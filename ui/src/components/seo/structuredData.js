@@ -1,3 +1,5 @@
+import { DEFAULT_SEO_IMAGE_URL } from './siteMetadata.js';
+
 /**
  * Structured data (JSON-LD) generators for SEO
  * Based on schema.org standards
@@ -11,7 +13,7 @@ export const organizationSchema = () => ({
   '@type': 'Organization',
   name: 'ElevenID LLC',
   url: 'https://elevenidllc.com',
-  logo: 'https://elevenidllc.com/logo512.png',
+  logo: DEFAULT_SEO_IMAGE_URL,
   description: 'Marty: customer-operated software for portable credentials, applicant and document verification, and Travel Trust',
   foundingDate: '2023',
   sameAs: [
@@ -86,7 +88,7 @@ export const articleSchema = ({
     name: 'ElevenID LLC',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://elevenidllc.com/logo512.png',
+      url: DEFAULT_SEO_IMAGE_URL,
     },
   },
   url,

@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { DEFAULT_SEO_IMAGE_URL, SITE_URL } from './siteMetadata.js';
 
 /**
  * SEOHead component - Manages page metadata for SEO
- * 
+ *
  * @param {string} title - Page title (max 60 chars, will be suffixed with " | ElevenID LLC")
  * @param {string} description - Meta description (140-160 chars recommended)
  * @param {string} canonicalPath - Path for canonical URL (e.g., "/product")
@@ -16,12 +17,12 @@ const SEOHead = ({
   title,
   description,
   canonicalPath,
-  ogImage = 'https://elevenidllc.com/logo512.png',
+  ogImage = DEFAULT_SEO_IMAGE_URL,
   ogType = 'website',
   structuredData = null,
   keywords = [],
 }) => {
-  const siteUrl = 'https://elevenidllc.com';
+  const siteUrl = SITE_URL;
   const fullTitle = title.includes('ElevenID LLC') ? title : `${title} | ElevenID LLC`;
   const canonicalUrl = `${siteUrl}${canonicalPath}`;
 

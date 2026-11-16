@@ -67,18 +67,6 @@
       "transfer": "verbatim"
     },
     {
-      "source_path": "ui/src/components/seo/structuredData.js",
-      "target_path": "ui/src/components/seo/structuredData.js",
-      "git_blob_sha1": "044b5efe9b7f2359ea8e3720e5a03ef0cd78e18f",
-      "transfer": "verbatim"
-    },
-    {
-      "source_path": "ui/src/components/seo/SEOHead.jsx",
-      "target_path": "ui/src/components/seo/SEOHead.jsx",
-      "git_blob_sha1": "1a2d9336d2205acd911ede177ec64d198d7c5c35",
-      "transfer": "verbatim"
-    },
-    {
       "source_path": "ui/src/components/seo/index.js",
       "target_path": "ui/src/components/seo/index.js",
       "git_blob_sha1": "50bf5b4c74cfc06d6f782e4ffc231af3eff5d3a3",
@@ -97,6 +85,18 @@
       "target_path": "ui/scripts/website-assets.mjs",
       "source_git_blob_sha1": "0cf0fee406e2d4c1888f254e0b7867a9092149d4",
       "changes": "Reject non-string revisions before validation or interpolation; preserve valid primitive string behavior."
+    },
+    {
+      "source_path": "ui/src/components/seo/SEOHead.jsx",
+      "target_path": "ui/src/components/seo/SEOHead.jsx",
+      "source_git_blob_sha1": "1a2d9336d2205acd911ede177ec64d198d7c5c35",
+      "changes": "Use the shared canonical site URL and immutable-build default metadata image; preserve explicit image overrides; remove one original trailing space in the comment."
+    },
+    {
+      "source_path": "ui/src/components/seo/structuredData.js",
+      "target_path": "ui/src/components/seo/structuredData.js",
+      "source_git_blob_sha1": "044b5efe9b7f2359ea8e3720e5a03ef0cd78e18f",
+      "changes": "Use the shared immutable-build default metadata image for organization and article publisher logos; retain all other schema fields."
     }
   ],
   "ci_action_pins": {
