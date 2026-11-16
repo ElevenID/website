@@ -1,5 +1,38 @@
 # Migration checkpoint
 
+## Batch 3: asset URL contracts on AWS
+
+Published for review through [website PR #3](https://github.com/ElevenID/website/pull/3).
+
+| Evidence | Revision |
+| --- | --- |
+| Accepted base | `cc2b3f82a23dd0118ee966868f80a39db84e8dfa` |
+| Verbatim asset-helper extraction | `a6da397976533fdbd31a42eb1ea8fc59837f7ee4` |
+| Original asset-helper blob | `0cf0fee406e2d4c1888f254e0b7867a9092149d4` |
+
+The first commit copies `ui/scripts/website-assets.mjs` from the pinned source snapshot and adds independent asset-URL tests. The same source blob was also verified at `marty-ui` commit `5e0734151ab8428cc5174aed83eb6d8eac3082d7`; this check does not requalify the rest of the older import inventory.
+
+The next commit rejects non-string asset revisions before regular-expression validation or string interpolation. Previously, arrays and objects could pass validation through implicit conversion. A stateful `toString` could then supply different text when the asset URL was constructed. The correction preserves all accepted primitive-string revision forms and never invokes user-defined conversion for a rejected value.
+
+The original helper remains recoverable from the extraction commit. Its current record moves to `adapted_files` with the original source blob and a description of this deliberate change; it is no longer represented as a verbatim copy.
+
+Validation ran in an isolated checkout on the existing AWS Free-plan development instance, with Node.js **24.22.1** verified against the official distribution checksum. The initial extraction passed 11 tests. Both new non-string regression tests failed against the original helper, then all **13 tests passed** after the correction, with no skips. The staged whitespace check also passed. No dependency installation was needed. See the PR for the published head, required hosted-check result and merge receipt.
+
+The tests cover revision namespaces, HTML entry/runtime/static URL rewriting, blog-owned local image rewriting, preserved external URLs and application links, non-string rejection, and the existing route/provenance contracts. They do not invoke `buildStart` or enumerate real public assets. No SVG, large generated module, shared lockfile or production data was read or copied for this batch.
+
+### Exact next development slice
+
+Finish the asset/build/test input classification using file names, sizes and Git identities. Preserve the committed source snapshot until relevant changes are reconciled; do not fetch an aggregate diff or dump asset contents. Then extract the classified source and assets separately from the website-only build.
+
+The following known items must be addressed before standalone-build qualification:
+
+- Keep the common/marketing locales for `de`, `en`, `es`, `fr`, `ja`, `nl`, the immutable blog package pin and its MUI compatibility resolver.
+- Declare the directly imported `prop-types` dependency in the reduced package.
+- Preserve generated demo-manifest inputs and the committed wallet-schema projection without importing the installer tree.
+- Remove the incidental API-core download and application-pruning import from the website-specific build context.
+- Correct default Open Graph/Twitter and JSON-LD logo URLs: the source currently uses an absolute root `logo512.png` URL while the asset build namespaces the image by revision.
+- Keep real asset emission, independent build, prerender, Nginx/browser handoffs, producer identity and production cutover as explicit remaining gates.
+
 ## Batch 1 complete: route contract foundation
 
 Integrated through [website PR #1](https://github.com/ElevenID/website/pull/1) using the normal protected merge path.

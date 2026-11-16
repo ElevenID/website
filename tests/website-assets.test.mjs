@@ -20,6 +20,7 @@ test('unsupported revision names cannot create an asset namespace', () => {
   for (const revision of [
     '', 'main', '../development', 'development/', '/development',
     'a'.repeat(39), 'A'.repeat(40), publicRevision + '-short',
+    'development\n', 'development\r\n', 'development\u2028',
     publicRevision + '-' + commerceRevision + '-extra',
   ]) {
     assert.throws(() => websiteAssetBase(revision), /Invalid website asset revision/);
@@ -94,4 +95,27 @@ test('unrelated modules and unchanged blog code remain untouched', () => {
     'const image = "https://cdn.example/images/photo.png";',
     '/project/node_modules/@elevenid/marty-blog/dist/data.js',
   ), null);
+});
+
+test('non-string revisions are rejected by the helper and plugin', () => {
+  for (const revision of [
+    undefined, null, 42, {}, ['development'], new String('development'),
+    Symbol('development'),
+  ]) {
+    assert.throws(() => websiteAssetBase(revision), /Invalid website asset revision/);
+    assert.throws(() => websiteAssetsPlugin(revision), /Invalid website asset revision/);
+  }
+});
+
+test('revision validation never invokes user-defined string conversion', () => {
+  let conversions = 0;
+  const revision = {
+    toString() {
+      conversions += 1;
+      return conversions === 1 ? 'development' : '../injected';
+    },
+  };
+  assert.throws(() => websiteAssetBase(revision), /Invalid website asset revision/);
+  assert.throws(() => websiteAssetsPlugin(revision), /Invalid website asset revision/);
+  assert.equal(conversions, 0);
 });

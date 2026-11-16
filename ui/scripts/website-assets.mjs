@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 export function websiteAssetBase(revision) {
-  if (!/^(?:development|[a-f0-9]{40}(?:-[a-f0-9]{40})?)$/.test(revision)) throw new Error('Invalid website asset revision');
+  if (typeof revision !== 'string' || !/^(?:development|[a-f0-9]{40}(?:-[a-f0-9]{40})?)$/.test(revision)) throw new Error('Invalid website asset revision');
   return `/_website/${revision}/`;
 }
 
