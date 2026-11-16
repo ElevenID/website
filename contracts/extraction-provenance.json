@@ -59,6 +59,30 @@
       "target_path": "ui/scripts/generated-text.test.mjs",
       "git_blob_sha1": "45e0634600c7c06497a6ed75da41c6015a5008e6",
       "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/utils/staticAssetHref.js",
+      "target_path": "ui/src/utils/staticAssetHref.js",
+      "git_blob_sha1": "6795f55182a267441e9633d8fba821b53fb253e1",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/components/seo/structuredData.js",
+      "target_path": "ui/src/components/seo/structuredData.js",
+      "git_blob_sha1": "044b5efe9b7f2359ea8e3720e5a03ef0cd78e18f",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/components/seo/SEOHead.jsx",
+      "target_path": "ui/src/components/seo/SEOHead.jsx",
+      "git_blob_sha1": "1a2d9336d2205acd911ede177ec64d198d7c5c35",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/components/seo/index.js",
+      "target_path": "ui/src/components/seo/index.js",
+      "git_blob_sha1": "50bf5b4c74cfc06d6f782e4ffc231af3eff5d3a3",
+      "transfer": "verbatim"
     }
   ],
   "adapted_files": [

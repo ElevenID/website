@@ -89,7 +89,11 @@ test('copied source and license retain their recorded Git blob identities', () =
     'ui/scripts/generated-text.test.mjs',
     'ui/scripts/web-surface-contract.mjs',
     'ui/src/application/routing/webSurfaceContract.mjs',
+    'ui/src/components/seo/SEOHead.jsx',
+    'ui/src/components/seo/index.js',
+    'ui/src/components/seo/structuredData.js',
     'ui/src/utils/hasAsciiControlCharacters.js',
+    'ui/src/utils/staticAssetHref.js',
   ]);
   assert.deepEqual(provenance.adapted_files.filter(
     (entry) => entry.target_path === 'ui/scripts/website-assets.mjs',
