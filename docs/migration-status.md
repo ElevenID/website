@@ -6,19 +6,29 @@ Published through [website PR #4](https://github.com/ElevenID/website/pull/4), b
 
 The [input inventory](input-inventory/README.md) classifies all **83 tracked public files** (46 retained and 37 excluded by existing website behavior) and **59 build/test paths**. Inventory commit: `dcc47e8715cd73d2cb95cdabac51d787cd4191d9`. A metadata comparison of the 79 candidate source files and public tree against `e10a7f26cda8ac217c7ddefebc709fc246dabaff` records **five source changes and one locale change**. These changes must be reconciled before importing the affected files.
 
-A separate source commit copies `dev-server-origin.mjs` and `generated-text.mjs`, plus their original Node tests, without changing bytes. The four files total **4,806 bytes**, and all four blob identities match both the pinned source snapshot and the current-source comparison. The provenance allowlist includes them; the earlier adapted asset-revision guard remains intact.
+Source commit `88fcf5a70f50724ef17af13937f672ccbc31bba3` copies `dev-server-origin.mjs` and `generated-text.mjs`, plus their original Node tests, without changing bytes. The four files total **4,806 bytes**, and all four blob identities match both the pinned source snapshot and the current-source comparison. The provenance allowlist includes them; the earlier adapted asset-revision guard remains intact.
 
-The root test command explicitly runs the two copied test files alongside the existing contract suite: **19 tests are expected**. The six inherited tests cover exact development origin/HMR/CORS behavior, malformed-origin rejection, cross-platform line endings and detection of changed generated content. See the PR for the observed final hosted-check result and merge receipt; the expected count alone is not evidence of a passing run.
+The root test command explicitly runs the two copied test files alongside the existing contract suite. **All 19 tests passed on AWS and in the required hosted check**, with no failures or skips, on Node.js 24.22.1. The six inherited tests cover exact development origin/HMR/CORS behavior, malformed-origin rejection, cross-platform line endings and detection of changed generated content.
 
-AWS sign-in expired before this batch. No current-turn AWS execution or full website build is claimed. The previous AWS checkout remains at the batch 3 checkpoint until it can fetch the accepted revision after sign-in. No actual public assets, SVGs, lockfile contents or large generated modules were read or copied for this batch.
+| Validation evidence | Revision or result |
+| --- | --- |
+| AWS tested source commit | `88fcf5a70f50724ef17af13937f672ccbc31bba3` |
+| AWS tested source tree | `d4924696073d82c952e4a09b2397401827dbdd5b` |
+| Required hosted check for that head | [Run 43940036162, job 133554816226](https://github.com/ElevenID/website/actions/runs/43940036162/job/133554816226): 19 passed |
+| Existing AWS safeguard | Six-hour automatic-stop timer active |
+
+The validation checkpoint changes documentation only. See PR #4 for its exact final head, required hosted check and merge receipt.
+
+AWS access was restored and the existing stopped development instance was started for verification. Its saved checkout was clean at the accepted PR #3 main before fetching the source commit above. The preserved Node runtime was used without installing dependencies; whitespace validation passed and the tested checkout remained clean. No full website build is claimed.
+
+No public assets were copied. No SVG or binary asset contents, lockfile contents or large generated modules were read; selected small public JSON/configuration files were inspected.
 
 ### Current resume point
 
-1. Restore AWS sign-in, reconnect to the existing development instance and verify the automatic-stop safeguard. Refresh the existing website checkout from accepted main; preserve any local changes.
-2. Run the expanded dependency-free contract suite on the existing pinned Node 24.22.1 runtime.
-3. Reconcile the five changed source files and English marketing locale using targeted reads and exact Git identities.
-4. Continue classified source/assets extraction separately from build-context changes. Preserve the immutable blog pin/MUI resolver and declare directly imported `prop-types`.
-5. Correct metadata image URLs, then qualify real asset emission, generated inputs, independent build/prerender, Nginx/browser handoffs and release-producer identity.
+1. Confirm the accepted PR #4 merge and clean AWS checkout before starting a branch from current main; preserve the automatic-stop safeguard.
+2. Reconcile the five changed source files and English marketing locale using targeted reads and exact Git identities.
+3. Continue classified source/assets extraction separately from build-context changes. Preserve the immutable blog pin/MUI resolver and declare directly imported `prop-types`.
+4. Correct metadata image URLs, then qualify real asset emission, generated inputs, independent build/prerender, Nginx/browser handoffs and release-producer identity.
 
 The shared `@ui-public-routes` alias is source-configuration evidence, not a demonstrated website dependency; do not bring application routes into the new repository to satisfy an unused alias. Demo publication states and route ownership remain unchanged.
 
@@ -104,7 +114,7 @@ The current website build, image publication, application integration and host d
 
 ## Resume in small batches
 
-1. Fetch the current `main` and confirm accepted commit `9136480448f380aa585ded15b075ce955fc684af` is in its ancestry. Read this checkpoint and the retained import inventory before choosing the next slice.
-2. Start a branch from current `main`; inspect source changes since the pinned audit commit before reusing any inventory. Begin with the missing asset/build/test input classification above.
+1. Fetch current `main` and confirm accepted PR #3 commit `b850cdbbd94b5c991767e1dd4e7e2de437b02c8d` is in its ancestry. Read the current batch 4 checkpoint and input inventories before choosing the next slice.
+2. Start a branch from current `main`; reconcile recorded source drift before importing affected files. Continue content/build qualification without redoing the completed metadata classification.
 3. Complete and verify one bounded change, then commit and push it promptly. Keep source extraction, build changes and release-identity migration in separate reviewable batches.
 4. Record each published head, PR, tested revision and remaining gate in the next checkpoint. Carry the exact stopping point forward before expanding scope.

@@ -16,14 +16,14 @@ This is a metadata classification and targeted small-file review. It does not qu
 
 Five candidate source files and one public translation changed after the pinned snapshot. Their exact old and new blob identities are recorded in the drift file. Reconcile those changes before importing the affected files; do not silently replace current content with the older snapshot.
 
-The next bounded source slice consists of two unchanged, dependency-free build helpers and their original tests (4,806 bytes total):
+This batch extracts two unchanged, dependency-free build helpers and their original tests (4,806 bytes total):
 
 - `ui/scripts/dev-server-origin.mjs`
 - `ui/scripts/dev-server-origin.test.mjs`
 - `ui/scripts/generated-text.mjs`
 - `ui/scripts/generated-text.test.mjs`
 
-These copies retain original paths and must be recorded in the extraction provenance. Their existence alone does not qualify the complete source graph or standalone build.
+These copies retain original paths and are recorded in the extraction provenance. Their existence alone does not qualify the complete source graph or standalone build.
 
 ## Remaining gates
 
@@ -39,4 +39,6 @@ The root route contract does not assign `/.well-known` to the website. Retaining
 
 ## Validation environment
 
-The previous AWS checkout remains at the accepted PR #3 checkpoint. AWS sign-in expired before this batch, so these inventory/source preparations must not be described as newly executed or build-qualified on AWS. Repository CI can verify the dependency-free contracts and copied-source identities; AWS execution resumes after authenticated access is restored.
+After AWS sign-in was restored, the existing development instance fetched and tested commit `88fcf5a70f50724ef17af13937f672ccbc31bba3` (tree `d4924696073d82c952e4a09b2397401827dbdd5b`) using the preserved Node.js 24.22.1 runtime. All **19 tests passed**, with no failures or skips; the checkout and whitespace check were clean. The existing six-hour automatic-stop timer was active. No new infrastructure or dependency installation was needed.
+
+[Required hosted check](https://github.com/ElevenID/website/actions/runs/43940036162/job/133554816226) also passed all 19 tests for that source head. The validation covers contracts and copied helpers, not a full website build. See PR #4 for the final checkpoint commit's required check and merge receipt.
