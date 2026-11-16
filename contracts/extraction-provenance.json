@@ -85,12 +85,6 @@
       "transfer": "verbatim"
     },
     {
-      "source_path": "ui/src/application/routing/landingEntry.js",
-      "target_path": "ui/src/application/routing/landingEntry.js",
-      "git_blob_sha1": "f6d79b9a83f2e2b3c31496758edbebd20c323987",
-      "transfer": "verbatim"
-    },
-    {
       "source_path": "ui/src/application/routing/webSurface.js",
       "target_path": "ui/src/application/routing/webSurface.js",
       "git_blob_sha1": "9e5b4921079dcff5e11dc92ae942f8966037a656",
@@ -133,6 +127,24 @@
       "target_path": "ui/src/components/seo/structuredData.js",
       "source_git_blob_sha1": "044b5efe9b7f2359ea8e3720e5a03ef0cd78e18f",
       "changes": "Use the shared immutable-build default metadata image for organization and article publisher logos; retain all other schema fields."
+    },
+    {
+      "source_path": "ui/src/application/routing/landingEntry.js",
+      "target_path": "ui/src/application/routing/landingEntry.js",
+      "source_git_blob_sha1": "f6d79b9a83f2e2b3c31496758edbebd20c323987",
+      "changes": "Return the already-decoded URLSearchParams auth_error value without a second percent decoding or replacement of literal plus signs; retain missing/empty behavior."
+    },
+    {
+      "source_path": "ui/src/application/routing/landingEntry.test.ts",
+      "target_path": "tests/landing-entry.test.mjs",
+      "source_git_blob_sha1": "6b2b93a8f6b853138fb4df0f31f0486f1a9d389b",
+      "changes": "Adapt behavioral cases to native Node assertions; add four single-decoding regressions and nonmutating query-clearing coverage."
+    },
+    {
+      "source_path": "ui/src/utils/runtimeConfig.test.ts",
+      "target_path": "tests/vm/runtime-config.test.mjs",
+      "source_git_blob_sha1": "ff28dd09080b6d5b244367c41ab647dd25903e67",
+      "changes": "Adapt runtime/build configuration cases to actual-module Node VM execution; add hosting and no-window coverage."
     }
   ],
   "ci_action_pins": {

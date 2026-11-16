@@ -8,7 +8,8 @@ export function getLandingAuthError(searchParams) {
     return null;
   }
 
-  return decodeURIComponent(error.replace(/\+/g, ' '));
+  // URLSearchParams.get() has already decoded percent escapes and form spaces.
+  return error;
 }
 
 export function clearLandingAuthError(searchParams) {
