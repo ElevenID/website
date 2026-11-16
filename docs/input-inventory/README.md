@@ -1,6 +1,6 @@
 # Website input inventory
 
-This directory records the next extraction boundary after [website PR #3](https://github.com/ElevenID/website/pull/3).
+This directory records source, asset, build and test evidence for the website extraction.
 
 ## Evidence and scope
 
@@ -14,9 +14,11 @@ This is a metadata classification and targeted small-file review. It does not qu
 
 ## Preserve newer source changes
 
-Five candidate source files and one public translation changed after the pinned snapshot. Their exact old and new blob identities are recorded in the drift file. Reconcile those changes before importing the affected files; do not silently replace current content with the older snapshot.
+Five candidate source files and one public translation changed after the pinned snapshot. The [reconciliation record](source-reconciliation.json) accounts for all six changes from source PR #1783: verification calls to action now point to the application-owned `/verify` route and use “Start Verifying” text. Preserve the recorded current blobs when those files are imported; the original drift audit remains unchanged.
 
-This batch extracts two unchanged, dependency-free build helpers and their original tests (4,806 bytes total):
+The reviewed deltas add no new module import edges. This conclusion is limited to those deltas and does not qualify the complete source/build graph. The application verification page and its backend stay outside the website extraction.
+
+PR #4 extracted two unchanged, dependency-free build helpers and their original tests (4,806 bytes total):
 
 - `ui/scripts/dev-server-origin.mjs`
 - `ui/scripts/dev-server-origin.test.mjs`
@@ -27,17 +29,19 @@ These copies retain original paths and are recorded in the extraction provenance
 
 ## Remaining gates
 
-1. Reconcile changed source and locale inputs.
+1. Preserve reconciled current source/locale blobs at import and refresh the drift comparison if source main moves.
 2. Transfer classified large/generated inputs as a separate bounded operation; avoid printing their contents or parsing SVGs during review.
 3. Verify demo poster references/digests and preserve the DRAFT/PARTIAL publication states.
 4. Create the website-only dependency lock and build context, preserving the immutable blog pin and MUI compatibility resolver. Declare the directly used `prop-types` dependency.
-5. Correct social/JSON-LD image URLs to use the immutable asset namespace; decide whether to adapt or defer the AI-plugin compatibility payload.
+5. Verify the corrected metadata image URLs against emitted assets; decide whether to adapt or defer the AI-plugin compatibility payload.
 6. Qualify real asset emission, generated crawler outputs, prerender, Nginx and browser/application handoffs.
 7. Rebind release provenance and verify rollback before any production cutover.
 
 The root route contract does not assign `/.well-known` to the website. Retaining a versioned AI-plugin payload does not authorize inventing a new root route.
 
 ## Validation environment
+
+[Batch 5](../checkpoints/batch-5-metadata.md) records source reconciliation and the metadata correction, with all 24 tests passing on AWS. The following is the retained batch 4 receipt.
 
 After AWS sign-in was restored, the existing development instance fetched and tested commit `88fcf5a70f50724ef17af13937f672ccbc31bba3` (tree `d4924696073d82c952e4a09b2397401827dbdd5b`) using the preserved Node.js 24.22.1 runtime. All **19 tests passed**, with no failures or skips; the checkout and whitespace check were clean. The existing six-hour automatic-stop timer was active. No new infrastructure or dependency installation was needed.
 

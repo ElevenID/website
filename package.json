@@ -9,6 +9,6 @@
     "node": ">=24 <25"
   },
   "scripts": {
-    "test": "node --test tests/*.test.mjs ui/scripts/dev-server-origin.test.mjs ui/scripts/generated-text.test.mjs"
+    "test": "node --experimental-vm-modules --test tests/*.test.mjs tests/vm/*.test.mjs ui/scripts/dev-server-origin.test.mjs ui/scripts/generated-text.test.mjs"
   }
 }

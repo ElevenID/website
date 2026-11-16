@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "source_repository": "ElevenID/marty-ui",
+  "source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "comparison_commit": "e10a7f26cda8ac217c7ddefebc709fc246dabaff",
+  "authoring_change": {
+    "commit": "ff0ca08718d7d638ad779df782d36b022a86ac52",
+    "parent": "fcef4c3912b5cbe4af2be22fb3eb47bc3da382a8",
+    "pull_request": "https://github.com/ElevenID/marty-ui/pull/1783",
+    "title": "Add example-first Marty public verification demo"
+  },
+  "scope": "Reconciliation of the five recorded source changes and one English locale change. No affected source/assets imports or complete build qualification are claimed.",
+  "source_changes": [
+    {
+      "path": "ui/src/apps/website/WebsiteApp.jsx",
+      "source_blob_sha": "51789b621ae64442135789314c7857ff393a6cf0",
+      "current_blob_sha": "bb9616ba5618cac9899b4c487487b687a1caa51c",
+      "current_size_bytes": 4069,
+      "additions": 1,
+      "deletions": 1,
+      "summary": "Header Start Verifying CTA changes from /developers to /verify through publicEntryHref.",
+      "disposition": "preserve_current_blob_at_later_import"
+    },
+    {
+      "path": "ui/src/components/LandingPageContent.jsx",
+      "source_blob_sha": "a8c8d3a0ee9ff0ba140b3b91ee14b4d179bd02bc",
+      "current_blob_sha": "07e7a07003aef819e424cb7ae6ded6722640669f",
+      "current_size_bytes": 81010,
+      "additions": 5,
+      "deletions": 5,
+      "summary": "Verification quick-start, hero and footer destinations become /verify; both analytics destinationPath values change with their links.",
+      "disposition": "preserve_current_blob_at_later_import"
+    },
+    {
+      "path": "ui/src/components/pages/PublicIAPages.jsx",
+      "source_blob_sha": "54f3a9b34fa8254c9907794154bb5bbed33c76ee",
+      "current_blob_sha": "fa46177013b543e2d7d909479d02c681c8006551",
+      "current_size_bytes": 23375,
+      "additions": 1,
+      "deletions": 1,
+      "summary": "Default Start Verifying Credentials action changes from /developers to /verify.",
+      "disposition": "preserve_current_blob_at_later_import"
+    },
+    {
+      "path": "ui/src/components/pages/VerifiableCredentialApiPage.jsx",
+      "source_blob_sha": "ad2b7bcd519d64258c49144ceadd2afa24577f8a",
+      "current_blob_sha": "c14b91af44171793b34d8f026cb3eafcb1b315f0",
+      "current_size_bytes": 17485,
+      "additions": 2,
+      "deletions": 0,
+      "summary": "Adds Start Verifying button gated by existing SHOW_PUBLIC_CTA export; existing useSurfaceNavigate handles /verify.",
+      "disposition": "preserve_current_blob_at_later_import"
+    },
+    {
+      "path": "ui/src/data/marketingContent.js",
+      "source_blob_sha": "19afb2feb6e66e0b3c3c29b15c8ab1548deb369b",
+      "current_blob_sha": "930654cc94c8a2a958a114b86c66e26afd368166",
+      "current_size_bytes": 37770,
+      "additions": 1,
+      "deletions": 1,
+      "summary": "VALUE_PROPOSITION.primaryCTA changes from Explore the Developer Docs to Start Verifying.",
+      "disposition": "preserve_current_blob_at_later_import"
+    }
+  ],
+  "dependency_and_route_effect": {
+    "new_import_module_specifiers": [],
+    "added_named_import": {
+      "name": "SHOW_PUBLIC_CTA",
+      "from": "@ui-public-config",
+      "note": "Existing alias and export; no new module edge."
+    },
+    "destination": "/verify",
+    "destination_owner": "application",
+    "website_contract_changed": false,
+    "handoff": "Existing WebSurfaceBoundary handles cross-surface anchor clicks; useSurfaceNavigate handles programmatic navigation. publicEntryHref preserves configured public-entry behavior.",
+    "application_implementation": "PR #1783 adds PublicVerificationPage to application PublicRoutes. It is not a new WebsiteRoutes import and does not belong in this website extraction.",
+    "qualification_limit": "The reviewed deltas add no source-graph edges. This does not requalify all transitive, computed, runtime or build dependencies in the 79-file candidate inventory."
+  },
+  "evidence": {
+    "method": "Per-path commit histories, directory Git metadata and five bounded PR file patches; no aggregate diff.",
+    "authoring_parent_blobs_match_pinned_inventory": true,
+    "authoring_commit_blobs_match_comparison_inventory": true,
+    "patch_additions": 10,
+    "patch_deletions": 8,
+    "full_large_source_files_read": false,
+    "svg_or_binary_contents_read": false,
+    "targeted_context": "WebsiteApp, WebsiteRoutes, WebSurfaceBoundary and routing helpers; VerifiableCredentialApiPage lines 1-45 only.",
+    "execution": "Read-only review; no tests, application requests, deployment or public-verification backend qualification performed.",
+    "locale_review": "Both small JSON files parsed; exactly one value changed, with no added or removed keys."
+  },
+  "public_changes": [
+    {
+      "path": "ui/public/locales/en/marketing.json",
+      "source_blob_sha": "1fabd6d5ef601aa3ae6d904f96de7c9105dad4dc",
+      "current_blob_sha": "abd0a07db30845792adebff0d281241ebfcd666a",
+      "source_size_bytes": 10550,
+      "current_size_bytes": 10539,
+      "semantic_changes": [
+        {
+          "key": "valueProposition.primaryCTA",
+          "before": "Explore the Developer Docs",
+          "after": "Start Verifying"
+        }
+      ],
+      "added_or_removed_keys": false,
+      "disposition": "preserve_current_blob_at_later_import"
+    }
+  ]
+}

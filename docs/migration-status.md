@@ -1,10 +1,20 @@
 # Migration checkpoint
 
+## Batch 5: source reconciliation and metadata images
+
+[Website PR #5](https://github.com/ElevenID/website/pull/5) reconciles the five source changes and one locale change, extracts four small metadata files, and corrects default social/JSON-LD logo URLs to use the immutable asset namespace. The expanded suite passed **all 24 tests on AWS**, after two regression cases reproduced the original defect.
+
+[The batch 5 checkpoint](checkpoints/batch-5-metadata.md) records the exact source commits, tested tree, provenance decisions and limits. See the PR for final required CI and merge evidence.
+
+### Current resume point
+
+Confirm the accepted PR #5 merge and clean AWS checkout, then continue the website navigation/runtime boundary in a bounded source-and-test batch. Preserve the reconciled current blobs when importing affected source/locale files. Actual asset emission, the independent website build, browser/DOM checks and release migration remain unqualified.
+
 ## Batch 4: input inventory and independent build helpers
 
 Published through [website PR #4](https://github.com/ElevenID/website/pull/4), based on accepted main `b850cdbbd94b5c991767e1dd4e7e2de437b02c8d`.
 
-The [input inventory](input-inventory/README.md) classifies all **83 tracked public files** (46 retained and 37 excluded by existing website behavior) and **59 build/test paths**. Inventory commit: `dcc47e8715cd73d2cb95cdabac51d787cd4191d9`. A metadata comparison of the 79 candidate source files and public tree against `e10a7f26cda8ac217c7ddefebc709fc246dabaff` records **five source changes and one locale change**. These changes must be reconciled before importing the affected files.
+The [input inventory](input-inventory/README.md) classifies all **83 tracked public files** (46 retained and 37 excluded by existing website behavior) and **59 build/test paths**. Inventory commit: `dcc47e8715cd73d2cb95cdabac51d787cd4191d9`. A metadata comparison of the 79 candidate source files and public tree against `e10a7f26cda8ac217c7ddefebc709fc246dabaff` records **five source changes and one locale change**. Batch 5 records their reconciliation and current-blob preservation decisions.
 
 Source commit `88fcf5a70f50724ef17af13937f672ccbc31bba3` copies `dev-server-origin.mjs` and `generated-text.mjs`, plus their original Node tests, without changing bytes. The four files total **4,806 bytes**, and all four blob identities match both the pinned source snapshot and the current-source comparison. The provenance allowlist includes them; the earlier adapted asset-revision guard remains intact.
 
@@ -23,7 +33,7 @@ AWS access was restored and the existing stopped development instance was starte
 
 No public assets were copied. No SVG or binary asset contents, lockfile contents or large generated modules were read; selected small public JSON/configuration files were inspected.
 
-### Current resume point
+### Resume point recorded after batch 4
 
 1. Confirm the accepted PR #4 merge and clean AWS checkout before starting a branch from current main; preserve the automatic-stop safeguard.
 2. Reconcile the five changed source files and English marketing locale using targeted reads and exact Git identities.
@@ -104,7 +114,7 @@ The inventory is audit-only. It does not authorize export or deletion and does n
 
 ## Next batch
 
-1. Finish content/build qualification of the classified inputs and reconcile recorded source drift. The 34-module source-ownership list expands to 79 candidate source files; metadata classification alone is not a complete executed build graph.
+1. Continue content/build qualification of the classified inputs and preserve the reconciled current source/locale blobs. The 34-module source-ownership list expands to 79 candidate source files; metadata classification alone is not a complete executed build graph.
 2. Extract the public website source and required assets in a separate commit, with original paths and source identities recorded. Retain the source in `marty-ui` during qualification.
 3. Create a self-contained website build context and dependency lock. The public source graph does not import API-core, but the current shared Dockerfile downloads it; remove that incidental dependency in the website-specific build.
 4. Run the public-route, prerender, crawler, asset, Nginx and browser handoff checks from a clean website-only checkout. Preserve the blog package pin and the common/marketing language resources.
@@ -114,7 +124,7 @@ The current website build, image publication, application integration and host d
 
 ## Resume in small batches
 
-1. Fetch current `main` and confirm accepted PR #3 commit `b850cdbbd94b5c991767e1dd4e7e2de437b02c8d` is in its ancestry. Read the current batch 4 checkpoint and input inventories before choosing the next slice.
-2. Start a branch from current `main`; reconcile recorded source drift before importing affected files. Continue content/build qualification without redoing the completed metadata classification.
+1. Fetch current `main` and confirm accepted PR #3 commit `b850cdbbd94b5c991767e1dd4e7e2de437b02c8d` is in its ancestry. Read the current batch 5 checkpoint and input inventories before choosing the next slice.
+2. Start a branch from current `main`; apply the source-reconciliation decisions before importing affected files; refresh drift if source main advances. Continue content/build qualification without redoing the completed metadata classification.
 3. Complete and verify one bounded change, then commit and push it promptly. Keep source extraction, build changes and release-identity migration in separate reviewable batches.
 4. Record each published head, PR, tested revision and remaining gate in the next checkpoint. Carry the exact stopping point forward before expanding scope.

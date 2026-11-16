@@ -23,6 +23,7 @@ test('explicit marketing pages, resources and reserved pricing keep website owne
 test('application entrypoints and unknown paths do not acquire website ownership', () => {
   for (const route of [
     '/login', '/login/error', '/auth/callback', '/console', '/console/org',
+    '/verify', '/verify/', '/verify/examples',
     '/docs', '/pricing/checkout', '/resources/', '/v1/protocol-support',
     '/wallet/setup', '/unknown', '/blogger', '/sitemap-bad/path.xml',
   ]) {
@@ -88,7 +89,9 @@ test('copied source and license retain their recorded Git blob identities', () =
     'ui/scripts/generated-text.test.mjs',
     'ui/scripts/web-surface-contract.mjs',
     'ui/src/application/routing/webSurfaceContract.mjs',
+    'ui/src/components/seo/index.js',
     'ui/src/utils/hasAsciiControlCharacters.js',
+    'ui/src/utils/staticAssetHref.js',
   ]);
   assert.deepEqual(provenance.adapted_files.filter(
     (entry) => entry.target_path === 'ui/scripts/website-assets.mjs',
