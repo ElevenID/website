@@ -86,6 +86,14 @@ test('copied source and license retain their recorded Git blob identities', () =
     'ui/src/application/routing/webSurfaceContract.mjs',
     'ui/src/utils/hasAsciiControlCharacters.js',
   ]);
+  assert.deepEqual(provenance.adapted_files.filter(
+    (entry) => entry.target_path === 'ui/scripts/website-assets.mjs',
+  ), [{
+    source_path: 'ui/scripts/website-assets.mjs',
+    target_path: 'ui/scripts/website-assets.mjs',
+    source_git_blob_sha1: '0cf0fee406e2d4c1888f254e0b7867a9092149d4',
+    changes: 'Reject non-string revisions before validation or interpolation; preserve valid primitive string behavior.',
+  }]);
   for (const entry of provenance.files) {
     assert.equal(entry.source_path, entry.target_path);
     assert.equal(entry.transfer, 'verbatim');
