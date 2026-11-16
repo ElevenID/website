@@ -12,6 +12,8 @@ The verbatim source and license entries are byte-for-byte identical to their ori
 
 The [input inventory and build-helper batch](https://github.com/ElevenID/website/pull/4) records public assets, build/test inputs and source drift, and extracts two dependency-free helpers with their original tests. See [the input inventory](docs/input-inventory/README.md) for scope and remaining qualification gates. All 19 dependency-free tests passed on the existing AWS development environment and in the required hosted check. Exact tested revisions and remaining gates are recorded in the migration checkpoint.
 
+The [source reconciliation and metadata batch](https://github.com/ElevenID/website/pull/5) preserves the newer verification CTA changes, keeps `/verify` application-owned, and fixes default social/JSON-LD images to follow the immutable asset namespace. Its expanded suite passed all **24 tests on AWS**. See [batch 5](docs/checkpoints/batch-5-metadata.md) for the exact tested source, regression evidence and remaining qualification.
+
 ## Run the checks
 
 Use Node.js **24.22.1**, the version pinned in CI:
