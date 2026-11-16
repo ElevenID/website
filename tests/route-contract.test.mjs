@@ -83,6 +83,7 @@ test('copied source and license retain their recorded Git blob identities', () =
     'LICENSE',
     'contracts/web-surface-routes.json',
     'ui/scripts/web-surface-contract.mjs',
+    'ui/scripts/website-assets.mjs',
     'ui/src/application/routing/webSurfaceContract.mjs',
     'ui/src/utils/hasAsciiControlCharacters.js',
   ]);

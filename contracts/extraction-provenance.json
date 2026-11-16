@@ -35,6 +35,12 @@
       "target_path": "ui/src/utils/hasAsciiControlCharacters.js",
       "git_blob_sha1": "e04b39258879bf3c52fe4d6bd3b24f7b2f3db130",
       "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/scripts/website-assets.mjs",
+      "target_path": "ui/scripts/website-assets.mjs",
+      "git_blob_sha1": "0cf0fee406e2d4c1888f254e0b7867a9092149d4",
+      "transfer": "verbatim"
     }
   ],
   "adapted_files": [
