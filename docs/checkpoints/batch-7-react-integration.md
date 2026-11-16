@@ -54,7 +54,7 @@ The new tests are independently authored. The eight inherited boundary cases are
 
 The source copy passed all 49 native tests. The environment commit passed those plus eight inherited DOM cases. The navigation correction passed 49 native and 30 navigation DOM cases. After the metadata correction, the full aggregate passed all 88 tests. Staged whitespace checks passed for each commit, and published Git trees matched the AWS-tested trees.
 
-Functional commits are `384c959af19fc6773aa965f37a1e5c265e583941` (environment), `2200772357096154e9cceedce122fe691992fc19` (navigation), and `6e16040ebf4abb57f76f91c0ce546c27ae5efa80` (metadata). The complete functional source tree tested on AWS is `eaa950497c0a810638822f14546fa4d5688cdf2e`. The following documentation commit changes no source, dependencies or tests; final head CI and the accepted merge are recorded on PR #7.
+Functional commits are `384c959af19fc6773aa965f37a1e5c265e583941` (environment), `2200772357096154e9cceedce122fe691992fc19` (navigation), and `6e16040ebf4abb57f76f91c0ce546c27ae5efa80` (metadata). The complete functional source tree tested on AWS is `eaa950497c0a810638822f14546fa4d5688cdf2e`. The documentation commits change no source, dependencies or tests. See PR #7 for final head CI and merge status.
 
 ## Scope and resume
 

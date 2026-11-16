@@ -2,7 +2,7 @@
 
 ## Current milestone: React navigation and metadata integration
 
-[Website PR #7](https://github.com/ElevenID/website/pull/7) groups source extraction, the pinned DOM environment, navigation regression coverage and page metadata coverage into one larger PR with separate commits. **All 88 tests passed on AWS**: 49 native tests and 39 DOM tests across four suites. The final required hosted check and accepted merge receipt are linked from the PR.
+[Website PR #7](https://github.com/ElevenID/website/pull/7) groups source extraction, the pinned DOM environment, navigation regression coverage and page metadata coverage into one larger PR with separate commits. **All 88 tests passed on AWS**: 49 native tests and 39 DOM tests across four suites. Track the final required hosted check and merge status on the PR.
 
 | Evidence | Revision |
 | --- | --- |
