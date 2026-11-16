@@ -23,6 +23,7 @@ test('explicit marketing pages, resources and reserved pricing keep website owne
 test('application entrypoints and unknown paths do not acquire website ownership', () => {
   for (const route of [
     '/login', '/login/error', '/auth/callback', '/console', '/console/org',
+    '/verify', '/verify/', '/verify/examples',
     '/docs', '/pricing/checkout', '/resources/', '/v1/protocol-support',
     '/wallet/setup', '/unknown', '/blogger', '/sitemap-bad/path.xml',
   ]) {

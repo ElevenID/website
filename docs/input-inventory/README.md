@@ -14,7 +14,9 @@ This is a metadata classification and targeted small-file review. It does not qu
 
 ## Preserve newer source changes
 
-Five candidate source files and one public translation changed after the pinned snapshot. Their exact old and new blob identities are recorded in the drift file. Reconcile those changes before importing the affected files; do not silently replace current content with the older snapshot.
+Five candidate source files and one public translation changed after the pinned snapshot. The [reconciliation record](source-reconciliation.json) accounts for all six changes from source PR #1783: verification calls to action now point to the application-owned `/verify` route and use “Start Verifying” text. Preserve the recorded current blobs when those files are imported; the original drift audit remains unchanged.
+
+The reviewed deltas add no new module import edges. This conclusion is limited to those deltas and does not qualify the complete source/build graph. The application verification page and its backend stay outside the website extraction.
 
 This batch extracts two unchanged, dependency-free build helpers and their original tests (4,806 bytes total):
 
@@ -27,7 +29,7 @@ These copies retain original paths and are recorded in the extraction provenance
 
 ## Remaining gates
 
-1. Reconcile changed source and locale inputs.
+1. Preserve reconciled current source/locale blobs at import and refresh the drift comparison if source main moves.
 2. Transfer classified large/generated inputs as a separate bounded operation; avoid printing their contents or parsing SVGs during review.
 3. Verify demo poster references/digests and preserve the DRAFT/PARTIAL publication states.
 4. Create the website-only dependency lock and build context, preserving the immutable blog pin and MUI compatibility resolver. Declare the directly used `prop-types` dependency.
