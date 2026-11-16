@@ -56,6 +56,8 @@ const SEOHead = ({
     upsertMeta('meta[name="description"]', { name: 'description' }, description);
     if (keywords.length > 0) {
       upsertMeta('meta[name="keywords"]', { name: 'keywords' }, keywords.join(', '));
+    } else {
+      document.head.querySelector('meta[name="keywords"]')?.remove();
     }
 
     upsertLink('link[rel="canonical"]', 'canonical', canonicalUrl);

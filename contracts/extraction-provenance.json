@@ -132,7 +132,7 @@
       "source_path": "ui/src/components/seo/SEOHead.jsx",
       "target_path": "ui/src/components/seo/SEOHead.jsx",
       "source_git_blob_sha1": "1a2d9336d2205acd911ede177ec64d198d7c5c35",
-      "changes": "Use the shared canonical site URL and immutable-build default metadata image; preserve explicit image overrides; remove one original trailing space in the comment."
+      "changes": "Use the shared canonical site URL and immutable-build default metadata image; preserve explicit image overrides; remove one original trailing space in the comment. Remove stale keyword metadata when the current page supplies an empty list or omits keywords."
     },
     {
       "source_path": "ui/src/components/seo/structuredData.js",
