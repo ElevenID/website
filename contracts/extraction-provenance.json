@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "purpose": "source-extraction-record",
+  "source": {
+    "repository": "ElevenID/marty-ui",
+    "commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3"
+  },
+  "files": [
+    {
+      "source_path": "LICENSE",
+      "target_path": "LICENSE",
+      "git_blob_sha1": "0ad25db4bd1d86c452db3f9602ccdbe172438f52",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "contracts/web-surface-routes.json",
+      "target_path": "contracts/web-surface-routes.json",
+      "git_blob_sha1": "b7fcfca7a2b2d3804da1fa41f8aaf4593869a0b0",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/scripts/web-surface-contract.mjs",
+      "target_path": "ui/scripts/web-surface-contract.mjs",
+      "git_blob_sha1": "18eafe744194d9c887086bca48b24bf953167b8a",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/application/routing/webSurfaceContract.mjs",
+      "target_path": "ui/src/application/routing/webSurfaceContract.mjs",
+      "git_blob_sha1": "67a8bddf49c56cf5de8faa8141479a9ff389ab2c",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/utils/hasAsciiControlCharacters.js",
+      "target_path": "ui/src/utils/hasAsciiControlCharacters.js",
+      "git_blob_sha1": "e04b39258879bf3c52fe4d6bd3b24f7b2f3db130",
+      "transfer": "verbatim"
+    }
+  ],
+  "adapted_files": [
+    {
+      "source_path": "ui/scripts/web-surface-contract.test.mjs",
+      "target_path": "tests/route-contract.test.mjs",
+      "source_git_blob_sha1": "6e1116396a76213f60d97b7f1f35f9401f3ea75a",
+      "changes": "Retain route, schema and canonicalization cases; omit Nginx dependency; add fixed contract digest and copied-source identity checks."
+    }
+  ],
+  "ci_action_pins": {
+    "source_path": ".github/workflows/ci.yml",
+    "source_git_blob_sha1": "d923dc54a71b2ee3f94504d9fad629d199dfd5bf",
+    "actions": {
+      "actions/checkout": "3d3c42e5aac5ba805825da76410c181273ba90b1",
+      "actions/setup-node": "949feb2413d6458794dcd2491c4babbbce0c15c1"
+    }
+  }
+}
