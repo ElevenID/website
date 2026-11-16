@@ -82,6 +82,10 @@ test('copied source and license retain their recorded Git blob identities', () =
   assert.deepEqual(provenance.files.map((entry) => entry.target_path).sort(), [
     'LICENSE',
     'contracts/web-surface-routes.json',
+    'ui/scripts/dev-server-origin.mjs',
+    'ui/scripts/dev-server-origin.test.mjs',
+    'ui/scripts/generated-text.mjs',
+    'ui/scripts/generated-text.test.mjs',
     'ui/scripts/web-surface-contract.mjs',
     'ui/src/application/routing/webSurfaceContract.mjs',
     'ui/src/utils/hasAsciiControlCharacters.js',

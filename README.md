@@ -10,6 +10,8 @@ The next [asset-contract batch](https://github.com/ElevenID/website/pull/3) adds
 
 The verbatim source and license entries are byte-for-byte identical to their originals at [`df6ec6c4bfee803d89c54e9333297f29f378cee3`](https://github.com/ElevenID/marty-ui/tree/df6ec6c4bfee803d89c54e9333297f29f378cee3). [Extraction provenance](contracts/extraction-provenance.json) records the original paths and Git blob hashes, and separately identifies intentional adaptations. This source record is not a release attestation or a transfer of Git history.
 
+The [input inventory and build-helper batch](https://github.com/ElevenID/website/pull/4) records public assets, build/test inputs and source drift, and extracts two dependency-free helpers with their original tests. See [the input inventory](docs/input-inventory/README.md) for scope and remaining qualification gates. AWS validation for this batch awaits restored sign-in; hosted checks are linked from the PR.
+
 ## Run the checks
 
 Use Node.js **24.22.1**, the version pinned in CI:

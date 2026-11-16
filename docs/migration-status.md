@@ -1,5 +1,27 @@
 # Migration checkpoint
 
+## Batch 4: input inventory and independent build helpers
+
+Published through [website PR #4](https://github.com/ElevenID/website/pull/4), based on accepted main `b850cdbbd94b5c991767e1dd4e7e2de437b02c8d`.
+
+The [input inventory](input-inventory/README.md) classifies all **83 tracked public files** (46 retained and 37 excluded by existing website behavior) and **59 build/test paths**. Inventory commit: `dcc47e8715cd73d2cb95cdabac51d787cd4191d9`. A metadata comparison of the 79 candidate source files and public tree against `e10a7f26cda8ac217c7ddefebc709fc246dabaff` records **five source changes and one locale change**. These changes must be reconciled before importing the affected files.
+
+A separate source commit copies `dev-server-origin.mjs` and `generated-text.mjs`, plus their original Node tests, without changing bytes. The four files total **4,806 bytes**, and all four blob identities match both the pinned source snapshot and the current-source comparison. The provenance allowlist includes them; the earlier adapted asset-revision guard remains intact.
+
+The root test command explicitly runs the two copied test files alongside the existing contract suite: **19 tests are expected**. The six inherited tests cover exact development origin/HMR/CORS behavior, malformed-origin rejection, cross-platform line endings and detection of changed generated content. See the PR for the observed final hosted-check result and merge receipt; the expected count alone is not evidence of a passing run.
+
+AWS sign-in expired before this batch. No current-turn AWS execution or full website build is claimed. The previous AWS checkout remains at the batch 3 checkpoint until it can fetch the accepted revision after sign-in. No actual public assets, SVGs, lockfile contents or large generated modules were read or copied for this batch.
+
+### Current resume point
+
+1. Restore AWS sign-in, reconnect to the existing development instance and verify the automatic-stop safeguard. Refresh the existing website checkout from accepted main; preserve any local changes.
+2. Run the expanded dependency-free contract suite on the existing pinned Node 24.22.1 runtime.
+3. Reconcile the five changed source files and English marketing locale using targeted reads and exact Git identities.
+4. Continue classified source/assets extraction separately from build-context changes. Preserve the immutable blog pin/MUI resolver and declare directly imported `prop-types`.
+5. Correct metadata image URLs, then qualify real asset emission, generated inputs, independent build/prerender, Nginx/browser handoffs and release-producer identity.
+
+The shared `@ui-public-routes` alias is source-configuration evidence, not a demonstrated website dependency; do not bring application routes into the new repository to satisfy an unused alias. Demo publication states and route ownership remain unchanged.
+
 ## Batch 3: asset URL contracts on AWS
 
 Published for review through [website PR #3](https://github.com/ElevenID/website/pull/3).
@@ -20,7 +42,7 @@ Validation ran in an isolated checkout on the existing AWS Free-plan development
 
 The tests cover revision namespaces, HTML entry/runtime/static URL rewriting, blog-owned local image rewriting, preserved external URLs and application links, non-string rejection, and the existing route/provenance contracts. They do not invoke `buildStart` or enumerate real public assets. No SVG, large generated module, shared lockfile or production data was read or copied for this batch.
 
-### Exact next development slice
+### Next slice recorded after batch 3
 
 Finish the asset/build/test input classification using file names, sizes and Git identities. Preserve the committed source snapshot until relevant changes are reconciled; do not fetch an aggregate diff or dump asset contents. Then extract the classified source and assets separately from the website-only build.
 
@@ -72,7 +94,7 @@ The inventory is audit-only. It does not authorize export or deletion and does n
 
 ## Next batch
 
-1. Finish the asset, build and test input inventory. The 34-module source-ownership list expands to 79 files in the audited public import graph; that graph alone is not the full build input set.
+1. Finish content/build qualification of the classified inputs and reconcile recorded source drift. The 34-module source-ownership list expands to 79 candidate source files; metadata classification alone is not a complete executed build graph.
 2. Extract the public website source and required assets in a separate commit, with original paths and source identities recorded. Retain the source in `marty-ui` during qualification.
 3. Create a self-contained website build context and dependency lock. The public source graph does not import API-core, but the current shared Dockerfile downloads it; remove that incidental dependency in the website-specific build.
 4. Run the public-route, prerender, crawler, asset, Nginx and browser handoff checks from a clean website-only checkout. Preserve the blog package pin and the common/marketing language resources.
