@@ -1,5 +1,37 @@
 # Migration checkpoint
 
+## Batch 4: input inventory and independent build helpers
+
+Published through [website PR #4](https://github.com/ElevenID/website/pull/4), based on accepted main `b850cdbbd94b5c991767e1dd4e7e2de437b02c8d`.
+
+The [input inventory](input-inventory/README.md) classifies all **83 tracked public files** (46 retained and 37 excluded by existing website behavior) and **59 build/test paths**. Inventory commit: `dcc47e8715cd73d2cb95cdabac51d787cd4191d9`. A metadata comparison of the 79 candidate source files and public tree against `e10a7f26cda8ac217c7ddefebc709fc246dabaff` records **five source changes and one locale change**. These changes must be reconciled before importing the affected files.
+
+Source commit `88fcf5a70f50724ef17af13937f672ccbc31bba3` copies `dev-server-origin.mjs` and `generated-text.mjs`, plus their original Node tests, without changing bytes. The four files total **4,806 bytes**, and all four blob identities match both the pinned source snapshot and the current-source comparison. The provenance allowlist includes them; the earlier adapted asset-revision guard remains intact.
+
+The root test command explicitly runs the two copied test files alongside the existing contract suite. **All 19 tests passed on AWS and in the required hosted check**, with no failures or skips, on Node.js 24.22.1. The six inherited tests cover exact development origin/HMR/CORS behavior, malformed-origin rejection, cross-platform line endings and detection of changed generated content.
+
+| Validation evidence | Revision or result |
+| --- | --- |
+| AWS tested source commit | `88fcf5a70f50724ef17af13937f672ccbc31bba3` |
+| AWS tested source tree | `d4924696073d82c952e4a09b2397401827dbdd5b` |
+| Required hosted check for that head | [Run 43940036162, job 133554816226](https://github.com/ElevenID/website/actions/runs/43940036162/job/133554816226): 19 passed |
+| Existing AWS safeguard | Six-hour automatic-stop timer active |
+
+The validation checkpoint changes documentation only. See PR #4 for its exact final head, required hosted check and merge receipt.
+
+AWS access was restored and the existing stopped development instance was started for verification. Its saved checkout was clean at the accepted PR #3 main before fetching the source commit above. The preserved Node runtime was used without installing dependencies; whitespace validation passed and the tested checkout remained clean. No full website build is claimed.
+
+No public assets were copied. No SVG or binary asset contents, lockfile contents or large generated modules were read; selected small public JSON/configuration files were inspected.
+
+### Current resume point
+
+1. Confirm the accepted PR #4 merge and clean AWS checkout before starting a branch from current main; preserve the automatic-stop safeguard.
+2. Reconcile the five changed source files and English marketing locale using targeted reads and exact Git identities.
+3. Continue classified source/assets extraction separately from build-context changes. Preserve the immutable blog pin/MUI resolver and declare directly imported `prop-types`.
+4. Correct metadata image URLs, then qualify real asset emission, generated inputs, independent build/prerender, Nginx/browser handoffs and release-producer identity.
+
+The shared `@ui-public-routes` alias is source-configuration evidence, not a demonstrated website dependency; do not bring application routes into the new repository to satisfy an unused alias. Demo publication states and route ownership remain unchanged.
+
 ## Batch 3: asset URL contracts on AWS
 
 Published for review through [website PR #3](https://github.com/ElevenID/website/pull/3).
@@ -20,7 +52,7 @@ Validation ran in an isolated checkout on the existing AWS Free-plan development
 
 The tests cover revision namespaces, HTML entry/runtime/static URL rewriting, blog-owned local image rewriting, preserved external URLs and application links, non-string rejection, and the existing route/provenance contracts. They do not invoke `buildStart` or enumerate real public assets. No SVG, large generated module, shared lockfile or production data was read or copied for this batch.
 
-### Exact next development slice
+### Next slice recorded after batch 3
 
 Finish the asset/build/test input classification using file names, sizes and Git identities. Preserve the committed source snapshot until relevant changes are reconciled; do not fetch an aggregate diff or dump asset contents. Then extract the classified source and assets separately from the website-only build.
 
@@ -72,7 +104,7 @@ The inventory is audit-only. It does not authorize export or deletion and does n
 
 ## Next batch
 
-1. Finish the asset, build and test input inventory. The 34-module source-ownership list expands to 79 files in the audited public import graph; that graph alone is not the full build input set.
+1. Finish content/build qualification of the classified inputs and reconcile recorded source drift. The 34-module source-ownership list expands to 79 candidate source files; metadata classification alone is not a complete executed build graph.
 2. Extract the public website source and required assets in a separate commit, with original paths and source identities recorded. Retain the source in `marty-ui` during qualification.
 3. Create a self-contained website build context and dependency lock. The public source graph does not import API-core, but the current shared Dockerfile downloads it; remove that incidental dependency in the website-specific build.
 4. Run the public-route, prerender, crawler, asset, Nginx and browser handoff checks from a clean website-only checkout. Preserve the blog package pin and the common/marketing language resources.
@@ -82,7 +114,7 @@ The current website build, image publication, application integration and host d
 
 ## Resume in small batches
 
-1. Fetch the current `main` and confirm accepted commit `9136480448f380aa585ded15b075ce955fc684af` is in its ancestry. Read this checkpoint and the retained import inventory before choosing the next slice.
-2. Start a branch from current `main`; inspect source changes since the pinned audit commit before reusing any inventory. Begin with the missing asset/build/test input classification above.
+1. Fetch current `main` and confirm accepted PR #3 commit `b850cdbbd94b5c991767e1dd4e7e2de437b02c8d` is in its ancestry. Read the current batch 4 checkpoint and input inventories before choosing the next slice.
+2. Start a branch from current `main`; reconcile recorded source drift before importing affected files. Continue content/build qualification without redoing the completed metadata classification.
 3. Complete and verify one bounded change, then commit and push it promptly. Keep source extraction, build changes and release-identity migration in separate reviewable batches.
 4. Record each published head, PR, tested revision and remaining gate in the next checkpoint. Carry the exact stopping point forward before expanding scope.

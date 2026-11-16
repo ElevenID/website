@@ -6,9 +6,11 @@ ElevenID's public website, product information and marketing experiences.
 
 This repository is being extracted from [ElevenID/marty-ui](https://github.com/ElevenID/marty-ui). The route-contract foundation is merged through [PR #1](https://github.com/ElevenID/website/pull/1), with `Website contracts` configured as a required check. It preserves the existing website/application route contract and its validation helpers. The complete website build and release producer remain pending.
 
-The next [asset-contract batch](https://github.com/ElevenID/website/pull/3) adds independent asset URL checks and rejects non-string revisions before conversion. Its 13 dependency-free tests passed on the existing AWS development environment.
+The merged [asset-contract batch](https://github.com/ElevenID/website/pull/3) adds independent asset URL checks and rejects non-string revisions before conversion. Its 13 dependency-free tests passed on the existing AWS development environment.
 
 The verbatim source and license entries are byte-for-byte identical to their originals at [`df6ec6c4bfee803d89c54e9333297f29f378cee3`](https://github.com/ElevenID/marty-ui/tree/df6ec6c4bfee803d89c54e9333297f29f378cee3). [Extraction provenance](contracts/extraction-provenance.json) records the original paths and Git blob hashes, and separately identifies intentional adaptations. This source record is not a release attestation or a transfer of Git history.
+
+The [input inventory and build-helper batch](https://github.com/ElevenID/website/pull/4) records public assets, build/test inputs and source drift, and extracts two dependency-free helpers with their original tests. See [the input inventory](docs/input-inventory/README.md) for scope and remaining qualification gates. All 19 dependency-free tests passed on the existing AWS development environment and in the required hosted check. Exact tested revisions and remaining gates are recorded in the migration checkpoint.
 
 ## Run the checks
 

@@ -1,0 +1,709 @@
+{
+  "schema_version": 1,
+  "source": {
+    "repository": "ElevenID/marty-ui",
+    "commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3"
+  },
+  "destination": {
+    "repository": "ElevenID/website",
+    "reviewed_base": "b850cdbbd94b5c991767e1dd4e7e2de437b02c8d"
+  },
+  "status": "metadata-classified; content-review-and-full-build-qualification-incomplete",
+  "scope": {
+    "file_count": 59,
+    "all_ui_script_metadata_count": 32,
+    "not_read": [
+      "SVG",
+      "binary",
+      "lockfile contents",
+      "generated module contents"
+    ],
+    "partial_source": {
+      "path": "ui/vite.config.ts",
+      "ranges": [
+        [
+          1,
+          110
+        ],
+        [
+          300,
+          410
+        ],
+        [
+          411,
+          530
+        ]
+      ]
+    },
+    "full_source_read_limit_bytes": 20000
+  },
+  "files": [
+    {
+      "source_path": ".dockerignore",
+      "git_blob_sha1": "0f55fe10d0a8187f3ad9be5847723bde9076e877",
+      "size": 7150,
+      "role": "shared build context",
+      "disposition": "adapt-metadata-only",
+      "notes": "Create narrow website context; source contents not reviewed."
+    },
+    {
+      "source_path": "contracts/protocol-support-catalog-schema.json",
+      "git_blob_sha1": "635e761805e21470459640f2eaa9d218dc8e628f",
+      "size": 3448,
+      "role": "protocol schema",
+      "disposition": "defer-review",
+      "notes": "3448B; metadata only; no need to import for leaf batch."
+    },
+    {
+      "source_path": "contracts/protocol-support-catalog.json",
+      "git_blob_sha1": "4bd05ca7b2f5be09bea9489aee8c2bba2c65c734",
+      "size": 21034,
+      "role": "protocol page input",
+      "disposition": "defer-large",
+      "notes": "21034B; metadata only; blocks strict20000-byte full extraction."
+    },
+    {
+      "source_path": "contracts/web-surface-routes.json",
+      "git_blob_sha1": "b7fcfca7a2b2d3804da1fa41f8aaf4593869a0b0",
+      "size": 2144,
+      "role": "route contract",
+      "disposition": "already-extracted",
+      "notes": "Preserve exact public/app boundary and shared digest."
+    },
+    {
+      "source_path": "contracts/website-source-ownership.json",
+      "git_blob_sha1": "05e0dcae6716aa86cbc8e4d7f9b29eaee95dd6b6",
+      "size": 1815,
+      "role": "ownership seed manifest",
+      "disposition": "defer-inputs",
+      "notes": "Requires actual source files, not a list-only or placeholder import."
+    },
+    {
+      "source_path": "docker/ui.Dockerfile",
+      "git_blob_sha1": "0e75f0cdd828dafc9094423df63737a03c486161",
+      "size": 9742,
+      "role": "shared image recipe",
+      "disposition": "adapt",
+      "notes": "Remove API-core download; retain immutable blog verification and website target."
+    },
+    {
+      "source_path": "scripts/deploy_website.py",
+      "git_blob_sha1": "205b60211dbc4828cf5c0a8ca1a2c0e3460decd0",
+      "size": 40597,
+      "role": "deployment",
+      "disposition": "defer-large",
+      "notes": "Metadata only;40597B; not part of source extraction milestone."
+    },
+    {
+      "source_path": "scripts/load-secrets-env.sh",
+      "git_blob_sha1": "361d108cbeb98174be29394d596af74c58593f6d",
+      "size": 5164,
+      "role": "shared runtime environment",
+      "disposition": "adapt",
+      "notes": "Generic shared reader; reduce to explicit website public runtime needs."
+    },
+    {
+      "source_path": "scripts/ui-production-start.sh",
+      "git_blob_sha1": "3916bc1f2b446f893bc63c35418466b80603bdd8",
+      "size": 2291,
+      "role": "runtime public configuration",
+      "disposition": "adapt",
+      "notes": "Writes public GA/org flags; validates values; source load-secrets dependency."
+    },
+    {
+      "source_path": "scripts/website_provenance.py",
+      "git_blob_sha1": "ac69c7a0398cb25eaf04e5c41f5bd413cc0047ce",
+      "size": 11303,
+      "role": "release provenance",
+      "disposition": "defer-release",
+      "notes": "Metadata only; source producer trust migration remains separate."
+    },
+    {
+      "source_path": "scripts/website_release.py",
+      "git_blob_sha1": "02c4fdb3c8f037744bd7cfc359c02e39b688e8ce",
+      "size": 18100,
+      "role": "release process",
+      "disposition": "defer-release",
+      "notes": "Metadata only; do not inherit marty-ui producer identity silently."
+    },
+    {
+      "source_path": "ui/bun.lock",
+      "git_blob_sha1": "5b2140c63458da4f1bef1bbde931f1f27976bee0",
+      "size": 173950,
+      "role": "shared dependency lock",
+      "disposition": "defer-lockfile",
+      "notes": "Metadata only; regenerate reduced lock under reviewed dependency plan."
+    },
+    {
+      "source_path": "ui/Dockerfile.prod",
+      "git_blob_sha1": "f07af30db3ffb15693560f96c15b8fa861e0f639",
+      "size": 1024,
+      "role": "combined UI image",
+      "disposition": "exclude-application",
+      "notes": "Builds shared dist using nginx.prod.conf; not website target."
+    },
+    {
+      "source_path": "ui/index.html",
+      "git_blob_sha1": "a35c82de60c80576efa8150653a948adee2413ba",
+      "size": 3732,
+      "role": "HTML shell",
+      "disposition": "adapt",
+      "notes": "Asset plugin rewrites source entry/owned URLs; external Google font CSS."
+    },
+    {
+      "source_path": "ui/nginx.website.conf",
+      "git_blob_sha1": "013f4cc8424aa18a80f9a6d0c6e3bdf1a14800ea",
+      "size": 1478,
+      "role": "static website server",
+      "disposition": "adapt",
+      "notes": "Requires generated route include and headers; stable runtime no-store."
+    },
+    {
+      "source_path": "ui/nginx.website.headers.conf",
+      "git_blob_sha1": "8c3884ec38f4c5c7bea7af8f980de5049895aeb1",
+      "size": 900,
+      "role": "website response policy",
+      "disposition": "retain",
+      "notes": "Preserve CSP/font origins and security/cache policy."
+    },
+    {
+      "source_path": "ui/package-lock.json",
+      "git_blob_sha1": "07636999adcd821b40fd6ef8cef86ef527e6effd",
+      "size": 367901,
+      "role": "shared dependency lock",
+      "disposition": "defer-lockfile",
+      "notes": "Metadata only; do not copy unreviewed shared dependency graph."
+    },
+    {
+      "source_path": "ui/package.json",
+      "git_blob_sha1": "b430e66bd23f5771004372738f47a990855b65cd",
+      "size": 4543,
+      "role": "shared dependencies/scripts",
+      "disposition": "adapt",
+      "notes": "Use reduced website dependencies; preserve blog pin, add explicit prop-types."
+    },
+    {
+      "source_path": "ui/scripts/adopt-vitest-timings.mjs",
+      "git_blob_sha1": "9bc4495c351d497e9108869e8efc902b4ee54765",
+      "size": 2622,
+      "role": "test scheduling",
+      "disposition": "exclude-initial",
+      "notes": "Shared test timing infrastructure."
+    },
+    {
+      "source_path": "ui/scripts/assert-website-dist.mjs",
+      "git_blob_sha1": "6167fe968afd96b0b8f91d1f6370880ad6dadbfe",
+      "size": 3967,
+      "role": "dist acceptance",
+      "disposition": "adapt",
+      "notes": "Depends on build/ownership closure; update producer identity deliberately."
+    },
+    {
+      "source_path": "ui/scripts/build-selfhost.mjs",
+      "git_blob_sha1": "2ff6800c3f3471217810cfb247904c21365da5c7",
+      "size": 4928,
+      "role": "application build",
+      "disposition": "exclude-application",
+      "notes": "Not a website build entry."
+    },
+    {
+      "source_path": "ui/scripts/build-web-surface.mjs",
+      "git_blob_sha1": "7ffefb9d6109b12fc39d6b89accfbc358f656d03",
+      "size": 1769,
+      "role": "build runner",
+      "disposition": "adapt",
+      "notes": "Remove unconditional prune-selfhost import and application branch."
+    },
+    {
+      "source_path": "ui/scripts/check_crawler_artifacts.py",
+      "git_blob_sha1": "b22360ed56deafb53d2e2fafe410b651e4ff4b81",
+      "size": 5992,
+      "role": "crawler acceptance",
+      "disposition": "adapt",
+      "notes": "Shared check requires /docs; website sitemap excludes /docs."
+    },
+    {
+      "source_path": "ui/scripts/checker-worker-cleanup.mjs",
+      "git_blob_sha1": "34586cd31e93ff29e1d8f6801c10035ab18df20d",
+      "size": 3681,
+      "role": "dev worker cleanup",
+      "disposition": "defer-toolchain",
+      "notes": "Retain if selecting pinned checker patch."
+    },
+    {
+      "source_path": "ui/scripts/checker-worker-cleanup.test.mjs",
+      "git_blob_sha1": "e171564249429c9b4b768f28ae09a3cbffd2f28d",
+      "size": 15145,
+      "role": "dev worker tests",
+      "disposition": "defer-toolchain",
+      "notes": "Requires installed Vite/checker0.14.5 and real Vite config."
+    },
+    {
+      "source_path": "ui/scripts/crawler-config.test.mjs",
+      "git_blob_sha1": "b5adf3f6e251feb0138cbbc7c735eb5271b0c374",
+      "size": 4872,
+      "role": "config contract tests",
+      "disposition": "adapt",
+      "notes": "Asserts source Vite text; standalone config requires revised checks."
+    },
+    {
+      "source_path": "ui/scripts/dev-server-origin.mjs",
+      "git_blob_sha1": "b411bc1363a67131f0be797c14539d91260aa988",
+      "size": 1468,
+      "role": "dev origin validation",
+      "disposition": "extract",
+      "notes": "Standalone Node helper; no application imports."
+    },
+    {
+      "source_path": "ui/scripts/dev-server-origin.test.mjs",
+      "git_blob_sha1": "0731e4bd6da2a390ec8504e4546179c93fbc740e",
+      "size": 2445,
+      "role": "dev origin tests",
+      "disposition": "extract",
+      "notes": "Node tests of the adjacent helper."
+    },
+    {
+      "source_path": "ui/scripts/generate-demo-manifest-module.mjs",
+      "git_blob_sha1": "8cdf1d9ea21f37a60e2a24c69b7df9d9faeae76e",
+      "size": 2723,
+      "role": "generated inputs",
+      "disposition": "defer-inputs",
+      "notes": "Needs manifest index, all releases, and wallet schema projection."
+    },
+    {
+      "source_path": "ui/scripts/generated-text.mjs",
+      "git_blob_sha1": "353416d8c2c21f39159bbb9ff613a333f74e4456",
+      "size": 232,
+      "role": "generator text helper",
+      "disposition": "extract",
+      "notes": "Standalone newline normalization helper."
+    },
+    {
+      "source_path": "ui/scripts/generated-text.test.mjs",
+      "git_blob_sha1": "45e0634600c7c06497a6ed75da41c6015a5008e6",
+      "size": 661,
+      "role": "generator helper tests",
+      "disposition": "extract",
+      "notes": "Node tests of the adjacent helper."
+    },
+    {
+      "source_path": "ui/scripts/patch-checker-worker-cleanup.mjs",
+      "git_blob_sha1": "c1a830faa518396195b58d1452165f06394f1a81",
+      "size": 5955,
+      "role": "install compatibility",
+      "disposition": "defer-toolchain",
+      "notes": "Requires helper and exact checker0.14.5 patch hashes."
+    },
+    {
+      "source_path": "ui/scripts/patch-prerenderer-ts-deepmerge.cjs",
+      "git_blob_sha1": "a1a0b46464188a76cbff88087508b6f7d5b75a70",
+      "size": 1103,
+      "role": "install compatibility",
+      "disposition": "defer-toolchain",
+      "notes": "Retain with prerender packages and ts-deepmerge8.0.0."
+    },
+    {
+      "source_path": "ui/scripts/production-build-contract.mjs",
+      "git_blob_sha1": "ce50431b187494a7aef0d1d5000eaa9c172e285f",
+      "size": 2303,
+      "role": "private source guard",
+      "disposition": "adapt",
+      "notes": "Preserve public guard; no automatic private checkout."
+    },
+    {
+      "source_path": "ui/scripts/production-build-contract.test.mjs",
+      "git_blob_sha1": "5b22fccc0768ae6732c3ee5aef1ed0e9be73170c",
+      "size": 2481,
+      "role": "private guard tests",
+      "disposition": "adapt",
+      "notes": "Uses temporary fixture metadata; no private source required."
+    },
+    {
+      "source_path": "ui/scripts/prune-selfhost-dist.mjs",
+      "git_blob_sha1": "76d6efeab2426079c64960e17925133db326a0ec",
+      "size": 1269,
+      "role": "application pruning",
+      "disposition": "exclude-application",
+      "notes": "Remove from website runner import graph."
+    },
+    {
+      "source_path": "ui/scripts/render-website-nginx.mjs",
+      "git_blob_sha1": "0edf2fd1ba1062f2b0226887abf8694bc8f1a769",
+      "size": 1978,
+      "role": "route generation",
+      "disposition": "adapt",
+      "notes": "Transitive ownership dependency; preserve resource404 and pricing exclusion."
+    },
+    {
+      "source_path": "ui/scripts/run-vitest-shard.mjs",
+      "git_blob_sha1": "cb211a95bf3a91d1a8e506e5065b87cdb8046523",
+      "size": 3744,
+      "role": "test scheduling",
+      "disposition": "exclude-initial",
+      "notes": "Shared test sharding infrastructure."
+    },
+    {
+      "source_path": "ui/scripts/selfhost-build-contract.mjs",
+      "git_blob_sha1": "78896e5fd3afbd72856965cf09078944418acfc6",
+      "size": 2256,
+      "role": "ownership bridge",
+      "disposition": "adapt",
+      "notes": "Website uses isProductionMarketingModule; imports ownership at load time."
+    },
+    {
+      "source_path": "ui/scripts/smoke-website.mjs",
+      "git_blob_sha1": "cf87df9dedd762496b0b46dc436b513b554feced",
+      "size": 9170,
+      "role": "browser/server acceptance",
+      "disposition": "adapt",
+      "notes": "Requires built dist, real Nginx, Chromium/Puppeteer and ownership closure."
+    },
+    {
+      "source_path": "ui/scripts/test_crawler_artifacts.py",
+      "git_blob_sha1": "0567d5c28953b769e63403144a531415ae674cdf",
+      "size": 2958,
+      "role": "crawler tests",
+      "disposition": "adapt",
+      "notes": "Review with website-specific crawler validator."
+    },
+    {
+      "source_path": "ui/scripts/test_nginx_crawler_routes.py",
+      "git_blob_sha1": "948529a7d57d0b69266b03799a682d9c3862ed14",
+      "size": 29225,
+      "role": "shared nginx tests",
+      "disposition": "defer-large",
+      "notes": "Metadata only; exceeds20000 bytes."
+    },
+    {
+      "source_path": "ui/scripts/test-openapi-proxy.mjs",
+      "git_blob_sha1": "7be2f2cce73e130d06b1cbed9aaf2752f4d868b1",
+      "size": 1515,
+      "role": "application proxy test",
+      "disposition": "exclude-application",
+      "notes": "Website has no API-core/OpenAPI proxy requirement."
+    },
+    {
+      "source_path": "ui/scripts/update-vitest-timings.mjs",
+      "git_blob_sha1": "a367ee3f41ab6b2739b2c9753c4f1df01c5008af",
+      "size": 3059,
+      "role": "test scheduling",
+      "disposition": "exclude-initial",
+      "notes": "Shared test timing infrastructure."
+    },
+    {
+      "source_path": "ui/scripts/web-surface-build-contract.mjs",
+      "git_blob_sha1": "bcb80076c5fca772ab834b52db505987314d932e",
+      "size": 3947,
+      "role": "build boundary/provenance",
+      "disposition": "adapt",
+      "notes": "Loads ownership via selfhost helper; marty-ui producer identity needs migration."
+    },
+    {
+      "source_path": "ui/scripts/web-surface-build-contract.test.mjs",
+      "git_blob_sha1": "530795a0d87269f5dd108c101f98080159133e7e",
+      "size": 6188,
+      "role": "build boundary tests",
+      "disposition": "defer-inputs",
+      "notes": "Requires all34 real ownership seed source files."
+    },
+    {
+      "source_path": "ui/scripts/web-surface-contract.mjs",
+      "git_blob_sha1": "18eafe744194d9c887086bca48b24bf953167b8a",
+      "size": 968,
+      "role": "route digest/ownership",
+      "disposition": "already-extracted",
+      "notes": "Depends on route JSON and source webSurfaceContract helper."
+    },
+    {
+      "source_path": "ui/scripts/web-surface-contract.test.mjs",
+      "git_blob_sha1": "6e1116396a76213f60d97b7f1f35f9401f3ea75a",
+      "size": 2829,
+      "role": "route tests",
+      "disposition": "retain-destination-adaptation",
+      "notes": "Source version imports renderer and ownership closure."
+    },
+    {
+      "source_path": "ui/scripts/website-assets.mjs",
+      "git_blob_sha1": "0cf0fee406e2d4c1888f254e0b7867a9092149d4",
+      "size": 2782,
+      "role": "asset emission",
+      "disposition": "retain-destination-adaptation",
+      "notes": "Preserve destination typeof-revision guard; do not overwrite."
+    },
+    {
+      "source_path": "ui/scripts/website-source-ownership.mjs",
+      "git_blob_sha1": "07751081bb7817433c000d59f2fdd2ecea872010",
+      "size": 1371,
+      "role": "source ownership",
+      "disposition": "defer-inputs",
+      "notes": "Module evaluation lstat-checks all34 seed files; placeholders forbidden."
+    },
+    {
+      "source_path": "ui/src/generated/demoManifests.generated.js",
+      "git_blob_sha1": "4c7f75f3fcba17a439501d6774b52c2ea36e1de6",
+      "size": 136834,
+      "role": "generated demo module",
+      "disposition": "defer-generated",
+      "notes": "136834B; metadata only; regenerate after inputs are available."
+    },
+    {
+      "source_path": "ui/src/generated/demoWalletSchema.generated.json",
+      "git_blob_sha1": "58dd81b135c281707185927a6c48de599e100bf9",
+      "size": 1836,
+      "role": "committed schema projection",
+      "disposition": "defer-generated",
+      "notes": "1836B; metadata only; required fallback when deploy-config source absent."
+    },
+    {
+      "source_path": "ui/src/test/i18nTestSetup.js",
+      "git_blob_sha1": "a0c4d55a89ae1fc8d2808a8903b424aae467b212",
+      "size": 1322,
+      "role": "test translations",
+      "disposition": "adapt",
+      "notes": "Shared setup imports six excluded application locale namespaces."
+    },
+    {
+      "source_path": "ui/src/test/setup.ts",
+      "git_blob_sha1": "f18cdc4f6b576d95ad25e94d23758e1060655341",
+      "size": 2234,
+      "role": "DOM/mock setup",
+      "disposition": "adapt",
+      "notes": "Imports MSW server; use website-only setup instead of pulling app mocks."
+    },
+    {
+      "source_path": "ui/tsconfig.build.json",
+      "git_blob_sha1": "82337bbc5c44e21ba01b53197d663596b5a8908d",
+      "size": 253,
+      "role": "build typecheck config",
+      "disposition": "adapt",
+      "notes": "Keep test/story exclusions with standalone include scope."
+    },
+    {
+      "source_path": "ui/tsconfig.json",
+      "git_blob_sha1": "dffe41424aed5dc5e0a63603c043de06b80deb63",
+      "size": 1066,
+      "role": "typecheck config",
+      "disposition": "adapt",
+      "notes": "Reduce application aliases and include scope."
+    },
+    {
+      "source_path": "ui/tsconfig.node.json",
+      "git_blob_sha1": "42872c59f5b01c9155864572bc2fbd5833a7406c",
+      "size": 213,
+      "role": "Vite typecheck config",
+      "disposition": "adapt",
+      "notes": "Includes vite.config.ts."
+    },
+    {
+      "source_path": "ui/vite.config.ts",
+      "git_blob_sha1": "c5b2000bb311da5b4a54f4b18236d6b2edb1ee49",
+      "size": 22614,
+      "role": "shared build config",
+      "disposition": "adapt-partial-review",
+      "notes": "22614B; only ranges1-110,300-410,411-530 reviewed."
+    },
+    {
+      "source_path": "ui/vitest.config.ts",
+      "git_blob_sha1": "444ee2c9684b7483e2245aee0e97d15194d343eb",
+      "size": 2853,
+      "role": "shared test config",
+      "disposition": "adapt",
+      "notes": "Website alias and fixture setup need reduction."
+    }
+  ],
+  "dependency_declarations": {
+    "source_manifest": "ui/package.json",
+    "note": "These are source declarations, not resolved lock versions. Source lockfiles were not read; final reduced install and browser build remain pending.",
+    "runtime": {
+      "@elevenid/marty-blog": "https://github.com/ElevenID/marty-blog/releases/download/v0.1.9/elevenid-marty-blog-0.1.9.tgz",
+      "@emotion/react": "^11.14.0",
+      "@emotion/styled": "^11.14.1",
+      "@mui/icons-material": "^9.3.0",
+      "@mui/material": "^9.4.0",
+      "i18next": "^26.5.7",
+      "i18next-browser-languagedetector": "^8.2.1",
+      "i18next-http-backend": "^4.0.4",
+      "react": "^19.2.8",
+      "react-dom": "^19.2.8",
+      "react-i18next": "^17.0.12",
+      "react-router": "^8.3.0",
+      "web-vitals": "^6.2.3"
+    },
+    "missing_explicit_runtime": [
+      "prop-types"
+    ],
+    "build": {
+      "@prerenderer/renderer-puppeteer": "^1.2.4",
+      "@prerenderer/rollup-plugin": "^0.3.12",
+      "@vitejs/plugin-react": "^6.1.2",
+      "puppeteer": "^25.16.0",
+      "rollup-plugin-visualizer": "^7.1.2",
+      "typescript": "^7.0.2",
+      "vite": "^8.3.6",
+      "vite-plugin-checker": "^0.14.5",
+      "vite-plugin-sitemap": "^0.8.2"
+    },
+    "selected_test_candidates": {
+      "@testing-library/dom": "^10.4.2",
+      "@testing-library/jest-dom": "^7.0.0",
+      "@testing-library/react": "^16.3.3",
+      "@testing-library/user-event": "^14.6.8",
+      "@types/react": "^19.2.18",
+      "@types/react-dom": "^19.2.4",
+      "jsdom": "^30.1.3",
+      "vitest": "^5.0.5"
+    },
+    "compatibility_exact_pins": {
+      "ts-deepmerge": "8.0.0",
+      "vite-plugin-checker_patch_target": "0.14.5"
+    },
+    "exclude": [
+      "@elevenid/marty-api-core",
+      "application-only dependency tree",
+      "Storybook and MSW unless selected tests prove need"
+    ],
+    "security_overrides": "Review applicable source overrides when generating reduced lock; do not drop them incidentally."
+  },
+  "build_graph": {
+    "script_prefix": "ui/scripts/",
+    "edges": {
+      "build-web-surface.mjs": [
+        "generate-demo-manifest-module.mjs",
+        "prune-selfhost-dist.mjs (remove website import)",
+        "tsc -p ui/tsconfig.build.json",
+        "ui/vite.config.ts"
+      ],
+      "generate-demo-manifest-module.mjs": [
+        "generated-text.mjs",
+        "ui/public/demos/manifests/index.json",
+        "ui/public/demos/manifests/<stack_version>.json",
+        "ui/src/generated/demoWalletSchema.generated.json"
+      ],
+      "web-surface-build-contract.mjs": [
+        "selfhost-build-contract.mjs",
+        "web-surface-contract.mjs"
+      ],
+      "selfhost-build-contract.mjs": [
+        "website-source-ownership.mjs"
+      ],
+      "website-source-ownership.mjs": [
+        "contracts/website-source-ownership.json",
+        "34 real regular source files listed in ownership contract"
+      ],
+      "web-surface-contract.mjs": [
+        "contracts/web-surface-routes.json",
+        "ui/src/application/routing/webSurfaceContract.mjs"
+      ],
+      "assert-website-dist.mjs": [
+        "web-surface-contract.mjs",
+        "web-surface-build-contract.mjs"
+      ],
+      "render-website-nginx.mjs": [
+        "web-surface-contract.mjs",
+        "web-surface-build-contract.mjs",
+        "website-assets.mjs"
+      ],
+      "smoke-website.mjs": [
+        "web-surface-contract.mjs",
+        "render-website-nginx.mjs",
+        "puppeteer",
+        "Nginx binary",
+        "Chromium",
+        "ui/nginx.website.conf",
+        "ui/nginx.website.headers.conf",
+        "built dist"
+      ],
+      "patch-checker-worker-cleanup.mjs": [
+        "checker-worker-cleanup.mjs",
+        "vite-plugin-checker@0.14.5"
+      ],
+      "patch-prerenderer-ts-deepmerge.cjs": [
+        "@prerenderer/rollup-plugin",
+        "@prerenderer/renderer-puppeteer",
+        "ts-deepmerge@8.0.0"
+      ],
+      "web-surface-contract.test.mjs": [
+        "web-surface-contract.mjs",
+        "render-website-nginx.mjs"
+      ],
+      "web-surface-build-contract.test.mjs": [
+        "web-surface-build-contract.mjs",
+        "selfhost-build-contract.mjs",
+        "website-source-ownership.mjs",
+        "web-surface-contract.mjs"
+      ],
+      "production-build-contract.test.mjs": [
+        "production-build-contract.mjs"
+      ],
+      "crawler-config.test.mjs": [
+        "ui/vite.config.ts (source text)"
+      ],
+      "checker-worker-cleanup.test.mjs": [
+        "checker-worker-cleanup.mjs",
+        "patch-checker-worker-cleanup.mjs",
+        "installed Vite/checker/TypeScript/ESLint",
+        "ui/vite.config.ts"
+      ],
+      "generated-text.test.mjs": [
+        "generated-text.mjs"
+      ],
+      "dev-server-origin.test.mjs": [
+        "dev-server-origin.mjs"
+      ]
+    },
+    "vite_script_imports": [
+      "selfhost-build-contract.mjs",
+      "production-build-contract.mjs",
+      "web-surface-build-contract.mjs",
+      "website-assets.mjs",
+      "dev-server-origin.mjs"
+    ],
+    "runtime_startup": [
+      "scripts/ui-production-start.sh",
+      "scripts/load-secrets-env.sh"
+    ],
+    "incomplete_nodes": "Unselected scheduling/application scripts are classified by metadata and excluded. MSW mock closure, generated content and remaining shared Vite content are not qualified."
+  },
+  "configuration_requirements": [
+    "Preserve immutable marty-blog v0.1.9 artifact and Docker digest verification; do not download API-core.",
+    "Preserve MUI .js-to-.mjs icon resolver and Outline-to-Outlined fallback for immutable blog package.",
+    "Preserve react-router-dom -> react-router alias and React/ReactDOM/router/MUI/Emotion/prop-types dedupe.",
+    "Select @ui-public-config -> publicConfig.website.js and the public commerce stub. The candidate website source graph does not require the shared @ui-public-routes alias.",
+    "Keep prerender app-rendered wait, loopback URL sanitization, root HTML promotion and generated crawler output.",
+    "Preserve destination website-assets.mjs type guard; source version is not a safe overwrite.",
+    "Website public runtime accepts GA measurement ID and organizationCreationEnabled; never add private runtime values."
+  ],
+  "asset_contract": [
+    "llms.txt and blog/rss.xml remain at dist root; robots/sitemaps are generated at root.",
+    "runtime-config.js emits to /_website/runtime-config.js with no-store; other retained public assets emit under /_website/<revision>/.",
+    ".well-known/ai-plugin.json is currently versioned; route contract does not expose root /.well-known. Its root logo/OpenAPI references need a separate decision.",
+    "index.html uses external Google Roboto and Material Icons stylesheets; nginx CSP permits corresponding Google font/style origins."
+  ],
+  "safe_next_helper_batch": {
+    "source_paths": [
+      "ui/scripts/dev-server-origin.mjs",
+      "ui/scripts/dev-server-origin.test.mjs",
+      "ui/scripts/generated-text.mjs",
+      "ui/scripts/generated-text.test.mjs"
+    ],
+    "total_bytes": 4806,
+    "validation": "Node built-in tests for these two helper pairs; no installed dependencies required.",
+    "boundaries": "Candidate independent helper extraction; source metadata is evidence, not authorization or full build qualification."
+  },
+  "outstanding_gates": [
+    "Real 34-file ownership seed closure before importing build/renderer helpers; no placeholders.",
+    "Resolve protocol catalog (21,034 bytes) and demo inputs/generated module beyond current read/extraction cap.",
+    "Adapt shared runner/config/Docker/package/typecheck/test setup; remove app pruning/API-core paths.",
+    "Source test i18n setup imports six app locale namespaces; source MSW setup must be reduced.",
+    "Shared crawler checker requires /docs, contrary to website sitemap policy; adapt selected checks.",
+    "Declare prop-types explicitly, preserve blog/MUI compatibility, generate/review reduced lock.",
+    "Run typecheck, website build, prerender, dist validation and real Nginx/Chromium smoke in authorized AWS environment.",
+    "Migrate source metadata/OCI/provenance producer identity deliberately; no standalone release/deploy claim yet."
+  ],
+  "source_config_only_aliases": {
+    "@ui-public-routes": {
+      "source_target": "ui/src/variants/publicSite.public.jsx",
+      "status": "Not required by the recorded 79-file website graph; do not import application routes merely to preserve the shared alias. Revisit only if an executed website graph proves a dependency."
+    }
+  }
+}

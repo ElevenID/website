@@ -35,6 +35,30 @@
       "target_path": "ui/src/utils/hasAsciiControlCharacters.js",
       "git_blob_sha1": "e04b39258879bf3c52fe4d6bd3b24f7b2f3db130",
       "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/scripts/dev-server-origin.mjs",
+      "target_path": "ui/scripts/dev-server-origin.mjs",
+      "git_blob_sha1": "b411bc1363a67131f0be797c14539d91260aa988",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/scripts/dev-server-origin.test.mjs",
+      "target_path": "ui/scripts/dev-server-origin.test.mjs",
+      "git_blob_sha1": "0731e4bd6da2a390ec8504e4546179c93fbc740e",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/scripts/generated-text.mjs",
+      "target_path": "ui/scripts/generated-text.mjs",
+      "git_blob_sha1": "353416d8c2c21f39159bbb9ff613a333f74e4456",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/scripts/generated-text.test.mjs",
+      "target_path": "ui/scripts/generated-text.test.mjs",
+      "git_blob_sha1": "45e0634600c7c06497a6ed75da41c6015a5008e6",
+      "transfer": "verbatim"
     }
   ],
   "adapted_files": [
