@@ -41,7 +41,7 @@ The root route contract does not assign `/.well-known` to the website. Retaining
 
 ## Validation environment
 
-[Batch 5](../checkpoints/batch-5-metadata.md) records source reconciliation and the metadata correction, with all 24 tests passing on AWS. The following is the retained batch 4 receipt.
+[Batch 6](../checkpoints/batch-6-navigation.md) records the pure navigation/runtime extraction and landing-error correction, with all 49 tests passing on AWS. [Batch 5](../checkpoints/batch-5-metadata.md) retains the earlier source reconciliation and metadata evidence. The following is the retained batch 4 receipt.
 
 After AWS sign-in was restored, the existing development instance fetched and tested commit `88fcf5a70f50724ef17af13937f672ccbc31bba3` (tree `d4924696073d82c952e4a09b2397401827dbdd5b`) using the preserved Node.js 24.22.1 runtime. All **19 tests passed**, with no failures or skips; the checkout and whitespace check were clean. The existing six-hour automatic-stop timer was active. No new infrastructure or dependency installation was needed.
 

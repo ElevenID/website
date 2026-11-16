@@ -4,15 +4,13 @@ ElevenID's public website, product information and marketing experiences.
 
 ## Migration status
 
-This repository is being extracted from [ElevenID/marty-ui](https://github.com/ElevenID/marty-ui). The route-contract foundation is merged through [PR #1](https://github.com/ElevenID/website/pull/1), with `Website contracts` configured as a required check. It preserves the existing website/application route contract and its validation helpers. The complete website build and release producer remain pending.
+This repository is being extracted from [ElevenID/marty-ui](https://github.com/ElevenID/marty-ui). The route and asset contracts, independent build helpers, metadata helpers and pure navigation/runtime boundary are now preserved here. The complete website build and release producer remain pending.
 
-The merged [asset-contract batch](https://github.com/ElevenID/website/pull/3) adds independent asset URL checks and rejects non-string revisions before conversion. Its 13 dependency-free tests passed on the existing AWS development environment.
+[Batch 6](docs/checkpoints/batch-6-navigation.md) copies six navigation/runtime helpers, corrects double decoding of landing-page error messages, and expands the suite to **49 tests passing on AWS**. The tests execute the actual helper modules and route JSON. React click handling, full builds and deployment remain separate qualification.
 
-The verbatim source and license entries are byte-for-byte identical to their originals at [`df6ec6c4bfee803d89c54e9333297f29f378cee3`](https://github.com/ElevenID/marty-ui/tree/df6ec6c4bfee803d89c54e9333297f29f378cee3). [Extraction provenance](contracts/extraction-provenance.json) records the original paths and Git blob hashes, and separately identifies intentional adaptations. This source record is not a release attestation or a transfer of Git history.
+The verbatim source and license entries are byte-for-byte identical to their originals at [`df6ec6c4bfee803d89c54e9333297f29f378cee3`](https://github.com/ElevenID/marty-ui/tree/df6ec6c4bfee803d89c54e9333297f29f378cee3). [Extraction provenance](contracts/extraction-provenance.json) records original paths and Git blob hashes, and separately identifies intentional adaptations. This record is not a release attestation or a transfer of Git history.
 
-The [input inventory and build-helper batch](https://github.com/ElevenID/website/pull/4) records public assets, build/test inputs and source drift, and extracts two dependency-free helpers with their original tests. See [the input inventory](docs/input-inventory/README.md) for scope and remaining qualification gates. All 19 dependency-free tests passed on the existing AWS development environment and in the required hosted check. Exact tested revisions and remaining gates are recorded in the migration checkpoint.
-
-The [source reconciliation and metadata batch](https://github.com/ElevenID/website/pull/5) preserves the newer verification CTA changes, keeps `/verify` application-owned, and fixes default social/JSON-LD images to follow the immutable asset namespace. Its expanded suite passed all **24 tests on AWS**. See [batch 5](docs/checkpoints/batch-5-metadata.md) for the exact tested source, regression evidence and remaining qualification.
+Start with the short [current migration checkpoint](docs/migration-status.md). Older receipts are retained in [the history through batch 5](docs/migration-history-through-batch-5.md).
 
 ## Run the checks
 
