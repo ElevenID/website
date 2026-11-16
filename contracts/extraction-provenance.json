@@ -101,6 +101,24 @@
       "target_path": "ui/src/utils/runtimeConfig.js",
       "git_blob_sha1": "f464b19c5806671696e1760560d90c09d7e59ab0",
       "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/application/routing/useSurfaceNavigate.js",
+      "target_path": "ui/src/application/routing/useSurfaceNavigate.js",
+      "git_blob_sha1": "4685cd2b9f5ddbf4d48cc1c91166a7da45db7528",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/apps/shared/WebSurfaceBoundary.jsx",
+      "target_path": "ui/src/apps/shared/WebSurfaceBoundary.jsx",
+      "git_blob_sha1": "ea1f32d7ca2a9ee6721d1c72b8f8430bc42d6ebd",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/apps/shared/WebSurfaceBoundary.test.tsx",
+      "target_path": "ui/src/apps/shared/WebSurfaceBoundary.test.tsx",
+      "git_blob_sha1": "5ce3d8cc4a179eef490082b9e050b6c786d65918",
+      "transfer": "verbatim"
     }
   ],
   "adapted_files": [
