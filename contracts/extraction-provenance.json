@@ -103,12 +103,6 @@
       "transfer": "verbatim"
     },
     {
-      "source_path": "ui/src/application/routing/useSurfaceNavigate.js",
-      "target_path": "ui/src/application/routing/useSurfaceNavigate.js",
-      "git_blob_sha1": "4685cd2b9f5ddbf4d48cc1c91166a7da45db7528",
-      "transfer": "verbatim"
-    },
-    {
       "source_path": "ui/src/apps/shared/WebSurfaceBoundary.jsx",
       "target_path": "ui/src/apps/shared/WebSurfaceBoundary.jsx",
       "git_blob_sha1": "ea1f32d7ca2a9ee6721d1c72b8f8430bc42d6ebd",
@@ -163,6 +157,12 @@
       "target_path": "tests/vm/runtime-config.test.mjs",
       "source_git_blob_sha1": "ff28dd09080b6d5b244367c41ab647dd25903e67",
       "changes": "Adapt runtime/build configuration cases to actual-module Node VM execution; add hosting and no-window coverage."
+    },
+    {
+      "source_path": "ui/src/application/routing/useSurfaceNavigate.js",
+      "target_path": "ui/src/application/routing/useSurfaceNavigate.js",
+      "source_git_blob_sha1": "4685cd2b9f5ddbf4d48cc1c91166a7da45db7528",
+      "changes": "Delegate document handoff decisions to shouldBrowserRedirect using the original destination; remove the redundant canonical rewrite check so fragment-only navigation stays in the current router."
     }
   ],
   "ci_action_pins": {
