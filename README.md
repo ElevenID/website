@@ -4,7 +4,7 @@ ElevenID's public website, product information and marketing experiences.
 
 ## Migration status
 
-This repository is being extracted from [ElevenID/marty-ui](https://github.com/ElevenID/marty-ui). The first batch preserves the existing website/application route contract and its validation helpers. It adds a dependency-free test suite and CI; the complete website build and release producer remain pending.
+This repository is being extracted from [ElevenID/marty-ui](https://github.com/ElevenID/marty-ui). The route-contract foundation is merged through [PR #1](https://github.com/ElevenID/website/pull/1), with all six hosted tests passing and `Website contracts` configured as a required check. It preserves the existing website/application route contract and its validation helpers. The complete website build and release producer remain pending.
 
 The copied source and license are byte-for-byte identical to their originals at [`df6ec6c4bfee803d89c54e9333297f29f378cee3`](https://github.com/ElevenID/marty-ui/tree/df6ec6c4bfee803d89c54e9333297f29f378cee3). [Extraction provenance](contracts/extraction-provenance.json) records the original paths and Git blob hashes. This source record is not a release attestation or a transfer of Git history.
 

@@ -1,0 +1,426 @@
+{
+  "schema_version": 1,
+  "audit_only": true,
+  "repository": "ElevenID/marty-ui",
+  "source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "scope": "literal JS/TS module closure of 34 website ownership seeds; static inference, not complete asset/build/test closure",
+  "aliases": {
+    "@ui-public-config": "ui/src/variants/publicConfig.website.js",
+    "@marty/commerce-extension": "ui/src/extensions/commerce/publicStub.jsx"
+  },
+  "resolution_suffixes": [
+    "",
+    ".js",
+    ".jsx",
+    ".ts",
+    ".tsx",
+    ".json",
+    ".css",
+    "/index.js",
+    "/index.jsx",
+    "/index.ts",
+    "/index.tsx"
+  ],
+  "files": [
+    {
+      "path": "contracts/protocol-support-catalog.json",
+      "blob_sha": "4bd05ca7b2f5be09bea9489aee8c2bba2c65c734"
+    },
+    {
+      "path": "contracts/web-surface-routes.json",
+      "blob_sha": "b7fcfca7a2b2d3804da1fa41f8aaf4593869a0b0"
+    },
+    {
+      "path": "ui/src/application/protocolSupportCatalog.js",
+      "blob_sha": "26f31ccd8f058bb63880f1f1c1b5c239e4b9104b"
+    },
+    {
+      "path": "ui/src/application/routing/appHandoff.js",
+      "blob_sha": "ac4ea3f1fbc5949afd8c6f2624e267bd0dda586b"
+    },
+    {
+      "path": "ui/src/application/routing/landingEntry.js",
+      "blob_sha": "f6d79b9a83f2e2b3c31496758edbebd20c323987"
+    },
+    {
+      "path": "ui/src/application/routing/publicEntry.js",
+      "blob_sha": "5747e9f1237a35bb946fe161654efe78fb577b5a"
+    },
+    {
+      "path": "ui/src/application/routing/safeNavigation.js",
+      "blob_sha": "6ebcfe7ed558466a1067cefb4f973fa3d36a42b8"
+    },
+    {
+      "path": "ui/src/application/routing/useSurfaceNavigate.js",
+      "blob_sha": "4685cd2b9f5ddbf4d48cc1c91166a7da45db7528"
+    },
+    {
+      "path": "ui/src/application/routing/webSurface.js",
+      "blob_sha": "9e5b4921079dcff5e11dc92ae942f8966037a656"
+    },
+    {
+      "path": "ui/src/application/routing/webSurfaceContract.mjs",
+      "blob_sha": "67a8bddf49c56cf5de8faa8141479a9ff389ab2c"
+    },
+    {
+      "path": "ui/src/application/verifier/verifierDemoFlow.js",
+      "blob_sha": "3805bd4b162fe6f6c13b69da4704eaeeccbfde22"
+    },
+    {
+      "path": "ui/src/apps/shared/PrerenderReadySignal.jsx",
+      "blob_sha": "bf3bf2608a8263012d1499d2fd601c790287cf49"
+    },
+    {
+      "path": "ui/src/apps/shared/WebSurfaceBoundary.jsx",
+      "blob_sha": "ea1f32d7ca2a9ee6721d1c72b8f8430bc42d6ebd"
+    },
+    {
+      "path": "ui/src/apps/website/WebsiteApp.jsx",
+      "blob_sha": "51789b621ae64442135789314c7857ff393a6cf0"
+    },
+    {
+      "path": "ui/src/apps/website/WebsiteRoutes.jsx",
+      "blob_sha": "79935cd48d6d805da8030577ced43ae7fc771f17"
+    },
+    {
+      "path": "ui/src/bootstrapRoot.jsx",
+      "blob_sha": "bdb31ce7d33ccac886f004257b2f12d26db227fd"
+    },
+    {
+      "path": "ui/src/components/FromIDVPage.jsx",
+      "blob_sha": "e24f99d3af45cd84514d6ab9aafd480b56c2cb5e"
+    },
+    {
+      "path": "ui/src/components/FutureFeatureButton.jsx",
+      "blob_sha": "0b9095f737fe68f18f9067bec047ada2b92efbb2"
+    },
+    {
+      "path": "ui/src/components/IdentityGuidePage.jsx",
+      "blob_sha": "f3e9104a7d4b242b11359a83da80a88560c75cc4"
+    },
+    {
+      "path": "ui/src/components/LandingPageContent.jsx",
+      "blob_sha": "a8c8d3a0ee9ff0ba140b3b91ee14b4d179bd02bc"
+    },
+    {
+      "path": "ui/src/components/ProductPage.jsx",
+      "blob_sha": "b34814b99d67667695eedd833455e46b22a43b8e"
+    },
+    {
+      "path": "ui/src/components/ProtocolPage.jsx",
+      "blob_sha": "42e1d3b5e32aaefb2e44d371602839f0c1baa580"
+    },
+    {
+      "path": "ui/src/components/StandardsPage.jsx",
+      "blob_sha": "0fcbf958eeaa57e8e0f52c77bdbef08ec388be26"
+    },
+    {
+      "path": "ui/src/components/WebSectionUnavailable.jsx",
+      "blob_sha": "692636598718e00486f712bd4167f72ac237460c"
+    },
+    {
+      "path": "ui/src/components/common/LanguageSwitcher.jsx",
+      "blob_sha": "b56114fe8c5d530d127daba4823fe7168677cbb1"
+    },
+    {
+      "path": "ui/src/components/demos/DemoVideoPlayer.jsx",
+      "blob_sha": "8e24d03da762d7b259fe2df3fc0f6950fdfa96c4"
+    },
+    {
+      "path": "ui/src/components/diagrams/CredentialFlowDiagram.jsx",
+      "blob_sha": "bbb31f7701f325dc4e1eeb09f368a5f14b50086f"
+    },
+    {
+      "path": "ui/src/components/diagrams/DeploymentModelDiagram.jsx",
+      "blob_sha": "2414b6a868fcbad17cda889070f79e5f7d528abc"
+    },
+    {
+      "path": "ui/src/components/diagrams/IdentityTransactionDiagram.jsx",
+      "blob_sha": "772358530070a592eb1d1b32f7473900cbbe5f26"
+    },
+    {
+      "path": "ui/src/components/diagrams/InteractiveProtocolMap.jsx",
+      "blob_sha": "14a1a63e109726d5befcf0152161500c2d3b06cf"
+    },
+    {
+      "path": "ui/src/components/diagrams/StandardsStackDiagram.jsx",
+      "blob_sha": "6d8b3838344884f23610784cd3b7191d7a56cfad"
+    },
+    {
+      "path": "ui/src/components/diagrams/TrustModelDiagram.jsx",
+      "blob_sha": "cbeb41e11c28873594f9ab58527022d4a5fa6f19"
+    },
+    {
+      "path": "ui/src/components/diagrams/UnifiedIdentityFlowDiagram.jsx",
+      "blob_sha": "4e4aad84fc99fe8aaadc28675661e7318b3bc7c5"
+    },
+    {
+      "path": "ui/src/components/diagrams/index.js",
+      "blob_sha": "3ad3f7966dc7ed95b1519dba416152fa8932b0f7"
+    },
+    {
+      "path": "ui/src/components/landing/DeploymentModelsSection.jsx",
+      "blob_sha": "e8a9ad5193db4c627bcd17c6d35f40054b6614d7"
+    },
+    {
+      "path": "ui/src/components/landing/EndUserExperienceSection.jsx",
+      "blob_sha": "84faa1e2fddb8d53619a362ab1001309e83c3210"
+    },
+    {
+      "path": "ui/src/components/landing/LandingSection.jsx",
+      "blob_sha": "944ef2749f51c89ba60fa4c65c2e21711b7a5273"
+    },
+    {
+      "path": "ui/src/components/landing/ProductCapabilitiesSection.jsx",
+      "blob_sha": "de73d281e803542ff4f0f51321255626879ec2da"
+    },
+    {
+      "path": "ui/src/components/landing/ProofLabSection.jsx",
+      "blob_sha": "6836204e406006c7d052c8ab5f9a23114067205f"
+    },
+    {
+      "path": "ui/src/components/landing/proofLabRuntime.js",
+      "blob_sha": "916404343c260440fafb80d7d51e89dba65870d2"
+    },
+    {
+      "path": "ui/src/components/layouts/PublicFooter.jsx",
+      "blob_sha": "9e377036588bf454dcc437c20f49381bd180c94e"
+    },
+    {
+      "path": "ui/src/components/pages/AiCapabilityPage.jsx",
+      "blob_sha": "2b0c0f055152e05af23bcc132456ad134f2ce441"
+    },
+    {
+      "path": "ui/src/components/pages/DemoPages.jsx",
+      "blob_sha": "4976c8554dfd03b1bd7387a0251cd3cdcdc3416b"
+    },
+    {
+      "path": "ui/src/components/pages/EudiWalletVerificationPage.jsx",
+      "blob_sha": "9c35d01f078333faffc065c58f3bccb6336727f5"
+    },
+    {
+      "path": "ui/src/components/pages/IsoMdocVerificationPage.jsx",
+      "blob_sha": "dff6943e498eb8cf746ed107f1e84ba2d24a4054"
+    },
+    {
+      "path": "ui/src/components/pages/LegalPages.jsx",
+      "blob_sha": "f76c7a00c6f3f67b077f06e1c7b8eae05fbf37ff"
+    },
+    {
+      "path": "ui/src/components/pages/MarketingProtocolSupportCatalog.jsx",
+      "blob_sha": "5718f4a1ee33fd5ab8d2e5095a3824e218f12f2d"
+    },
+    {
+      "path": "ui/src/components/pages/OpenBadgesIssuancePage.jsx",
+      "blob_sha": "ef936158348e4f38fa767389a6ffc9fd45763d64"
+    },
+    {
+      "path": "ui/src/components/pages/OpenBadgesVerificationPage.jsx",
+      "blob_sha": "d616bf65c18071c71a31e72030f828667173c47b"
+    },
+    {
+      "path": "ui/src/components/pages/ProtocolSupportCatalogView.jsx",
+      "blob_sha": "506c07af7d3c1f4f5800bc5976264a67e82a54a0"
+    },
+    {
+      "path": "ui/src/components/pages/PublicIAPages.jsx",
+      "blob_sha": "54f3a9b34fa8254c9907794154bb5bbed33c76ee"
+    },
+    {
+      "path": "ui/src/components/pages/SdJwtVerificationPage.jsx",
+      "blob_sha": "f433a7388a6e13886a38732431d072a558fe6bed"
+    },
+    {
+      "path": "ui/src/components/pages/TrustRegistryPage.jsx",
+      "blob_sha": "a4736f6d1c33135b9e3119efa381f5cac9b7edd4"
+    },
+    {
+      "path": "ui/src/components/pages/VerifiableCredentialApiPage.jsx",
+      "blob_sha": "ad2b7bcd519d64258c49144ceadd2afa24577f8a"
+    },
+    {
+      "path": "ui/src/components/pages/WhatIsCredentialVerificationPage.jsx",
+      "blob_sha": "f2ec6b74c8095b084c52f55f4b9109d82663e616"
+    },
+    {
+      "path": "ui/src/components/pages/WhatIsDigitalCredentialPage.jsx",
+      "blob_sha": "b597e97ce104ff3085288574f8d794cea0fc9168"
+    },
+    {
+      "path": "ui/src/components/pages/WhatIsMartyProtocolPage.jsx",
+      "blob_sha": "5ef8f20f7b35852c22f10442844a65b68afec2bf"
+    },
+    {
+      "path": "ui/src/components/pages/WhatIsOpenBadgePage.jsx",
+      "blob_sha": "6e12d64da9b7fba78117551e0f54281c991cb202"
+    },
+    {
+      "path": "ui/src/components/seo/SEOHead.jsx",
+      "blob_sha": "1a2d9336d2205acd911ede177ec64d198d7c5c35"
+    },
+    {
+      "path": "ui/src/components/seo/index.js",
+      "blob_sha": "50bf5b4c74cfc06d6f782e4ffc231af3eff5d3a3"
+    },
+    {
+      "path": "ui/src/components/seo/structuredData.js",
+      "blob_sha": "044b5efe9b7f2359ea8e3720e5a03ef0cd78e18f"
+    },
+    {
+      "path": "ui/src/contexts/BrandingContext.jsx",
+      "blob_sha": "ab37c777fe493f11eab4075233fdd77eef480f9a"
+    },
+    {
+      "path": "ui/src/data/marketingContent.js",
+      "blob_sha": "19afb2feb6e66e0b3c3c29b15c8ab1548deb369b"
+    },
+    {
+      "path": "ui/src/extensions/commerce/publicStub.jsx",
+      "blob_sha": "193d6e2dd595cd6fd3ba370ff7af0c63024276e1"
+    },
+    {
+      "path": "ui/src/extensions/commerce/website.js",
+      "blob_sha": "65389d443cee08f542f724db98aca69140f87298"
+    },
+    {
+      "path": "ui/src/generated/demoManifests.generated.js",
+      "blob_sha": "4c7f75f3fcba17a439501d6774b52c2ea36e1de6"
+    },
+    {
+      "path": "ui/src/generated/demoWalletSchema.generated.json",
+      "blob_sha": "58dd81b135c281707185927a6c48de599e100bf9"
+    },
+    {
+      "path": "ui/src/hooks/useBranding.js",
+      "blob_sha": "039cf94575068876b7c77914e5fccd9b41aeaada"
+    },
+    {
+      "path": "ui/src/i18n/index.js",
+      "blob_sha": "5a134f240ce2b241c8b5c822af268e198881f4ef"
+    },
+    {
+      "path": "ui/src/services/demoManifestService.js",
+      "blob_sha": "5788a5b7e7e0d3a77fedb14dfbbc19f576ae6696"
+    },
+    {
+      "path": "ui/src/utils/analytics.js",
+      "blob_sha": "78cdde9abca78e4f69dc6191a3cdd668b39841fe"
+    },
+    {
+      "path": "ui/src/utils/hasAsciiControlCharacters.js",
+      "blob_sha": "e04b39258879bf3c52fe4d6bd3b24f7b2f3db130"
+    },
+    {
+      "path": "ui/src/utils/runtimeConfig.js",
+      "blob_sha": "f464b19c5806671696e1760560d90c09d7e59ab0"
+    },
+    {
+      "path": "ui/src/utils/staticAssetHref.js",
+      "blob_sha": "6795f55182a267441e9633d8fba821b53fb253e1"
+    },
+    {
+      "path": "ui/src/utils/waitForFonts.js",
+      "blob_sha": "ec8688fbec681f3cc7921a033e7c1a231e0f2538"
+    },
+    {
+      "path": "ui/src/variants/marketingRoutes.jsx",
+      "blob_sha": "531f22b358c66e8081e4d6f0e7f6e3512cc9cdee"
+    },
+    {
+      "path": "ui/src/variants/publicConfig.public.js",
+      "blob_sha": "1fcdf810dcf69b323c8a610570e76c24c01afd90"
+    },
+    {
+      "path": "ui/src/variants/publicConfig.website.js",
+      "blob_sha": "b3f6934d583a6d9d422ec6e26a336c23c39b1f02"
+    },
+    {
+      "path": "ui/src/website.jsx",
+      "blob_sha": "b54d8fced93f3fac230bf40f71105de8e80d69eb"
+    }
+  ],
+  "bare_package_imports": [
+    "@elevenid/marty-blog",
+    "@elevenid/marty-blog/author-page",
+    "@elevenid/marty-blog/authors-page",
+    "@elevenid/marty-blog/blog-page",
+    "@elevenid/marty-blog/blog-post-page",
+    "@elevenid/marty-blog/foundations-page",
+    "@mui/icons-material/AccountBalance",
+    "@mui/icons-material/AccountBalanceWallet",
+    "@mui/icons-material/AccountTree",
+    "@mui/icons-material/Api",
+    "@mui/icons-material/ArrowBackRounded",
+    "@mui/icons-material/ArrowDownward",
+    "@mui/icons-material/ArrowForward",
+    "@mui/icons-material/ArrowForwardRounded",
+    "@mui/icons-material/Badge",
+    "@mui/icons-material/Business",
+    "@mui/icons-material/Cancel",
+    "@mui/icons-material/CheckCircle",
+    "@mui/icons-material/CheckCircleRounded",
+    "@mui/icons-material/Cloud",
+    "@mui/icons-material/CloudUpload",
+    "@mui/icons-material/Code",
+    "@mui/icons-material/Computer",
+    "@mui/icons-material/Description",
+    "@mui/icons-material/Devices",
+    "@mui/icons-material/EmojiEvents",
+    "@mui/icons-material/ErrorOutlineRounded",
+    "@mui/icons-material/ExpandLess",
+    "@mui/icons-material/ExpandMore",
+    "@mui/icons-material/FactCheckRounded",
+    "@mui/icons-material/FlightTakeoff",
+    "@mui/icons-material/Gavel",
+    "@mui/icons-material/GitHub",
+    "@mui/icons-material/GppGood",
+    "@mui/icons-material/Groups",
+    "@mui/icons-material/IntegrationInstructions",
+    "@mui/icons-material/Inventory",
+    "@mui/icons-material/Language",
+    "@mui/icons-material/MenuBook",
+    "@mui/icons-material/PendingActionsRounded",
+    "@mui/icons-material/PendingRounded",
+    "@mui/icons-material/Person",
+    "@mui/icons-material/PhoneAndroid",
+    "@mui/icons-material/PhoneIphone",
+    "@mui/icons-material/PlayArrowRounded",
+    "@mui/icons-material/Policy",
+    "@mui/icons-material/PortableWifiOff",
+    "@mui/icons-material/Public",
+    "@mui/icons-material/ReplayRounded",
+    "@mui/icons-material/Schema",
+    "@mui/icons-material/School",
+    "@mui/icons-material/Search",
+    "@mui/icons-material/SearchRounded",
+    "@mui/icons-material/Security",
+    "@mui/icons-material/SettingsInputAntenna",
+    "@mui/icons-material/SmartToy",
+    "@mui/icons-material/Speed",
+    "@mui/icons-material/Storage",
+    "@mui/icons-material/SyncAlt",
+    "@mui/icons-material/TrendingUp",
+    "@mui/icons-material/Verified",
+    "@mui/icons-material/VerifiedUser",
+    "@mui/icons-material/YouTube",
+    "@mui/material",
+    "@mui/material/Button",
+    "@mui/material/styles",
+    "i18next",
+    "i18next-browser-languagedetector",
+    "i18next-http-backend",
+    "prop-types",
+    "react",
+    "react-dom/client",
+    "react-i18next",
+    "react-router",
+    "web-vitals"
+  ],
+  "limitations": [
+    "Candidate source inventory only; not authorization to export files, delete source, build, publish or deploy.",
+    "Literal import/re-export resolution is a static audit, not a complete parser or executed bundle graph.",
+    "Public assets, translations, build configuration, package locks and test fixtures still require classification.",
+    "Computed dynamic imports, generated-module inputs and runtime fetches require separate verification.",
+    "Recorded blob hashes identify the inspected source snapshot; they are not release signatures or attestations."
+  ]
+}
