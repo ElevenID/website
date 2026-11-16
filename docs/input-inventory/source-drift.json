@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "source_repository": "ElevenID/marty-ui",
+  "source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "comparison_commit": "e10a7f26cda8ac217c7ddefebc709fc246dabaff",
+  "comparison_root_tree_sha": "c377bdc36919e5dd70fba31c29ce5e86c9fa1a36",
+  "candidate_source_files_compared": 79,
+  "source_changes": [
+    {
+      "path": "ui/src/apps/website/WebsiteApp.jsx",
+      "source_blob_sha": "51789b621ae64442135789314c7857ff393a6cf0",
+      "current_blob_sha": "bb9616ba5618cac9899b4c487487b687a1caa51c",
+      "current_size_bytes": 4069
+    },
+    {
+      "path": "ui/src/components/LandingPageContent.jsx",
+      "source_blob_sha": "a8c8d3a0ee9ff0ba140b3b91ee14b4d179bd02bc",
+      "current_blob_sha": "07e7a07003aef819e424cb7ae6ded6722640669f",
+      "current_size_bytes": 81010
+    },
+    {
+      "path": "ui/src/components/pages/PublicIAPages.jsx",
+      "source_blob_sha": "54f3a9b34fa8254c9907794154bb5bbed33c76ee",
+      "current_blob_sha": "fa46177013b543e2d7d909479d02c681c8006551",
+      "current_size_bytes": 23375
+    },
+    {
+      "path": "ui/src/components/pages/VerifiableCredentialApiPage.jsx",
+      "source_blob_sha": "ad2b7bcd519d64258c49144ceadd2afa24577f8a",
+      "current_blob_sha": "c14b91af44171793b34d8f026cb3eafcb1b315f0",
+      "current_size_bytes": 17485
+    },
+    {
+      "path": "ui/src/data/marketingContent.js",
+      "source_blob_sha": "19afb2feb6e66e0b3c3c29b15c8ab1548deb369b",
+      "current_blob_sha": "930654cc94c8a2a958a114b86c66e26afd368166",
+      "current_size_bytes": 37770
+    }
+  ],
+  "public_tree_sha": "034f87321bc610cc0867e1441016e276cd140bc6",
+  "public_files_compared": 83,
+  "public_files_current": 83,
+  "public_changes": [
+    {
+      "path": "ui/public/locales/en/marketing.json",
+      "change": "modified",
+      "source_blob_sha": "1fabd6d5ef601aa3ae6d904f96de7c9105dad4dc",
+      "current_blob_sha": "abd0a07db30845792adebff0d281241ebfcd666a",
+      "source_size_bytes": 10550,
+      "current_size_bytes": 10539
+    }
+  ],
+  "method": "Git tree/blob metadata only; no changed-file contents read.",
+  "independent_build_helper_files_compared": 4,
+  "independent_build_helper_changes": []
+}

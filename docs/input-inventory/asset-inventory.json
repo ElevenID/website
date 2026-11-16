@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "audit_only": true,
+  "source_repository": "ElevenID/marty-ui",
+  "source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "source_root": "ui/public",
+  "public_tree_sha": "c7a86c30b3fa854e95d4249968627e32eadc63d3",
+  "tracked_file_mode": "100644",
+  "scope": "Complete Git metadata and disposition of the pinned ui/public tree; not proof of all source/runtime/build dependencies.",
+  "counts": {
+    "tracked_files": 83,
+    "tracked_bytes": 20689674,
+    "selected_by_existing_plugin": 46,
+    "selected_bytes": 20236636,
+    "excluded_by_existing_plugin": 37
+  },
+  "classification_basis": {
+    "path": "ui/scripts/website-assets.mjs",
+    "blob_sha": "0cf0fee406e2d4c1888f254e0b7867a9092149d4",
+    "notes": "Match current public-tree traversal, HTML exclusion, locale filter and emission paths. The subsequently extracted helper adds only a primitive-string revision guard."
+  },
+  "emission": {
+    "versioned": "/_website/<revision>/<relative-path>",
+    "stable_runtime": "/_website/runtime-config.js",
+    "stable_root": [
+      "/llms.txt",
+      "/blog/rss.xml"
+    ],
+    "manifest_rewrite": "Prefix all icon src values; set start_url and scope to /."
+  },
+  "categories": {
+    "html_entry_asset": {
+      "disposition": "include",
+      "reason": "Referenced by ui/index.html and rewritten by transformIndexHtml."
+    },
+    "manifest_icon": {
+      "disposition": "include",
+      "reason": "Referenced by manifest.json; logo512 also appears in metadata whose absolute URLs require correction."
+    },
+    "web_manifest": {
+      "disposition": "include",
+      "reason": "HTML entry references it; buildStart rewrites icon URLs, start_url and scope."
+    },
+    "branding_config": {
+      "disposition": "include",
+      "reason": "BrandingProvider fetches staticAssetHref('/config.json')."
+    },
+    "stable_runtime_config": {
+      "disposition": "include",
+      "reason": "Entry script initializes runtime state; emitted outside revision-specific namespace."
+    },
+    "website_locale": {
+      "disposition": "include",
+      "reason": "Website config declares common/marketing; i18n fetches six supported languages through staticAssetHref."
+    },
+    "demo_index": {
+      "disposition": "include",
+      "reason": "Runtime service fetches index; generator embeds the same index for prerender."
+    },
+    "demo_manifest": {
+      "disposition": "include",
+      "reason": "Both releases are indexed runtime fetches and generator inputs; content and poster digests not read in this metadata pass."
+    },
+    "demo_poster": {
+      "disposition": "include",
+      "reason": "DemoVideoPlayer loads scenario.poster.src through staticAssetHref; preserve complete release-poster tree pending reference/digest verification."
+    },
+    "blog_image": {
+      "disposition": "include",
+      "reason": "Pinned blog package local /images literals are rewritten to the asset base; preserve authors/social images pending package-consumer verification."
+    },
+    "stable_root_text": {
+      "disposition": "include",
+      "reason": "Existing asset plugin emits llms.txt and blog/rss.xml at unversioned paths."
+    },
+    "ai_plugin_compatibility": {
+      "disposition": "retain_output_parity",
+      "reason": "Existing plugin emits it under the versioned namespace. Route contract has no root /.well-known route; stale root logo/openapi references need a separate adapt/defer decision."
+    },
+    "favicon_compatibility": {
+      "disposition": "retain_output_parity",
+      "reason": "Existing plugin emits these even though the inspected entry uses favicon.ico; metadata only, not authorization to remove or parse SVG."
+    },
+    "application_locale": {
+      "disposition": "exclude",
+      "reason": "Not common/marketing; existing website plugin deliberately excludes product namespaces."
+    },
+    "application_test_html": {
+      "disposition": "exclude",
+      "reason": "Existing plugin skips all .html public files; application test harness is not a marketing input."
+    }
+  },
+  "runtime_inputs": {
+    "locales": {
+      "languages": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "ja",
+        "nl"
+      ],
+      "namespaces": [
+        "common",
+        "marketing"
+      ],
+      "count": 12,
+      "url": "/_website/<revision>/locales/<language>/<namespace>.json"
+    },
+    "branding": "/_website/<revision>/config.json",
+    "demos": {
+      "index": "/_website/<revision>/demos/manifests/index.json",
+      "versions": [
+        "2026.07.0",
+        "2026.08.0"
+      ],
+      "index_blob_sha": "d4665513bd526f093e2daf3c1541e10589ead680",
+      "latest_approved_stack_version": null,
+      "latest_available_stack_version": "2026.08.0",
+      "preserved_publication_state": "Both source releases are DRAFT/PARTIAL; extraction must not promote them."
+    }
+  },
+  "external_resources": [
+    {
+      "kind": "stylesheet",
+      "url": "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap",
+      "source": "ui/index.html"
+    },
+    {
+      "kind": "stylesheet",
+      "url": "https://fonts.googleapis.com/icon?family=Material+Icons",
+      "source": "ui/index.html"
+    },
+    {
+      "kind": "conditional_video",
+      "origin": "https://www.youtube-nocookie.com",
+      "source": "ui/src/components/demos/DemoVideoPlayer.jsx",
+      "condition": "PUBLIC scenario with youtube_id and user consent."
+    }
+  ],
+  "source_evidence": [
+    {
+      "path": "ui/scripts/generate-demo-manifest-module.mjs",
+      "blob_sha": "8cdf1d9ea21f37a60e2a24c69b7df9d9faeae76e"
+    },
+    {
+      "path": "ui/src/utils/staticAssetHref.js",
+      "blob_sha": "6795f55182a267441e9633d8fba821b53fb253e1"
+    },
+    {
+      "path": "ui/src/i18n/index.js",
+      "blob_sha": "5a134f240ce2b241c8b5c822af268e198881f4ef"
+    },
+    {
+      "path": "ui/src/variants/publicConfig.website.js",
+      "blob_sha": "b3f6934d583a6d9d422ec6e26a336c23c39b1f02"
+    },
+    {
+      "path": "ui/src/contexts/BrandingContext.jsx",
+      "blob_sha": "ab37c777fe493f11eab4075233fdd77eef480f9a"
+    },
+    {
+      "path": "ui/src/components/demos/DemoVideoPlayer.jsx",
+      "blob_sha": "8e24d03da762d7b259fe2df3fc0f6950fdfa96c4"
+    },
+    {
+      "path": "ui/src/services/demoManifestService.js",
+      "blob_sha": "5788a5b7e7e0d3a77fedb14dfbbc19f576ae6696"
+    },
+    {
+      "path": "ui/index.html",
+      "blob_sha": "a35c82de60c80576efa8150653a948adee2413ba"
+    }
+  ],
+  "limitations": [
+    "All 83 public blob identities/sizes and five child-directory trees were obtained from Git metadata; no SVG or binary contents were read.",
+    "No files over 20 KB, generated demo module or package lock contents were fetched/read in this pass.",
+    "No local font files occur under ui/public; external stylesheet font downloads and built dependency assets remain runtime/build qualification inputs.",
+    "Large demo-manifest poster-reference and digest checks remain pending; preserve all seven observed poster files.",
+    "Pinned blog package image references and provenance remain a separate build audit.",
+    "Root /.well-known discovery is not in the route contract. Retaining the versioned ai-plugin payload does not establish a functioning root discovery endpoint."
+  ],
+  "source_drift_comparison": {
+    "artifact": "source-drift.json",
+    "comparison_commit": "e10a7f26cda8ac217c7ddefebc709fc246dabaff",
+    "candidate_source_changes": 5,
+    "public_changes": 1,
+    "planned_metadata_helpers_unchanged": true
+  },
+  "generated_root_outputs": "Vite sitemap generation produces root robots/sitemap artifacts outside this tracked public tree; exact generated outputs still require clean-build qualification.",
+  "files": [
+    {"path":".well-known/ai-plugin.json","blob_sha":"b2dfb31f023e360f05a9ae204f3c5503eec03ac5","size_bytes":885,"category":"ai_plugin_compatibility"},
+    {"path":"apple-touch-icon.png","blob_sha":"49bf8d6fd211a7ce3fd3daf17fd19f5ea405d64e","size_bytes":9510,"category":"html_entry_asset"},
+    {"path":"blog/rss.xml","blob_sha":"3a34d35733108ff48c579994fae8786d30383225","size_bytes":13987,"category":"stable_root_text"},
+    {"path":"config.json","blob_sha":"4ab9ae8e8bacff50a12f694f741a4be608fd33f4","size_bytes":419,"category":"branding_config"},
+    {"path":"demos/manifests/2026.07.0.json","blob_sha":"7da5692cb8237b5f6028b03853ae321716cb6701","size_bytes":33081,"category":"demo_manifest"},
+    {"path":"demos/manifests/2026.08.0.json","blob_sha":"5cef621e9927e15f46a5be2cac3dd35cddb4dfcc","size_bytes":87363,"category":"demo_manifest"},
+    {"path":"demos/manifests/index.json","blob_sha":"d4665513bd526f093e2daf3c1541e10589ead680","size_bytes":899,"category":"demo_index"},
+    {"path":"favicon-96x96.png","blob_sha":"c74c9734e84c3d396142777afae202d49b0c2469","size_bytes":3189,"category":"favicon_compatibility"},
+    {"path":"favicon.ico","blob_sha":"c7d964e734f28f3d4b6963aa6bf0bf0db199d3d2","size_bytes":15086,"category":"html_entry_asset"},
+    {"path":"favicon.svg","blob_sha":"ddd6c72026f3e832695a8897746d705d192facc1","size_bytes":2882826,"category":"favicon_compatibility"},
+    {"path":"images/authors/aiko-tanaka.png","blob_sha":"df3ae0d2d1bebc607698790b7e056e42568a55c5","size_bytes":1581408,"category":"blog_image"},
+    {"path":"images/authors/daniel-ortega.png","blob_sha":"d3b8c340a6bbb0e3508b2ddc8978ff3966efcba2","size_bytes":2135406,"category":"blog_image"},
+    {"path":"images/authors/elena-kovacs.png","blob_sha":"dbb406718d6fc7a358669e1a563b2d345da96c3b","size_bytes":1943931,"category":"blog_image"},
+    {"path":"images/authors/marcus-vale.png","blob_sha":"d51f8bd97d0dbe2a0dc5b440d1c42784e448df7c","size_bytes":1943905,"category":"blog_image"},
+    {"path":"images/authors/nora-patel.png","blob_sha":"8547e60dedebd33a715927231e9d7b71652e7646","size_bytes":2174146,"category":"blog_image"},
+    {"path":"images/authors/sofia-rahman.png","blob_sha":"d5150fc8a455b9cb7666b52f54cc2b3d4f9f2347","size_bytes":1767306,"category":"blog_image"},
+    {"path":"images/authors/victor-leclerc.png","blob_sha":"2572d06f6aa4eaff5b3e9e6ce929e5d29c1441c0","size_bytes":2145634,"category":"blog_image"},
+    {"path":"images/demos/2026.07.0/canvas-learning-achievement.png","blob_sha":"731ca20b1ac843f4474756de602758cefa593a4b","size_bytes":77972,"category":"demo_poster"},
+    {"path":"images/demos/2026.07.0/credential-lifecycle.png","blob_sha":"cd0a7092ab73742b6ea3dae111b81ae128255b38","size_bytes":677248,"category":"demo_poster"},
+    {"path":"images/demos/2026.07.0/first-party-browser-wallet.png","blob_sha":"f91543a0c2068a558d4192a359f90ee2da5fde5b","size_bytes":116642,"category":"demo_poster"},
+    {"path":"images/demos/2026.07.0/independent-wallet-interoperability.png","blob_sha":"60ae406833c24a74de784cc4907a7b28c5277669","size_bytes":76840,"category":"demo_poster"},
+    {"path":"images/demos/2026.07.0/membership-badge-login.png","blob_sha":"1cbcf99aad65fb4693fd1da13a0cc55a5bc685d1","size_bytes":273604,"category":"demo_poster"},
+    {"path":"images/demos/2026.07.0/organization-primitives.png","blob_sha":"f7a73f6c9dfccb1003f12334403acabb2936f60b","size_bytes":91607,"category":"demo_poster"},
+    {"path":"images/demos/2026.08.0/portfolio-draft.svg","blob_sha":"35335854b93f1399d5a3d7aeafff784449cf6c9b","size_bytes":1345,"category":"demo_poster"},
+    {"path":"images/social/elevenid-blog-default.png","blob_sha":"d8fc957964f829745862732c9b25c1b34f093272","size_bytes":600831,"category":"blog_image"},
+    {"path":"images/social/trust-profiles-explained.png","blob_sha":"fff8c43a8fe99aa74a3ce5bfacd9597c7361c39d","size_bytes":597516,"category":"blog_image"},
+    {"path":"images/social/understanding-csca-certificates-v2.png","blob_sha":"79af84bf1a2304342d3ff900991ff8b9e845c5ac","size_bytes":230633,"category":"blog_image"},
+    {"path":"images/social/why-identity-needs-a-protocol.png","blob_sha":"cb7814b352e461bd84200a973b86d75599a14c2f","size_bytes":601429,"category":"blog_image"},
+    {"path":"llms.txt","blob_sha":"a2f57de94ec6d3dc7508679fd1e8417c3f86e291","size_bytes":2291,"category":"stable_root_text"},
+    {"path":"locales/de/applicant.json","blob_sha":"b0f45e3b4f530e725ab0dd6f40140eb6f13a867e","size_bytes":4556,"category":"application_locale"},
+    {"path":"locales/de/common.json","blob_sha":"9dd9cd4d95758889b5211736be80256d9e429f56","size_bytes":1344,"category":"website_locale"},
+    {"path":"locales/de/console.json","blob_sha":"d8522729b60b3c91c3699ef5cca82561c4706890","size_bytes":30460,"category":"application_locale"},
+    {"path":"locales/de/errors.json","blob_sha":"852416d3f6a3c7d81416b59b105cb04500fc3c7c","size_bytes":2333,"category":"application_locale"},
+    {"path":"locales/de/forms.json","blob_sha":"1f295f8a110e1ac02097d543ab73dfcac4355537","size_bytes":1512,"category":"application_locale"},
+    {"path":"locales/de/marketing.json","blob_sha":"cd8fd539c568e8fcee00b0677698de908cc379d7","size_bytes":9916,"category":"website_locale"},
+    {"path":"locales/de/onboarding.json","blob_sha":"0fc6d41624a1adb36428561d5fc489da9da0c33e","size_bytes":3440,"category":"application_locale"},
+    {"path":"locales/de/vendor.json","blob_sha":"038c8ba6b89a75787c8b5dd2e5c7fbf4ddc8b71f","size_bytes":1531,"category":"application_locale"},
+    {"path":"locales/en/applicant.json","blob_sha":"f588dd2b3a6314fff6c6163437387036e620a253","size_bytes":12035,"category":"application_locale"},
+    {"path":"locales/en/common.json","blob_sha":"7d95018c5d8dc339f075e1f61615343fd39580ec","size_bytes":7728,"category":"website_locale"},
+    {"path":"locales/en/console.json","blob_sha":"5b941553357f42fccc7f02c367cb4d046249259b","size_bytes":127208,"category":"application_locale"},
+    {"path":"locales/en/errors.json","blob_sha":"fcd3a154af07b944250efadb2083c3450a50f2e6","size_bytes":2223,"category":"application_locale"},
+    {"path":"locales/en/forms.json","blob_sha":"ad5179e075abf471bf25dd1d9a7922d93c257ada","size_bytes":1484,"category":"application_locale"},
+    {"path":"locales/en/marketing.json","blob_sha":"1fabd6d5ef601aa3ae6d904f96de7c9105dad4dc","size_bytes":10550,"category":"website_locale"},
+    {"path":"locales/en/onboarding.json","blob_sha":"49b4153c9d4c7f41ac6f19f3cbf663d413f35279","size_bytes":3352,"category":"application_locale"},
+    {"path":"locales/en/vendor.json","blob_sha":"fee3f417938710aee3e7ad8ebb218cce5312ac1c","size_bytes":54198,"category":"application_locale"},
+    {"path":"locales/es/applicant.json","blob_sha":"bdf22cdd9dcf3f0e82b0dfe5eb0a992b90717604","size_bytes":4397,"category":"application_locale"},
+    {"path":"locales/es/common.json","blob_sha":"d84250c0726a1a2846e7efd24a9a790a213b1053","size_bytes":1260,"category":"website_locale"},
+    {"path":"locales/es/console.json","blob_sha":"eab760c06728055a18689c6a73f36773bd431284","size_bytes":29699,"category":"application_locale"},
+    {"path":"locales/es/errors.json","blob_sha":"65a354877d813935819300806837d63445d0059f","size_bytes":2126,"category":"application_locale"},
+    {"path":"locales/es/forms.json","blob_sha":"e5dfc19d08fedcd3ac869aafec42aea8976e0cfc","size_bytes":1518,"category":"application_locale"},
+    {"path":"locales/es/marketing.json","blob_sha":"a00e404a1423187063c1f23830b15215e7bf8139","size_bytes":9975,"category":"website_locale"},
+    {"path":"locales/es/onboarding.json","blob_sha":"eb0b9e21b881457fd2222047a72502508ab37860","size_bytes":3375,"category":"application_locale"},
+    {"path":"locales/es/vendor.json","blob_sha":"8fd745f5c9479d22b1dd7473ee5e91690bd91a80","size_bytes":1524,"category":"application_locale"},
+    {"path":"locales/fr/applicant.json","blob_sha":"22eb815263306ed50bf98ae64428581eb2b312d9","size_bytes":4596,"category":"application_locale"},
+    {"path":"locales/fr/common.json","blob_sha":"62ed4a96d3fa991ee32eaad4c2e7de61f8f3d92e","size_bytes":1252,"category":"website_locale"},
+    {"path":"locales/fr/console.json","blob_sha":"ec4ea18f33012d723d09f8c86ea3d0b24bb67b54","size_bytes":31153,"category":"application_locale"},
+    {"path":"locales/fr/errors.json","blob_sha":"49d9a17ed2464224d272117c002bea02c00b220b","size_bytes":2223,"category":"application_locale"},
+    {"path":"locales/fr/forms.json","blob_sha":"dab113187691129cc1c007a81fde62573bb696dd","size_bytes":1511,"category":"application_locale"},
+    {"path":"locales/fr/marketing.json","blob_sha":"b32931e8f36b5e0241f06a8eec45efc75ad5fdb3","size_bytes":10488,"category":"website_locale"},
+    {"path":"locales/fr/onboarding.json","blob_sha":"b9000f7b8e49320d33435558aa6ca2b6e59dcf1f","size_bytes":3600,"category":"application_locale"},
+    {"path":"locales/fr/vendor.json","blob_sha":"8472613309f900c8a5af2fd0596fe18454245dab","size_bytes":1497,"category":"application_locale"},
+    {"path":"locales/ja/applicant.json","blob_sha":"83d9d6657aaa30031bf56dcd87a75a89ae6633ad","size_bytes":5071,"category":"application_locale"},
+    {"path":"locales/ja/common.json","blob_sha":"b5af927ce0f7e41973b7980b755ec1b4c471060d","size_bytes":1306,"category":"website_locale"},
+    {"path":"locales/ja/console.json","blob_sha":"ba79dbea227324c335f1f20750768c891df0ff29","size_bytes":31943,"category":"application_locale"},
+    {"path":"locales/ja/errors.json","blob_sha":"9675ef2311703ec32b314fe854eca006b1d2f981","size_bytes":2615,"category":"application_locale"},
+    {"path":"locales/ja/forms.json","blob_sha":"62a372bb98b33d89ed76bd1e2b40dcb8e3f75095","size_bytes":1625,"category":"application_locale"},
+    {"path":"locales/ja/marketing.json","blob_sha":"d6bb4769221efba36252d9ce138a41f98d5ec5f8","size_bytes":10304,"category":"website_locale"},
+    {"path":"locales/ja/onboarding.json","blob_sha":"37be22984b92d48e26208920bcdeeab752197ab9","size_bytes":3445,"category":"application_locale"},
+    {"path":"locales/ja/vendor.json","blob_sha":"72769478d69a97603bb36d51ae584598e7278920","size_bytes":1579,"category":"application_locale"},
+    {"path":"locales/nl/applicant.json","blob_sha":"4aed9fdf6d23d7ff30abddd535d4308d67164020","size_bytes":11864,"category":"application_locale"},
+    {"path":"locales/nl/common.json","blob_sha":"df626d414d186d384bc7c48bd4b683f6e336631d","size_bytes":6515,"category":"website_locale"},
+    {"path":"locales/nl/console.json","blob_sha":"f5111e6cdb62bba55b3b169860a0e0f0ba4f8232","size_bytes":23107,"category":"application_locale"},
+    {"path":"locales/nl/errors.json","blob_sha":"9661b8f785833f0fab76aa3e71be7c142b6e13a7","size_bytes":2407,"category":"application_locale"},
+    {"path":"locales/nl/forms.json","blob_sha":"4f078f91ed107db2bc510428f544c544c59ddba2","size_bytes":1527,"category":"application_locale"},
+    {"path":"locales/nl/marketing.json","blob_sha":"81b4f538f904c6710cbdcd2102c5f661cf40a754","size_bytes":9753,"category":"website_locale"},
+    {"path":"locales/nl/onboarding.json","blob_sha":"dc03a0dc2284abf70df02894cfd6ec0cea07d4f2","size_bytes":3537,"category":"application_locale"},
+    {"path":"locales/nl/vendor.json","blob_sha":"02eda4c10b5680003b6696bafe0f2e9adef382c2","size_bytes":29271,"category":"application_locale"},
+    {"path":"logo192.png","blob_sha":"4bf3e500467ac9950e01beb313773ef9697185c0","size_bytes":10217,"category":"manifest_icon"},
+    {"path":"logo512.png","blob_sha":"15c08f5a422e5b05f1974113bde9b39232701e1b","size_bytes":55292,"category":"manifest_icon"},
+    {"path":"manifest.json","blob_sha":"09e1c3ff5c9e7bd455aaa7e5e7242b5d13f2e798","size_bytes":542,"category":"web_manifest"},
+    {"path":"runtime-config.js","blob_sha":"d5cce705ae0395897d8fa4e226d8dfd746359123","size_bytes":72,"category":"stable_runtime_config"},
+    {"path":"startup.js","blob_sha":"73cf0207894e7a806667913ee88073f8b9047d42","size_bytes":3183,"category":"html_entry_asset"},
+    {"path":"test-harness.html","blob_sha":"a71335a26b20a36c319b6ce0eccc472791bbdd78","size_bytes":3496,"category":"application_test_html"}
+  ]
+}
