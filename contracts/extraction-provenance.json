@@ -101,6 +101,18 @@
       "target_path": "ui/src/utils/runtimeConfig.js",
       "git_blob_sha1": "f464b19c5806671696e1760560d90c09d7e59ab0",
       "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/apps/shared/WebSurfaceBoundary.jsx",
+      "target_path": "ui/src/apps/shared/WebSurfaceBoundary.jsx",
+      "git_blob_sha1": "ea1f32d7ca2a9ee6721d1c72b8f8430bc42d6ebd",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/apps/shared/WebSurfaceBoundary.test.tsx",
+      "target_path": "ui/src/apps/shared/WebSurfaceBoundary.test.tsx",
+      "git_blob_sha1": "5ce3d8cc4a179eef490082b9e050b6c786d65918",
+      "transfer": "verbatim"
     }
   ],
   "adapted_files": [
@@ -120,7 +132,7 @@
       "source_path": "ui/src/components/seo/SEOHead.jsx",
       "target_path": "ui/src/components/seo/SEOHead.jsx",
       "source_git_blob_sha1": "1a2d9336d2205acd911ede177ec64d198d7c5c35",
-      "changes": "Use the shared canonical site URL and immutable-build default metadata image; preserve explicit image overrides; remove one original trailing space in the comment."
+      "changes": "Use the shared canonical site URL and immutable-build default metadata image; preserve explicit image overrides; remove one original trailing space in the comment. Remove stale keyword metadata when the current page supplies an empty list or omits keywords."
     },
     {
       "source_path": "ui/src/components/seo/structuredData.js",
@@ -145,6 +157,12 @@
       "target_path": "tests/vm/runtime-config.test.mjs",
       "source_git_blob_sha1": "ff28dd09080b6d5b244367c41ab647dd25903e67",
       "changes": "Adapt runtime/build configuration cases to actual-module Node VM execution; add hosting and no-window coverage."
+    },
+    {
+      "source_path": "ui/src/application/routing/useSurfaceNavigate.js",
+      "target_path": "ui/src/application/routing/useSurfaceNavigate.js",
+      "source_git_blob_sha1": "4685cd2b9f5ddbf4d48cc1c91166a7da45db7528",
+      "changes": "Delegate document handoff decisions to shouldBrowserRedirect using the original destination; remove the redundant canonical rewrite check so fragment-only navigation stays in the current router."
     }
   ],
   "ci_action_pins": {
