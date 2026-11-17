@@ -1,38 +1,44 @@
-# Migration checkpoint
+# Migration checkpoint — complete source graph and standalone development bundle
 
-## Current milestone: educational pages, build inputs and public runtime
+**Latest branch:** [website PR #13](https://github.com/ElevenID/website/pull/13), `feat/complete-website-source-graph`. It remains **draft**; accepted main is still `c586c1ca2800f181594ffd03c5045fd3b93f76fb` from PR #12. Do not merge as a complete website release.
 
-[Website PR #12](https://github.com/ElevenID/website/pull/12) continues from accepted PR #11 at `57adcea498bb77935bdbd08ca49654eea44db878`. It preserves **seven source files totaling 45,628 bytes**, each below 16 KiB, and groups page qualification with generation, build and public startup contracts.
+## Verified progress
 
-Final validation passed **548 records**: `npm test` passed 528 records in 64.77 seconds (61 native, 345 DOM across 24 files and 122 build), and the separate HTTP suite passed 20 records in 0.77 seconds. There were no failures, cancellations or skips. This adds **92 records** to batch 11. Fresh dependency audit: zero vulnerabilities at every severity (exit 0). Five Python cases inside an existing build record are reported separately without double counting.
+- All **79/79** original source candidates now exist in `website`. Ten large public data/page/catalog files (411,599 bytes) and eight diagram source files (46,150 bytes) were added with exact Git identities. The four previously reconciled large sources use their current blobs; source data and application-owned `/verify` CTA semantics remain preserved.
+- **38/46** public assets from the selected inventory exist with pinned source blobs: six common/marketing language pairs, demo manifests, RSS/llms and runtime text, branding, manifest icons, demo posters, and blog/social images. The remaining eight image assets total **16,574,562 bytes** and are listed in [the asset inventory](input-inventory/asset-inventory.json).
+- A new website-only `ui/index.html`, `ui/vite.config.mjs`, TypeScript configuration, npm lock, and exact `@elevenid/marty-blog` v0.1.9 package pin no longer require a marty-ui source checkout for the **development bundle smoke**. The root script `npm run build:website` first generates the demo manifest module, then executes the real TypeScript CLI and Vite.
+- The [required hosted CI check](https://github.com/ElevenID/website/actions/runs/44135521693/job/134223871973) passed a clean install, **65 native + 345 DOM + 122 build + 20 Nginx HTTP = 552 checks** (zero failures/skips), and a real Vite bundle: **1,147 modules transformed, 66 JavaScript chunks**, release metadata with development audience, and eight emitted resource checks. The existing 5 nested Python crawler cases are not added twice.
+- TypeScript 7's native CLI path is resolved without broadening the source/bundle boundary. [Batch 18 provenance](../contracts/extraction-provenance-batch-18.json) supersedes only the current runner blob while preserving the previous [batch 12 historical record](../contracts/extraction-provenance-batch-12.json).
 
-The exact source-copy checkpoint passed 458 combined records; its [required hosted CI](https://github.com/ElevenID/website/actions/runs/44009299256/job/133792151996) passed. The corrected educational-page checkpoint passed 482 native/DOM/build records in 61.39 seconds; its [required hosted CI](https://github.com/ElevenID/website/actions/runs/44010150926/job/133794951739) also passed.
+## Reproduce the qualified scope
 
-| Evidence | Revision/status |
-| --- | --- |
-| Accepted base, PR #11 | `57adcea498bb77935bdbd08ca49654eea44db878` |
-| Exact source-copy commit | `5cc954693cb4de0ac3938a1f0871d68d1a0e47ab` |
-| Exact source-copy tree | `c03207086ede15bf72698cdabab1dd82a3147a22` |
-| Corrected educational-page commit | `dbc26e6e059a9a4de8a6d072b22571ec8bc83180` |
-| Corrected educational-page tree | `c383b62a87ecd6d7e43374e387e6eef1597633cf` |
-| Corrected functional commit | `6e76d883132773b11a2b694438a7a53d34a619cc` |
-| Verified functional tree | `ba71d9f93cf9812e5db77a9cd4e82d406df466b2` |
-| Final required CI and merge | Track PR #12 for the final revision and accepted merge |
+With Node.js 24.22.1 and Docker for the HTTP suite:
 
-Read [the batch 12 receipt](checkpoints/batch-12-pages-build-runtime.md) for the source identities, behavior changes and qualification limits. [Batch 11](checkpoints/batch-11-sections-release-routing.md) and earlier receipts remain historical.
+```sh
+npm ci --no-audit --no-fund
+npm test
+npm run test:nginx
+MARTY_WEBSITE_SOURCE_SHA=development MARTY_WEBSITE_ALLOW_DEVELOPMENT=true npm run build:website
+node scripts/verify-standalone-bundle.mjs
+```
 
-## Resume and next batches
+These commands build a **development audience** bundle with a full source graph and pinned blog package; they do not produce a publishable site image. The generated module can change in the working directory during the build; do not mistake that output for a reviewed commit.
 
-1. Refresh PR #12. If merged, continue from its accepted main; otherwise use its existing branch and remaining checks.
-2. Retain immutable source pin `df6ec6c4bfee803d89c54e9333297f29f378cee3`. The [batch 12 metadata receipt](input-inventory/source-refresh-batch-12.json) confirms comparison main remains `9ff6e9779a020839ebeafc60095370725e9fb694`. Unchanged UI/contracts trees preserve the prior candidate identities and reconciled locale. The selected root startup script was checked separately; other changed root files need their own inspection before use.
-3. Preserve the [source reconciliation](input-inventory/source-reconciliation.json), including `Start Verifying` to application-owned `/verify`, and the [batch 12 provenance chain](../contracts/extraction-provenance-batch-12.json). Later adaptations must retain their original source identities.
-4. The original [79-file candidate inventory](source-import-inventory.json) now has **61 present and 18 deferred**: ten large inputs/page/service/catalog bodies and eight diagram modules/barrel. There are no remaining unimported, non-diagram candidates below 16 KiB in that inventory. Continue suitable bounded build/release work; completing the page graph requires resolving those large-input and diagram deferrals.
-5. Keep related verified commits in cohesive PRs. Preserve website/application ownership, withheld pricing and DRAFT/PARTIAL demo publication states.
+On the existing AWS development instance, preserve the existing rootless Docker and six-hour stop safeguard. To transfer the remaining eight image blobs, use a local source Git checkout containing the immutable `df6ec6c4bfee803d89c54e9333297f29f378cee3` commit, from the website checkout:
 
-## Remaining qualification
+```sh
+node scripts/import-large-public-assets.mjs --source /absolute/path/to/marty-ui
+node scripts/verify-public-assets.mjs
+```
 
-The three educational pages execute with real React, MUI, i18n, metadata and routing helpers. Small marketing/blog inputs and named diagram boundaries keep production content and the immutable blog package deferred. Link semantics, router transitions and recorded document-load calls do not establish real browser handoffs.
+Both scripts are source-bound. The importer refuses collisions and does not automatically commit, push or deploy. Review and commit the eight copied assets as the next checkpoint. No AWS operations were executed in this session because interactive browser command execution was unavailable.
 
-Generator and startup checks use synthetic inputs. Vite executes in the build-runner fixture, while TypeScript invocation is instrumented. Complete production configuration and dependencies remain required; the runner rejects an incomplete checkout. Startup supports the tested single-line generated metadata forms, and file replacements are individually atomic rather than a transaction across the output corpus.
+## Remaining acceptance gates
 
-Production assets, complete crawler/prerender output, the real blog/commerce packages, browser/application handoffs, deployed release identity and rollback remain unqualified. The existing Nginx fixture evidence must be replayed against the complete production output before deployment acceptance. Production cutover is a later milestone.
+1. Complete **46/46** public asset identity verification. The root `favicon.svg` and seven author PNGs remain missing.
+2. Integrate full production Chromium prerender, sitemap/robots generation, RSS/demos, actual emitted metadata images and every route's HTML; the current bundle is a client-rendered development smoke.
+3. Test real browser website/application redirects and Nginx against the complete production output, not only synthetic fixtures.
+4. Produce and verify a website-only container digest, source/workflow/run provenance, private commerce compatibility, promotion and retained-slot rollback without mutating application/backend releases.
+5. Continue the separate platform/application/Canvas migrations. No production cutover.
+
+[Detailed receipt](checkpoints/batch-13-complete-source-bundle.md) · [Original candidate inventory](source-import-inventory.json) · [Source reconciliation](input-inventory/source-reconciliation.json).
