@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "purpose": "post-extraction-adaptation-record",
+  "source_repository": "ElevenID/marty-ui",
+  "immutable_source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "extends": "contracts/extraction-provenance-batch-18.json",
+  "adapted_files": [
+    {
+      "path": "ui/src/components/pages/DemoPages.jsx",
+      "source_original_blob": "4976c8554dfd03b1bd7387a0251cd3cdcdc3416b",
+      "current_blob": "a782855e6bdd29bfae0cd25e91b846db4d565793",
+      "current_bytes": 33955,
+      "change": "Apply the website revision namespace to release and scenario Open Graph poster URLs via staticAssetHref; canonical paths remain unmodified."
+    }
+  ]
+}

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { execFile } from 'node:child_process';
 import {
-  existsSync, lstatSync, mkdirSync, readFileSync, realpathSync,
+  existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, realpathSync,
   renameSync, rmSync, writeFileSync,
 } from 'node:fs';
 import os from 'node:os';
