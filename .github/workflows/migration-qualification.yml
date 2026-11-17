@@ -1,0 +1,60 @@
+name: Website migration qualification
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: website-migration-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  complete-assets:
+    name: Complete asset migration and browser fixture
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24.22.1'
+      # This source checkout is ONLY a temporary migration test input. The
+      # existing Website contracts job and normal builds remain website-only.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: ElevenID/marty-ui
+          ref: df6ec6c4bfee803d89c54e9333297f29f378cee3
+          path: .migration-source
+          sparse-checkout: ui/public
+          persist-credentials: false
+      - name: Exercise exact asset import and idempotent replay
+        run: |
+          node scripts/import-large-public-assets.mjs --source "$GITHUB_WORKSPACE/.migration-source"
+          node scripts/verify-public-assets.mjs
+          node scripts/import-large-public-assets.mjs --source "$GITHUB_WORKSPACE/.migration-source"
+          node scripts/verify-public-assets.mjs
+      - name: Remove temporary migration source before independent build
+        run: |
+          test -d .migration-source/.git
+          rm -rf -- .migration-source
+          test ! -e .migration-source
+      - name: Install website-only pinned dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Build complete development fixture without source checkout
+        env:
+          MARTY_WEBSITE_SOURCE_SHA: development
+          MARTY_WEBSITE_ALLOW_DEVELOPMENT: 'true'
+          MARTY_PRODUCTION_PAGES: public
+        run: |
+          npm run build:website
+          node scripts/verify-standalone-bundle.mjs
+          node scripts/verify-public-assets.mjs
+      - name: Qualify real rendered pages and application document handoff fixture
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        run: node scripts/qualify-rendered-website.mjs
