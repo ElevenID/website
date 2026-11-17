@@ -10,27 +10,6 @@
   "scope": "Batch 12 bounded identity/protocol/standards pages, demo schema, website build input and public runtime sources. Earlier source records remain unchanged.",
   "files": [
     {
-      "source_path": "ui/src/components/IdentityGuidePage.jsx",
-      "target_path": "ui/src/components/IdentityGuidePage.jsx",
-      "git_blob_sha1": "f3e9104a7d4b242b11359a83da80a88560c75cc4",
-      "bytes": 11013,
-      "transfer": "verbatim"
-    },
-    {
-      "source_path": "ui/src/components/ProtocolPage.jsx",
-      "target_path": "ui/src/components/ProtocolPage.jsx",
-      "git_blob_sha1": "42e1d3b5e32aaefb2e44d371602839f0c1baa580",
-      "bytes": 16232,
-      "transfer": "verbatim"
-    },
-    {
-      "source_path": "ui/src/components/StandardsPage.jsx",
-      "target_path": "ui/src/components/StandardsPage.jsx",
-      "git_blob_sha1": "0fcbf958eeaa57e8e0f52c77bdbef08ec388be26",
-      "bytes": 9764,
-      "transfer": "verbatim"
-    },
-    {
       "source_path": "ui/src/generated/demoWalletSchema.generated.json",
       "target_path": "ui/src/generated/demoWalletSchema.generated.json",
       "git_blob_sha1": "58dd81b135c281707185927a6c48de599e100bf9",
@@ -59,5 +38,33 @@
       "transfer": "verbatim"
     }
   ],
-  "adapted_files": []
+  "adapted_files": [
+    {
+      "source_path": "ui/src/components/IdentityGuidePage.jsx",
+      "target_path": "ui/src/components/IdentityGuidePage.jsx",
+      "source_git_blob_sha1": "f3e9104a7d4b242b11359a83da80a88560c75cc4",
+      "bytes": 11013,
+      "target_git_blob_sha1": "032d7f5baf8e6bc34a9c04c477d70e4edc70f570",
+      "target_bytes": 11144,
+      "changes": "Use supported responsive Grid sizes and Typography sx weights/alignment while preserving educational content, metadata and navigation."
+    },
+    {
+      "source_path": "ui/src/components/ProtocolPage.jsx",
+      "target_path": "ui/src/components/ProtocolPage.jsx",
+      "source_git_blob_sha1": "42e1d3b5e32aaefb2e44d371602839f0c1baa580",
+      "bytes": 16232,
+      "target_git_blob_sha1": "79d4308a3cadf29f73e76774466f5957299e3c21",
+      "target_bytes": 16283,
+      "changes": "Use supported Grid/Typography styles; sort article copies; expose native canonical article links with existing surface navigation semantics; disable empty chapter actions and remove unsupported fixed progress."
+    },
+    {
+      "source_path": "ui/src/components/StandardsPage.jsx",
+      "target_path": "ui/src/components/StandardsPage.jsx",
+      "source_git_blob_sha1": "0fcbf958eeaa57e8e0f52c77bdbef08ec388be26",
+      "bytes": 9764,
+      "target_git_blob_sha1": "c0951141c6457639fa00acb18180a3b1b2f8ccc2",
+      "target_bytes": 9789,
+      "changes": "Use supported responsive Grid sizes and Typography sx weights/alignment while preserving standards disclaimers, metadata and navigation."
+    }
+  ]
 }

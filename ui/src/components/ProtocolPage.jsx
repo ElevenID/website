@@ -1,13 +1,13 @@
 import { useSurfaceNavigate } from '../application/routing/useSurfaceNavigate';
+import { publicEntryHref } from '../application/routing/publicEntry';
 /**
  * Protocol Page
  *
  * Explains the Marty Identity Protocol (MIP) — the open standard
  * that defines primitives for verifiable digital identity management.
- * Features the Interactive Protocol Map and the learning curriculum.
  */
 
-import { Box, Typography, Card, CardContent, CardActionArea, Grid, Paper, Button, Chip, Divider, LinearProgress } from '@mui/material';
+import { Box, Typography, Card, CardContent, Grid, Paper, Button, Chip, Divider } from '@mui/material';
 import { SEOHead } from './seo';
 import { protocolSchema } from './seo/structuredData';
 import { useTranslation } from 'react-i18next';
@@ -37,6 +37,11 @@ const CHAPTER_ICONS = {
 function ProtocolPage() {
   const { t } = useTranslation('marketing');
   const navigate = useSurfaceNavigate();
+  const openArticle = (event, slug) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    navigate(`/blog/${slug}`);
+  };
 
   return (
     <Box>
@@ -80,8 +85,7 @@ function ProtocolPage() {
           variant="h3"
           component="h1"
           gutterBottom
-          fontWeight={800}
-          sx={{ fontSize: { xs: '2rem', md: '2.75rem' } }}
+          sx={{ fontWeight: 800, fontSize: { xs: '2rem', md: '2.75rem' } }}
         >
           {t('protocol.heroTitle', 'Built around an Open Draft Protocol')}
         </Typography>
@@ -131,17 +135,17 @@ function ProtocolPage() {
         elevation={0}
         sx={{ p: 4, mb: 6, bgcolor: 'primary.50', borderRadius: 2, textAlign: 'center', border: '1px solid', borderColor: 'primary.100' }}
       >
-        <Typography variant="h6" fontWeight={600} color="primary.dark" sx={{ fontStyle: 'italic', maxWidth: 900, mx: 'auto' }}>
+        <Typography variant="h6" color="primary.dark" sx={{ fontWeight: 600, fontStyle: 'italic', maxWidth: 900, mx: 'auto' }}>
           &ldquo;{PROTOCOL.thesis}&rdquo;
         </Typography>
       </Paper>
 
       {/* Interactive Protocol Map */}
       <Box sx={{ mb: 8 }}>
-        <Typography variant="h4" fontWeight={800} textAlign="center" gutterBottom>
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: 800, textAlign: 'center' }}>
           Protocol Architecture
         </Typography>
-        <Typography variant="body1" color="text.secondary" textAlign="center" sx={{ mb: 4, maxWidth: 800, mx: 'auto' }}>
+        <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', mb: 4, maxWidth: 800, mx: 'auto' }}>
           Hover to explore relationships between components. Click any node to read its guide article.
           Toggle between Concept and Implementation views.
         </Typography>
@@ -155,7 +159,7 @@ function ProtocolPage() {
       {/* Learning Curriculum */}
       <Box sx={{ mb: 8 }}>
         <Box sx={{ textAlign: 'center', mb: 5 }}>
-          <Typography variant="h4" fontWeight={800} gutterBottom>
+          <Typography variant="h4" gutterBottom sx={{ fontWeight: 800 }}>
             Learn the Protocol
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 700, mx: 'auto' }}>
@@ -166,11 +170,11 @@ function ProtocolPage() {
 
         <Grid container spacing={3} sx={{ maxWidth: 1100, mx: 'auto' }}>
           {GUIDE_CHAPTERS.map((chapter) => {
-            const articles = (GUIDE_ARTICLES_BY_CHAPTER[chapter.id] || [])
+            const articles = [...(GUIDE_ARTICLES_BY_CHAPTER[chapter.id] || [])]
               .sort((a, b) => a.order - b.order);
 
             return (
-              <Grid item xs={12} sm={6} md={4} key={chapter.id}>
+              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={chapter.id}>
                 <Card
                   elevation={2}
                   sx={{
@@ -193,39 +197,30 @@ function ProtocolPage() {
                         sx={{ fontWeight: 700, bgcolor: `${chapter.color}15`, color: chapter.color }}
                       />
                     </Box>
-                    <Typography variant="h6" fontWeight={700} gutterBottom>
+                    <Typography variant="h6" gutterBottom sx={{ fontWeight: 700 }}>
                       {chapter.title}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                      <LinearProgress
-                        variant="determinate"
-                        value={0}
-                        sx={{
-                          flexGrow: 1,
-                          height: 4,
-                          borderRadius: 2,
-                          bgcolor: 'grey.200',
-                          '& .MuiLinearProgress-bar': { bgcolor: chapter.color },
-                        }}
-                      />
                       <Typography variant="caption" color="text.secondary">
-                        {articles.length} articles
+                        {articles.length} {articles.length === 1 ? 'article' : 'articles'}
                       </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
                       {articles.slice(0, 4).map((article) => (
                         <Typography
                           key={article.slug}
+                          component="a"
+                          href={publicEntryHref(`/blog/${article.slug}`)}
+                          onClick={(event) => openArticle(event, article.slug)}
                           variant="body2"
                           color="text.secondary"
                           sx={{
-                            cursor: 'pointer',
+                            textDecoration: 'none',
                             display: 'flex',
                             alignItems: 'center',
                             gap: 0.5,
                             '&:hover': { color: chapter.color },
                           }}
-                          onClick={() => navigate(`/blog/${article.slug}`)}
                         >
                           <ArrowForwardIcon sx={{ fontSize: 12 }} />
                           {article.title}
@@ -241,6 +236,7 @@ function ProtocolPage() {
                   <Box sx={{ p: 2, pt: 0 }}>
                     <Button
                       size="small"
+                      disabled={articles.length === 0}
                       endIcon={<ArrowForwardIcon />}
                       onClick={() => {
                         const first = articles[0];
@@ -262,16 +258,16 @@ function ProtocolPage() {
 
       {/* Standards Alignment */}
       <Box sx={{ mb: 8 }}>
-        <Typography variant="h4" fontWeight={800} textAlign="center" gutterBottom>
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: 800, textAlign: 'center' }}>
           {t('protocol.sectionStandards', 'Standards Alignment')}
         </Typography>
-        <Typography variant="body1" color="text.secondary" textAlign="center" sx={{ mb: 4, maxWidth: 800, mx: 'auto' }}>
+        <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', mb: 4, maxWidth: 800, mx: 'auto' }}>
           {t('protocol.standardsSubtitle', 'Review the exact release and profile. Protocol mappings do not certify a product or deployment.')}
         </Typography>
 
         <Grid container spacing={2} sx={{ maxWidth: 900, mx: 'auto' }}>
           {PROTOCOL.standards.map((std) => (
-            <Grid item xs={12} sm={6} key={std.name}>
+            <Grid size={{ xs: 12, sm: 6 }} key={std.name}>
               <Paper
                 elevation={1}
                 sx={{
@@ -285,7 +281,7 @@ function ProtocolPage() {
               >
                 <CheckCircleIcon color="success" sx={{ mt: 0.3, flexShrink: 0 }} />
                 <Box>
-                  <Typography variant="subtitle2" fontWeight={700}>{std.name}</Typography>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>{std.name}</Typography>
                   <Typography variant="body2" color="text.secondary">{std.coverage}</Typography>
                 </Box>
               </Paper>
@@ -308,10 +304,10 @@ function ProtocolPage() {
 
       {/* Open Governance */}
       <Box sx={{ mb: 8 }}>
-        <Typography variant="h4" fontWeight={800} textAlign="center" gutterBottom>
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: 800, textAlign: 'center' }}>
           {t('protocol.sectionGovernance', 'Open Governance')}
         </Typography>
-        <Typography variant="body1" color="text.secondary" textAlign="center" sx={{ mb: 4, maxWidth: 700, mx: 'auto' }}>
+        <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', mb: 4, maxWidth: 700, mx: 'auto' }}>
           {t('protocol.governanceSubtitle', 'No single organization controls the protocol. All decisions are made publicly on GitHub.')}
         </Typography>
 
@@ -322,7 +318,7 @@ function ProtocolPage() {
             { icon: <PublicIcon sx={{ fontSize: 32, color: 'info.main' }} />, text: t('protocol.governanceDecisions', 'All decisions made publicly on GitHub — no private steering committees') },
             { icon: <InventoryIcon sx={{ fontSize: 32, color: 'success.main' }} />, text: t('protocol.governanceCopyright', 'Copyright held by The MIP Authors') },
           ].map((item, idx) => (
-            <Grid item xs={12} sm={6} key={idx}>
+            <Grid size={{ xs: 12, sm: 6 }} key={idx}>
               <Paper elevation={1} sx={{ p: 3, display: 'flex', alignItems: 'center', gap: 2, height: '100%' }}>
                 {item.icon}
                 <Typography variant="body1">{item.text}</Typography>
@@ -342,7 +338,7 @@ function ProtocolPage() {
           borderRadius: 2,
         }}
       >
-        <Typography variant="h4" gutterBottom fontWeight={800}>
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: 800 }}>
           {t('protocol.ctaTitle', 'Get Involved')}
         </Typography>
         <Typography variant="body1" sx={{ maxWidth: 600, mx: 'auto', mb: 4, opacity: 0.92 }}>

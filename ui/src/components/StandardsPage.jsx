@@ -1,7 +1,7 @@
 import { useSurfaceNavigate } from '../application/routing/useSurfaceNavigate';
 /**
  * Standards Page
- * 
+ *
  * Explains why standards matter and shows the standards stack
  * that ElevenID LLC is built on
  */
@@ -15,7 +15,6 @@ import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import GitHubIcon from '@mui/icons-material/GitHub';
 
 
 const ICON_MAP = {
@@ -37,7 +36,7 @@ function StandardsPage() {
         canonicalPath="/standards"
         keywords={['identity standards', 'ISO 18013-5', 'W3C Verifiable Credentials', 'EUDI Wallet', 'OpenID4VP', 'Open Badges', 'interoperability']}
       />
-      
+
       {/* Hero Section */}
       <Box
         sx={{
@@ -49,7 +48,7 @@ function StandardsPage() {
           borderRadius: 2,
         }}
       >
-        <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
+        <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
           Standards & Interoperability
         </Typography>
         <Typography variant="h6" sx={{ maxWidth: 800, mx: 'auto', opacity: 0.95 }}>
@@ -59,7 +58,7 @@ function StandardsPage() {
 
       {/* Why This Matters for You */}
       <Paper elevation={0} sx={{ p: 4, mb: 6, bgcolor: 'grey.50', borderRadius: 2 }}>
-        <Typography variant="h5" fontWeight="bold" gutterBottom color="primary">
+        <Typography variant="h5" gutterBottom color="primary" sx={{ fontWeight: 'bold' }}>
           Why Standards Matter for Your Organization
         </Typography>
         <Typography variant="body1" paragraph sx={{ fontSize: '1.05rem', lineHeight: 1.7 }}>
@@ -75,8 +74,8 @@ function StandardsPage() {
           is not certification, regulatory approval, or an assurance that a deployment meets an organization&apos;s obligations.
         </Typography>
         <Typography variant="body1" sx={{ fontSize: '1.05rem', lineHeight: 1.7 }}>
-          <strong>Standards save engineering time.</strong> Instead of building custom protocols for credential 
-          exchange, trust establishment, and security, you leverage proven solutions with libraries, tools, 
+          <strong>Standards save engineering time.</strong> Instead of building custom protocols for credential
+          exchange, trust establishment, and security, you leverage proven solutions with libraries, tools,
           and community support.
         </Typography>
       </Paper>
@@ -84,12 +83,12 @@ function StandardsPage() {
       {/* Strategic Statement */}
       <Box sx={{ mb: 6 }}>
         <Paper elevation={0} sx={{ p: 3, mb: 2, bgcolor: 'primary.light', borderRadius: 2 }}>
-          <Typography variant="h5" textAlign="center" fontWeight="bold" color="primary.dark">
+          <Typography variant="h5" color="primary.dark" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
             {STANDARDS_STRATEGIC.header}
           </Typography>
         </Paper>
-        <Typography variant="body1" color="text.secondary" textAlign="center" sx={{ maxWidth: 800, mx: 'auto' }}>
-          ElevenID LLC models standards as governed configuration—trust rules, credential formats, presentation policies, 
+        <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', maxWidth: 800, mx: 'auto' }}>
+          ElevenID LLC models standards as governed configuration—trust rules, credential formats, presentation policies,
           and deployment behavior—rather than one-off integrations.
         </Typography>
       </Box>
@@ -98,13 +97,13 @@ function StandardsPage() {
       <Box sx={{ mb: 8 }}>
         <Grid container spacing={4}>
           {STANDARDS_INFO.whyStandardsMatter.points.map((point) => (
-            <Grid item xs={12} sm={6} md={3} key={point.title}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }} key={point.title}>
               <Card sx={{ height: '100%', textAlign: 'center' }}>
                 <CardContent sx={{ py: 4 }}>
                   <Box sx={{ color: 'primary.main', mb: 2 }}>
                     {ICON_MAP[point.title]}
                   </Box>
-                  <Typography variant="h6" fontWeight="bold" gutterBottom>
+                  <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
                     {point.title}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
@@ -122,24 +121,24 @@ function StandardsPage() {
         <Paper elevation={2} sx={{ p: 4, bgcolor: 'grey.50' }}>
           <StandardsStackDiagram interactive={true} />
         </Paper>
-        <Typography variant="body1" color="text.secondary" textAlign="center" sx={{ mt: 3, maxWidth: 800, mx: 'auto' }}>
-          Each layer maps to a different concern: frameworks define what identity means, formats define how claims are encoded, 
+        <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', mt: 3, maxWidth: 800, mx: 'auto' }}>
+          Each layer maps to a different concern: frameworks define what identity means, formats define how claims are encoded,
           protocols define how they move, and trust defines who is authorized. ElevenID LLC governs all four centrally.
         </Typography>
       </Box>
 
       {/* Detailed Standards by Layer */}
       <Box sx={{ mb: 6 }}>
-        <Typography variant="h4" gutterBottom fontWeight="bold" textAlign="center" sx={{ mb: 4 }}>
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'center', mb: 4 }}>
           Standards in Detail
         </Typography>
 
         <Grid container spacing={4}>
           {STANDARDS_INFO.layers.map((layer) => (
-            <Grid item xs={12} md={6} key={layer.name}>
+            <Grid size={{ xs: 12, md: 6 }} key={layer.name}>
               <Card elevation={3} sx={{ height: '100%' }}>
                 <CardContent>
-                  <Typography variant="h5" fontWeight="bold" color="primary" gutterBottom>
+                  <Typography variant="h5" color="primary" gutterBottom sx={{ fontWeight: 'bold' }}>
                     {layer.name}
                   </Typography>
                   <Typography variant="body2" color="text.secondary" paragraph>
@@ -149,7 +148,7 @@ function StandardsPage() {
                   <Box sx={{ mt: 3 }}>
                     {layer.standards.map((standard) => (
                       <Box key={standard.name} sx={{ mb: 2 }}>
-                        <Typography variant="subtitle2" fontWeight="bold">
+                        <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
                           {standard.name}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
@@ -175,7 +174,7 @@ function StandardsPage() {
           borderRadius: 2,
         }}
       >
-        <Typography variant="h4" gutterBottom fontWeight="bold">
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
           Standards-First Architecture
         </Typography>
         <Typography variant="body1" sx={{ maxWidth: 800, mx: 'auto', mb: 2 }}>
@@ -183,7 +182,7 @@ function StandardsPage() {
           profile, and executed evidence before making an interoperability or production commitment.
         </Typography>
         <Typography variant="body2" sx={{ maxWidth: 700, mx: 'auto', mb: 3, opacity: 0.9 }}>
-          Standards define the rules; ElevenID LLC enforces them through centrally governed policies 
+          Standards define the rules; ElevenID LLC enforces them through centrally governed policies
           executed consistently across APIs, wallets, and devices.
         </Typography>
         <Typography variant="body2" sx={{ maxWidth: 700, mx: 'auto', mb: 3, opacity: 0.85 }}>

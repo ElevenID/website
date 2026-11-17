@@ -1,7 +1,7 @@
 import { useSurfaceNavigate } from '../application/routing/useSurfaceNavigate';
 /**
  * Identity Guide Page
- * 
+ *
  * Educational content explaining how digital identity works
  * Adapted from Digital_Identity_model.md and White_Paper.md
  */
@@ -49,7 +49,7 @@ function IdentityGuidePage() {
           borderRadius: 2,
         }}
       >
-        <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
+        <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
           How Digital Identity Works
         </Typography>
         <Typography variant="h6" sx={{ maxWidth: 800, mx: 'auto', opacity: 0.95 }}>
@@ -57,17 +57,17 @@ function IdentityGuidePage() {
         </Typography>
       </Box>
       {/* TL;DR - 60 Second Summary */}
-      <Paper 
-        elevation={3} 
-        sx={{ 
-          p: 4, 
-          mb: 6, 
-          bgcolor: 'primary.light', 
+      <Paper
+        elevation={3}
+        sx={{
+          p: 4,
+          mb: 6,
+          bgcolor: 'primary.light',
           color: 'primary.contrastText',
           borderRadius: 2
         }}
       >
-        <Typography variant="h5" fontWeight="bold" gutterBottom>
+        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
           TL;DR: Identity in 60 Seconds
         </Typography>
         <Typography variant="body1" paragraph sx={{ fontSize: '1.05rem', lineHeight: 1.7 }}>
@@ -83,7 +83,7 @@ function IdentityGuidePage() {
       </Paper>
       {/* What Identity Is */}
       <Box sx={{ mb: 8 }}>
-        <Typography variant="h4" gutterBottom fontWeight="bold">
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
           {IDENTITY_CONCEPTS.whatIs.title}
         </Typography>
         <Typography variant="h6" color="text.secondary" gutterBottom sx={{ fontStyle: 'italic' }}>
@@ -94,7 +94,7 @@ function IdentityGuidePage() {
         </Typography>
 
         <Paper elevation={2} sx={{ p: 4, bgcolor: 'warning.light', color: 'warning.contrastText', my: 4 }}>
-          <Typography variant="h6" fontWeight="bold" gutterBottom>
+          <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
             Why Traditional Identity Systems Fail
           </Typography>
           <List>
@@ -120,10 +120,10 @@ function IdentityGuidePage() {
 
           <Grid container spacing={3} sx={{ mt: 2 }}>
             {IDENTITY_CONCEPTS.threeQuestions.questions.map((item) => (
-              <Grid item xs={12} md={4} key={item.question}>
+              <Grid size={{ xs: 12, md: 4 }} key={item.question}>
                 <Card elevation={2}>
                   <CardContent>
-                    <Typography variant="h6" fontWeight="bold" color="primary" gutterBottom>
+                    <Typography variant="h6" color="primary" gutterBottom sx={{ fontWeight: 'bold' }}>
                       {item.question}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" paragraph>
@@ -142,13 +142,13 @@ function IdentityGuidePage() {
       <Divider sx={{ my: 8 }} />
       {/* Four Primitives */}
       <Box sx={{ mb: 8 }}>
-        <Typography variant="h4" gutterBottom fontWeight="bold" textAlign="center">
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'center' }}>
           {IDENTITY_CONCEPTS.fourPrimitives.title}
         </Typography>
-        <Typography variant="body1" color="text.secondary" textAlign="center" paragraph>
+        <Typography variant="body1" color="text.secondary" paragraph sx={{ textAlign: 'center' }}>
           {IDENTITY_CONCEPTS.fourPrimitives.tagline}
         </Typography>
-        <Typography variant="body2" color="primary.main" textAlign="center" paragraph sx={{ mb: 6, fontWeight: 500 }}>
+        <Typography variant="body2" color="primary.main" paragraph sx={{ textAlign: 'center', mb: 6, fontWeight: 500 }}>
           Policies are configuration, not code. Endpoints execute centrally governed trust and disclosure rules without redeployment.
         </Typography>
 
@@ -158,23 +158,23 @@ function IdentityGuidePage() {
 
         <Grid container spacing={4}>
           {IDENTITY_CONCEPTS.fourPrimitives.primitives.map((primitive) => (
-            <Grid item xs={12} md={6} key={primitive.name}>
+            <Grid size={{ xs: 12, md: 6 }} key={primitive.name}>
               <Card elevation={3} sx={{ height: '100%' }}>
                 <CardContent>
-                  <Typography variant="h5" fontWeight="bold" color="primary" gutterBottom>
+                  <Typography variant="h5" color="primary" gutterBottom sx={{ fontWeight: 'bold' }}>
                     {primitive.name}
                   </Typography>
                   <Typography variant="subtitle2" color="text.secondary" paragraph sx={{ fontStyle: 'italic' }}>
                     {primitive.purpose}
                   </Typography>
 
-                  <Typography variant="subtitle2" fontWeight="bold" gutterBottom sx={{ mt: 2 }}>
+                  <Typography variant="subtitle2" gutterBottom sx={{ fontWeight: 'bold', mt: 2 }}>
                     Contains:
                   </Typography>
                   <List dense>
                     {primitive.contains.map((item) => (
                       <ListItem key={item} sx={{ py: 0.5 }}>
-                        <ListItemText 
+                        <ListItemText
                           primary={item}
                           slotProps={{
                             primary: { variant: 'body2' }
@@ -185,9 +185,9 @@ function IdentityGuidePage() {
                   </List>
 
                   <Box sx={{ mt: 2 }}>
-                    <Chip 
-                      label={primitive.stability} 
-                      size="small" 
+                    <Chip
+                      label={primitive.stability}
+                      size="small"
                       variant="outlined"
                       color="secondary"
                     />
@@ -201,10 +201,10 @@ function IdentityGuidePage() {
       <Divider sx={{ my: 8 }} />
       {/* Flows */}
       <Box sx={{ mb: 8 }}>
-        <Typography variant="h4" gutterBottom fontWeight="bold" textAlign="center">
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'center' }}>
           {IDENTITY_CONCEPTS.flows.title}
         </Typography>
-        <Typography variant="body1" color="text.secondary" textAlign="center" paragraph sx={{ mb: 4 }}>
+        <Typography variant="body1" color="text.secondary" paragraph sx={{ textAlign: 'center', mb: 4 }}>
           {IDENTITY_CONCEPTS.flows.description}
         </Typography>
 
@@ -212,16 +212,16 @@ function IdentityGuidePage() {
           <CredentialFlowDiagram interactive={true} />
         </Paper>
 
-        <Typography variant="h5" fontWeight="bold" gutterBottom>
+        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
           Real-World Flow Examples
         </Typography>
 
         <Grid container spacing={3}>
           {IDENTITY_CONCEPTS.flows.examples.map((example) => (
-            <Grid item xs={12} md={4} key={example.name}>
+            <Grid size={{ xs: 12, md: 4 }} key={example.name}>
               <Card elevation={2}>
                 <CardContent>
-                  <Typography variant="h6" fontWeight="bold" gutterBottom>
+                  <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
                     {example.name}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
@@ -243,16 +243,16 @@ function IdentityGuidePage() {
           borderRadius: 2,
         }}
       >
-        <Typography variant="h4" gutterBottom fontWeight="bold">
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
           Identity as Infrastructure
         </Typography>
         <Typography variant="body1" sx={{ maxWidth: 800, mx: 'auto', mb: 2 }}>
-          Digital identity becomes automatable when modeled as trust configuration, credential templates, 
-          presentation policies, and deployment profiles—orchestrated by flows that handle the complete 
+          Digital identity becomes automatable when modeled as trust configuration, credential templates,
+          presentation policies, and deployment profiles—orchestrated by flows that handle the complete
           lifecycle from application through verification.
         </Typography>
         <Typography variant="body2" sx={{ maxWidth: 700, mx: 'auto', mb: 3, opacity: 0.85 }}>
-          These primitives are now formalized in the <strong>Marty Identity Protocol (MIP)</strong>—an 
+          These primitives are now formalized in the <strong>Marty Identity Protocol (MIP)</strong>—an
           open, vendor-neutral specification.
         </Typography>
         <Button
