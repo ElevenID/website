@@ -13,9 +13,12 @@
     "test:contracts": "node --experimental-vm-modules --test tests/*.test.mjs tests/vm/*.test.mjs ui/scripts/dev-server-origin.test.mjs ui/scripts/generated-text.test.mjs",
     "test:dom": "vitest run --config vitest.dom.config.mjs",
     "test:build": "node --test --test-concurrency=1 tests/build/*.test.mjs",
-    "test:nginx": "node --test --test-concurrency=1 tests/nginx/*.test.mjs"
+    "test:nginx": "node --test --test-concurrency=1 tests/nginx/*.test.mjs",
+    "prebuild:website": "node ui/scripts/generate-demo-manifest-module.mjs",
+    "build:website": "node ui/scripts/build-web-surface.mjs website"
   },
   "dependencies": {
+    "@elevenid/marty-blog": "https://github.com/ElevenID/marty-blog/releases/download/v0.1.9/elevenid-marty-blog-0.1.9.tgz",
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
     "@mui/icons-material": "9.3.0",
@@ -33,8 +36,11 @@
   "devDependencies": {
     "@testing-library/dom": "10.4.2",
     "@testing-library/react": "16.3.3",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.4",
     "@vitejs/plugin-react": "6.1.2",
     "jsdom": "30.1.3",
+    "typescript": "7.0.2",
     "vite": "8.3.6",
     "vitest": "5.0.5"
   }
