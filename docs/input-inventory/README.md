@@ -6,13 +6,14 @@ This directory records source, asset, build and test evidence for the website ex
 
 - Immutable source snapshot: `ElevenID/marty-ui@df6ec6c4bfee803d89c54e9333297f29f378cee3`.
 - Historical full source/public comparison: `e10a7f26cda8ac217c7ddefebc709fc246dabaff`, retained in [source drift](source-drift.json).
-- [Latest source metadata receipt](source-refresh-batch-10.json): source main advanced to `9ff6e9779a020839ebeafc60095370725e9fb694`; the complete `ui/` and `contracts/` subtrees remain identical to the [batch 8 comparison](source-refresh-batch-8.json). This proves unchanged identities for 77 UI candidates, two contract candidates and the reconciled locale without rereading source bodies.
+- [Latest source metadata receipt](source-refresh-batch-11.json): source main remains `9ff6e9779a020839ebeafc60095370725e9fb694`. The full `ui/` and `contracts/` tree identities remain unchanged from [batch 10](source-refresh-batch-10.json), preserving 77 UI candidates, two contract candidates and the reconciled locale without rereading large source bodies.
 - [Original public inventory](asset-inventory.json): 83 tracked files, including 46 retained and 37 excluded by the inspected website plugin.
 - [Original build/test inventory](build-inventory.json): classification of helpers, configuration, generated inputs, dependency constraints and tests. Later execution evidence is recorded in the batch checkpoints.
+- [Batch 11 provenance shard](../../contracts/extraction-provenance-batch-11.json): 12 selected source imports totaling 60,382 bytes, with original identities and separate adaptation records: one verbatim header and 11 adapted files. The earlier 67 targets remain unchanged. It extends [earlier provenance](../../contracts/extraction-provenance.json).
 
-The source refresh retains **74 original-pin matches, five reconciled source matches and one reconciled locale match**, with no missing paths or unexpected differences. Root `.github/`, `release/`, `scripts/` and `tests/` changed and are outside that inherited candidate comparison. The public asset corpus has not received a new content audit.
+The source refresh retains **74 original-pin matches, five reconciled source matches and one reconciled locale match**, with no missing paths or unexpected differences. Earlier changes to root `.github/`, `release/`, `scripts/` and `tests/` remain outside that candidate comparison. The public asset corpus has not received a new content audit.
 
-The inventories remain bounded evidence. Vite, DOM and crawler fixtures qualify selected modules and artifact contracts; they do not establish a complete standalone website or production generated-output graph.
+The inventories remain bounded evidence. Vite, DOM, crawler and server fixtures qualify selected modules and artifact contracts; they do not establish a complete standalone production website.
 
 ## Preserve newer source changes
 
@@ -27,20 +28,19 @@ The reviewed CTA deltas add no module-import edges. This limited conclusion does
 | [7](../checkpoints/batch-7-react-integration.md) | Pinned DOM dependencies, React navigation and metadata; 88 passing tests |
 | [8](../checkpoints/batch-8-runtime-pages-build.md) | Runtime sources, ten public pages, shared components and Vite fixtures; 178 passing tests |
 | [9](../checkpoints/batch-9-demo-catalog-composition.md) | Page/catalog/demo helpers and composition foundations; 272 passing tests |
-| [10](../checkpoints/batch-10-crawler-build-routes.md) | Four build/crawler sources and route wiring; source-copy baseline 272 plus standalone production 2 and Python 5 passed; expanded aggregate 353 passed (54 native, 266 DOM, 33 build) |
+| [10](../checkpoints/batch-10-crawler-build-routes.md) | Build/crawler sources and route wiring; 353 aggregate records passed (54 native, 266 DOM, 33 build) |
+| [11](../checkpoints/batch-11-sections-release-routing.md) | Six runtime and six build/server sources; source checkpoint 355 passed; corrected aggregate 436 passed (56 native, 304 DOM, 76 build); 20 separate Nginx HTTP cases passed in 0.72 seconds |
 
-Batch 10 retains the npm dependency pins and CI workflow, adds a Python standard-library execution requirement, and extends fixture coverage. The fresh npm audit reported zero vulnerabilities. Track the final hosted check and merge on [PR #10](https://github.com/ElevenID/website/pull/10). Its five Python cases run within one of the build records and are reported separately to avoid double counting.
-
-PR #4 preserved the dependency-free `dev-server-origin.mjs` and `generated-text.mjs` helpers and their original tests, 4,806 bytes total. Its [required hosted check](https://github.com/ElevenID/website/actions/runs/43940036162/job/133554816226) passed 19 tests. Later checkpoints supersede that historical validation scope.
+Batch 11 adds 38 component cases. The expanded original-source component baseline passed 22 and failed 16; the adaptations correct effective Grid/typography styles, keyboard link/control semantics, selected-state exposure and canonical public-entry destinations. The 76 passing build records include 43 new cases for website identity, actual Vite composition and distribution checks. The separate HTTP suite passed all 20 cases against the digest-pinned official Nginx image. Fresh dependency audit: zero vulnerabilities at every severity (exit 0). Track final hosted checks and merge on [PR #11](https://github.com/ElevenID/website/pull/11). Five Python cases run inside one build wrapper and are reported separately without adding them again to aggregate counts.
 
 ## Remaining gates
 
 1. Complete page and data imports behind the website route boundaries, preserving reconciled source/locale identities and later adaptations.
-2. Extend the existing dependency/build context to the complete website graph, including the immutable blog pin. Retain the extracted icon resolver and qualified component compatibility changes.
-3. Handle deferred larger/generated inputs in bounded work without full content dumps or SVG parsing.
+2. Extend the dependency/build context to the complete website graph, including the immutable blog pin. Retain the extracted icon resolver and qualified component compatibility changes.
+3. Defer large/generated input bodies and SVG processing under the current bounded-work constraint.
 4. Verify actual demo poster references/digests and preserve DRAFT/PARTIAL publication states.
 5. Expand asset checks to the production website corpus, including metadata images. Decide whether to adapt or defer the AI-plugin compatibility payload.
-6. Qualify generated production crawler output, complete prerender execution and actual Nginx/browser/application handoffs.
-7. Bind release provenance and verify rollback before production cutover.
+6. Qualify generated production crawler output, complete prerender execution and full browser/application handoffs. Replay server policy against the complete production output before deployment acceptance.
+7. Bind production release provenance and verify deployment rollback before cutover.
 
 The root route contract does not assign `/.well-known` to the website. A versioned AI-plugin payload does not establish a new root route.
