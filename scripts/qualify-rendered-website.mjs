@@ -17,6 +17,14 @@ const version = (await execute(chrome, ['--version'], { timeout: 10000 })).stdou
 const metadata = JSON.parse(readFileSync(path.join(dist, 'marty-website-release.json'), 'utf8'));
 assert.equal(metadata.audience, 'development', 'This migration fixture must not claim production provenance');
 assert.equal(metadata.revision, 'development');
+const demoIndex = JSON.parse(readFileSync(path.join(dist, '_website/development/demos/manifests/index.json'), 'utf8'));
+assert.equal(demoIndex.schema_version, 2);
+// The catalog intentionally presents a selected release and uses its immutable
+// version canonical, not /demos. Match the existing approved/available order.
+const demoVersion = demoIndex.latest_approved_stack_version || demoIndex.latest_available_stack_version;
+assert.match(demoVersion, /^[0-9]+\.[0-9]+\.[0-9]+$/);
+const demoRelease = demoIndex.releases.find((entry) => entry.stack_version === demoVersion);
+assert.ok(demoRelease, 'Demo canonical must reference an indexed release');
 const routes = ['/', '/product', '/standards', '/protocol', '/demos', '/blog'];
 const misses = [];
 const requests = [];
@@ -83,7 +91,9 @@ await new Promise((resolve, reject) => {
   server.listen(0, '127.0.0.1', resolve);
 });
 const origin = `http://127.0.0.1:${server.address().port}`;
-const receipt = { scope: 'complete-assets-development-render-fixture', chrome: version, pages: [], application_handoff_fixture: false };
+const receipt = { scope: 'complete-assets-development-render-fixture', chrome: version, pages: [],
+  demo_state: { version: demoVersion, publication: demoRelease.publication_state, coverage: demoRelease.coverage_state },
+  application_handoff_fixture: false };
 async function render(route) {
   const profile = mkdtempSync(path.join(os.tmpdir(), 'website-chrome-'));
   try {
@@ -102,25 +112,31 @@ try {
   for (const route of routes) {
     const start = misses.length;
     const document = await render(route);
-    const root = document.documentElement;
-    assert.equal(root.getAttribute('data-website-error'), null, `Browser exception on ${route}`);
-    assert.equal(root.getAttribute('data-website-rendered'), 'true', `app-rendered was not observed on ${route}; missing resources: ${misses.slice(start).join(', ')}`);
-    assert.ok(root.classList.contains('app-ready'), `Startup did not finish on ${route}`);
-    const heading = document.querySelector('#root h1');
-    assert.ok(heading?.textContent.trim(), `No rendered page heading on ${route}`);
-    const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute('href');
-    assert.equal(canonical, 'https://elevenidllc.com' + (route === '/' ? '/' : route), `Canonical mismatch on ${route}`);
-    assert.deepEqual(misses.slice(start), [], `Missing same-origin resources on ${route}`);
-    receipt.pages.push({ route, heading: heading.textContent.trim(), canonical });
-    console.log(JSON.stringify({ rendered: route, heading: heading.textContent.trim() }));
-    document.defaultView.close();
+    try {
+      const root = document.documentElement;
+      assert.equal(root.getAttribute('data-website-error'), null, `Browser exception on ${route}`);
+      assert.equal(root.getAttribute('data-website-rendered'), 'true', `app-rendered was not observed on ${route}; missing resources: ${misses.slice(start).join(', ')}`);
+      assert.ok(root.classList.contains('app-ready'), `Startup did not finish on ${route}`);
+      const heading = document.querySelector('#root h1');
+      assert.ok(heading?.textContent.trim(), `No rendered page heading on ${route}`);
+      const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute('href');
+      const canonicalPath = route === '/demos' ? `/demos/${demoVersion}` : route;
+      assert.equal(canonical, 'https://elevenidllc.com' + canonicalPath, `Canonical mismatch on ${route}`);
+      if (route === '/demos' && demoRelease.publication_state === 'DRAFT') {
+        assert.ok(document.body.textContent.includes('publication preview'), 'Draft demonstration lost its qualification disclaimer');
+      }
+      assert.deepEqual(misses.slice(start), [], `Missing same-origin resources on ${route}`);
+      receipt.pages.push({ route, heading: heading.textContent.trim(), canonical });
+      console.log(JSON.stringify({ rendered: route, heading: heading.textContent.trim(), canonical }));
+    } finally { document.defaultView.close(); }
   }
   const before = requests.filter((route) => route === '/verify').length;
   const handoff = await render('/?handoff-probe=1');
-  assert.equal(handoff.documentElement.getAttribute('data-application-handoff'), 'true', 'Verification CTA did not load the application document');
-  assert.ok(requests.filter((route) => route === '/verify').length > before, 'No document request reached the application fixture');
-  receipt.application_handoff_fixture = true;
-  handoff.defaultView.close();
+  try {
+    assert.equal(handoff.documentElement.getAttribute('data-application-handoff'), 'true', 'Verification CTA did not load the application document');
+    assert.ok(requests.filter((route) => route === '/verify').length > before, 'No document request reached the application fixture');
+    receipt.application_handoff_fixture = true;
+  } finally { handoff.defaultView.close(); }
   console.log(JSON.stringify(receipt));
 } finally {
   server.closeAllConnections();
