@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "source_repository": "ElevenID/marty-ui",
+  "source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "kind": "public-runtime-and-compatibility-text",
+  "files": [
+    {
+      "path": "ui/public/llms.txt",
+      "sha": "a2f57de94ec6d3dc7508679fd1e8417c3f86e291"
+    },
+    {
+      "path": "ui/public/runtime-config.js",
+      "sha": "d5cce705ae0395897d8fa4e226d8dfd746359123"
+    },
+    {
+      "path": "ui/public/startup.js",
+      "sha": "73cf0207894e7a806667913ee88073f8b9047d42"
+    },
+    {
+      "path": "ui/public/.well-known/ai-plugin.json",
+      "sha": "b2dfb31f023e360f05a9ae204f3c5503eec03ac5"
+    }
+  ]
+}
