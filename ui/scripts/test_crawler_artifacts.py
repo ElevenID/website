@@ -33,7 +33,7 @@ class CrawlerArtifactContractTests(unittest.TestCase):
             encoding="utf-8",
         )
         (self.root / "sitemap.xml").write_text(
-            sitemap("/", "/product", "/docs"), encoding="utf-8"
+            sitemap("/", "/product", "/developers"), encoding="utf-8"
         )
 
     def test_accepts_unique_canonical_public_artifacts(self) -> None:
@@ -41,7 +41,7 @@ class CrawlerArtifactContractTests(unittest.TestCase):
 
     def test_rejects_duplicate_root(self) -> None:
         (self.root / "sitemap.xml").write_text(
-            sitemap("/", "/", "/product", "/docs"), encoding="utf-8"
+            sitemap("/", "/", "/product", "/developers"), encoding="utf-8"
         )
         with self.assertRaisesRegex(AssertionError, "duplicate sitemap location"):
             validate(self.root)
@@ -55,8 +55,8 @@ class CrawlerArtifactContractTests(unittest.TestCase):
                     else f"{CANONICAL_ORIGIN}{invalid}"
                 )
                 (self.root / "sitemap.xml").write_text(
-                    sitemap("/", "/product", "/docs").replace(
-                        f"{CANONICAL_ORIGIN}/docs", value
+                    sitemap("/", "/product", "/developers").replace(
+                        f"{CANONICAL_ORIGIN}/developers", value
                     ),
                     encoding="utf-8",
                 )
