@@ -9,6 +9,18 @@ import { getPublicEntryCanonicalOrigin } from '../application/routing/publicEntr
 const publicEntry = Boolean(getPublicEntryCanonicalOrigin());
 
 i18n
+  // Format values through the i18next v26 formatter API.
+  .use({
+    type: 'formatter',
+    format: (value, format, lng) => {
+      if (format === 'uppercase') return value.toUpperCase();
+      if (format === 'lowercase') return value.toLowerCase();
+      if (value instanceof Date) {
+        return new Intl.DateTimeFormat(lng).format(value);
+      }
+      return value;
+    },
+  })
   // Load translation files
   .use(HttpBackend)
   // Detect user language
@@ -62,16 +74,6 @@ i18n
     interpolation: {
       // React already escapes values
       escapeValue: false,
-
-      // Format values
-      format: (value, format, lng) => {
-        if (format === 'uppercase') return value.toUpperCase();
-        if (format === 'lowercase') return value.toLowerCase();
-        if (value instanceof Date) {
-          return new Intl.DateTimeFormat(lng).format(value);
-        }
-        return value;
-      },
     },
 
     // React-specific options

@@ -93,7 +93,6 @@ test('copied source and license retain their recorded Git blob identities', () =
     'ui/src/application/routing/safeNavigation.js',
     'ui/src/application/routing/webSurface.js',
     'ui/src/application/routing/webSurfaceContract.mjs',
-    'ui/src/apps/shared/PrerenderReadySignal.jsx',
     'ui/src/apps/shared/WebSurfaceBoundary.jsx',
     'ui/src/apps/shared/WebSurfaceBoundary.test.tsx',
     'ui/src/bootstrapRoot.jsx',

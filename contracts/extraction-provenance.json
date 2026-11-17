@@ -133,12 +133,6 @@
       "transfer": "verbatim"
     },
     {
-      "source_path": "ui/src/apps/shared/PrerenderReadySignal.jsx",
-      "target_path": "ui/src/apps/shared/PrerenderReadySignal.jsx",
-      "git_blob_sha1": "bf3bf2608a8263012d1499d2fd601c790287cf49",
-      "transfer": "verbatim"
-    },
-    {
       "source_path": "ui/src/bootstrapRoot.jsx",
       "target_path": "ui/src/bootstrapRoot.jsx",
       "git_blob_sha1": "bdb31ce7d33ccac886f004257b2f12d26db227fd",
@@ -288,7 +282,7 @@
       "source_path": "ui/src/i18n/index.js",
       "target_path": "ui/src/i18n/index.js",
       "source_git_blob_sha1": "5a134f240ce2b241c8b5c822af268e198881f4ef",
-      "changes": "Remove inherited trailing whitespace; preserve runtime behavior."
+      "changes": "Remove inherited trailing whitespace; register the existing uppercase, lowercase, Date and passthrough formatter through the supported i18next v26 formatter module API."
     },
     {
       "source_path": "ui/src/contexts/BrandingContext.jsx",
@@ -306,13 +300,19 @@
       "source_path": "ui/src/utils/analytics.js",
       "target_path": "ui/src/utils/analytics.js",
       "source_git_blob_sha1": "78cdde9abca78e4f69dc6191a3cdd668b39841fe",
-      "changes": "Remove inherited trailing whitespace; preserve runtime behavior."
+      "changes": "Remove inherited trailing whitespace; register the five supported web-vitals metrics without calling the removed onFID export."
     },
     {
       "source_path": "ui/vite.config.ts",
       "target_path": "ui/scripts/mui-icon-compatibility.mjs",
       "source_git_blob_sha1": "c5b2000bb311da5b4a54f4b18236d6b2edb1ee49",
       "changes": "Extract and export the existing legacy MUI icon resolver; resolve packages from repository-root node_modules and accept an explicit dependency root for isolated fixture tests; preserve direct mjs and Outline-to-Outlined fallback behavior."
+    },
+    {
+      "source_path": "ui/src/apps/shared/PrerenderReadySignal.jsx",
+      "target_path": "ui/src/apps/shared/PrerenderReadySignal.jsx",
+      "source_git_blob_sha1": "bf3bf2608a8263012d1499d2fd601c790287cf49",
+      "changes": "Release translation and demo deadlines plus mutation observers when readiness settles or the route effect is cleaned up; cancel abandoned animation frames while preserving the existing font wait and readiness gates."
     }
   ],
   "ci_action_pins": {

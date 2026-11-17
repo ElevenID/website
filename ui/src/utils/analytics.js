@@ -91,7 +91,7 @@ export const trackEvent = (eventName, params = {}) => {
 
 /**
  * Track Core Web Vitals
- * Automatically reports CLS, FID, LCP to Google Analytics
+ * Automatically reports CLS, LCP, INP, FCP and TTFB to Google Analytics
  */
 export const trackWebVitals = () => {
   if (typeof window === 'undefined' || webVitalsTrackingStarted || getPublicEntryCanonicalOrigin()) return;
@@ -99,7 +99,7 @@ export const trackWebVitals = () => {
   webVitalsTrackingStarted = true;
 
   // Use web-vitals library if available
-  import('web-vitals').then(({ onCLS, onFID, onLCP, onFCP, onTTFB, onINP }) => {
+  import('web-vitals').then(({ onCLS, onLCP, onFCP, onTTFB, onINP }) => {
     const sendToGA = (metric) => {
       if (!window.gtag) return;
 
@@ -114,7 +114,6 @@ export const trackWebVitals = () => {
     };
 
     onCLS(sendToGA);
-    onFID(sendToGA);
     onLCP(sendToGA);
     onFCP(sendToGA);
     onTTFB(sendToGA);
