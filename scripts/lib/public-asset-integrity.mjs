@@ -91,7 +91,56 @@ function readExisting(root, asset) {
   return true;
 }
 
-export function selectPublicAssets(inventory, reconciliation = []) {
+function validateBlogAssetManifest(manifest) {
+  if (manifest === undefined || manifest === null) return new Map();
+  if (manifest.schema_version !== 1
+    || manifest.purpose !== 'website-blog-social-image-assets'
+    || manifest.source_repository !== 'ElevenID/marty-blog'
+    || manifest.source_tag !== 'v0.1.9'
+    || manifest.source_commit !== '587274a4e1d4281f8fa4d71cea212141759f0435'
+    || manifest.package_release !== '@elevenid/marty-blog@0.1.9'
+    || !Array.isArray(manifest.expected_post_slugs)
+    || new Set(manifest.expected_post_slugs).size !== manifest.expected_post_slugs.length
+    || !Array.isArray(manifest.entries)) {
+    throw new Error('Invalid pinned blog social asset manifest');
+  }
+  const byTarget = new Map();
+  for (const entry of manifest.entries) {
+    if (!entry || typeof entry.target_path !== 'string'
+      || !entry.target_path.startsWith('ui/public/')) {
+      throw new Error('Unsafe blog social asset target');
+    }
+    const relative = entry.target_path.slice('ui/public/'.length);
+    validateAssets([{ path: relative, sha: entry.source_sha, bytes: entry.bytes }]);
+    if (byTarget.has(entry.target_path)) throw new Error('Duplicate blog social asset target');
+    if (entry.kind === 'source') {
+      if (typeof entry.source_path !== 'string'
+        || entry.source_path !== `public/${relative}`
+        || entry.derived_from !== undefined) {
+        throw new Error('Blog social source path does not match its target');
+      }
+    } else if (entry.kind === 'default-fallback') {
+      if (entry.source_path !== null || typeof entry.derived_from !== 'string'
+        || !entry.derived_from.startsWith('public/')) {
+        throw new Error('Invalid blog social fallback provenance');
+      }
+    } else {
+      throw new Error('Unknown blog social asset disposition');
+    }
+    byTarget.set(entry.target_path, entry);
+  }
+  for (const entry of manifest.entries) {
+    if (entry.kind !== 'default-fallback') continue;
+    const source = manifest.entries.find((candidate) => candidate.kind === 'source'
+      && candidate.source_path === entry.derived_from);
+    if (!source || source.source_sha !== entry.source_sha || source.bytes !== entry.bytes) {
+      throw new Error('Blog social fallback does not match its pinned default');
+    }
+  }
+  return byTarget;
+}
+
+export function selectPublicAssets(inventory, reconciliation = [], blogAssetManifest) {
   if (inventory?.schema_version !== 1 || !Array.isArray(inventory.files)
     || !inventory.categories || !Array.isArray(reconciliation)) throw new Error('Invalid asset inventory');
   const selected = [];
@@ -115,6 +164,14 @@ export function selectPublicAssets(inventory, reconciliation = []) {
     entry.sha = change.current_blob_sha;
     entry.bytes = change.current_size_bytes;
     reconciled.add(change.path);
+  }
+  const blogAssets = validateBlogAssetManifest(blogAssetManifest);
+  for (const entry of selected) {
+    const blogAsset = blogAssets.get(`ui/public/${entry.path}`);
+    if (blogAsset) {
+      entry.sha = blogAsset.source_sha;
+      entry.bytes = blogAsset.bytes;
+    }
   }
   return validateAssets(selected);
 }

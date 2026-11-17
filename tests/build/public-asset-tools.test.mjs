@@ -270,3 +270,35 @@ test('actual CLI rejects relative source paths before touching the checkout', ()
     new URL('../../scripts/import-large-public-assets.mjs', import.meta.url).pathname, '--source', 'relative',
   ], { stdio: 'pipe' }), /Usage/);
 });
+
+test('pinned blog social assets take precedence over same-path application export variants', () => {
+  const inventoryFile = JSON.parse(readFileSync(new URL('../../docs/input-inventory/asset-inventory.json', import.meta.url), 'utf8'));
+  const reconciliation = JSON.parse(readFileSync(new URL('../../docs/input-inventory/source-reconciliation.json', import.meta.url), 'utf8'));
+  const blog = JSON.parse(readFileSync(new URL('../../contracts/blog-social-assets-v1.0.json', import.meta.url), 'utf8'));
+  const selected = selectPublicAssets(inventoryFile, reconciliation.public_changes, blog);
+  assert.equal(selected.length, 46);
+  const byPath = new Map(selected.map((asset) => [asset.path, asset]));
+  for (const entry of blog.entries.filter((asset) => [
+    'ui/public/images/social/elevenid-blog-default.png',
+    'ui/public/images/social/trust-profiles-explained.png',
+    'ui/public/images/social/why-identity-needs-a-protocol.png',
+  ].includes(asset.target_path))) {
+    const selectedAsset = byPath.get(entry.target_path.slice('ui/public/'.length));
+    assert.equal(selectedAsset.sha, entry.source_sha, entry.target_path);
+    assert.equal(selectedAsset.bytes, entry.bytes, entry.target_path);
+  }
+});
+
+test('blog social asset manifest rejects changed source identity, duplicate targets and invalid fallbacks', () => {
+  const inventoryFile = JSON.parse(readFileSync(new URL('../../docs/input-inventory/asset-inventory.json', import.meta.url), 'utf8'));
+  const reconciliation = JSON.parse(readFileSync(new URL('../../docs/input-inventory/source-reconciliation.json', import.meta.url), 'utf8'));
+  const blog = JSON.parse(readFileSync(new URL('../../contracts/blog-social-assets-v1.0.json', import.meta.url), 'utf8'));
+  assert.throws(() => selectPublicAssets(inventoryFile, reconciliation.public_changes, { ...blog, source_commit: '0'.repeat(40) }), /Invalid pinned blog/);
+  assert.throws(() => selectPublicAssets(inventoryFile, reconciliation.public_changes, {
+    ...blog, entries: [...blog.entries, blog.entries[0]],
+  }), /Duplicate blog social asset target/);
+  const fallbackIndex = blog.entries.findIndex((entry) => entry.kind === 'default-fallback');
+  const entries = blog.entries.map((entry, index) => index === fallbackIndex
+    ? { ...entry, source_sha: '0'.repeat(40) } : entry);
+  assert.throws(() => selectPublicAssets(inventoryFile, reconciliation.public_changes, { ...blog, entries }), /fallback does not match/);
+});
