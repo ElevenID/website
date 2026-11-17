@@ -155,6 +155,72 @@
       "target_path": "ui/src/components/common/LanguageSwitcher.jsx",
       "git_blob_sha1": "b56114fe8c5d530d127daba4823fe7168677cbb1",
       "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/apps/website/WebsiteRoutes.jsx",
+      "target_path": "ui/src/apps/website/WebsiteRoutes.jsx",
+      "git_blob_sha1": "79935cd48d6d805da8030577ced43ae7fc771f17",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/website.jsx",
+      "target_path": "ui/src/website.jsx",
+      "git_blob_sha1": "b54d8fced93f3fac230bf40f71105de8e80d69eb",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/variants/marketingRoutes.jsx",
+      "target_path": "ui/src/variants/marketingRoutes.jsx",
+      "git_blob_sha1": "531f22b358c66e8081e4d6f0e7f6e3512cc9cdee",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/extensions/commerce/publicStub.jsx",
+      "target_path": "ui/src/extensions/commerce/publicStub.jsx",
+      "git_blob_sha1": "193d6e2dd595cd6fd3ba370ff7af0c63024276e1",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/extensions/commerce/website.js",
+      "target_path": "ui/src/extensions/commerce/website.js",
+      "git_blob_sha1": "65389d443cee08f542f724db98aca69140f87298",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/application/protocolSupportCatalog.js",
+      "target_path": "ui/src/application/protocolSupportCatalog.js",
+      "git_blob_sha1": "26f31ccd8f058bb63880f1f1c1b5c239e4b9104b",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/application/verifier/verifierDemoFlow.js",
+      "target_path": "ui/src/application/verifier/verifierDemoFlow.js",
+      "git_blob_sha1": "3805bd4b162fe6f6c13b69da4704eaeeccbfde22",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/components/landing/proofLabRuntime.js",
+      "target_path": "ui/src/components/landing/proofLabRuntime.js",
+      "git_blob_sha1": "916404343c260440fafb80d7d51e89dba65870d2",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/components/demos/DemoVideoPlayer.jsx",
+      "target_path": "ui/src/components/demos/DemoVideoPlayer.jsx",
+      "git_blob_sha1": "8e24d03da762d7b259fe2df3fc0f6950fdfa96c4",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/components/FromIDVPage.jsx",
+      "target_path": "ui/src/components/FromIDVPage.jsx",
+      "git_blob_sha1": "e24f99d3af45cd84514d6ab9aafd480b56c2cb5e",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/components/pages/ProtocolSupportCatalogView.jsx",
+      "target_path": "ui/src/components/pages/ProtocolSupportCatalogView.jsx",
+      "git_blob_sha1": "506c07af7d3c1f4f5800bc5976264a67e82a54a0",
+      "transfer": "verbatim"
     }
   ],
   "adapted_files": [
@@ -313,6 +379,14 @@
       "target_path": "ui/src/components/pages/TrustRegistryPage.jsx",
       "source_git_blob_sha1": "a4736f6d1c33135b9e3119efa381f5cac9b7edd4",
       "changes": "move Typography fontWeight into sx while preserving the existing weight and all other styles and content."
+    },
+    {
+      "source_path": "ui/src/apps/website/WebsiteApp.jsx",
+      "target_path": "ui/src/apps/website/WebsiteApp.jsx",
+      "source_git_blob_sha1": "51789b621ae64442135789314c7857ff393a6cf0",
+      "reconciled_source_commit": "a4fc3801b636e2cfd0753797e8fc0dc846b42a22",
+      "reconciled_source_git_blob_sha1": "bb9616ba5618cac9899b4c487487b687a1caa51c",
+      "changes": "Adopt reconciled source WebsiteApp from the recorded current source commit; preserve Start Verifying wording and /verify CTA plus existing public-entry handoffs."
     }
   ],
   "ci_action_pins": {
