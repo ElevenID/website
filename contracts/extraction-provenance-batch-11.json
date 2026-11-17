@@ -10,45 +10,10 @@
   "scope": "Batch 11 bounded page, section and website build/server sources. Existing provenance remains in its earlier shard.",
   "files": [
     {
-      "source_path": "ui/scripts/render-website-nginx.mjs",
-      "target_path": "ui/scripts/render-website-nginx.mjs",
-      "git_blob_sha1": "0edf2fd1ba1062f2b0226887abf8694bc8f1a769",
-      "bytes": 1978,
-      "transfer": "verbatim"
-    },
-    {
-      "source_path": "ui/nginx.website.conf",
-      "target_path": "ui/nginx.website.conf",
-      "git_blob_sha1": "013f4cc8424aa18a80f9a6d0c6e3bdf1a14800ea",
-      "bytes": 1478,
-      "transfer": "verbatim"
-    },
-    {
       "source_path": "ui/nginx.website.headers.conf",
       "target_path": "ui/nginx.website.headers.conf",
       "git_blob_sha1": "8c3884ec38f4c5c7bea7af8f980de5049895aeb1",
       "bytes": 900,
-      "transfer": "verbatim"
-    },
-    {
-      "source_path": "ui/scripts/assert-website-dist.mjs",
-      "target_path": "ui/scripts/assert-website-dist.mjs",
-      "git_blob_sha1": "6167fe968afd96b0b8f91d1f6370880ad6dadbfe",
-      "bytes": 3967,
-      "transfer": "verbatim"
-    },
-    {
-      "source_path": "ui/scripts/web-surface-build-contract.mjs",
-      "target_path": "ui/scripts/web-surface-build-contract.mjs",
-      "git_blob_sha1": "bcb80076c5fca772ab834b52db505987314d932e",
-      "bytes": 3947,
-      "transfer": "verbatim"
-    },
-    {
-      "source_path": "ui/scripts/web-surface-build-contract.test.mjs",
-      "target_path": "ui/scripts/web-surface-build-contract.test.mjs",
-      "git_blob_sha1": "530795a0d87269f5dd108c101f98080159133e7e",
-      "bytes": 6188,
       "transfer": "verbatim"
     }
   ],
@@ -106,6 +71,51 @@
       "target_git_blob_sha1": "7f4352cc913c7930d5ceacf840fd75abc8cdec6d",
       "target_bytes": 13729,
       "changes": "Use current MUI Grid sizing and typography/slot styles; expose controlled proof scenario selection through aria-pressed."
+    },
+    {
+      "source_path": "ui/scripts/assert-website-dist.mjs",
+      "target_path": "ui/scripts/assert-website-dist.mjs",
+      "source_git_blob_sha1": "6167fe968afd96b0b8f91d1f6370880ad6dadbfe",
+      "bytes": 3967,
+      "target_git_blob_sha1": "8f8286f005e02acdbc16aef459cfb94cc051e3d8",
+      "target_bytes": 8561,
+      "changes": "Bind caller-supplied website source identities; parse HTML inertly; reject unowned prerenders, unsafe or stale resources, loopback URLs and symlinks; reuse the qualified crawler checker."
+    },
+    {
+      "source_path": "ui/scripts/render-website-nginx.mjs",
+      "target_path": "ui/scripts/render-website-nginx.mjs",
+      "source_git_blob_sha1": "0edf2fd1ba1062f2b0226887abf8694bc8f1a769",
+      "bytes": 1978,
+      "target_git_blob_sha1": "6f6575071b47eef9e7fd56978fc6c752772ece2f",
+      "target_bytes": 2161,
+      "changes": "Render the explicitly owned blog RSS file and use the extracted website source identity for generated route configuration."
+    },
+    {
+      "source_path": "ui/scripts/web-surface-build-contract.mjs",
+      "target_path": "ui/scripts/web-surface-build-contract.mjs",
+      "source_git_blob_sha1": "bcb80076c5fca772ab834b52db505987314d932e",
+      "bytes": 3947,
+      "target_git_blob_sha1": "6064d219c47558c7a8e5330cf23702ec60a18bc2",
+      "target_bytes": 4465,
+      "changes": "Remove application/selfhost dependency; enforce website-only module policy, typed source inputs and explicit repository, audience and public/full release identity."
+    },
+    {
+      "source_path": "ui/scripts/web-surface-build-contract.test.mjs",
+      "target_path": "ui/scripts/web-surface-build-contract.test.mjs",
+      "source_git_blob_sha1": "530795a0d87269f5dd108c101f98080159133e7e",
+      "bytes": 6188,
+      "target_git_blob_sha1": "7b14f5dc0147a6e6cb612fc24f4147e415529f09",
+      "target_bytes": 6436,
+      "changes": "Adapt preserved contract cases to the website-only repository and add strict source, revision, private-entry and forbidden-module coverage."
+    },
+    {
+      "source_path": "ui/nginx.website.conf",
+      "target_path": "ui/nginx.website.conf",
+      "source_git_blob_sha1": "013f4cc8424aa18a80f9a6d0c6e3bdf1a14800ea",
+      "bytes": 1478,
+      "target_git_blob_sha1": "9c9f3053e445ee9299cb2deb971dd2fc3652fc4e",
+      "target_bytes": 1825,
+      "changes": "Deny unowned root resources and known resource suffixes under page prefixes while preserving dotted page slugs, owned crawler resources and namespaced asset policy. Preserve page fallbacks through an internal-only index handler while denying direct index requests."
     }
   ]
 }

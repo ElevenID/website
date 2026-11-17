@@ -1,61 +1,119 @@
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { lstatSync, readFileSync, readdirSync, realpathSync } from 'node:fs';
 import path from 'node:path';
-import { WEB_ROUTE_CONTRACT } from './web-surface-contract.mjs';
-import { websiteBuildRevision } from './web-surface-build-contract.mjs';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { JSDOM } from 'jsdom';
+import { WEB_SURFACE_ROUTES } from './web-surface-contract.mjs';
+import { websiteReleaseMetadata } from './web-surface-build-contract.mjs';
 
-const directory = path.resolve(process.argv[2] || 'dist-website');
-const metadata = JSON.parse(readFileSync(path.join(directory, 'marty-website-release.json'), 'utf8'));
-assert.equal(metadata.schema, 'marty.website-image/v1');
-assert.equal(metadata.surface, 'website');
-assert.deepEqual(metadata.route_contract, WEB_ROUTE_CONTRACT);
-const revision = websiteBuildRevision({ sourceSha: metadata.source_sha, pages: metadata.production_pages,
-  commerceSha: metadata.commerce_extension?.source_sha, revision: metadata.revision });
-const prefix = `/_website/${revision}/`;
-assert.equal(existsSync(path.join(directory, 'pricing')), false, 'private pricing must not be prerendered');
-assert.equal(existsSync(path.join(directory, 'console')), false, 'website must not publish a console entry');
-assert.equal(existsSync(path.join(directory, 'marty-ui-release.json')), false, 'website must not claim stack identity');
-const root = readFileSync(path.join(directory, 'index.html'), 'utf8');
-assert.match(root, /<h1\b/i, 'homepage must be prerendered');
-assert.match(root, /prerender-status-code/);
-assert.ok(root.includes('/_website/runtime-config.js'));
-assert.ok(root.includes(`${prefix}assets/`));
-assert.ok(!/https?:\/\/(?:localhost|127\.0\.0\.1|\[::1\])/.test(root), 'loopback URLs must not survive prerendering');
+const canonicalOrigin = 'https://elevenidllc.com';
+const resourceSuffix = /\.(?:css|[cm]?js|json|txt|xml|map|png|jpe?g|gif|webp|avif|ico|svg|woff2?|ttf|otf|eot|mp[34]|webm|pdf|zip|wasm)$/i;
+const isPublicPage = (route) => !/^\/pricing(?:\/|$)/.test(route) && !resourceSuffix.test(route)
+  && (WEB_SURFACE_ROUTES.website.exact_paths.includes(route)
+    || WEB_SURFACE_ROUTES.website.path_prefixes.some((prefix) => prefix !== '/_website/' && route.startsWith(prefix)));
 
-let documents = 0;
-function checkHtml(directoryPath) {
-  for (const entry of readdirSync(directoryPath, { withFileTypes: true })) {
-    const filename = path.join(directoryPath, entry.name);
-    if (entry.isDirectory()) { checkHtml(filename); continue; }
-    if (!entry.isFile() || !entry.name.endsWith('.html')) continue;
-    documents += 1;
-    const html = readFileSync(filename, 'utf8');
-    for (const match of html.matchAll(/<a\b[^>]*href=["']([^"']+)["']/gi)) {
-      const url = new URL(match[1], 'https://elevenidllc.com');
-      assert.ok(url.origin !== 'https://elevenidllc.com' || !/^\/pricing(?:\/|$)/.test(url.pathname), `pricing link in ${filename}`);
-    }
-    for (const match of html.matchAll(/(?:src|href)=["'](\/_website\/[^"']+)["']/g)) {
-      const resource = match[1].split(/[?#]/)[0];
-      assert.ok(resource === '/_website/runtime-config.js' || resource.startsWith(prefix), `stale asset namespace in ${filename}`);
-      assert.ok(existsSync(path.join(directory, resource.slice(1))), `missing ${resource} referenced by ${filename}`);
-    }
-    assert.ok(!/(?:src|href)=["']\/(?:assets|locales|images)\//.test(html), `root resource namespace leaked in ${filename}`);
+export function assertWebsiteDist(directory, { sourceSha, commerceSha, allowDevelopment = false } = {}) {
+  assert.equal(typeof allowDevelopment, 'boolean', 'development mode must be explicit');
+  const expectedSource = sourceSha ?? (allowDevelopment ? 'development' : undefined);
+  assert.ok(typeof expectedSource === 'string' && (/^[a-f0-9]{40}$/.test(expectedSource)
+    || (allowDevelopment && expectedSource === 'development')), 'expected website source SHA is required');
+  const root = path.resolve(directory);
+  assert.ok(lstatSync(root).isDirectory() && !lstatSync(root).isSymbolicLink(), 'artifact root must be a regular directory');
+  const realRoot = realpathSync(root);
+  function regularFile(relative) {
+    const filename = path.join(root, relative);
+    const stat = lstatSync(filename);
+    assert.ok(stat.isFile() && !stat.isSymbolicLink(), `artifact is not a regular file: ${relative}`);
+    assert.ok(realpathSync(filename).startsWith(`${realRoot}${path.sep}`), `artifact escapes its root: ${relative}`);
+    return filename;
   }
+  const metadata = JSON.parse(readFileSync(regularFile('marty-website-release.json'), 'utf8'));
+  assert.ok(metadata && typeof metadata === 'object' && !Array.isArray(metadata), 'invalid release metadata');
+  const expected = websiteReleaseMetadata({ sourceSha: expectedSource, commerceSha,
+    pages: metadata.production_pages, revision: metadata.revision });
+  assert.deepEqual(metadata, expected, 'release metadata differs from the expected website inputs');
+  const prefix = `/_website/${expected.revision}/`;
+  const documents = [];
+  function inspect(directoryPath) {
+    for (const entry of readdirSync(directoryPath, { withFileTypes: true })) {
+      const filename = path.join(directoryPath, entry.name);
+      const relative = path.relative(root, filename).split(path.sep).join('/');
+      assert.ok(!entry.isSymbolicLink(), `artifact symlink is forbidden: ${relative}`);
+      assert.notEqual(relative, 'marty-ui-release.json', 'website must not claim stack identity');
+      assert.ok(!/^(?:pricing|console|login|auth|api|v1)(?:\/|$)/.test(relative), `application artifact is forbidden: ${relative}`);
+      if (entry.isDirectory()) { inspect(filename); continue; }
+      assert.ok(entry.isFile(), `artifact is not a regular file: ${relative}`);
+      if (!relative.endsWith('.html')) continue;
+      const route = relative === 'index.html' ? '/' : `/${relative.replace(/\/index\.html$/, '')}`;
+      assert.ok(isPublicPage(route), `unowned prerendered route: ${route}`);
+      const html = readFileSync(filename, 'utf8');
+      assert.ok(!/https?:\/\/(?:localhost|127\.0\.0\.1|\[::1\])(?=[:/"'\s>]|$)/i.test(html), `loopback URL in ${relative}`);
+      const pageUrl = new URL(route, canonicalOrigin).href;
+      // Inert parsing handles actual HTML attribute rules without running scripts
+      // or fetching resources. jsdom is already pinned for build/DOM qualification.
+      const dom = new JSDOM(html, { url: pageUrl });
+      try {
+        assert.equal(dom.window.document.baseURI, pageUrl, `unexpected document base in ${relative}`);
+        if (route === '/') {
+          assert.ok(dom.window.document.querySelector('h1'), 'homepage must be prerendered');
+          assert.equal(dom.window.document.querySelector('meta[name="prerender-status-code"]')?.content, '200', 'homepage status must be 200');
+          const scripts = [...dom.window.document.querySelectorAll('script[src]')].map((element) => new URL(element.getAttribute('src'), pageUrl));
+          assert.ok(scripts.some((url) => url.origin === canonicalOrigin && decodeURIComponent(url.pathname) === '/_website/runtime-config.js'), 'runtime configuration is missing');
+          assert.ok(scripts.some((url) => url.origin === canonicalOrigin && decodeURIComponent(url.pathname).startsWith(`${prefix}assets/`)), 'versioned bundle is missing');
+        }
+        for (const element of dom.window.document.querySelectorAll('[src], [href]')) {
+          for (const attribute of ['src', 'href']) {
+            if (!element.hasAttribute(attribute)) continue;
+            const value = element.getAttribute(attribute);
+            const url = new URL(value, pageUrl);
+            const hostname = url.hostname.toLowerCase().replace(/\.+$/, '');
+            assert.ok(!['localhost', '0.0.0.0', '[::1]', '[::]'].includes(hostname)
+              && !hostname.endsWith('.localhost') && !/^127\./.test(hostname)
+              && !/^\[::ffff:7f[\da-f]{2}:/.test(hostname), `loopback URL in ${relative}`);
+            if (url.origin !== canonicalOrigin) continue;
+            const decodedPath = decodeURIComponent(url.pathname);
+            if (element.localName === 'a' && attribute === 'href') {
+              assert.ok(!/^\/pricing(?:\/|$)/.test(decodedPath), `pricing link in ${relative}`);
+            }
+            assert.ok(!/^\/(?:assets|locales|images)(?:\/|$)/.test(decodedPath), `root resource namespace leaked in ${relative}`);
+            const rawPath = value.trim().replace(/^(?:[a-z][a-z\d+.-]*:)?\/\/[^/?#]*/i, '').split(/[?#]/, 1)[0];
+            const rawDecoded = decodeURIComponent(rawPath);
+            const namespaced = decodedPath.replace(/\/+/g, '/').startsWith('/_website/')
+              || /(?:^|\/)_website\//.test(rawDecoded);
+            if (!namespaced) continue;
+            assert.ok(!/[\\\x00-\x20\x7f]/.test(rawPath) && !/%(?:2f|5c)/i.test(rawPath), `noncanonical resource path in ${relative}`);
+            assert.ok(!rawDecoded.includes('//') && !rawDecoded.split('/').some((part) => part === '.' || part === '..')
+              && !/[\\\x00-\x20\x7f]/.test(rawDecoded), `unsafe resource path in ${relative}`);
+            assert.ok(decodedPath === '/_website/runtime-config.js' || decodedPath.startsWith(prefix), `stale asset namespace in ${relative}`);
+            regularFile(decodedPath.slice(1));
+          }
+        }
+      } finally { dom.window.close(); }
+      documents.push(relative);
+    }
+  }
+  inspect(root);
+  assert.ok(documents.includes('index.html') && documents.includes('product/index.html'), 'homepage and product must be prerendered');
+  const crawler = spawnSync(process.env.PYTHON || 'python3',
+    [fileURLToPath(new URL('./check_crawler_artifacts.py', import.meta.url)), root],
+    { encoding: 'utf8', timeout: 30000, env: { ...process.env, PYTHONDONTWRITEBYTECODE: '1' } });
+  if (crawler.error) throw crawler.error;
+  assert.equal(crawler.status, 0, `crawler artifacts failed: ${crawler.stderr || crawler.stdout}`);
+  return { documents: documents.length, revision: expected.revision, sourceSha: expectedSource };
 }
-checkHtml(directory);
-assert.ok(documents > 1, 'website must include prerendered public routes');
-const robots = readFileSync(path.join(directory, 'robots.txt'), 'utf8');
-assert.match(robots, /Sitemap:/i);
-assert.match(robots, /Disallow: \/v1\/\*/i);
-const urls = [];
-for (const entry of readdirSync(directory).filter((name) => /^sitemap(?:-[^.]+|-index)?\.xml$/.test(name))) {
-  const xml = readFileSync(path.join(directory, entry), 'utf8');
-  if (!/<urlset\b/.test(xml)) continue;
-  urls.push(...[...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]));
+
+if (process.argv[1] && pathToFileURL(path.resolve(process.argv[1])).href === import.meta.url) {
+  const [directory, ...args] = process.argv.slice(2);
+  if (!directory) throw new Error('Usage: assert-website-dist.mjs DIST --source-sha SHA [--commerce-sha SHA] [--allow-development]');
+  const options = {};
+  for (let index = 0; index < args.length; index += 1) {
+    const flag = args[index];
+    const key = { '--source-sha': 'sourceSha', '--commerce-sha': 'commerceSha', '--allow-development': 'allowDevelopment' }[flag];
+    if (!key || Object.hasOwn(options, key)) throw new Error(`Unknown or repeated argument: ${flag}`);
+    options[key] = key === 'allowDevelopment' ? true : args[++index];
+    if (options[key] === undefined || (typeof options[key] === 'string' && options[key].startsWith('--'))) throw new Error(`Missing value for ${flag}`);
+  }
+  const result = assertWebsiteDist(directory, options);
+  console.log(`Website artifacts verified: ${result.documents} HTML documents, expected release identity, namespaced resources and crawler files.`);
 }
-assert.ok(urls.length > 1, 'sitemap URL set is missing');
-assert.equal(new Set(urls).size, urls.length, 'sitemap URLs must be unique');
-assert.equal(urls.filter((url) => new URL(url).pathname === '/').length, 1, 'homepage must occur once');
-assert.ok(urls.some((url) => /^\/product\/?$/.test(new URL(url).pathname)));
-for (const url of urls) assert.ok(!/^\/(?:console|login|auth|docs|pricing|_website)(?:\/|$)/.test(new URL(url).pathname), `application or resource route in sitemap: ${url}`);
-console.log(`Website artifacts verified: ${documents} HTML documents, namespaced resources, provenance, crawler files.`);

@@ -19,6 +19,9 @@ export function renderWebsiteNginx(revision) {
       '    expires -1;',
       '}');
   }
+  if (WEB_SURFACE_ROUTES.website.path_prefixes.includes('/blog/')) {
+    lines.push('location = /blog/rss.xml {', '    try_files $uri =404;', '    expires -1;', '}');
+  }
   for (const prefix of WEB_SURFACE_ROUTES.website.path_prefixes) {
     if (prefix === '/_website/') continue; // Resource policy is stronger than page fallbacks.
     lines.push(`location ${prefix} {`, '    try_files $uri/index.html /index.html;', '    expires -1;', '}');
@@ -30,7 +33,7 @@ export function renderWebsiteNginx(revision) {
 }
 
 if (process.argv[1] && pathToFileURL(path.resolve(process.argv[1])).href === import.meta.url) {
-  const revision = websiteBuildRevision({ sourceSha: process.env.MARTY_UI_SHA || 'development',
+  const revision = websiteBuildRevision({ sourceSha: process.env.MARTY_WEBSITE_SOURCE_SHA || 'development',
     commerceSha: process.env.MARTY_COMMERCE_SOURCE_SHA, pages: process.env.MARTY_PRODUCTION_PAGES || 'public',
     revision: process.env.MARTY_WEBSITE_REVISION });
   process.stdout.write(renderWebsiteNginx(revision));

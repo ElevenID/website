@@ -12,7 +12,8 @@
     "test": "npm run test:contracts && npm run test:dom && npm run test:build",
     "test:contracts": "node --experimental-vm-modules --test tests/*.test.mjs tests/vm/*.test.mjs ui/scripts/dev-server-origin.test.mjs ui/scripts/generated-text.test.mjs",
     "test:dom": "vitest run --config vitest.dom.config.mjs",
-    "test:build": "node --test --test-concurrency=1 tests/build/*.test.mjs"
+    "test:build": "node --test --test-concurrency=1 tests/build/*.test.mjs",
+    "test:nginx": "node --test --test-concurrency=1 tests/nginx/*.test.mjs"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
