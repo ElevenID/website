@@ -1,0 +1,23 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { readFileSync, lstatSync } from 'node:fs';
+import { test } from 'node:test';
+const manifest=JSON.parse(readFileSync(new URL('../contracts/extraction-provenance-batch-13.json',import.meta.url),'utf8'));
+const hash=(buffer)=>createHash('sha1').update('blob '+buffer.length+String.fromCharCode(0)).update(buffer).digest('hex');
+test('batch 13 large public source identity is recorded',()=>{
+ assert.equal(manifest.schema_version,1);
+ assert.equal(manifest.immutable_source_commit,'df6ec6c4bfee803d89c54e9333297f29f378cee3');
+ assert.equal(manifest.extends,'contracts/extraction-provenance-batch-12.json');
+ assert.equal(manifest.source_paths.length,10);
+ assert.equal(new Set(manifest.source_paths.map(e=>e.path)).size,10);
+});
+test('batch 13 imported bytes match selected source blobs',()=>{
+ for(const entry of manifest.source_paths){
+  const file=new URL('../'+entry.path,import.meta.url);
+  assert.equal(lstatSync(file).isFile(),true,entry.path);
+  const content=readFileSync(file);
+  assert.equal(content.length,entry.bytes,entry.path);
+  assert.equal(hash(content),entry.selected_sha,entry.path);
+  assert.ok(entry.selected_revision==='original-pin'||entry.selected_revision==='reconciled-current');
+ }
+});
