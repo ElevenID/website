@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "audit_only": true,
+  "source_repository": "ElevenID/marty-ui",
+  "comparison_commit": "a4fc3801b636e2cfd0753797e8fc0dc846b42a22",
+  "comparison_tree": "039c375c589de2e87884a6df33d07de7161599b2",
+  "baseline": {
+    "source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+    "inventory_repository": "ElevenID/website",
+    "inventory_commit": "8d473beb3971d09da07a36eaeb11faf3e9081a78",
+    "inventory_path": "docs/source-import-inventory.json",
+    "inventory_blob": "e3c28a11486775360279e4b2b465f4ae6a4ba126",
+    "reconciliation_path": "docs/input-inventory/source-reconciliation.json",
+    "reconciliation_blob": "36486da74c5dff6f2bd1690a287c168f5ec14572"
+  },
+  "method": "Nonrecursive Git tree traversal limited to the 79 inventoried source paths and one reconciled English locale; compare source Git blob identities and reconciled sizes without reading large source contents.",
+  "results": {
+    "source_paths_checked": 79,
+    "source_paths_found": 79,
+    "source_blobs_matching_original_pin": 74,
+    "source_blobs_matching_reconciled_current": 5,
+    "locale_paths_checked": 1,
+    "locale_blobs_matching_reconciled_current": 1,
+    "missing_paths": [],
+    "unexpected_differences": []
+  },
+  "reconciled_current_files": [
+    {
+      "path": "ui/src/apps/website/WebsiteApp.jsx",
+      "blob_sha": "bb9616ba5618cac9899b4c487487b687a1caa51c",
+      "size_bytes": 4069
+    },
+    {
+      "path": "ui/src/components/LandingPageContent.jsx",
+      "blob_sha": "07e7a07003aef819e424cb7ae6ded6722640669f",
+      "size_bytes": 81010
+    },
+    {
+      "path": "ui/src/components/pages/PublicIAPages.jsx",
+      "blob_sha": "fa46177013b543e2d7d909479d02c681c8006551",
+      "size_bytes": 23375
+    },
+    {
+      "path": "ui/src/components/pages/VerifiableCredentialApiPage.jsx",
+      "blob_sha": "c14b91af44171793b34d8f026cb3eafcb1b315f0",
+      "size_bytes": 17485
+    },
+    {
+      "path": "ui/src/data/marketingContent.js",
+      "blob_sha": "930654cc94c8a2a958a114b86c66e26afd368166",
+      "size_bytes": 37770
+    },
+    {
+      "path": "ui/public/locales/en/marketing.json",
+      "blob_sha": "abd0a07db30845792adebff0d281241ebfcd666a",
+      "size_bytes": 10539
+    }
+  ],
+  "limits": [
+    "Metadata drift receipt; no complete build/runtime dependency qualification.",
+    "Does not refresh the full public-asset inventory; only the one reconciled English locale is included.",
+    "Destination adaptations from earlier PRs remain separate from upstream source comparison.",
+    "No repository code or tests executed; no large source, SVG, binary or full upstream lock contents read."
+  ]
+}

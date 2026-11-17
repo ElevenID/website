@@ -4,13 +4,13 @@ ElevenID's public website, product information and marketing experiences.
 
 ## Migration status
 
-This repository is being extracted from [ElevenID/marty-ui](https://github.com/ElevenID/marty-ui). The route and asset contracts, independent build helpers, metadata helpers, navigation/runtime helpers and React navigation boundary are now preserved here. The complete website build and release producer remain pending.
+This repository is being extracted from [ElevenID/marty-ui](https://github.com/ElevenID/marty-ui). The route and asset contracts, build helpers, runtime foundation, React navigation boundary, ten public pages and selected shared components are now preserved here. The complete website build and release producer remain pending.
 
-[Batch 7](docs/checkpoints/batch-7-react-integration.md) adds a pinned React/DOM test environment and qualifies navigation and page metadata with **88 tests passing on AWS**: 49 native contract tests and 39 DOM tests. It corrects fragment-only navigation on configured entry aliases and stale keyword metadata across page changes. Actual browser document loading, full builds and deployment remain separate qualification.
+[Batch 8](docs/checkpoints/batch-8-runtime-pages-build.md) expands qualification to **178 tests passing on AWS**: 49 native contract tests, 118 DOM tests and 11 build-test records. It covers runtime readiness, supported analytics metrics, translation formatting, selected page rendering and actual Vite fixture builds. The tests reproduce and protect corrections for stale readiness resources, obsolete package APIs, responsive Grid sizing and typography weights. Full WebsiteApp/WebsiteRoutes composition, production assets, prerender and actual browser document loading remain separate qualification.
 
 The verbatim source and license entries are byte-for-byte identical to their originals at [`df6ec6c4bfee803d89c54e9333297f29f378cee3`](https://github.com/ElevenID/marty-ui/tree/df6ec6c4bfee803d89c54e9333297f29f378cee3). [Extraction provenance](contracts/extraction-provenance.json) records original paths and Git blob hashes, and separately identifies intentional adaptations. This record is not a release attestation or a transfer of Git history.
 
-Start with the short [current migration checkpoint](docs/migration-status.md). Earlier receipts remain in the [batch 6 checkpoint](docs/checkpoints/batch-6-navigation.md) and [history through batch 5](docs/migration-history-through-batch-5.md).
+Start with the short [current migration checkpoint](docs/migration-status.md). Earlier receipts remain in [batch 7](docs/checkpoints/batch-7-react-integration.md), [batch 6](docs/checkpoints/batch-6-navigation.md) and [history through batch 5](docs/migration-history-through-batch-5.md).
 
 ## Run the checks
 
@@ -21,7 +21,7 @@ npm ci
 npm test
 ```
 
-The committed lock installs the minimal React, React Router, Vitest and jsdom dependencies for this milestone. `npm test` runs `test:contracts` with Node's built-in runner, then `test:dom` with the isolated Vitest configuration. Each can also be run separately. This manifest is not yet the complete website build dependency graph.
+The committed lock installs the selected React/Router, MUI/Emotion, i18n, web-vitals and test/build dependencies. `npm test` runs the native contract checks, isolated React/DOM suites and actual Vite fixture-build checks. Individual commands are listed in [package.json](package.json). These fixtures qualify the selected modules and asset contracts; the manifest is not yet the complete website build dependency graph.
 
 ## Route ownership
 
