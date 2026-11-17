@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "source_repository": "ElevenID/marty-ui",
+  "source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "kind": "public-social-images",
+  "files": [
+    {
+      "path": "ui/public/images/social/elevenid-blog-default.png",
+      "sha": "d8fc957964f829745862732c9b25c1b34f093272"
+    },
+    {
+      "path": "ui/public/images/social/trust-profiles-explained.png",
+      "sha": "fff8c43a8fe99aa74a3ce5bfacd9597c7361c39d"
+    },
+    {
+      "path": "ui/public/images/social/understanding-csca-certificates-v2.png",
+      "sha": "79af84bf1a2304342d3ff900991ff8b9e845c5ac"
+    },
+    {
+      "path": "ui/public/images/social/why-identity-needs-a-protocol.png",
+      "sha": "cb7814b352e461bd84200a973b86d75599a14c2f"
+    }
+  ]
+}
