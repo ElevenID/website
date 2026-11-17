@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "audit_only": true,
+  "source_repository": "ElevenID/marty-ui",
+  "comparison_commit": "9ff6e9779a020839ebeafc60095370725e9fb694",
+  "comparison_tree": "994ebf5e770f9008be4eba9a69930a642656b9c3",
+  "baseline": {
+    "source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+    "inventory_repository": "ElevenID/website",
+    "inventory_commit": "57adcea498bb77935bdbd08ca49654eea44db878",
+    "inventory_path": "docs/source-import-inventory.json",
+    "inventory_blob": "e3c28a11486775360279e4b2b465f4ae6a4ba126",
+    "previous_receipt_path": "docs/input-inventory/source-refresh-batch-11.json",
+    "previous_receipt_blob": "f47979ee8c53df204ce0a03dd376e7b1048ce03b",
+    "previous_comparison_commit": "9ff6e9779a020839ebeafc60095370725e9fb694",
+    "previous_comparison_tree": "994ebf5e770f9008be4eba9a69930a642656b9c3",
+    "reconciliation_path": "docs/input-inventory/source-reconciliation.json",
+    "reconciliation_blob": "36486da74c5dff6f2bd1690a287c168f5ec14572"
+  },
+  "method": "A fresh source main ref and commit resolve to the same commit and root tree as batch 11. Nonrecursive root metadata confirms unchanged ui/ and contracts/ subtrees. Original-pin and current UI metadata separately establish the selected page/data file identities without rereading large source bodies.",
+  "subtree_identity_proof": [
+    {
+      "path": "ui",
+      "previous_tree_sha": "05f3ea8e22c6142769180b2f7c2b36d85efcb8e4",
+      "current_tree_sha": "05f3ea8e22c6142769180b2f7c2b36d85efcb8e4",
+      "inventoried_paths": 77,
+      "additional_reconciled_locale_paths": 1
+    },
+    {
+      "path": "contracts",
+      "previous_tree_sha": "e1f6adeaa25bff33edef1819548d4e0652b58739",
+      "current_tree_sha": "e1f6adeaa25bff33edef1819548d4e0652b58739",
+      "inventoried_paths": 2,
+      "additional_reconciled_locale_paths": 0
+    }
+  ],
+  "results": {
+    "source_paths_covered": 79,
+    "source_blobs_matching_original_pin": 74,
+    "source_blobs_matching_reconciled_current": 5,
+    "locale_paths_covered": 1,
+    "locale_blobs_matching_reconciled_current": 1,
+    "missing_paths": [],
+    "unexpected_differences": []
+  },
+  "changed_since_previous_refresh": false,
+  "changed_root_subtrees": [],
+  "limits": [
+    "This metadata refresh preserves prior candidate identity conclusions; it does not qualify the complete website dependency or production output graph.",
+    "Root .github/, release/, scripts/ and tests/ changed before batch 10 relative to batch 8. The selected startup helper is inspected separately; other root files remain outside this candidate comparison.",
+    "No SVG, diagram, binary, large source, production catalog, complete generated manifest or lockfile bodies were read.",
+    "This metadata refresh does not substitute for executed behavior. The batch 12 checkpoint records final component, generation, build, startup and HTTP qualification and their explicit boundaries.",
+    "Original-pin provenance and explicit reconciliation/adaptation records remain authoritative."
+  ],
+  "selected_runtime_data_source_identity_checks": [
+    {
+      "path": "ui/src/components/IdentityGuidePage.jsx",
+      "original_blob_sha": "f3e9104a7d4b242b11359a83da80a88560c75cc4",
+      "comparison_blob_sha": "f3e9104a7d4b242b11359a83da80a88560c75cc4",
+      "bytes": 11013
+    },
+    {
+      "path": "ui/src/components/ProtocolPage.jsx",
+      "original_blob_sha": "42e1d3b5e32aaefb2e44d371602839f0c1baa580",
+      "comparison_blob_sha": "42e1d3b5e32aaefb2e44d371602839f0c1baa580",
+      "bytes": 16232
+    },
+    {
+      "path": "ui/src/components/StandardsPage.jsx",
+      "original_blob_sha": "0fcbf958eeaa57e8e0f52c77bdbef08ec388be26",
+      "comparison_blob_sha": "0fcbf958eeaa57e8e0f52c77bdbef08ec388be26",
+      "bytes": 9764
+    },
+    {
+      "path": "ui/src/generated/demoWalletSchema.generated.json",
+      "original_blob_sha": "58dd81b135c281707185927a6c48de599e100bf9",
+      "comparison_blob_sha": "58dd81b135c281707185927a6c48de599e100bf9",
+      "bytes": 1836
+    }
+  ],
+  "selected_runtime_data_source_count": 4,
+  "selected_runtime_data_source_bytes": 38845,
+  "selected_build_source_identity_checks": [
+    {
+      "path": "ui/scripts/generate-demo-manifest-module.mjs",
+      "original_blob_sha": "8cdf1d9ea21f37a60e2a24c69b7df9d9faeae76e",
+      "comparison_blob_sha": "8cdf1d9ea21f37a60e2a24c69b7df9d9faeae76e",
+      "bytes": 2723,
+      "mode": "100644"
+    },
+    {
+      "path": "ui/scripts/build-web-surface.mjs",
+      "original_blob_sha": "7ffefb9d6109b12fc39d6b89accfbc358f656d03",
+      "comparison_blob_sha": "7ffefb9d6109b12fc39d6b89accfbc358f656d03",
+      "bytes": 1769,
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/ui-production-start.sh",
+      "original_blob_sha": "3916bc1f2b446f893bc63c35418466b80603bdd8",
+      "comparison_blob_sha": "3916bc1f2b446f893bc63c35418466b80603bdd8",
+      "bytes": 2291,
+      "mode": "100644"
+    }
+  ],
+  "selected_build_source_count": 3,
+  "selected_build_source_bytes": 6783,
+  "selected_source_count": 7,
+  "selected_source_bytes": 45628,
+  "selected_startup_identity_proof": {
+    "path": "scripts/ui-production-start.sh",
+    "original_parent_tree": "f6cd1a3e9f89f4500ce11cd2b9415349f8ef2882",
+    "comparison_parent_tree": "360b425b38d29957cd8eb8cf43ed8cda109f0fa0",
+    "original_blob_sha": "3916bc1f2b446f893bc63c35418466b80603bdd8",
+    "comparison_blob_sha": "3916bc1f2b446f893bc63c35418466b80603bdd8",
+    "bytes": 2291,
+    "mode": "100644"
+  },
+  "selected_target_extraction": {
+    "repository": "ElevenID/website",
+    "accepted_base": "57adcea498bb77935bdbd08ca49654eea44db878",
+    "source_copy_commit": "5cc954693cb4de0ac3938a1f0871d68d1a0e47ab",
+    "source_copy_tree": "c03207086ede15bf72698cdabab1dd82a3147a22",
+    "original_candidate_inventory_paths": 79,
+    "original_candidate_paths_present": 61,
+    "original_candidate_paths_deferred": 18,
+    "deferred_large_paths": 10,
+    "deferred_diagram_paths": 8,
+    "provenance_target_count": 86,
+    "count_note": "The original candidate inventory and provenance targets are different sets. Provenance also includes build and other extracted files.",
+    "content_limits": "The 18 deferred candidate paths comprise ten large bodies and eight diagram modules or their barrel. No remaining unimported non-diagram candidate in that inventory is below 16 KiB.",
+    "functional_commit": "6e76d883132773b11a2b694438a7a53d34a619cc",
+    "functional_tree": "ba71d9f93cf9812e5db77a9cd4e82d406df466b2",
+    "qualification_receipt": "docs/checkpoints/batch-12-pages-build-runtime.md"
+  }
+}

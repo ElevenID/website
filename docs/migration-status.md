@@ -1,33 +1,38 @@
 # Migration checkpoint
 
-## Current milestone: website sections, release identity and server routing
+## Current milestone: educational pages, build inputs and public runtime
 
-[Website PR #11](https://github.com/ElevenID/website/pull/11), branch `feat/website-sections-release-routing`, continues from accepted PR #10 at `4f53c1768e59b464fddc3b032d260816c7047de2`. It preserves **12 source files totaling 60,382 bytes**, each below 16 KiB, and groups component qualification with website build/server work.
+[Website PR #12](https://github.com/ElevenID/website/pull/12) continues from accepted PR #11 at `57adcea498bb77935bdbd08ca49654eea44db878`. It preserves **seven source files totaling 45,628 bytes**, each below 16 KiB, and groups page qualification with generation, build and public startup contracts.
 
-The source-copy checkpoint passed **355 records**: 56 native, 266 DOM and 33 build, in 45.12 seconds. The new component baseline ran **38 cases: 22 passed and 16 failed**, exposing layout, typography, accessible control and canonical-link problems in the preserved sources. After correction: **436 passing native/DOM/build records** — 56 native, 304 DOM across 22 files, and 76 build. 20 separate Nginx HTTP cases passed in 0.72 seconds, for **456 passing records across both commands**, with no failures, cancellations or skips. Fresh npm audit: zero vulnerabilities at every severity (exit 0). The existing crawler wrapper also runs five Python cases; those cases are not added again to the aggregate.
+Final validation passed **548 records**: `npm test` passed 528 records in 64.77 seconds (61 native, 345 DOM across 24 files and 122 build), and the separate HTTP suite passed 20 records in 0.77 seconds. There were no failures, cancellations or skips. This adds **92 records** to batch 11. Fresh dependency audit: zero vulnerabilities at every severity (exit 0). Five Python cases inside an existing build record are reported separately without double counting.
+
+The exact source-copy checkpoint passed 458 combined records; its [required hosted CI](https://github.com/ElevenID/website/actions/runs/44009299256/job/133792151996) passed. The corrected educational-page checkpoint passed 482 native/DOM/build records in 61.39 seconds; its [required hosted CI](https://github.com/ElevenID/website/actions/runs/44010150926/job/133794951739) also passed.
 
 | Evidence | Revision/status |
 | --- | --- |
-| Accepted base, PR #10 | `4f53c1768e59b464fddc3b032d260816c7047de2` |
-| Exact source-copy commit | `7193b1bdea2cf7c0ec81c223588540f39b8d8488` |
-| Source-copy tree | `015362ebecedbc14fe58fc22405d8cdbd4dc6091` |
-| Corrected functional commit | `67b5c1e3886e96dbf380757ab342d8b459bb6afa` |
-| Verified functional tree | `eaa47b8a1183b31e2e2402ef8672c3e39591934d` |
-| Final required CI and merge | Track PR #11 for the final revision and accepted merge |
+| Accepted base, PR #11 | `57adcea498bb77935bdbd08ca49654eea44db878` |
+| Exact source-copy commit | `5cc954693cb4de0ac3938a1f0871d68d1a0e47ab` |
+| Exact source-copy tree | `c03207086ede15bf72698cdabab1dd82a3147a22` |
+| Corrected educational-page commit | `dbc26e6e059a9a4de8a6d072b22571ec8bc83180` |
+| Corrected educational-page tree | `c383b62a87ecd6d7e43374e387e6eef1597633cf` |
+| Corrected functional commit | `6e76d883132773b11a2b694438a7a53d34a619cc` |
+| Verified functional tree | `ba71d9f93cf9812e5db77a9cd4e82d406df466b2` |
+| Final required CI and merge | Track PR #12 for the final revision and accepted merge |
 
-Read [the batch 11 receipt](checkpoints/batch-11-sections-release-routing.md) for source identities, executed results and qualification limits. [Batch 10](checkpoints/batch-10-crawler-build-routes.md) and earlier receipts remain historical.
+Read [the batch 12 receipt](checkpoints/batch-12-pages-build-runtime.md) for the source identities, behavior changes and qualification limits. [Batch 11](checkpoints/batch-11-sections-release-routing.md) and earlier receipts remain historical.
 
 ## Resume and next batches
 
-1. Refresh PR #11. If merged, continue from its accepted main; otherwise continue its existing branch and remaining checks.
-2. Retain immutable source pin `df6ec6c4bfee803d89c54e9333297f29f378cee3`. The [batch 11 metadata receipt](input-inventory/source-refresh-batch-11.json) confirms source main remains `9ff6e9779a020839ebeafc60095370725e9fb694`. Unchanged `ui/` and `contracts/` trees retain the 79 candidate identities and reconciled locale. Earlier changes to root `.github/`, `release/`, `scripts/` and `tests/` still need separate inspection before use.
-3. Preserve the [source reconciliation](input-inventory/source-reconciliation.json), including WebsiteApp's `Start Verifying` CTA to application-owned `/verify`. Retain both the [original provenance](../contracts/extraction-provenance.json) and [batch 11 shard](../contracts/extraction-provenance-batch-11.json); keep later adaptations separate from verbatim identities.
-4. Close the remaining page/data graph using the [source audit](source-import-inventory.json) and [input inventory](input-inventory/README.md). Continue bounded reads, avoid SVG processing, and group related verified commits into cohesive PRs.
+1. Refresh PR #12. If merged, continue from its accepted main; otherwise use its existing branch and remaining checks.
+2. Retain immutable source pin `df6ec6c4bfee803d89c54e9333297f29f378cee3`. The [batch 12 metadata receipt](input-inventory/source-refresh-batch-12.json) confirms comparison main remains `9ff6e9779a020839ebeafc60095370725e9fb694`. Unchanged UI/contracts trees preserve the prior candidate identities and reconciled locale. The selected root startup script was checked separately; other changed root files need their own inspection before use.
+3. Preserve the [source reconciliation](input-inventory/source-reconciliation.json), including `Start Verifying` to application-owned `/verify`, and the [batch 12 provenance chain](../contracts/extraction-provenance-batch-12.json). Later adaptations must retain their original source identities.
+4. The original [79-file candidate inventory](source-import-inventory.json) now has **61 present and 18 deferred**: ten large inputs/page/service/catalog bodies and eight diagram modules/barrel. There are no remaining unimported, non-diagram candidates below 16 KiB in that inventory. Continue suitable bounded build/release work; completing the page graph requires resolving those large-input and diagram deferrals.
+5. Keep related verified commits in cohesive PRs. Preserve website/application ownership, withheld pricing and DRAFT/PARTIAL demo publication states.
 
 ## Remaining qualification
 
-The new DOM suites execute the actual AI page/catalog adapter and four landing sections. Small synthetic marketing/catalog inputs and one explicit diagram boundary leave production data and SVG deferred. The route-composition suite retains its separate page boundaries. These checks do not establish complete website content or browser document handoffs.
+The three educational pages execute with real React, MUI, i18n, metadata and routing helpers. Small marketing/blog inputs and named diagram boundaries keep production content and the immutable blog package deferred. Link semantics, router transitions and recorded document-load calls do not establish real browser handoffs.
 
-Release checks use small synthetic output trees and adapters; HTTP checks use generated route configuration and a synthetic content corpus. They qualify artifact identity and server policy, not the complete production website, real commerce/blog packages, a deployed release or rollback. The complete production corpus and browser/application handoffs still require acceptance.
+Generator and startup checks use synthetic inputs. Vite executes in the build-runner fixture, while TypeScript invocation is instrumented. Complete production configuration and dependencies remain required; the runner rejects an incomplete checkout. Startup supports the tested single-line generated metadata forms, and file replacements are individually atomic rather than a transaction across the output corpus.
 
-Large marketing/catalog/manifest inputs, the immutable blog dependency, production assets, complete prerender, browser/application handoffs and release/rollback qualification remain pending. Preserve website/application ownership, withheld pricing and demo publication states. Production cutover remains a future milestone.
+Production assets, complete crawler/prerender output, the real blog/commerce packages, browser/application handoffs, deployed release identity and rollback remain unqualified. The existing Nginx fixture evidence must be replayed against the complete production output before deployment acceptance. Production cutover is a later milestone.

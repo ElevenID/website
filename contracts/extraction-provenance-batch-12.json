@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "purpose": "source-extraction-record",
+  "source": {
+    "repository": "ElevenID/marty-ui",
+    "commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3"
+  },
+  "comparison_source_commit": "9ff6e9779a020839ebeafc60095370725e9fb694",
+  "extends": "contracts/extraction-provenance-batch-11.json",
+  "scope": "Batch 12 bounded identity/protocol/standards pages, demo schema, website build input and public runtime sources. Earlier source records remain unchanged.",
+  "files": [
+    {
+      "source_path": "ui/src/generated/demoWalletSchema.generated.json",
+      "target_path": "ui/src/generated/demoWalletSchema.generated.json",
+      "git_blob_sha1": "58dd81b135c281707185927a6c48de599e100bf9",
+      "bytes": 1836,
+      "transfer": "verbatim"
+    }
+  ],
+  "adapted_files": [
+    {
+      "source_path": "ui/src/components/IdentityGuidePage.jsx",
+      "target_path": "ui/src/components/IdentityGuidePage.jsx",
+      "source_git_blob_sha1": "f3e9104a7d4b242b11359a83da80a88560c75cc4",
+      "bytes": 11013,
+      "target_git_blob_sha1": "032d7f5baf8e6bc34a9c04c477d70e4edc70f570",
+      "target_bytes": 11144,
+      "changes": "Use supported responsive Grid sizes and Typography sx weights/alignment while preserving educational content, metadata and navigation."
+    },
+    {
+      "source_path": "ui/src/components/ProtocolPage.jsx",
+      "target_path": "ui/src/components/ProtocolPage.jsx",
+      "source_git_blob_sha1": "42e1d3b5e32aaefb2e44d371602839f0c1baa580",
+      "bytes": 16232,
+      "target_git_blob_sha1": "79d4308a3cadf29f73e76774466f5957299e3c21",
+      "target_bytes": 16283,
+      "changes": "Use supported Grid/Typography styles; sort article copies; expose native canonical article links with existing surface navigation semantics; disable empty chapter actions and remove unsupported fixed progress."
+    },
+    {
+      "source_path": "ui/src/components/StandardsPage.jsx",
+      "target_path": "ui/src/components/StandardsPage.jsx",
+      "source_git_blob_sha1": "0fcbf958eeaa57e8e0f52c77bdbef08ec388be26",
+      "bytes": 9764,
+      "target_git_blob_sha1": "c0951141c6457639fa00acb18180a3b1b2f8ccc2",
+      "target_bytes": 9789,
+      "changes": "Use supported responsive Grid sizes and Typography sx weights/alignment while preserving standards disclaimers, metadata and navigation."
+    },
+    {
+      "source_path": "scripts/ui-production-start.sh",
+      "target_path": "scripts/ui-production-start.sh",
+      "source_git_blob_sha1": "3916bc1f2b446f893bc63c35418466b80603bdd8",
+      "bytes": 2291,
+      "target_git_blob_sha1": "4267d8ab4788b1596791a0ced784ed6062237591",
+      "target_bytes": 4140,
+      "changes": "Remove the application secrets loader; validate public settings and owned output paths before writes; merge into preinitialized public window configuration; replace supported verification metadata safely without following HTML symlinks."
+    },
+    {
+      "source_path": "ui/scripts/build-web-surface.mjs",
+      "target_path": "ui/scripts/build-web-surface.mjs",
+      "source_git_blob_sha1": "7ffefb9d6109b12fc39d6b89accfbc358f656d03",
+      "bytes": 1769,
+      "target_git_blob_sha1": "838dff8947aeece58debcdb1680a345c9f433d5f",
+      "target_bytes": 3041,
+      "changes": "Remove application pruning; require website-only source identity and complete prerequisites; check generated artifacts and run ordered TypeScript/Vite stages through Node with failure propagation."
+    },
+    {
+      "source_path": "ui/scripts/generate-demo-manifest-module.mjs",
+      "target_path": "ui/scripts/generate-demo-manifest-module.mjs",
+      "source_git_blob_sha1": "8cdf1d9ea21f37a60e2a24c69b7df9d9faeae76e",
+      "bytes": 2723,
+      "target_git_blob_sha1": "e9e1856aa25aabaedbe0e9da5ffa31005923750f",
+      "target_bytes": 6570,
+      "changes": "Validate source projections, release identities, uniqueness, pointers and contained regular input/output paths before writes; preserve JSON keys; support read-only freshness checks and per-file atomic replacement."
+    }
+  ]
+}
