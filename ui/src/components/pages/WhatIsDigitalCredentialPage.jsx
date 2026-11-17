@@ -54,7 +54,7 @@ function WhatIsDigitalCredentialPage() {
       {/* Definition */}
       <Paper elevation={0} sx={{ p: 4, mb: 4, border: '1px solid', borderColor: 'divider', borderRadius: 2 }}>
         <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold' }}>Definition</Typography>
-        <Typography variant="body1" paragraph>
+        <Typography variant="body1" sx={{ marginBottom: '16px' }}>
           A <strong>digital credential</strong> is the electronic equivalent of a physical document—a diploma,
           a license, an employee badge, a passport—represented as structured data with a cryptographic
           proof of authenticity. Unlike a scanned PDF or a database record, a digital credential is

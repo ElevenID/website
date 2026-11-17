@@ -20,6 +20,12 @@ vi.mock('web-vitals', async (importOriginal) => {
 const loadAnalytics = () => import('../../ui/src/utils/analytics.js');
 const scriptSelector = 'script[data-marty-ga-id]';
 
+async function waitForMetrics() {
+  await vi.dynamicImportSettled();
+  // Wait for the observable registration state before inspecting callbacks.
+  await vi.waitFor(() => expect([...metrics.registrations].sort()).toEqual(supported));
+}
+
 beforeEach(() => {
   vi.resetModules();
   vi.clearAllMocks();
@@ -51,7 +57,7 @@ describe('analytics with the installed web-vitals API', () => {
   it('registers every supported metric exactly once', async () => {
     const { trackWebVitals } = await loadAnalytics();
     trackWebVitals();
-    await vi.dynamicImportSettled();
+    await waitForMetrics();
     expect([...metrics.registrations].sort()).toEqual(supported);
     trackWebVitals();
     await vi.dynamicImportSettled();
@@ -65,7 +71,7 @@ describe('analytics with the installed web-vitals API', () => {
     window.gtag = vi.fn();
     const { trackWebVitals } = await loadAnalytics();
     trackWebVitals();
-    await vi.dynamicImportSettled();
+    await waitForMetrics();
     const report = metrics.callbacks.get(registration);
     expect(report).toBeTypeOf('function');
     report({ name, value, id: 'metric-fixture' });
@@ -80,7 +86,7 @@ describe('analytics with the installed web-vitals API', () => {
   it('allows metric callbacks when analytics has not been configured', async () => {
     const { trackWebVitals } = await loadAnalytics();
     trackWebVitals();
-    await vi.dynamicImportSettled();
+    await waitForMetrics();
     expect(() => metrics.callbacks.get('onCLS')({ name: 'CLS', value: 0.1, id: 'silent' })).not.toThrow();
     expect(window.gtag).toBeUndefined();
   });

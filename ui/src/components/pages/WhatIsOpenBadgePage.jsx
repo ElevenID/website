@@ -54,7 +54,7 @@ function WhatIsOpenBadgePage() {
       {/* Definition */}
       <Paper elevation={0} sx={{ p: 4, mb: 4, border: '1px solid', borderColor: 'divider', borderRadius: 2 }}>
         <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold' }}>Definition</Typography>
-        <Typography variant="body1" paragraph>
+        <Typography variant="body1" sx={{ marginBottom: '16px' }}>
           An <strong>Open Badge</strong> is a digital credential conforming to the <strong>Open Badges v3.0 standard</strong> (an
           IMS Global / 1EdTech specification). It packages a claim about an achievement—a course
           completion, a certification, a skill—into a verifiable, portable format that the recipient
