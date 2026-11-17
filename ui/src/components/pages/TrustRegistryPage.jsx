@@ -15,7 +15,7 @@ function TrustRegistryPage() {
         keywords={['trust registry infrastructure', 'issuer trust governance', 'verifiable credential trust registry']}
       />
 
-      <Typography variant="h3" component="h1" fontWeight="bold" sx={{ mb: 2 }}>Trust Registry Infrastructure</Typography>
+      <Typography variant="h3" component="h1" sx={{ fontWeight: 'bold', mb: 2 }}>Trust Registry Infrastructure</Typography>
       <Typography variant="body1" sx={{ mb: 3 }}>
         ElevenID LLC centralizes trust decisions so verifier and issuer applications do not require redeployments when trust participants,
         policies, or revocation requirements change.

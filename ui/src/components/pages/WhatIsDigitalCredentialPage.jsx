@@ -42,7 +42,7 @@ function WhatIsDigitalCredentialPage() {
         color: 'white', borderRadius: 2,
       }}>
         <BadgeIcon sx={{ fontSize: 56, mb: 2, opacity: 0.9 }} />
-        <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
+        <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
           What Is a Digital Credential?
         </Typography>
         <Typography variant="h6" sx={{ maxWidth: 800, mx: 'auto', opacity: 0.95 }}>
@@ -53,7 +53,7 @@ function WhatIsDigitalCredentialPage() {
 
       {/* Definition */}
       <Paper elevation={0} sx={{ p: 4, mb: 4, border: '1px solid', borderColor: 'divider', borderRadius: 2 }}>
-        <Typography variant="h5" component="h2" gutterBottom fontWeight="bold">Definition</Typography>
+        <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold' }}>Definition</Typography>
         <Typography variant="body1" paragraph>
           A <strong>digital credential</strong> is the electronic equivalent of a physical document—a diploma,
           a license, an employee badge, a passport—represented as structured data with a cryptographic
@@ -63,7 +63,7 @@ function WhatIsDigitalCredentialPage() {
       </Paper>
 
       {/* Types */}
-      <Typography variant="h5" component="h2" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
+      <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
         Types of Digital Credentials
       </Typography>
       <Grid container spacing={2} sx={{ mb: 4 }}>
@@ -73,9 +73,9 @@ function WhatIsDigitalCredentialPage() {
           { name: 'ISO 18013-5 mDoc', desc: 'The standard for mobile documents like driving licenses and national eIDs, used in EUDI Wallets.', link: '/iso-18013-5-mdoc-verification' },
           { name: 'Open Badge', desc: 'An achievement credential designed for education and professional development contexts.', link: '/what-is-open-badge' },
         ].map((type) => (
-          <Grid item xs={12} sm={6} key={type.name}>
+          <Grid size={{ xs: 12, sm: 6 }} key={type.name}>
             <Paper elevation={1} sx={{ p: 3, height: '100%', cursor: 'pointer' }} onClick={() => navigate(type.link)}>
-              <Typography variant="h6" gutterBottom fontWeight="bold">{type.name}</Typography>
+              <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>{type.name}</Typography>
               <Typography variant="body2" color="text.secondary">{type.desc}</Typography>
             </Paper>
           </Grid>
@@ -83,7 +83,7 @@ function WhatIsDigitalCredentialPage() {
       </Grid>
 
       {/* Lifecycle */}
-      <Typography variant="h5" component="h2" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
+      <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
         Credential Lifecycle
       </Typography>
       <Grid container spacing={2} sx={{ mb: 4 }}>
@@ -95,9 +95,9 @@ function WhatIsDigitalCredentialPage() {
           { phase: 'Verify', desc: 'The verifier checks authenticity, validity, and trust.' },
           { phase: 'Revoke', desc: 'The issuer can revoke the credential if circumstances change.' },
         ].map((item, i) => (
-          <Grid item xs={12} sm={6} md={4} key={item.phase}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={item.phase}>
             <Paper elevation={0} sx={{ p: 2.5, border: '1px solid', borderColor: 'divider', borderRadius: 2, height: '100%' }}>
-              <Typography variant="h6" color="primary.main" fontWeight="bold">{i + 1}. {item.phase}</Typography>
+              <Typography variant="h6" color="primary.main" sx={{ fontWeight: 'bold' }}>{i + 1}. {item.phase}</Typography>
               <Typography variant="body2" color="text.secondary">{item.desc}</Typography>
             </Paper>
           </Grid>
@@ -105,13 +105,13 @@ function WhatIsDigitalCredentialPage() {
       </Grid>
 
       {/* vs Physical */}
-      <Typography variant="h5" component="h2" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
+      <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
         Digital vs. Physical Credentials
       </Typography>
       <Paper elevation={0} sx={{ p: 3, mb: 4, border: '1px solid', borderColor: 'divider', borderRadius: 2 }}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
-            <Typography variant="subtitle1" fontWeight="bold" color="text.secondary" gutterBottom>Physical Credentials</Typography>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Typography variant="subtitle1" color="text.secondary" gutterBottom sx={{ fontWeight: 'bold' }}>Physical Credentials</Typography>
             <Typography variant="body2" color="text.secondary" component="ul" sx={{ pl: 2 }}>
               <li>Can be forged or altered</li>
               <li>Verification requires contacting the issuer</li>
@@ -120,8 +120,8 @@ function WhatIsDigitalCredentialPage() {
               <li>Difficult to revoke after issuance</li>
             </Typography>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <Typography variant="subtitle1" fontWeight="bold" color="success.main" gutterBottom>Digital Credentials</Typography>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Typography variant="subtitle1" color="success.main" gutterBottom sx={{ fontWeight: 'bold' }}>Digital Credentials</Typography>
             <Typography variant="body2" color="text.secondary" component="ul" sx={{ pl: 2 }}>
               <li>Tamper-evident via cryptographic signatures</li>
               <li>Independently verifiable without issuer contact</li>

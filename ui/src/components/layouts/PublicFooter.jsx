@@ -27,7 +27,7 @@ function PublicFooter() {
         }}
       >
         <Box>
-          <Typography variant="subtitle2" fontWeight={700} color="text.primary">
+          <Typography variant="subtitle2" color="text.primary" sx={{ fontWeight: 700 }}>
             ElevenID LLC
           </Typography>
           <Typography variant="body2" color="text.secondary">

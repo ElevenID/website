@@ -42,7 +42,7 @@ function WhatIsOpenBadgePage() {
         color: 'white', borderRadius: 2,
       }}>
         <EmojiEventsIcon sx={{ fontSize: 56, mb: 2, opacity: 0.9 }} />
-        <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
+        <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
           What Is an Open Badge?
         </Typography>
         <Typography variant="h6" sx={{ maxWidth: 800, mx: 'auto', opacity: 0.95 }}>
@@ -53,7 +53,7 @@ function WhatIsOpenBadgePage() {
 
       {/* Definition */}
       <Paper elevation={0} sx={{ p: 4, mb: 4, border: '1px solid', borderColor: 'divider', borderRadius: 2 }}>
-        <Typography variant="h5" component="h2" gutterBottom fontWeight="bold">Definition</Typography>
+        <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold' }}>Definition</Typography>
         <Typography variant="body1" paragraph>
           An <strong>Open Badge</strong> is a digital credential conforming to the <strong>Open Badges v3.0 standard</strong> (an
           IMS Global / 1EdTech specification). It packages a claim about an achievement—a course
@@ -67,7 +67,7 @@ function WhatIsOpenBadgePage() {
       </Paper>
 
       {/* How it works */}
-      <Typography variant="h5" component="h2" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
+      <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
         How Open Badges Work
       </Typography>
       <Grid container spacing={3} sx={{ mb: 4 }}>
@@ -77,10 +77,10 @@ function WhatIsOpenBadgePage() {
           { step: '3', title: 'Badge Shared', description: 'The recipient stores the badge in a digital wallet and can share it with employers, platforms, or other institutions.' },
           { step: '4', title: 'Badge Verified', description: 'Any recipient of the shared badge can verify its authenticity and check whether the issuer is trusted.' },
         ].map((item) => (
-          <Grid item xs={12} sm={6} key={item.step}>
+          <Grid size={{ xs: 12, sm: 6 }} key={item.step}>
             <Paper elevation={1} sx={{ p: 3, height: '100%' }}>
-              <Typography variant="h4" color="primary.main" fontWeight="bold" gutterBottom>{item.step}</Typography>
-              <Typography variant="h6" gutterBottom fontWeight="bold">{item.title}</Typography>
+              <Typography variant="h4" color="primary.main" gutterBottom sx={{ fontWeight: 'bold' }}>{item.step}</Typography>
+              <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>{item.title}</Typography>
               <Typography variant="body2" color="text.secondary">{item.description}</Typography>
             </Paper>
           </Grid>
@@ -88,7 +88,7 @@ function WhatIsOpenBadgePage() {
       </Grid>
 
       {/* Example */}
-      <Typography variant="h5" component="h2" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
+      <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
         Example: An Open Badge Credential
       </Typography>
       <Paper elevation={0} sx={{ p: 3, mb: 4, bgcolor: 'grey.50', borderRadius: 2, border: '1px solid', borderColor: 'divider' }}>
@@ -120,7 +120,7 @@ function WhatIsOpenBadgePage() {
       </Paper>
 
       {/* Use cases */}
-      <Typography variant="h5" component="h2" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
+      <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
         Where Open Badges Are Used
       </Typography>
       <Grid container spacing={2} sx={{ mb: 4 }}>
@@ -130,9 +130,9 @@ function WhatIsOpenBadgePage() {
           { title: 'Corporate Learning', desc: 'Companies recognize internal training and skill development.' },
           { title: 'Workforce Development', desc: 'Government programs issue badges for workforce readiness.' },
         ].map((uc) => (
-          <Grid item xs={12} sm={6} key={uc.title}>
+          <Grid size={{ xs: 12, sm: 6 }} key={uc.title}>
             <Paper elevation={0} sx={{ p: 2.5, border: '1px solid', borderColor: 'divider', borderRadius: 2 }}>
-              <Typography variant="subtitle1" fontWeight="bold">{uc.title}</Typography>
+              <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>{uc.title}</Typography>
               <Typography variant="body2" color="text.secondary">{uc.desc}</Typography>
             </Paper>
           </Grid>

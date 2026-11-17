@@ -14,7 +14,7 @@ function OpenBadgesIssuancePage() {
         structuredData={softwareApplicationSchema({ name: 'Open Badges Issuance API', description: 'Open Badges 3.0 issuance and lifecycle infrastructure.' })}
         keywords={['Open Badges issuance API', 'W3C VC issuance', 'education credential issuance']}
       />
-      <Typography variant="h3" component="h1" fontWeight="bold" sx={{ mb: 2 }}>Open Badges 3.0 Issuance Infrastructure</Typography>
+      <Typography variant="h3" component="h1" sx={{ fontWeight: 'bold', mb: 2 }}>Open Badges 3.0 Issuance Infrastructure</Typography>
       <Typography variant="body1" sx={{ mb: 3 }}>
         Define the badge version, credential template, issuer, lifecycle, and recipient wallet. Validate the specific release and interoperability evidence using synthetic data before issuing real credentials.
       </Typography>

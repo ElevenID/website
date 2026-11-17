@@ -46,7 +46,7 @@ function WhatIsMartyProtocolPage() {
         color: 'white', borderRadius: 2,
       }}>
         <AccountTreeIcon sx={{ fontSize: 56, mb: 2, opacity: 0.9 }} />
-        <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
+        <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
           What Is the Marty Identity Protocol?
         </Typography>
         <Typography variant="h6" sx={{ maxWidth: 800, mx: 'auto', opacity: 0.95 }}>
@@ -57,7 +57,7 @@ function WhatIsMartyProtocolPage() {
 
       {/* Definition */}
       <Paper elevation={0} sx={{ p: 4, mb: 4, border: '1px solid', borderColor: 'divider', borderRadius: 2 }}>
-        <Typography variant="h5" component="h2" gutterBottom fontWeight="bold">Definition</Typography>
+        <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold' }}>Definition</Typography>
         <Typography variant="body1" paragraph>
           The <strong>Marty Identity Protocol (MIP)</strong> is an open specification that defines
           the core building blocks—called <em>primitives</em>—needed to manage digital credentials
@@ -75,14 +75,14 @@ function WhatIsMartyProtocolPage() {
       </Paper>
 
       {/* Primitives */}
-      <Typography variant="h5" component="h2" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
+      <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
         Protocol Primitives
       </Typography>
       <Grid container spacing={2} sx={{ mb: 4 }}>
         {primitives.map((prim) => (
-          <Grid item xs={12} sm={6} key={prim.name}>
+          <Grid size={{ xs: 12, sm: 6 }} key={prim.name}>
             <Paper elevation={0} sx={{ p: 2.5, height: '100%', border: '1px solid', borderColor: 'divider', borderRadius: 2 }}>
-              <Typography variant="subtitle1" fontWeight="bold">{prim.name}</Typography>
+              <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>{prim.name}</Typography>
               <Typography variant="body2" color="text.secondary">{prim.desc}</Typography>
             </Paper>
           </Grid>
@@ -90,7 +90,7 @@ function WhatIsMartyProtocolPage() {
       </Grid>
 
       {/* What MIP solves */}
-      <Typography variant="h5" component="h2" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
+      <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
         What Problem Does MIP Solve?
       </Typography>
       <Paper elevation={0} sx={{ p: 4, mb: 4, border: '1px solid', borderColor: 'divider', borderRadius: 2 }}>
@@ -111,7 +111,7 @@ function WhatIsMartyProtocolPage() {
       </Paper>
 
       {/* Example */}
-      <Typography variant="h5" component="h2" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
+      <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
         Example: A Trust Profile
       </Typography>
       <Paper elevation={0} sx={{ p: 3, mb: 4, bgcolor: 'grey.50', borderRadius: 2, border: '1px solid', borderColor: 'divider' }}>

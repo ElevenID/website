@@ -42,7 +42,7 @@ function WhatIsCredentialVerificationPage() {
         color: 'white', borderRadius: 2,
       }}>
         <SearchIcon sx={{ fontSize: 56, mb: 2, opacity: 0.9 }} />
-        <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
+        <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
           What Is Credential Verification?
         </Typography>
         <Typography variant="h6" sx={{ maxWidth: 800, mx: 'auto', opacity: 0.95 }}>
@@ -53,7 +53,7 @@ function WhatIsCredentialVerificationPage() {
 
       {/* Definition */}
       <Paper elevation={0} sx={{ p: 4, mb: 4, border: '1px solid', borderColor: 'divider', borderRadius: 2 }}>
-        <Typography variant="h5" component="h2" gutterBottom fontWeight="bold">Definition</Typography>
+        <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold' }}>Definition</Typography>
         <Typography variant="body1" paragraph>
           <strong>Credential verification</strong> is the act of validating that a digital credential
           presented by a holder is genuine, has not been tampered with, has not been revoked, and was
@@ -64,7 +64,7 @@ function WhatIsCredentialVerificationPage() {
       </Paper>
 
       {/* Verification Steps */}
-      <Typography variant="h5" component="h2" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
+      <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
         How Verification Works
       </Typography>
       <Grid container spacing={2} sx={{ mb: 4 }}>
@@ -75,11 +75,11 @@ function WhatIsCredentialVerificationPage() {
           { step: '4', title: 'Issuer Trust Evaluation', description: 'The issuer\'s DID or public key is checked against a trust registry to confirm they are authorized to issue the credential type.' },
           { step: '5', title: 'Policy Evaluation', description: 'Custom business rules—minimum disclosure, holder binding, compliance requirements—are applied to the credential presentation.' },
         ].map((item) => (
-          <Grid item xs={12} key={item.step}>
+          <Grid size={{ xs: 12 }} key={item.step}>
             <Paper elevation={0} sx={{ p: 2.5, border: '1px solid', borderColor: 'divider', borderRadius: 2, display: 'flex', gap: 2 }}>
-              <Typography variant="h5" color="primary.main" fontWeight="bold" sx={{ minWidth: 32 }}>{item.step}</Typography>
+              <Typography variant="h5" color="primary.main" sx={{ fontWeight: 'bold', minWidth: 32 }}>{item.step}</Typography>
               <Box>
-                <Typography variant="subtitle1" fontWeight="bold">{item.title}</Typography>
+                <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>{item.title}</Typography>
                 <Typography variant="body2" color="text.secondary">{item.description}</Typography>
               </Box>
             </Paper>
@@ -88,7 +88,7 @@ function WhatIsCredentialVerificationPage() {
       </Grid>
 
       {/* Supported Formats */}
-      <Typography variant="h5" component="h2" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
+      <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
         Credential Formats Supported
       </Typography>
       <Grid container spacing={2} sx={{ mb: 4 }}>
@@ -98,9 +98,9 @@ function WhatIsCredentialVerificationPage() {
           { name: 'ISO 18013-5 mDoc', desc: 'Mobile document format used by mobile driving licenses and national eIDs', link: '/iso-18013-5-mdoc-verification' },
           { name: 'Open Badges v3', desc: 'Achievement credentials for education and professional development', link: '/open-badges-verification' },
         ].map((fmt) => (
-          <Grid item xs={12} sm={6} key={fmt.name}>
+          <Grid size={{ xs: 12, sm: 6 }} key={fmt.name}>
             <Paper elevation={1} sx={{ p: 2.5, height: '100%', cursor: 'pointer' }} onClick={() => navigate(fmt.link)}>
-              <Typography variant="subtitle1" fontWeight="bold">{fmt.name}</Typography>
+              <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>{fmt.name}</Typography>
               <Typography variant="body2" color="text.secondary">{fmt.desc}</Typography>
             </Paper>
           </Grid>
@@ -108,7 +108,7 @@ function WhatIsCredentialVerificationPage() {
       </Grid>
 
       {/* API Example */}
-      <Typography variant="h5" component="h2" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
+      <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
         Verification API Example
       </Typography>
       <Paper elevation={0} sx={{ p: 3, mb: 2, bgcolor: 'grey.50', borderRadius: 2, border: '1px solid', borderColor: 'divider' }}>

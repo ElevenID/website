@@ -24,7 +24,7 @@ function EudiWalletVerificationPage() {
       />
 
       <Box sx={{ textAlign: 'center', py: 7, mb: 5, background: 'linear-gradient(135deg, #1976d2 0%, #1565c0 100%)', color: 'white', borderRadius: 2 }}>
-        <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">EUDI Wallet Verification API</Typography>
+        <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>EUDI Wallet Verification API</Typography>
         <Typography variant="h6" sx={{ maxWidth: 860, mx: 'auto', opacity: 0.95 }}>
           Define the wallet, credential, presentation profile, and acceptance requirements your integration needs.
         </Typography>
@@ -37,9 +37,9 @@ function EudiWalletVerificationPage() {
       </Typography>
 
       <Grid container spacing={3} sx={{ mb: 5 }}>
-        <Grid item xs={12} md={4}><Card><CardContent><Typography variant="h6" gutterBottom>Issuer Authorization</Typography><Typography variant="body2" color="text.secondary">Validate issuer eligibility using trust registries and policy constraints.</Typography></CardContent></Card></Grid>
-        <Grid item xs={12} md={4}><Card><CardContent><Typography variant="h6" gutterBottom>Revocation & Status</Typography><Typography variant="body2" color="text.secondary">Check revocation and status resources before accepting credentials.</Typography></CardContent></Card></Grid>
-        <Grid item xs={12} md={4}><Card><CardContent><Typography variant="h6" gutterBottom>Selective Disclosure</Typography><Typography variant="body2" color="text.secondary">Enforce data minimization and proof requirements per use case.</Typography></CardContent></Card></Grid>
+        <Grid size={{ xs: 12, md: 4 }}><Card><CardContent><Typography variant="h6" gutterBottom>Issuer Authorization</Typography><Typography variant="body2" color="text.secondary">Validate issuer eligibility using trust registries and policy constraints.</Typography></CardContent></Card></Grid>
+        <Grid size={{ xs: 12, md: 4 }}><Card><CardContent><Typography variant="h6" gutterBottom>Revocation & Status</Typography><Typography variant="body2" color="text.secondary">Check revocation and status resources before accepting credentials.</Typography></CardContent></Card></Grid>
+        <Grid size={{ xs: 12, md: 4 }}><Card><CardContent><Typography variant="h6" gutterBottom>Selective Disclosure</Typography><Typography variant="body2" color="text.secondary">Enforce data minimization and proof requirements per use case.</Typography></CardContent></Card></Grid>
       </Grid>
 
       <Paper sx={{ p: 3, mb: 5, bgcolor: 'grey.50' }}>
