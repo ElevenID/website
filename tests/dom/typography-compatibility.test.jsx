@@ -73,4 +73,20 @@ describe('MUI typography compatibility', () => {
     renderContent(<SectionHeading>Capabilities</SectionHeading>);
     expect(computedWeight(screen.getByRole('heading', { level: 2, name: 'Capabilities' }))).toBe(800);
   });
+
+  it.each([
+    ['/what-is-digital-credential', DigitalCredential, ['electronic equivalent of a physical document']],
+    ['/what-is-credential-verification', CredentialVerification, ['act of validating that a digital credential']],
+    ['/what-is-marty-protocol', MartyProtocol, ['defines the core building blocks', 'Existing credential standards tell you']],
+    ['/what-is-open-badge', OpenBadge, ['packages a claim about an achievement']],
+  ])('%s retains the spacing after explanatory paragraphs', (pathname, Component, fragments) => {
+    const { container } = renderContent(<Component />, pathname);
+    const paragraphs = [...container.querySelectorAll('p')];
+    for (const fragment of fragments) {
+      const paragraph = paragraphs.find((element) =>
+        element.textContent.replace(/\s+/g, ' ').includes(fragment));
+      expect(paragraph, fragment).toBeDefined();
+      expect(window.getComputedStyle(paragraph).marginBottom).toBe('16px');
+    }
+  });
 });

@@ -185,42 +185,6 @@
       "target_path": "ui/src/extensions/commerce/website.js",
       "git_blob_sha1": "65389d443cee08f542f724db98aca69140f87298",
       "transfer": "verbatim"
-    },
-    {
-      "source_path": "ui/src/application/protocolSupportCatalog.js",
-      "target_path": "ui/src/application/protocolSupportCatalog.js",
-      "git_blob_sha1": "26f31ccd8f058bb63880f1f1c1b5c239e4b9104b",
-      "transfer": "verbatim"
-    },
-    {
-      "source_path": "ui/src/application/verifier/verifierDemoFlow.js",
-      "target_path": "ui/src/application/verifier/verifierDemoFlow.js",
-      "git_blob_sha1": "3805bd4b162fe6f6c13b69da4704eaeeccbfde22",
-      "transfer": "verbatim"
-    },
-    {
-      "source_path": "ui/src/components/landing/proofLabRuntime.js",
-      "target_path": "ui/src/components/landing/proofLabRuntime.js",
-      "git_blob_sha1": "916404343c260440fafb80d7d51e89dba65870d2",
-      "transfer": "verbatim"
-    },
-    {
-      "source_path": "ui/src/components/demos/DemoVideoPlayer.jsx",
-      "target_path": "ui/src/components/demos/DemoVideoPlayer.jsx",
-      "git_blob_sha1": "8e24d03da762d7b259fe2df3fc0f6950fdfa96c4",
-      "transfer": "verbatim"
-    },
-    {
-      "source_path": "ui/src/components/FromIDVPage.jsx",
-      "target_path": "ui/src/components/FromIDVPage.jsx",
-      "git_blob_sha1": "e24f99d3af45cd84514d6ab9aafd480b56c2cb5e",
-      "transfer": "verbatim"
-    },
-    {
-      "source_path": "ui/src/components/pages/ProtocolSupportCatalogView.jsx",
-      "target_path": "ui/src/components/pages/ProtocolSupportCatalogView.jsx",
-      "git_blob_sha1": "506c07af7d3c1f4f5800bc5976264a67e82a54a0",
-      "transfer": "verbatim"
     }
   ],
   "adapted_files": [
@@ -324,25 +288,25 @@
       "source_path": "ui/src/components/pages/WhatIsDigitalCredentialPage.jsx",
       "target_path": "ui/src/components/pages/WhatIsDigitalCredentialPage.jsx",
       "source_git_blob_sha1": "b597e97ce104ff3085288574f8d794cea0fc9168",
-      "changes": "Convert legacy Grid item breakpoint props to the MUI v9 size API without changing breakpoint values; move Typography fontWeight into sx while preserving the existing weight and all other styles and content."
+      "changes": "Convert legacy Grid item breakpoint props to the MUI v9 size API without changing breakpoint values; move Typography fontWeight into sx while preserving the existing weight and all other styles and content. Preserve the original fixed paragraph margins after removing legacy Typography paragraph flags."
     },
     {
       "source_path": "ui/src/components/pages/WhatIsCredentialVerificationPage.jsx",
       "target_path": "ui/src/components/pages/WhatIsCredentialVerificationPage.jsx",
       "source_git_blob_sha1": "f2ec6b74c8095b084c52f55f4b9109d82663e616",
-      "changes": "Convert legacy Grid item breakpoint props to the MUI v9 size API without changing breakpoint values; move Typography fontWeight into sx while preserving the existing weight and all other styles and content."
+      "changes": "Convert legacy Grid item breakpoint props to the MUI v9 size API without changing breakpoint values; move Typography fontWeight into sx while preserving the existing weight and all other styles and content. Preserve the original fixed paragraph margins after removing legacy Typography paragraph flags."
     },
     {
       "source_path": "ui/src/components/pages/WhatIsMartyProtocolPage.jsx",
       "target_path": "ui/src/components/pages/WhatIsMartyProtocolPage.jsx",
       "source_git_blob_sha1": "5ef8f20f7b35852c22f10442844a65b68afec2bf",
-      "changes": "Convert legacy Grid item breakpoint props to the MUI v9 size API without changing breakpoint values; move Typography fontWeight into sx while preserving the existing weight and all other styles and content."
+      "changes": "Convert legacy Grid item breakpoint props to the MUI v9 size API without changing breakpoint values; move Typography fontWeight into sx while preserving the existing weight and all other styles and content. Preserve the original fixed paragraph margins after removing legacy Typography paragraph flags."
     },
     {
       "source_path": "ui/src/components/pages/WhatIsOpenBadgePage.jsx",
       "target_path": "ui/src/components/pages/WhatIsOpenBadgePage.jsx",
       "source_git_blob_sha1": "6e12d64da9b7fba78117551e0f54281c991cb202",
-      "changes": "Convert legacy Grid item breakpoint props to the MUI v9 size API without changing breakpoint values; move Typography fontWeight into sx while preserving the existing weight and all other styles and content."
+      "changes": "Convert legacy Grid item breakpoint props to the MUI v9 size API without changing breakpoint values; move Typography fontWeight into sx while preserving the existing weight and all other styles and content. Preserve the original fixed paragraph margins after removing legacy Typography paragraph flags."
     },
     {
       "source_path": "ui/src/components/pages/EudiWalletVerificationPage.jsx",
@@ -387,6 +351,42 @@
       "reconciled_source_commit": "a4fc3801b636e2cfd0753797e8fc0dc846b42a22",
       "reconciled_source_git_blob_sha1": "bb9616ba5618cac9899b4c487487b687a1caa51c",
       "changes": "Adopt reconciled source WebsiteApp from the recorded current source commit; preserve Start Verifying wording and /verify CTA plus existing public-entry handoffs."
+    },
+    {
+      "source_path": "ui/src/application/protocolSupportCatalog.js",
+      "target_path": "ui/src/application/protocolSupportCatalog.js",
+      "source_git_blob_sha1": "26f31ccd8f058bb63880f1f1c1b5c239e4b9104b",
+      "changes": "Require a primitive string protocol revision before the existing lowercase 40-hex validation; preserve catalog normalization and unsupported-surface rules."
+    },
+    {
+      "source_path": "ui/src/application/verifier/verifierDemoFlow.js",
+      "target_path": "ui/src/application/verifier/verifierDemoFlow.js",
+      "source_git_blob_sha1": "3805bd4b162fe6f6c13b69da4704eaeeccbfde22",
+      "changes": "Require explicit boolean true before displaying a successful verification result; preserve request routing and returned evidence fields."
+    },
+    {
+      "source_path": "ui/src/components/landing/proofLabRuntime.js",
+      "target_path": "ui/src/components/landing/proofLabRuntime.js",
+      "source_git_blob_sha1": "916404343c260440fafb80d7d51e89dba65870d2",
+      "changes": "Select only own scenario keys before falling back to retail, and return an independent shallow copy of each scenario's scalar disclosure claims."
+    },
+    {
+      "source_path": "ui/src/components/demos/DemoVideoPlayer.jsx",
+      "target_path": "ui/src/components/demos/DemoVideoPlayer.jsx",
+      "source_git_blob_sha1": "8e24d03da762d7b259fe2df3fc0f6950fdfa96c4",
+      "changes": "Move unavailable-state title weight and Stack alignment into sx for MUI v9; preserve publication gates, consent binding, chapters, URLs and all content."
+    },
+    {
+      "source_path": "ui/src/components/FromIDVPage.jsx",
+      "target_path": "ui/src/components/FromIDVPage.jsx",
+      "source_git_blob_sha1": "e24f99d3af45cd84514d6ab9aafd480b56c2cb5e",
+      "changes": "Migrate two Grid tags and Typography/slot styles to supported MUI v9 APIs; preserve original heading weights, alignment, paragraph margins including explicit overrides, checklist text size, content, metadata and navigation. Remove eight inherited trailing-whitespace lines."
+    },
+    {
+      "source_path": "ui/src/components/pages/ProtocolSupportCatalogView.jsx",
+      "target_path": "ui/src/components/pages/ProtocolSupportCatalogView.jsx",
+      "source_git_blob_sha1": "506c07af7d3c1f4f5800bc5976264a67e82a54a0",
+      "changes": "Migrate Grid sizing, summary wrapping, metadata display and card-header alignment to supported MUI v9 props/sx without changing catalog data, grouping, labels or links."
     }
   ],
   "ci_action_pins": {

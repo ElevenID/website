@@ -71,7 +71,9 @@ export const PROOF_LAB_RUNTIME = {
 };
 
 export function createProofLabPresentation(scenarioId) {
-  const runtime = PROOF_LAB_RUNTIME[scenarioId] || PROOF_LAB_RUNTIME['retail-age'];
+  const runtime = Object.hasOwn(PROOF_LAB_RUNTIME, scenarioId)
+    ? PROOF_LAB_RUNTIME[scenarioId]
+    : PROOF_LAB_RUNTIME['retail-age'];
   const basePresentation = createVerifierDemoMockPresentation({ issuanceDate: runtime.issuedAt });
   const baseCredential = basePresentation.verifiableCredential?.[0] || {};
 
@@ -83,7 +85,7 @@ export function createProofLabPresentation(scenarioId) {
         type: ['VerifiableCredential', runtime.credentialType],
         issuer: runtime.issuer,
         issuanceDate: runtime.issuedAt,
-        credentialSubject: runtime.claims,
+        credentialSubject: { ...runtime.claims },
       },
     ],
   };

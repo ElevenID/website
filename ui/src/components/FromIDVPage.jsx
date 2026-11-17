@@ -1,7 +1,7 @@
 import { useSurfaceNavigate } from '../application/routing/useSurfaceNavigate';
 /**
  * From IDV to Verifiable Identity Page
- * 
+ *
  * Workflow guide for evaluating credential reuse, customer operation, and
  * release-specific trust and acceptance requirements
  */
@@ -111,7 +111,7 @@ function FromIDVPage() {
           borderRadius: 2,
         }}
       >
-        <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
+        <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
           Plan a Verifiable Identity Workflow
         </Typography>
         <Typography variant="h6" sx={{ maxWidth: 900, mx: 'auto', opacity: 0.95, mb: 2 }}>
@@ -126,14 +126,14 @@ function FromIDVPage() {
       </Box>
       {/* Section 1 - The IDV Plateau */}
       <Box sx={{ mb: 8 }}>
-        <Typography variant="h4" gutterBottom fontWeight="bold">
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
           Start with the decision your workflow must make
         </Typography>
-        <Typography variant="body1" paragraph sx={{ fontSize: '1.05rem', lineHeight: 1.8 }}>
+        <Typography variant="body1" sx={{ marginBottom: '16px', fontSize: '1.05rem', lineHeight: 1.8 }}>
           Identify the claim or document check, the evidence needed, and the party responsible for the decision.
           Assess each available implementation against those requirements; capabilities and operating models vary.
         </Typography>
-        <Typography variant="body1" paragraph sx={{ fontSize: '1.05rem', lineHeight: 1.8, fontWeight: 500 }}>
+        <Typography variant="body1" sx={{ marginBottom: '16px', fontSize: '1.05rem', lineHeight: 1.8, fontWeight: 500 }}>
           A reusable credential may support more than one workflow when each verifier accepts its issuer,
           format, holder-binding mechanism, and current status.
         </Typography>
@@ -141,16 +141,16 @@ function FromIDVPage() {
       <Divider sx={{ my: 8 }} />
       {/* Section 2 - What Changed */}
       <Box sx={{ mb: 8 }}>
-        <Typography variant="h4" gutterBottom fontWeight="bold">
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
           Review wallets, formats, and acceptance requirements together
         </Typography>
-        <Typography variant="body1" paragraph sx={{ fontSize: '1.05rem', lineHeight: 1.8 }}>
+        <Typography variant="body1" sx={{ marginBottom: '16px', fontSize: '1.05rem', lineHeight: 1.8 }}>
           Names such as W3C Verifiable Credentials, ISO 18013-5, and EUDI Wallet identify areas to evaluate.
           Confirm the exact specification, wallet build, presentation profile, and Marty release. The responsible
           organization must review applicable acceptance requirements; a standard name is not regulatory approval.
         </Typography>
         <Paper elevation={2} sx={{ p: 3, mt: 3, bgcolor: 'primary.light', color: 'primary.contrastText' }}>
-          <Typography variant="h6" textAlign="center">
+          <Typography variant="h6" sx={{ textAlign: 'center' }}>
             Record the <strong>tested scope, trust decisions, and known limitations</strong> for each workflow.
           </Typography>
         </Paper>
@@ -158,14 +158,14 @@ function FromIDVPage() {
       <Divider sx={{ my: 8 }} />
       {/* Section 3 - The Missing Layer in Most IDV Platforms */}
       <Box sx={{ mb: 8 }}>
-        <Typography variant="h4" gutterBottom fontWeight="bold">
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
           Make Trust Responsibilities Explicit
         </Typography>
         <Typography variant="h6" color="text.secondary" gutterBottom sx={{ mb: 4 }}>
           Define the evidence and policy behind each decision
         </Typography>
 
-        <Typography variant="body1" paragraph sx={{ fontSize: '1.05rem', lineHeight: 1.8 }}>
+        <Typography variant="body1" sx={{ marginBottom: '16px', fontSize: '1.05rem', lineHeight: 1.8 }}>
           Distinguish the questions your workflow asks:
         </Typography>
         <List>
@@ -179,21 +179,21 @@ function FromIDVPage() {
           ))}
         </List>
 
-        <Typography variant="body1" paragraph sx={{ fontSize: '1.05rem', lineHeight: 1.8, mt: 3 }}>
+        <Typography variant="body1" sx={{ marginBottom: '16px', fontSize: '1.05rem', lineHeight: 1.8, mt: 3 }}>
           Keep <strong>structural checks, cryptographic authenticity, and holder binding</strong> distinct.
           A passing check in one category does not prove the others.
         </Typography>
 
-        <Typography variant="body1" paragraph sx={{ fontSize: '1.05rem', lineHeight: 1.8, mb: 3 }}>
+        <Typography variant="body1" sx={{ fontSize: '1.05rem', lineHeight: 1.8, mb: 3 }}>
           Use these configuration concepts to describe the selected workflow:
         </Typography>
 
         <Grid container spacing={3}>
           {infrastructurePrimitives.map((primitive, index) => (
-            <Grid item xs={12} sm={6} key={index}>
+            <Grid size={{ xs: 12, sm: 6 }} key={index}>
               <Card elevation={2}>
                 <CardContent>
-                  <Typography variant="h6" fontWeight="bold" gutterBottom color="primary">
+                  <Typography variant="h6" gutterBottom color="primary" sx={{ fontWeight: 'bold' }}>
                     • {primitive.name}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
@@ -205,7 +205,7 @@ function FromIDVPage() {
           ))}
         </Grid>
 
-        <Typography variant="body1" paragraph sx={{ fontSize: '1.05rem', lineHeight: 1.8, mt: 4 }}>
+        <Typography variant="body1" sx={{ marginBottom: '16px', fontSize: '1.05rem', lineHeight: 1.8, mt: 4 }}>
           Connect these concepts through a defined <strong>flow</strong>. Validate its documented interfaces,
           selected devices, connectivity requirements, and rejected cases against the exact release.
         </Typography>
@@ -221,14 +221,14 @@ function FromIDVPage() {
       <Divider sx={{ my: 8 }} />
       {/* Section 4 - How ElevenID LLC Solves Identity Management */}
       <Box sx={{ mb: 8 }}>
-        <Typography variant="h4" gutterBottom fontWeight="bold">
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
           Evaluate Marty by {branding.branding.appName}
         </Typography>
         <Typography variant="h6" color="text.secondary" gutterBottom sx={{ mb: 4 }}>
           Select one useful workflow and its evidence requirements
         </Typography>
 
-        <Typography variant="body1" paragraph sx={{ fontSize: '1.05rem', lineHeight: 1.8, mb: 3 }}>
+        <Typography variant="body1" sx={{ fontSize: '1.05rem', lineHeight: 1.8, mb: 3 }}>
           Use the release documentation and executed tests to evaluate the scope your organization needs:
         </Typography>
 
@@ -238,10 +238,10 @@ function FromIDVPage() {
               <ListItemIcon>
                 <CheckCircleIcon color="success" />
               </ListItemIcon>
-              <ListItemText 
+              <ListItemText
                 primary={item}
                 slotProps={{
-                  primary: { fontSize: '1.05rem' }
+                  primary: { sx: { fontSize: '1.05rem' } }
                 }}
               />
             </ListItem>
@@ -249,7 +249,7 @@ function FromIDVPage() {
         </List>
 
         <Paper elevation={2} sx={{ p: 4, mt: 4, bgcolor: 'success.light', color: 'success.contrastText' }}>
-          <Typography variant="h6" textAlign="center" fontWeight="bold">
+          <Typography variant="h6" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
             Begin with <strong>synthetic data and a bounded workflow</strong>. Real records require accepted
             customer evaluation and the required security/privacy approvals; production additionally requires
             applicable signed terms and explicit authorization.
@@ -259,19 +259,19 @@ function FromIDVPage() {
       <Divider sx={{ my: 8 }} />
       {/* Section 5 - Who This Is For */}
       <Box sx={{ mb: 8 }}>
-        <Typography variant="h4" gutterBottom fontWeight="bold" textAlign="center">
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'center' }}>
           Who This Is For
         </Typography>
-        <Typography variant="h6" color="text.secondary" textAlign="center" gutterBottom sx={{ mb: 4 }}>
+        <Typography variant="h6" color="text.secondary" gutterBottom sx={{ textAlign: 'center', mb: 4 }}>
           Identify the workflow owner, operating team, and acceptance requirements
         </Typography>
 
         <Grid container spacing={4}>
           {audiences.map((audience, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
               <Card sx={{ height: '100%' }}>
                 <CardContent>
-                  <Typography variant="h6" fontWeight="bold" gutterBottom color="primary">
+                  <Typography variant="h6" gutterBottom color="primary" sx={{ fontWeight: 'bold' }}>
                     {audience.title}
                   </Typography>
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 1, fontStyle: 'italic' }}>
@@ -283,7 +283,7 @@ function FromIDVPage() {
                         <ListItemIcon sx={{ minWidth: 32 }}>
                           <CheckCircleIcon fontSize="small" color="success" />
                         </ListItemIcon>
-                        <ListItemText 
+                        <ListItemText
                           primary={point}
                           slotProps={{
                             primary: { variant: 'body2' }
@@ -301,10 +301,10 @@ function FromIDVPage() {
       <Divider sx={{ my: 8 }} />
       {/* Section 6 - The Outcome */}
       <Box sx={{ mb: 8 }}>
-        <Typography variant="h4" gutterBottom fontWeight="bold" textAlign="center">
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'center' }}>
           What the Evaluation Should Establish
         </Typography>
-        <Typography variant="h6" color="text.secondary" textAlign="center" gutterBottom sx={{ mb: 4 }}>
+        <Typography variant="h6" color="text.secondary" gutterBottom sx={{ textAlign: 'center', mb: 4 }}>
           A recorded result for the exact release, inputs, and operating environment
         </Typography>
 
@@ -315,15 +315,15 @@ function FromIDVPage() {
         </Paper>
       </Box>
       {/* Call to Action */}
-      <Box 
-        sx={{ 
-          textAlign: 'center', 
-          py: 6, 
-          bgcolor: 'grey.100', 
+      <Box
+        sx={{
+          textAlign: 'center',
+          py: 6,
+          bgcolor: 'grey.100',
           borderRadius: 2,
         }}
       >
-        <Typography variant="h5" gutterBottom fontWeight="bold">
+        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
           Define your next evaluation
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 4, maxWidth: 600, mx: 'auto' }}>

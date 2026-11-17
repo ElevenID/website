@@ -58,7 +58,7 @@ function WhatIsMartyProtocolPage() {
       {/* Definition */}
       <Paper elevation={0} sx={{ p: 4, mb: 4, border: '1px solid', borderColor: 'divider', borderRadius: 2 }}>
         <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold' }}>Definition</Typography>
-        <Typography variant="body1" paragraph>
+        <Typography variant="body1" sx={{ marginBottom: '16px' }}>
           The <strong>Marty Identity Protocol (MIP)</strong> is an open specification that defines
           the core building blocks—called <em>primitives</em>—needed to manage digital credentials
           across their entire lifecycle. It addresses the gap between existing credential format
@@ -94,7 +94,7 @@ function WhatIsMartyProtocolPage() {
         What Problem Does MIP Solve?
       </Typography>
       <Paper elevation={0} sx={{ p: 4, mb: 4, border: '1px solid', borderColor: 'divider', borderRadius: 2 }}>
-        <Typography variant="body1" paragraph>
+        <Typography variant="body1" sx={{ marginBottom: '16px' }}>
           Existing credential standards tell you <em>what format</em> to use (JSON-LD, SD-JWT, mDoc)
           and <em>how to exchange</em> them (OID4VCI, OID4VP). But they don't answer:
         </Typography>

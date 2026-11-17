@@ -54,7 +54,7 @@ function WhatIsCredentialVerificationPage() {
       {/* Definition */}
       <Paper elevation={0} sx={{ p: 4, mb: 4, border: '1px solid', borderColor: 'divider', borderRadius: 2 }}>
         <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold' }}>Definition</Typography>
-        <Typography variant="body1" paragraph>
+        <Typography variant="body1" sx={{ marginBottom: '16px' }}>
           <strong>Credential verification</strong> is the act of validating that a digital credential
           presented by a holder is genuine, has not been tampered with, has not been revoked, and was
           issued by an authority the verifier trusts. It involves checking cryptographic signatures,

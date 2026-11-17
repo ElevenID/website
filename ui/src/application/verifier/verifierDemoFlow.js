@@ -82,7 +82,7 @@ export function resolveVerifierDemoRequest({
 
 export function createVerifierDemoVerificationResult(result = {}) {
   const claimCount = Object.keys(result.claims || {}).length;
-  const isValid = Boolean(result.valid);
+  const isValid = result.valid === true;
 
   return {
     success: isValid,

@@ -103,9 +103,9 @@ function DemoVideoPlayback({ scenario, startSeconds = 0 }) {
                 Play recording
               </Button>
             ) : (
-              <Stack alignItems="center" spacing={1} sx={{ color: '#fff', textAlign: 'center', maxWidth: 440 }}>
+              <Stack spacing={1} sx={{ alignItems: 'center', color: '#fff', textAlign: 'center', maxWidth: 440 }}>
                 <PendingActionsRoundedIcon fontSize="large" />
-                <Typography variant="h6" component="p" fontWeight={700}>
+                <Typography variant="h6" component="p" sx={{ fontWeight: 700 }}>
                   {unavailableCopy.title}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.86)', display: { xs: 'none', sm: 'block' } }}>

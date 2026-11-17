@@ -27,7 +27,8 @@ export function normalizeProtocolSupportCatalog(raw) {
   if (catalog.schema_version !== 1 || catalog.discovery_path !== PROTOCOL_SUPPORT_PATH) {
     throw new Error('Protocol support catalog version or discovery path is unsupported.');
   }
-  if (!/^[0-9a-f]{40}$/.test(catalog.protocol_revision || '')) {
+  if (typeof catalog.protocol_revision !== 'string'
+    || !/^[0-9a-f]{40}$/.test(catalog.protocol_revision)) {
     throw new Error('Protocol support catalog revision is invalid.');
   }
   requireObject(catalog.support_levels, 'support levels');

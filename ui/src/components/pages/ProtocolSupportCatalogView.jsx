@@ -16,7 +16,7 @@ export default function ProtocolSupportCatalogView({ catalog, sourcePath = '/v1/
 
   return (
     <Box data-testid="protocol-support-catalog">
-      <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap" sx={{ mb: 2 }}>
+      <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: 'wrap', mb: 2 }}>
         {PROTOCOL_SUPPORT_LEVELS.map((level) => (
           <Chip
             key={level}
@@ -29,7 +29,7 @@ export default function ProtocolSupportCatalogView({ catalog, sourcePath = '/v1/
       <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
         These labels describe product consumer surfaces. Qualification is shown separately and does not imply production release readiness.
       </Typography>
-      <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 3 }}>
+      <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 3 }}>
         Protocol pin <code>{catalog.protocol_revision}</code> ·{' '}
         <Link href={sourcePath} target="_blank" rel="noopener noreferrer">machine-readable catalog</Link>
       </Typography>
@@ -41,10 +41,10 @@ export default function ProtocolSupportCatalogView({ catalog, sourcePath = '/v1/
           </Typography>
           <Grid container spacing={2}>
             {catalog.entities.filter((entity) => entity.support_level === level).map((entity) => (
-              <Grid item xs={12} md={6} key={entity.id}>
+              <Grid size={{ xs: 12, md: 6 }} key={entity.id}>
                 <Card variant="outlined" sx={{ height: '100%' }}>
                   <CardContent>
-                    <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
+                    <Stack direction="row" spacing={1} sx={{ alignItems: 'center', mb: 1 }}>
                       <Typography variant="h6" component="h4">{entity.display_name}</Typography>
                       <Chip size="small" label={entity.kind} variant="outlined" />
                     </Stack>
