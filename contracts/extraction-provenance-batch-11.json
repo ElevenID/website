@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "purpose": "source-extraction-record",
+  "source": {
+    "repository": "ElevenID/marty-ui",
+    "commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3"
+  },
+  "comparison_source_commit": "9ff6e9779a020839ebeafc60095370725e9fb694",
+  "extends": "contracts/extraction-provenance.json",
+  "scope": "Batch 11 bounded page, section and website build/server sources. Existing provenance remains in its earlier shard.",
+  "files": [
+    {
+      "source_path": "ui/src/components/pages/AiCapabilityPage.jsx",
+      "target_path": "ui/src/components/pages/AiCapabilityPage.jsx",
+      "git_blob_sha1": "2b0c0f055152e05af23bcc132456ad134f2ce441",
+      "bytes": 9839,
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/components/pages/MarketingProtocolSupportCatalog.jsx",
+      "target_path": "ui/src/components/pages/MarketingProtocolSupportCatalog.jsx",
+      "git_blob_sha1": "5718f4a1ee33fd5ab8d2e5095a3824e218f12f2d",
+      "bytes": 656,
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/components/landing/DeploymentModelsSection.jsx",
+      "target_path": "ui/src/components/landing/DeploymentModelsSection.jsx",
+      "git_blob_sha1": "e8a9ad5193db4c627bcd17c6d35f40054b6614d7",
+      "bytes": 8524,
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/components/landing/EndUserExperienceSection.jsx",
+      "target_path": "ui/src/components/landing/EndUserExperienceSection.jsx",
+      "git_blob_sha1": "84faa1e2fddb8d53619a362ab1001309e83c3210",
+      "bytes": 5572,
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/components/landing/ProductCapabilitiesSection.jsx",
+      "target_path": "ui/src/components/landing/ProductCapabilitiesSection.jsx",
+      "git_blob_sha1": "de73d281e803542ff4f0f51321255626879ec2da",
+      "bytes": 3720,
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/components/landing/ProofLabSection.jsx",
+      "target_path": "ui/src/components/landing/ProofLabSection.jsx",
+      "git_blob_sha1": "6836204e406006c7d052c8ab5f9a23114067205f",
+      "bytes": 13613,
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/scripts/render-website-nginx.mjs",
+      "target_path": "ui/scripts/render-website-nginx.mjs",
+      "git_blob_sha1": "0edf2fd1ba1062f2b0226887abf8694bc8f1a769",
+      "bytes": 1978,
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/nginx.website.conf",
+      "target_path": "ui/nginx.website.conf",
+      "git_blob_sha1": "013f4cc8424aa18a80f9a6d0c6e3bdf1a14800ea",
+      "bytes": 1478,
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/nginx.website.headers.conf",
+      "target_path": "ui/nginx.website.headers.conf",
+      "git_blob_sha1": "8c3884ec38f4c5c7bea7af8f980de5049895aeb1",
+      "bytes": 900,
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/scripts/assert-website-dist.mjs",
+      "target_path": "ui/scripts/assert-website-dist.mjs",
+      "git_blob_sha1": "6167fe968afd96b0b8f91d1f6370880ad6dadbfe",
+      "bytes": 3967,
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/scripts/web-surface-build-contract.mjs",
+      "target_path": "ui/scripts/web-surface-build-contract.mjs",
+      "git_blob_sha1": "bcb80076c5fca772ab834b52db505987314d932e",
+      "bytes": 3947,
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/scripts/web-surface-build-contract.test.mjs",
+      "target_path": "ui/scripts/web-surface-build-contract.test.mjs",
+      "git_blob_sha1": "530795a0d87269f5dd108c101f98080159133e7e",
+      "bytes": 6188,
+      "transfer": "verbatim"
+    }
+  ],
+  "adapted_files": []
+}
