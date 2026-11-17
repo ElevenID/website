@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "source_repository": "ElevenID/marty-ui",
+  "source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "kind": "common-public-locales",
+  "files": [
+    {
+      "path": "ui/public/locales/de/common.json",
+      "sha": "9dd9cd4d95758889b5211736be80256d9e429f56"
+    },
+    {
+      "path": "ui/public/locales/en/common.json",
+      "sha": "7d95018c5d8dc339f075e1f61615343fd39580ec"
+    },
+    {
+      "path": "ui/public/locales/es/common.json",
+      "sha": "d84250c0726a1a2846e7efd24a9a790a213b1053"
+    },
+    {
+      "path": "ui/public/locales/fr/common.json",
+      "sha": "62ed4a96d3fa991ee32eaad4c2e7de61f8f3d92e"
+    },
+    {
+      "path": "ui/public/locales/ja/common.json",
+      "sha": "b5af927ce0f7e41973b7980b755ec1b4c471060d"
+    },
+    {
+      "path": "ui/public/locales/nl/common.json",
+      "sha": "df626d414d186d384bc7c48bd4b683f6e336631d"
+    }
+  ]
+}
