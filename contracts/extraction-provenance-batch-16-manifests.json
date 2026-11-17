@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "source_repository": "ElevenID/marty-ui",
+  "source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "kind": "demo-manifests-and-public-metadata",
+  "files": [
+    {
+      "path": "ui/public/demos/manifests/index.json",
+      "sha": "d4665513bd526f093e2daf3c1541e10589ead680"
+    },
+    {
+      "path": "ui/public/demos/manifests/2026.07.0.json",
+      "sha": "7da5692cb8237b5f6028b03853ae321716cb6701"
+    },
+    {
+      "path": "ui/public/demos/manifests/2026.08.0.json",
+      "sha": "5cef621e9927e15f46a5be2cac3dd35cddb4dfcc"
+    },
+    {
+      "path": "ui/public/blog/rss.xml",
+      "sha": "3a34d35733108ff48c579994fae8786d30383225"
+    },
+    {
+      "path": "ui/public/config.json",
+      "sha": "4ab9ae8e8bacff50a12f694f741a4be608fd33f4"
+    },
+    {
+      "path": "ui/public/manifest.json",
+      "sha": "09e1c3ff5c9e7bd455aaa7e5e7242b5d13f2e798"
+    }
+  ]
+}
