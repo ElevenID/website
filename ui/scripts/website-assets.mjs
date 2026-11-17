@@ -53,7 +53,7 @@ export function websiteAssetsPlugin(revision) {
       const transformed = code
         .replace(/(["'`])\/images(?=\/|["'`])/g, `$1${base}images`)
         .replace(/(["'`])\/logo512\.png(?=["'`])/g, `$1${base}logo512.png`)
-        .replace(/(["'`])https:\/\/elevenidllc\.com\/logo512\.png(?=["'`])/g, `$1${base}logo512.png`);
+        .replace(/(["'`])https:\/\/elevenidllc\.com\/logo512\.png(?=["'`])/g, `$1https://elevenidllc.com${base}logo512.png`);
       return transformed === code ? null : { code: transformed, map: null };
     },
   };

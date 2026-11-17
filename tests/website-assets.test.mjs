@@ -94,7 +94,7 @@ test('unrelated modules and unchanged blog code remain untouched', () => {
   assert.deepEqual(plugin.transform(
     'const defaultImage = "/logo512.png"; const absoluteDefault = "https://elevenidllc.com/logo512.png";',
     '/project/node_modules/@elevenid/marty-blog/dist/seo.js',
-  ), { code: 'const defaultImage = "' + websiteAssetBase('development') + 'logo512.png"; const absoluteDefault = "' + websiteAssetBase('development') + 'logo512.png";', map: null });
+  ), { code: 'const defaultImage = "' + websiteAssetBase('development') + 'logo512.png"; const absoluteDefault = "https://elevenidllc.com' + websiteAssetBase('development') + 'logo512.png";', map: null });
   assert.equal(plugin.transform(
     'const image = "https://cdn.example/images/photo.png";',
     '/project/node_modules/@elevenid/marty-blog/dist/data.js',

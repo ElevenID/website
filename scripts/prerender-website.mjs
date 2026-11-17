@@ -199,7 +199,7 @@ async function renderRoute(route) {
     assert.ok(!/^\/(?:pricing|verify|console|applicant|admin|vendor|dashboard|auth|api|v1)(?:\/|$)/.test(canonicalUrl.pathname),
       'Canonical exposed a withheld or application-owned route on ' + route);
     assert.equal(ogImage, twitterImage, 'Open Graph and Twitter images differ on ' + route);
-    const ogImageUrl = new URL(ogImage);
+    const ogImageUrl = new URL(ogImage, SITE_ORIGIN);
     assert.equal(ogImageUrl.protocol, 'https:', 'Social image must use HTTPS on ' + route);
     if (ogImageUrl.origin === 'https://elevenidllc.com') {
       const imageFile = path.resolve(distRoot, '.' + decodeURIComponent(ogImageUrl.pathname));
