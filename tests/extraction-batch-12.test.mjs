@@ -42,6 +42,8 @@ test('batch 12 preserved and adapted files match their recorded blob identities'
       const hash = createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
       if (adapted) {
         assert.ok(entry.changes.length > 0, entry.target_path);
+        assert.equal(bytes.length, entry.target_bytes, entry.target_path);
+        assert.ok(bytes.length < 16 * 1024, entry.target_path);
         assert.equal(hash, entry.target_git_blob_sha1, entry.target_path);
       } else {
         assert.equal(entry.transfer, 'verbatim');
