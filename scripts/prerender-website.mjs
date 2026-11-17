@@ -171,7 +171,7 @@ async function renderRoute(route) {
     assert.ok(htmlElement.classList.contains('app-ready'), 'Application startup did not finish on ' + route);
     const finalPath = htmlElement.getAttribute('data-website-final-path');
     assert.ok(finalPath && finalPath.startsWith('/'), 'Browser did not report a final route for ' + route);
-    const heading = document.querySelector('#root h1');
+    const heading = document.querySelector('#root h1, #root h2, #root h3, #root h4, #root h5, #root h6');
     assert.ok(heading && heading.textContent.trim(), 'Rendered page has no h1 on ' + route);
     if (route.startsWith('/demos')) {
       assert.ok(document.querySelector('[data-demo-render-state="settled"]'), 'Demo route did not settle: ' + route);

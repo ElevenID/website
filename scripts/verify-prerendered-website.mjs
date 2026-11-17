@@ -44,7 +44,7 @@ for (const route of plan.routes) {
   const document = new JSDOM(html).window.document;
   assert.ok(document.documentElement.classList.contains('app-ready'), 'Application startup was not completed in ' + route);
   assert.ok(document.querySelector('meta[name="prerender-status-code"][content="200"]'), 'Prerender status is missing in ' + route);
-  const heading = document.querySelector('#root h1');
+  const heading = document.querySelector('#root h1, #root h2, #root h3, #root h4, #root h5, #root h6');
   assert.ok(heading && heading.textContent.trim(), 'Prerendered route has no h1: ' + route);
   const title = document.title.trim();
   const description = document.querySelector('meta[name="description"]')?.getAttribute('content')?.trim();

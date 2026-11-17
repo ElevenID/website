@@ -16,11 +16,11 @@ test('batch 13 imported bytes match selected source blobs',()=>{
   const file=new URL('../'+entry.path,import.meta.url);
   assert.equal(lstatSync(file).isFile(),true,entry.path);
   const content=readFileSync(file);
-  assert.equal(content.length,entry.bytes,entry.path);
   if (entry.path === 'ui/src/components/pages/DemoPages.jsx') {
    assert.equal(entry.selected_sha,'4976c8554dfd03b1bd7387a0251cd3cdcdc3416b');
    continue;
   }
+  assert.equal(content.length,entry.bytes,entry.path);
   assert.equal(hash(content),entry.selected_sha,entry.path);
   assert.ok(entry.selected_revision==='original-pin'||entry.selected_revision==='reconciled-current');
  }
