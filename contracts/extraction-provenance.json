@@ -113,6 +113,60 @@
       "target_path": "ui/src/apps/shared/WebSurfaceBoundary.test.tsx",
       "git_blob_sha1": "5ce3d8cc4a179eef490082b9e050b6c786d65918",
       "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/variants/publicConfig.public.js",
+      "target_path": "ui/src/variants/publicConfig.public.js",
+      "git_blob_sha1": "1fcdf810dcf69b323c8a610570e76c24c01afd90",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/variants/publicConfig.website.js",
+      "target_path": "ui/src/variants/publicConfig.website.js",
+      "git_blob_sha1": "b3f6934d583a6d9d422ec6e26a336c23c39b1f02",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/i18n/index.js",
+      "target_path": "ui/src/i18n/index.js",
+      "git_blob_sha1": "5a134f240ce2b241c8b5c822af268e198881f4ef",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/utils/waitForFonts.js",
+      "target_path": "ui/src/utils/waitForFonts.js",
+      "git_blob_sha1": "ec8688fbec681f3cc7921a033e7c1a231e0f2538",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/apps/shared/PrerenderReadySignal.jsx",
+      "target_path": "ui/src/apps/shared/PrerenderReadySignal.jsx",
+      "git_blob_sha1": "bf3bf2608a8263012d1499d2fd601c790287cf49",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/contexts/BrandingContext.jsx",
+      "target_path": "ui/src/contexts/BrandingContext.jsx",
+      "git_blob_sha1": "ab37c777fe493f11eab4075233fdd77eef480f9a",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/hooks/useBranding.js",
+      "target_path": "ui/src/hooks/useBranding.js",
+      "git_blob_sha1": "039cf94575068876b7c77914e5fccd9b41aeaada",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/bootstrapRoot.jsx",
+      "target_path": "ui/src/bootstrapRoot.jsx",
+      "git_blob_sha1": "bdb31ce7d33ccac886f004257b2f12d26db227fd",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/utils/analytics.js",
+      "target_path": "ui/src/utils/analytics.js",
+      "git_blob_sha1": "78cdde9abca78e4f69dc6191a3cdd668b39841fe",
+      "transfer": "verbatim"
     }
   ],
   "adapted_files": [
