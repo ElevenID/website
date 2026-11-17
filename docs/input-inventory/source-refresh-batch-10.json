@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "audit_only": true,
+  "source_repository": "ElevenID/marty-ui",
+  "comparison_commit": "9ff6e9779a020839ebeafc60095370725e9fb694",
+  "comparison_tree": "994ebf5e770f9008be4eba9a69930a642656b9c3",
+  "baseline": {
+    "source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+    "inventory_repository": "ElevenID/website",
+    "inventory_commit": "7b477a0372b2058fc5ea71ba41bccbbf16afc575",
+    "inventory_path": "docs/source-import-inventory.json",
+    "inventory_blob": "e3c28a11486775360279e4b2b465f4ae6a4ba126",
+    "previous_receipt_path": "docs/input-inventory/source-refresh-batch-8.json",
+    "previous_receipt_blob": "0b1bf3b8f0f83742f2d831b753f5bece3ed62e09",
+    "previous_comparison_commit": "a4fc3801b636e2cfd0753797e8fc0dc846b42a22",
+    "previous_comparison_tree": "039c375c589de2e87884a6df33d07de7161599b2",
+    "reconciliation_path": "docs/input-inventory/source-reconciliation.json",
+    "reconciliation_blob": "36486da74c5dff6f2bd1690a287c168f5ec14572"
+  },
+  "method": "Compare nonrecursive root Git trees at the previous and current source commits. Every inventoried source path and the reconciled English locale is covered by an identical ui/ or contracts/ subtree. The unchanged inventory and prior per-path receipt therefore retain their exact source blob and size conclusions without rereading source bodies.",
+  "subtree_identity_proof": [
+    {
+      "path": "ui",
+      "previous_tree_sha": "05f3ea8e22c6142769180b2f7c2b36d85efcb8e4",
+      "current_tree_sha": "05f3ea8e22c6142769180b2f7c2b36d85efcb8e4",
+      "inventoried_paths": 77,
+      "additional_reconciled_locale_paths": 1
+    },
+    {
+      "path": "contracts",
+      "previous_tree_sha": "e1f6adeaa25bff33edef1819548d4e0652b58739",
+      "current_tree_sha": "e1f6adeaa25bff33edef1819548d4e0652b58739",
+      "inventoried_paths": 2,
+      "additional_reconciled_locale_paths": 0
+    }
+  ],
+  "results": {
+    "source_paths_covered": 79,
+    "source_blobs_matching_original_pin": 74,
+    "source_blobs_matching_reconciled_current": 5,
+    "locale_paths_covered": 1,
+    "locale_blobs_matching_reconciled_current": 1,
+    "missing_paths": [],
+    "unexpected_differences": []
+  },
+  "changed_root_subtrees": [
+    ".github",
+    "release",
+    "scripts",
+    "tests"
+  ],
+  "limits": [
+    "This is an identity refresh of the previously audited candidate set, not a new per-path traversal or a complete dependency qualification.",
+    "Root .github/, release/, scripts/ and tests/ changed and are outside this inherited candidate receipt; inspect separately before relying on their current contents.",
+    "No SVG, binary, large source, generated manifest, production catalog or lockfile bodies were read.",
+    "Existing original-pin provenance and explicit reconciliation/adaptation records remain authoritative."
+  ]
+}
