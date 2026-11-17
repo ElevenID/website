@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "purpose": "source-extraction-record",
+  "source": {
+    "repository": "ElevenID/marty-ui",
+    "commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3"
+  },
+  "comparison_source_commit": "9ff6e9779a020839ebeafc60095370725e9fb694",
+  "extends": "contracts/extraction-provenance-batch-11.json",
+  "scope": "Batch 12 bounded identity/protocol/standards pages, demo schema, website build input and public runtime sources. Earlier source records remain unchanged.",
+  "files": [
+    {
+      "source_path": "ui/src/components/IdentityGuidePage.jsx",
+      "target_path": "ui/src/components/IdentityGuidePage.jsx",
+      "git_blob_sha1": "f3e9104a7d4b242b11359a83da80a88560c75cc4",
+      "bytes": 11013,
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/components/ProtocolPage.jsx",
+      "target_path": "ui/src/components/ProtocolPage.jsx",
+      "git_blob_sha1": "42e1d3b5e32aaefb2e44d371602839f0c1baa580",
+      "bytes": 16232,
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/components/StandardsPage.jsx",
+      "target_path": "ui/src/components/StandardsPage.jsx",
+      "git_blob_sha1": "0fcbf958eeaa57e8e0f52c77bdbef08ec388be26",
+      "bytes": 9764,
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/generated/demoWalletSchema.generated.json",
+      "target_path": "ui/src/generated/demoWalletSchema.generated.json",
+      "git_blob_sha1": "58dd81b135c281707185927a6c48de599e100bf9",
+      "bytes": 1836,
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/scripts/generate-demo-manifest-module.mjs",
+      "target_path": "ui/scripts/generate-demo-manifest-module.mjs",
+      "git_blob_sha1": "8cdf1d9ea21f37a60e2a24c69b7df9d9faeae76e",
+      "bytes": 2723,
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/scripts/build-web-surface.mjs",
+      "target_path": "ui/scripts/build-web-surface.mjs",
+      "git_blob_sha1": "7ffefb9d6109b12fc39d6b89accfbc358f656d03",
+      "bytes": 1769,
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "scripts/ui-production-start.sh",
+      "target_path": "scripts/ui-production-start.sh",
+      "git_blob_sha1": "3916bc1f2b446f893bc63c35418466b80603bdd8",
+      "bytes": 2291,
+      "transfer": "verbatim"
+    }
+  ],
+  "adapted_files": []
+}
