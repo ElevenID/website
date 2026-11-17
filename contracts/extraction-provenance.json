@@ -185,6 +185,30 @@
       "target_path": "ui/src/extensions/commerce/website.js",
       "git_blob_sha1": "65389d443cee08f542f724db98aca69140f87298",
       "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/scripts/check_crawler_artifacts.py",
+      "target_path": "ui/scripts/check_crawler_artifacts.py",
+      "git_blob_sha1": "b22360ed56deafb53d2e2fafe410b651e4ff4b81",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/scripts/production-build-contract.mjs",
+      "target_path": "ui/scripts/production-build-contract.mjs",
+      "git_blob_sha1": "ce50431b187494a7aef0d1d5000eaa9c172e285f",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/scripts/production-build-contract.test.mjs",
+      "target_path": "ui/scripts/production-build-contract.test.mjs",
+      "git_blob_sha1": "5b22fccc0768ae6732c3ee5aef1ed0e9be73170c",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/scripts/test_crawler_artifacts.py",
+      "target_path": "ui/scripts/test_crawler_artifacts.py",
+      "git_blob_sha1": "0567d5c28953b769e63403144a531415ae674cdf",
+      "transfer": "verbatim"
     }
   ],
   "adapted_files": [
