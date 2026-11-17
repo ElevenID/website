@@ -208,7 +208,7 @@ function ReleaseExperience({ index, manifest }) {
         title={`${manifest.release_name} | ElevenID LLC v${manifest.stack_version}`}
         description={`Release-bound demonstrations and evidence for the ${manifest.release_name} release of the ElevenID LLC Credential Platform, implementing MIP ${manifest.mip_version}.`}
         canonicalPath={`/demos/${manifest.stack_version}`}
-        ogImage={`https://elevenidllc.com${manifest.scenarios[0].poster.src}`}
+        ogImage={`https://elevenidllc.com${staticAssetHref(manifest.scenarios[0].poster.src)}`}
         keywords={['ElevenID LLC Credential Platform', manifest.release_name, `MIP ${manifest.mip_version}`, 'digital credential demos', 'release evidence']}
       />
       <Stack spacing={2.5} sx={{ mb: 4, maxWidth: 900 }}>
@@ -497,7 +497,7 @@ function DemoScenarioDetail({ manifest, scenario }) {
         title={`${scenario.title} | ${manifest.release_name} | ElevenID LLC v${manifest.stack_version}`}
         description={scenario.summary}
         canonicalPath={`/demos/${manifest.stack_version}/${scenario.slug}`}
-        ogImage={`https://elevenidllc.com${scenario.poster.src}`}
+        ogImage={`https://elevenidllc.com${staticAssetHref(scenario.poster.src)}`}
         ogType={isPublicVideo ? 'video.other' : 'website'}
         structuredData={structuredData}
       />

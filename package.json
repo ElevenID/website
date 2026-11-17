@@ -15,7 +15,8 @@
     "test:build": "node --test --test-concurrency=1 tests/build/*.test.mjs",
     "test:nginx": "node --test --test-concurrency=1 tests/nginx/*.test.mjs",
     "prebuild:website": "node ui/scripts/generate-demo-manifest-module.mjs",
-    "build:website": "node ui/scripts/build-web-surface.mjs website"
+    "build:website": "node ui/scripts/build-web-surface.mjs website",
+    "build:website:production": "npm run build:website && node scripts/prerender-website.mjs && node scripts/verify-prerendered-website.mjs"
   },
   "dependencies": {
     "@elevenid/marty-blog": "https://github.com/ElevenID/marty-blog/releases/download/v0.1.9/elevenid-marty-blog-0.1.9.tgz",
