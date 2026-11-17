@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "audit_only": true,
+  "source_repository": "ElevenID/marty-ui",
+  "comparison_commit": "9ff6e9779a020839ebeafc60095370725e9fb694",
+  "comparison_tree": "994ebf5e770f9008be4eba9a69930a642656b9c3",
+  "baseline": {
+    "source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+    "inventory_repository": "ElevenID/website",
+    "inventory_commit": "4f53c1768e59b464fddc3b032d260816c7047de2",
+    "inventory_path": "docs/source-import-inventory.json",
+    "inventory_blob": "e3c28a11486775360279e4b2b465f4ae6a4ba126",
+    "previous_receipt_path": "docs/input-inventory/source-refresh-batch-10.json",
+    "previous_receipt_blob": "21c9e0d6f394e052dadb685c81c3791026fcf555",
+    "previous_comparison_commit": "9ff6e9779a020839ebeafc60095370725e9fb694",
+    "previous_comparison_tree": "994ebf5e770f9008be4eba9a69930a642656b9c3",
+    "reconciliation_path": "docs/input-inventory/source-reconciliation.json",
+    "reconciliation_blob": "36486da74c5dff6f2bd1690a287c168f5ec14572"
+  },
+  "method": "A fresh source main read still resolves to the same commit and root tree as batch 10. Nonrecursive root metadata confirms unchanged ui/ and contracts/ subtrees; the prior candidate and locale identity conclusions remain valid. Original-pin UI metadata was separately compared for the bounded source-copy candidates.",
+  "subtree_identity_proof": [
+    {
+      "path": "ui",
+      "previous_tree_sha": "05f3ea8e22c6142769180b2f7c2b36d85efcb8e4",
+      "current_tree_sha": "05f3ea8e22c6142769180b2f7c2b36d85efcb8e4",
+      "inventoried_paths": 77,
+      "additional_reconciled_locale_paths": 1
+    },
+    {
+      "path": "contracts",
+      "previous_tree_sha": "e1f6adeaa25bff33edef1819548d4e0652b58739",
+      "current_tree_sha": "e1f6adeaa25bff33edef1819548d4e0652b58739",
+      "inventoried_paths": 2,
+      "additional_reconciled_locale_paths": 0
+    }
+  ],
+  "results": {
+    "source_paths_covered": 79,
+    "source_blobs_matching_original_pin": 74,
+    "source_blobs_matching_reconciled_current": 5,
+    "locale_paths_covered": 1,
+    "locale_blobs_matching_reconciled_current": 1,
+    "missing_paths": [],
+    "unexpected_differences": []
+  },
+  "changed_since_previous_refresh": false,
+  "changed_root_subtrees": [],
+  "limits": [
+    "This refresh preserves prior candidate identity conclusions; it does not qualify the complete website dependency or production output graph.",
+    "Root .github/, release/, scripts/ and tests/ had changed before batch 10 relative to batch 8 and still require separate inspection before use.",
+    "No SVG, binary, large source, generated manifest, production catalog or lockfile bodies were read.",
+    "The six selected runtime source imports require execution and explicit boundary qualification before acceptance. Build-source identity and execution evidence are tracked in the same milestone separately.",
+    "Existing original-pin provenance and explicit reconciliation/adaptation records remain authoritative."
+  ],
+  "selected_runtime_source_identity_checks": [
+    {
+      "path": "ui/src/components/pages/AiCapabilityPage.jsx",
+      "original_blob_sha": "2b0c0f055152e05af23bcc132456ad134f2ce441",
+      "comparison_blob_sha": "2b0c0f055152e05af23bcc132456ad134f2ce441",
+      "bytes": 9839
+    },
+    {
+      "path": "ui/src/components/pages/MarketingProtocolSupportCatalog.jsx",
+      "original_blob_sha": "5718f4a1ee33fd5ab8d2e5095a3824e218f12f2d",
+      "comparison_blob_sha": "5718f4a1ee33fd5ab8d2e5095a3824e218f12f2d",
+      "bytes": 656
+    },
+    {
+      "path": "ui/src/components/landing/DeploymentModelsSection.jsx",
+      "original_blob_sha": "e8a9ad5193db4c627bcd17c6d35f40054b6614d7",
+      "comparison_blob_sha": "e8a9ad5193db4c627bcd17c6d35f40054b6614d7",
+      "bytes": 8524
+    },
+    {
+      "path": "ui/src/components/landing/EndUserExperienceSection.jsx",
+      "original_blob_sha": "84faa1e2fddb8d53619a362ab1001309e83c3210",
+      "comparison_blob_sha": "84faa1e2fddb8d53619a362ab1001309e83c3210",
+      "bytes": 5572
+    },
+    {
+      "path": "ui/src/components/landing/ProductCapabilitiesSection.jsx",
+      "original_blob_sha": "de73d281e803542ff4f0f51321255626879ec2da",
+      "comparison_blob_sha": "de73d281e803542ff4f0f51321255626879ec2da",
+      "bytes": 3720
+    },
+    {
+      "path": "ui/src/components/landing/ProofLabSection.jsx",
+      "original_blob_sha": "6836204e406006c7d052c8ab5f9a23114067205f",
+      "comparison_blob_sha": "6836204e406006c7d052c8ab5f9a23114067205f",
+      "bytes": 13613
+    }
+  ],
+  "selected_runtime_source_count": 6,
+  "selected_runtime_source_bytes": 41924
+}

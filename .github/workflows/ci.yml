@@ -29,5 +29,9 @@ jobs:
           node-version: '24.22.1'
       - name: Install pinned test dependencies
         run: npm ci --no-audit --no-fund
-      - name: Verify contracts and DOM integration
+      - name: Pull pinned Nginx test image
+        run: docker pull nginx@sha256:785835ea65db4bba6f021acc0f3be91b0fef76a53fe41f8588c6698d2aed0606
+      - name: Verify contracts, components and build artifacts
         run: npm test
+      - name: Verify website HTTP routing
+        run: npm run test:nginx
