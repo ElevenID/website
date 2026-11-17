@@ -20,8 +20,8 @@ assert.equal(release.commerce_extension, null);
 
 const html = readFileSync(requireFile('index.html'), 'utf8');
 assert.match(html, /ElevenID/);
-assert.match(html, /_website\\/development\\/assets\\/[^"']+\\.js/);
-assert.doesNotMatch(html, /src=["']\\/src\\/index\\.jsx/);
+assert.ok(html.includes('/_website/development/assets/'), 'Missing versioned Vite asset references');
+assert.ok(!html.includes('/src/index.jsx'), 'Application entry remained in website HTML');
 const assets = path.join(root, '_website/development/assets');
 const chunks = readdirSync(assets).filter((name) => name.endsWith('.js'));
 assert.ok(chunks.length > 0, 'No real Vite JavaScript chunks emitted');
