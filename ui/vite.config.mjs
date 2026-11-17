@@ -15,7 +15,9 @@ const assetBase = websiteAssetBase(revision);
 export default defineConfig({
   root: uiRoot,
   publicDir: false,
-  base: assetBase,
+  // assetsDir already owns the immutable prefix. Applying it as base as well
+  // doubles every entry/preload URL and prevents the browser from starting.
+  base: '/',
   define: { 'import.meta.env.VITE_WEBSITE_ASSET_BASE': JSON.stringify(assetBase) },
   resolve: {
     alias: {
