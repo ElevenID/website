@@ -113,6 +113,48 @@
       "target_path": "ui/src/apps/shared/WebSurfaceBoundary.test.tsx",
       "git_blob_sha1": "5ce3d8cc4a179eef490082b9e050b6c786d65918",
       "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/variants/publicConfig.public.js",
+      "target_path": "ui/src/variants/publicConfig.public.js",
+      "git_blob_sha1": "1fcdf810dcf69b323c8a610570e76c24c01afd90",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/variants/publicConfig.website.js",
+      "target_path": "ui/src/variants/publicConfig.website.js",
+      "git_blob_sha1": "b3f6934d583a6d9d422ec6e26a336c23c39b1f02",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/utils/waitForFonts.js",
+      "target_path": "ui/src/utils/waitForFonts.js",
+      "git_blob_sha1": "ec8688fbec681f3cc7921a033e7c1a231e0f2538",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/bootstrapRoot.jsx",
+      "target_path": "ui/src/bootstrapRoot.jsx",
+      "git_blob_sha1": "bdb31ce7d33ccac886f004257b2f12d26db227fd",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/components/FutureFeatureButton.jsx",
+      "target_path": "ui/src/components/FutureFeatureButton.jsx",
+      "git_blob_sha1": "0b9095f737fe68f18f9067bec047ada2b92efbb2",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/components/WebSectionUnavailable.jsx",
+      "target_path": "ui/src/components/WebSectionUnavailable.jsx",
+      "git_blob_sha1": "692636598718e00486f712bd4167f72ac237460c",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/src/components/common/LanguageSwitcher.jsx",
+      "target_path": "ui/src/components/common/LanguageSwitcher.jsx",
+      "git_blob_sha1": "b56114fe8c5d530d127daba4823fe7168677cbb1",
+      "transfer": "verbatim"
     }
   ],
   "adapted_files": [
@@ -163,6 +205,114 @@
       "target_path": "ui/src/application/routing/useSurfaceNavigate.js",
       "source_git_blob_sha1": "4685cd2b9f5ddbf4d48cc1c91166a7da45db7528",
       "changes": "Delegate document handoff decisions to shouldBrowserRedirect using the original destination; remove the redundant canonical rewrite check so fragment-only navigation stays in the current router."
+    },
+    {
+      "source_path": "ui/src/i18n/index.js",
+      "target_path": "ui/src/i18n/index.js",
+      "source_git_blob_sha1": "5a134f240ce2b241c8b5c822af268e198881f4ef",
+      "changes": "Remove inherited trailing whitespace; register the existing uppercase, lowercase, Date and passthrough formatter through the supported i18next v26 formatter module API."
+    },
+    {
+      "source_path": "ui/src/contexts/BrandingContext.jsx",
+      "target_path": "ui/src/contexts/BrandingContext.jsx",
+      "source_git_blob_sha1": "ab37c777fe493f11eab4075233fdd77eef480f9a",
+      "changes": "Remove inherited trailing whitespace; preserve runtime behavior."
+    },
+    {
+      "source_path": "ui/src/hooks/useBranding.js",
+      "target_path": "ui/src/hooks/useBranding.js",
+      "source_git_blob_sha1": "039cf94575068876b7c77914e5fccd9b41aeaada",
+      "changes": "Remove inherited trailing whitespace; preserve runtime behavior."
+    },
+    {
+      "source_path": "ui/src/utils/analytics.js",
+      "target_path": "ui/src/utils/analytics.js",
+      "source_git_blob_sha1": "78cdde9abca78e4f69dc6191a3cdd668b39841fe",
+      "changes": "Remove inherited trailing whitespace; register the five supported web-vitals metrics without calling the removed onFID export."
+    },
+    {
+      "source_path": "ui/vite.config.ts",
+      "target_path": "ui/scripts/mui-icon-compatibility.mjs",
+      "source_git_blob_sha1": "c5b2000bb311da5b4a54f4b18236d6b2edb1ee49",
+      "changes": "Extract and export the existing legacy MUI icon resolver; resolve packages from repository-root node_modules and accept an explicit dependency root for isolated fixture tests; preserve direct mjs and Outline-to-Outlined fallback behavior."
+    },
+    {
+      "source_path": "ui/src/apps/shared/PrerenderReadySignal.jsx",
+      "target_path": "ui/src/apps/shared/PrerenderReadySignal.jsx",
+      "source_git_blob_sha1": "bf3bf2608a8263012d1499d2fd601c790287cf49",
+      "changes": "Release translation and demo deadlines plus mutation observers when readiness settles or the route effect is cleaned up; cancel abandoned animation frames while preserving the existing font wait and readiness gates."
+    },
+    {
+      "source_path": "ui/src/components/layouts/PublicFooter.jsx",
+      "target_path": "ui/src/components/layouts/PublicFooter.jsx",
+      "source_git_blob_sha1": "9e377036588bf454dcc437c20f49381bd180c94e",
+      "changes": "move Typography fontWeight into sx while preserving the existing weight and all other styles and content."
+    },
+    {
+      "source_path": "ui/src/components/landing/LandingSection.jsx",
+      "target_path": "ui/src/components/landing/LandingSection.jsx",
+      "source_git_blob_sha1": "944ef2749f51c89ba60fa4c65c2e21711b7a5273",
+      "changes": "move Typography fontWeight into sx while preserving the existing weight and all other styles and content."
+    },
+    {
+      "source_path": "ui/src/components/pages/WhatIsDigitalCredentialPage.jsx",
+      "target_path": "ui/src/components/pages/WhatIsDigitalCredentialPage.jsx",
+      "source_git_blob_sha1": "b597e97ce104ff3085288574f8d794cea0fc9168",
+      "changes": "Convert legacy Grid item breakpoint props to the MUI v9 size API without changing breakpoint values; move Typography fontWeight into sx while preserving the existing weight and all other styles and content."
+    },
+    {
+      "source_path": "ui/src/components/pages/WhatIsCredentialVerificationPage.jsx",
+      "target_path": "ui/src/components/pages/WhatIsCredentialVerificationPage.jsx",
+      "source_git_blob_sha1": "f2ec6b74c8095b084c52f55f4b9109d82663e616",
+      "changes": "Convert legacy Grid item breakpoint props to the MUI v9 size API without changing breakpoint values; move Typography fontWeight into sx while preserving the existing weight and all other styles and content."
+    },
+    {
+      "source_path": "ui/src/components/pages/WhatIsMartyProtocolPage.jsx",
+      "target_path": "ui/src/components/pages/WhatIsMartyProtocolPage.jsx",
+      "source_git_blob_sha1": "5ef8f20f7b35852c22f10442844a65b68afec2bf",
+      "changes": "Convert legacy Grid item breakpoint props to the MUI v9 size API without changing breakpoint values; move Typography fontWeight into sx while preserving the existing weight and all other styles and content."
+    },
+    {
+      "source_path": "ui/src/components/pages/WhatIsOpenBadgePage.jsx",
+      "target_path": "ui/src/components/pages/WhatIsOpenBadgePage.jsx",
+      "source_git_blob_sha1": "6e12d64da9b7fba78117551e0f54281c991cb202",
+      "changes": "Convert legacy Grid item breakpoint props to the MUI v9 size API without changing breakpoint values; move Typography fontWeight into sx while preserving the existing weight and all other styles and content."
+    },
+    {
+      "source_path": "ui/src/components/pages/EudiWalletVerificationPage.jsx",
+      "target_path": "ui/src/components/pages/EudiWalletVerificationPage.jsx",
+      "source_git_blob_sha1": "9c35d01f078333faffc065c58f3bccb6336727f5",
+      "changes": "Convert legacy Grid item breakpoint props to the MUI v9 size API without changing breakpoint values; move Typography fontWeight into sx while preserving the existing weight and all other styles and content."
+    },
+    {
+      "source_path": "ui/src/components/pages/IsoMdocVerificationPage.jsx",
+      "target_path": "ui/src/components/pages/IsoMdocVerificationPage.jsx",
+      "source_git_blob_sha1": "dff6943e498eb8cf746ed107f1e84ba2d24a4054",
+      "changes": "move Typography fontWeight into sx while preserving the existing weight and all other styles and content."
+    },
+    {
+      "source_path": "ui/src/components/pages/OpenBadgesIssuancePage.jsx",
+      "target_path": "ui/src/components/pages/OpenBadgesIssuancePage.jsx",
+      "source_git_blob_sha1": "ef936158348e4f38fa767389a6ffc9fd45763d64",
+      "changes": "move Typography fontWeight into sx while preserving the existing weight and all other styles and content."
+    },
+    {
+      "source_path": "ui/src/components/pages/OpenBadgesVerificationPage.jsx",
+      "target_path": "ui/src/components/pages/OpenBadgesVerificationPage.jsx",
+      "source_git_blob_sha1": "d616bf65c18071c71a31e72030f828667173c47b",
+      "changes": "Convert legacy Grid item breakpoint props to the MUI v9 size API without changing breakpoint values; move Typography fontWeight into sx while preserving the existing weight and all other styles and content."
+    },
+    {
+      "source_path": "ui/src/components/pages/SdJwtVerificationPage.jsx",
+      "target_path": "ui/src/components/pages/SdJwtVerificationPage.jsx",
+      "source_git_blob_sha1": "f433a7388a6e13886a38732431d072a558fe6bed",
+      "changes": "move Typography fontWeight into sx while preserving the existing weight and all other styles and content."
+    },
+    {
+      "source_path": "ui/src/components/pages/TrustRegistryPage.jsx",
+      "target_path": "ui/src/components/pages/TrustRegistryPage.jsx",
+      "source_git_blob_sha1": "a4736f6d1c33135b9e3119efa381f5cac9b7edd4",
+      "changes": "move Typography fontWeight into sx while preserving the existing weight and all other styles and content."
     }
   ],
   "ci_action_pins": {

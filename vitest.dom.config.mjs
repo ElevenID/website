@@ -1,8 +1,15 @@
+import { fileURLToPath } from 'node:url';
+import { muiIconMjsCompatibilityPlugin } from './ui/scripts/mui-icon-compatibility.mjs';
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  plugins: [react({ jsxRuntime: 'automatic' })],
+  plugins: [muiIconMjsCompatibilityPlugin(), react({ jsxRuntime: 'automatic' })],
+  resolve: {
+    alias: {
+      '@ui-public-config': fileURLToPath(new URL('./ui/src/variants/publicConfig.website.js', import.meta.url)),
+    },
+  },
   define: {
     'import.meta.env.VITE_WEBSITE_ASSET_BASE': JSON.stringify(
       '/_website/0123456789abcdef0123456789abcdef01234567/',
