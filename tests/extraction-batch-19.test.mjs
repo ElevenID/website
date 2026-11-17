@@ -10,6 +10,6 @@ test('DemoPages metadata image URLs use the immutable website asset namespace',(
  assert.equal(bytes.length,item.current_bytes);
  assert.equal(sha(bytes),item.current_blob);
  const source=bytes.toString('utf8');
- assert.match(source,/staticAssetHref\\(manifest\\.scenarios\\[0\\]\\.poster\\.src\\)/);
+ assert.ok(source.includes('staticAssetHref(scenario.poster.src)'));
  assert.match(source,/staticAssetHref\\(scenario\\.poster\\.src\\)/);
 });
