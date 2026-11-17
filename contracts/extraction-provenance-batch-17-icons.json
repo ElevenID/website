@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "source_repository": "ElevenID/marty-ui",
+  "source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "kind": "public-brand-icons",
+  "files": [
+    {
+      "path": "ui/public/apple-touch-icon.png",
+      "sha": "49bf8d6fd211a7ce3fd3daf17fd19f5ea405d64e"
+    },
+    {
+      "path": "ui/public/favicon-96x96.png",
+      "sha": "c74c9734e84c3d396142777afae202d49b0c2469"
+    },
+    {
+      "path": "ui/public/favicon.ico",
+      "sha": "c7d964e734f28f3d4b6963aa6bf0bf0db199d3d2"
+    },
+    {
+      "path": "ui/public/logo192.png",
+      "sha": "4bf3e500467ac9950e01beb313773ef9697185c0"
+    },
+    {
+      "path": "ui/public/logo512.png",
+      "sha": "15c08f5a422e5b05f1974113bde9b39232701e1b"
+    }
+  ]
+}
