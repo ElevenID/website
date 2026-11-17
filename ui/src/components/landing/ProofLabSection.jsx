@@ -49,14 +49,14 @@ export default function ProofLabSection({
         }}
       >
         <Grid container spacing={3} alignItems="stretch">
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Chip
               label={t('landingPage.proofLab.eyebrow', INTERACTIVE_PROOF_LAB.eyebrow)}
               color="info"
               variant="outlined"
               sx={{ mb: 2, fontWeight: 700, borderColor: 'rgba(255,255,255,0.22)', color: 'common.white' }}
             />
-            <Typography variant="h5" fontWeight={800} sx={{ mb: 1 }}>
+            <Typography variant="h5" sx={{ fontWeight: 800, mb: 1 }}>
               {activeScenario.title}
             </Typography>
             <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.78)', mb: 2.5 }}>
@@ -65,7 +65,7 @@ export default function ProofLabSection({
             <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.62)', textTransform: 'uppercase', letterSpacing: 1.1 }}>
               Active verifier channel
             </Typography>
-            <Typography variant="body1" fontWeight={700} sx={{ mt: 0.75, mb: 2.5 }}>
+            <Typography variant="body1" sx={{ fontWeight: 700, mt: 0.75, mb: 2.5 }}>
               {activeScenario.channel}
             </Typography>
 
@@ -76,6 +76,7 @@ export default function ProofLabSection({
                   size="small"
                   fullWidth={isMobile}
                   variant={activeScenario.id === scenario.id ? 'contained' : 'outlined'}
+                  aria-pressed={activeScenario.id === scenario.id}
                   onClick={() => onScenarioChange(scenario.id)}
                   sx={{
                     justifyContent: 'flex-start',
@@ -137,14 +138,14 @@ export default function ProofLabSection({
             </Box>
           </Grid>
 
-          <Grid item xs={12} md={8}>
+          <Grid size={{ xs: 12, md: 8 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Paper elevation={0} sx={{ p: 2.5, height: '100%', bgcolor: 'rgba(255,255,255,0.06)', borderRadius: 3, border: '1px solid rgba(255,255,255,0.1)' }}>
                   <Typography variant="overline" sx={{ color: 'rgba(255,255,255,0.62)', letterSpacing: 1.1 }}>
                     Holder sees
                   </Typography>
-                  <Typography variant="body1" fontWeight={700} sx={{ mt: 0.75, mb: 1.5 }}>
+                  <Typography variant="body1" sx={{ fontWeight: 700, mt: 0.75, mb: 1.5 }}>
                     {activeScenario.holderSummary}
                   </Typography>
                   <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.62)', textTransform: 'uppercase', letterSpacing: 1.1 }}>
@@ -158,7 +159,7 @@ export default function ProofLabSection({
                 </Paper>
               </Grid>
 
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Paper elevation={0} sx={{ p: 2.5, height: '100%', bgcolor: 'rgba(255,255,255,0.06)', borderRadius: 3, border: '1px solid rgba(255,255,255,0.1)' }}>
                   <Typography variant="overline" sx={{ color: 'rgba(255,255,255,0.62)', letterSpacing: 1.1 }}>
                     Verifier evaluates
@@ -177,7 +178,7 @@ export default function ProofLabSection({
                           primary={check.label}
                           secondary={check.detail}
                           slotProps={{
-                            primary: { fontWeight: 700, color: 'common.white' },
+                            primary: { sx: { fontWeight: 700 }, color: 'common.white' },
                             secondary: { color: 'rgba(255,255,255,0.72)' }
                           }} />
                       </ListItem>
@@ -186,7 +187,7 @@ export default function ProofLabSection({
                 </Paper>
               </Grid>
 
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Paper elevation={0} sx={{ p: 2.5, height: '100%', bgcolor: 'rgba(255,255,255,0.06)', borderRadius: 3, border: '1px solid rgba(255,255,255,0.1)' }}>
                   <Typography variant="overline" sx={{ color: 'rgba(255,255,255,0.62)', letterSpacing: 1.1 }}>
                     Request preview
@@ -211,7 +212,7 @@ export default function ProofLabSection({
                 </Paper>
               </Grid>
 
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Paper elevation={0} sx={{ p: 2.5, height: '100%', bgcolor: 'rgba(255,255,255,0.06)', borderRadius: 3, border: '1px solid rgba(255,255,255,0.1)' }}>
                   <Typography variant="overline" sx={{ color: 'rgba(255,255,255,0.62)', letterSpacing: 1.1 }}>
                     Proof preview
@@ -237,7 +238,7 @@ export default function ProofLabSection({
                 </Paper>
               </Grid>
 
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <Paper
                   elevation={0}
                   sx={{
@@ -252,7 +253,7 @@ export default function ProofLabSection({
                       <Typography variant="overline" sx={{ color: 'rgba(255,255,255,0.62)', letterSpacing: 1.1 }}>
                         Decision log
                       </Typography>
-                      <Typography variant="body1" fontWeight={700} sx={{ mt: 0.75 }}>
+                      <Typography variant="body1" sx={{ fontWeight: 700, mt: 0.75 }}>
                         {activeScenario.outcome}
                       </Typography>
                     </Box>
@@ -295,7 +296,7 @@ export default function ProofLabSection({
                       const itemKey = typeof item === 'string' ? item : `${item.check_name}-${index}`;
 
                       return (
-                        <Grid item xs={12} md={4} key={itemKey}>
+                        <Grid size={{ xs: 12, md: 4 }} key={itemKey}>
                           <Box sx={{ p: 2, height: '100%', borderRadius: 2, bgcolor: 'rgba(255,255,255,0.05)' }}>
                             <Chip label={index + 1} size="small" color="info" sx={{ mb: 1 }} />
                             <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.82)' }}>

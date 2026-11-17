@@ -29,6 +29,7 @@ export default function EndUserExperienceSection({ t, activeExperience, onSelect
             key={journey.id}
             size="small"
             variant={activeExperience.id === journey.id ? 'contained' : 'outlined'}
+            aria-pressed={activeExperience.id === journey.id}
             onClick={() => onSelectExperience(journey.id)}
           >
             {journey.label}
@@ -36,7 +37,7 @@ export default function EndUserExperienceSection({ t, activeExperience, onSelect
         ))}
       </Box>
       <Grid container spacing={4} alignItems="stretch">
-        <Grid item xs={12} md={5}>
+        <Grid size={{ xs: 12, md: 5 }}>
           <Paper elevation={2} sx={{ p: 3, height: '100%', borderRadius: 3 }}>
             <Chip
               label={`${activeExperience.persona} - ${activeExperience.environment}`}
@@ -44,7 +45,7 @@ export default function EndUserExperienceSection({ t, activeExperience, onSelect
               variant="outlined"
               sx={{ mb: 2, fontWeight: 600 }}
             />
-            <Typography variant="h5" fontWeight={800} sx={{ mb: 1.5 }}>
+            <Typography variant="h5" sx={{ fontWeight: 800, mb: 1.5 }}>
               {activeExperience.title}
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5 }}>
@@ -60,7 +61,7 @@ export default function EndUserExperienceSection({ t, activeExperience, onSelect
                     primary={step.label}
                     secondary={step.description}
                     slotProps={{
-                      primary: { fontWeight: 700 },
+                      primary: { sx: { fontWeight: 700 } },
                       secondary: { color: 'text.secondary' }
                     }} />
                 </ListItem>
@@ -69,14 +70,14 @@ export default function EndUserExperienceSection({ t, activeExperience, onSelect
           </Paper>
         </Grid>
 
-        <Grid item xs={12} md={7}>
+        <Grid size={{ xs: 12, md: 7 }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <Paper elevation={1} sx={{ p: 2.5, height: '100%', borderRadius: 3 }}>
                 <Typography variant="overline" sx={{ color: 'text.secondary', letterSpacing: 1.1 }}>
                   Holder experience
                 </Typography>
-                <Typography variant="body1" fontWeight={700} sx={{ mt: 0.75, mb: 1.5 }}>
+                <Typography variant="body1" sx={{ fontWeight: 700, mt: 0.75, mb: 1.5 }}>
                   {activeExperience.holderView}
                 </Typography>
                 <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 1.1 }}>
@@ -90,12 +91,12 @@ export default function EndUserExperienceSection({ t, activeExperience, onSelect
               </Paper>
             </Grid>
 
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <Paper elevation={1} sx={{ p: 2.5, height: '100%', borderRadius: 3 }}>
                 <Typography variant="overline" sx={{ color: 'text.secondary', letterSpacing: 1.1 }}>
                   Verifier experience
                 </Typography>
-                <Typography variant="body1" fontWeight={700} sx={{ mt: 0.75, mb: 1.5 }}>
+                <Typography variant="body1" sx={{ fontWeight: 700, mt: 0.75, mb: 1.5 }}>
                   {activeExperience.verifierView}
                 </Typography>
                 <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 1.1 }}>
@@ -109,7 +110,7 @@ export default function EndUserExperienceSection({ t, activeExperience, onSelect
               </Paper>
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <Paper
                 elevation={1}
                 sx={{
@@ -121,7 +122,7 @@ export default function EndUserExperienceSection({ t, activeExperience, onSelect
                 <Typography variant="overline" sx={{ color: 'text.secondary', letterSpacing: 1.1 }}>
                   Outcome
                 </Typography>
-                <Typography variant="body1" fontWeight={700} sx={{ mt: 0.75, mb: 1.5 }}>
+                <Typography variant="body1" sx={{ fontWeight: 700, mt: 0.75, mb: 1.5 }}>
                   {activeExperience.outcome}
                 </Typography>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>

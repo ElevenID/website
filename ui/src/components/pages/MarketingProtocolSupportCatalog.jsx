@@ -1,3 +1,4 @@
+import { publicEntryHref } from '../../application/routing/publicEntry';
 import { Alert } from '@mui/material';
 import snapshot from '../../../../contracts/protocol-support-catalog.json';
 import { normalizeProtocolSupportCatalog } from '../../application/protocolSupportCatalog';
@@ -9,6 +10,6 @@ export default function MarketingProtocolSupportCatalog() {
     <Alert severity="info" sx={{ mb: 2 }}>
       This is the product support snapshot included with this website. Check your deployment's live catalog before integrating.
     </Alert>
-    <ProtocolSupportCatalogView catalog={catalog} />
+    <ProtocolSupportCatalogView catalog={catalog} sourcePath={publicEntryHref('/v1/protocol-support')} />
   </>;
 }

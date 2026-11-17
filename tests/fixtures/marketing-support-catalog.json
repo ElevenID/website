@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "catalog_revision": "component-fixture",
+  "discovery_path": "/v1/protocol-support",
+  "protocol_revision": "0123456789abcdef0123456789abcdef01234567",
+  "support_levels": {
+    "implemented": "Fixture direct support.",
+    "derived": "Fixture derived support.",
+    "partial": "Fixture incomplete support.",
+    "unsupported": "Fixture unsupported concept."
+  },
+  "qualification_levels": { "focused_source": "Synthetic component qualification only.", "not_applicable": "No implementation." },
+  "entities": [
+    { "id": "direct", "display_name": "Fixture direct capability", "kind": "credential", "support_level": "implemented", "qualification": "focused_source", "owner_service": "fixture", "api_paths": ["/v1/fixture"], "ui_paths": [], "schema_refs": [], "limitations": ["Synthetic fixture only."] },
+    { "id": "derived", "display_name": "Fixture derived capability", "kind": "credential", "support_level": "derived", "qualification": "focused_source", "owner_service": "fixture", "api_paths": [], "ui_paths": [], "schema_refs": [], "limitations": ["Derived fixture only."] },
+    { "id": "partial", "display_name": "Fixture partial capability", "kind": "credential", "support_level": "partial", "qualification": "focused_source", "owner_service": "fixture", "api_paths": [], "ui_paths": [], "schema_refs": [], "limitations": ["Incomplete fixture only."] },
+    { "id": "unsupported", "display_name": "Fixture unsupported capability", "kind": "credential", "support_level": "unsupported", "qualification": "not_applicable", "owner_service": null, "api_paths": [], "ui_paths": [], "schema_refs": [], "limitations": ["No product surface is represented."] }
+  ]
+}

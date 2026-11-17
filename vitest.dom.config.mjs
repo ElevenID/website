@@ -1,11 +1,12 @@
 import { fileURLToPath } from 'node:url';
+import { marketingContentBoundaryPlugin } from './tests/fixtures/marketing-content-boundaries.mjs';
 import { websiteRouteBoundaryPlugin } from './tests/fixtures/website-route-boundaries.mjs';
 import { muiIconMjsCompatibilityPlugin } from './ui/scripts/mui-icon-compatibility.mjs';
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  plugins: [websiteRouteBoundaryPlugin(), muiIconMjsCompatibilityPlugin(), react({ jsxRuntime: 'automatic' })],
+  plugins: [marketingContentBoundaryPlugin(), websiteRouteBoundaryPlugin(), muiIconMjsCompatibilityPlugin(), react({ jsxRuntime: 'automatic' })],
   resolve: {
     alias: {
       '@ui-public-config': fileURLToPath(new URL('./ui/src/variants/publicConfig.website.js', import.meta.url)),

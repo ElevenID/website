@@ -10,48 +10,6 @@
   "scope": "Batch 11 bounded page, section and website build/server sources. Existing provenance remains in its earlier shard.",
   "files": [
     {
-      "source_path": "ui/src/components/pages/AiCapabilityPage.jsx",
-      "target_path": "ui/src/components/pages/AiCapabilityPage.jsx",
-      "git_blob_sha1": "2b0c0f055152e05af23bcc132456ad134f2ce441",
-      "bytes": 9839,
-      "transfer": "verbatim"
-    },
-    {
-      "source_path": "ui/src/components/pages/MarketingProtocolSupportCatalog.jsx",
-      "target_path": "ui/src/components/pages/MarketingProtocolSupportCatalog.jsx",
-      "git_blob_sha1": "5718f4a1ee33fd5ab8d2e5095a3824e218f12f2d",
-      "bytes": 656,
-      "transfer": "verbatim"
-    },
-    {
-      "source_path": "ui/src/components/landing/DeploymentModelsSection.jsx",
-      "target_path": "ui/src/components/landing/DeploymentModelsSection.jsx",
-      "git_blob_sha1": "e8a9ad5193db4c627bcd17c6d35f40054b6614d7",
-      "bytes": 8524,
-      "transfer": "verbatim"
-    },
-    {
-      "source_path": "ui/src/components/landing/EndUserExperienceSection.jsx",
-      "target_path": "ui/src/components/landing/EndUserExperienceSection.jsx",
-      "git_blob_sha1": "84faa1e2fddb8d53619a362ab1001309e83c3210",
-      "bytes": 5572,
-      "transfer": "verbatim"
-    },
-    {
-      "source_path": "ui/src/components/landing/ProductCapabilitiesSection.jsx",
-      "target_path": "ui/src/components/landing/ProductCapabilitiesSection.jsx",
-      "git_blob_sha1": "de73d281e803542ff4f0f51321255626879ec2da",
-      "bytes": 3720,
-      "transfer": "verbatim"
-    },
-    {
-      "source_path": "ui/src/components/landing/ProofLabSection.jsx",
-      "target_path": "ui/src/components/landing/ProofLabSection.jsx",
-      "git_blob_sha1": "6836204e406006c7d052c8ab5f9a23114067205f",
-      "bytes": 13613,
-      "transfer": "verbatim"
-    },
-    {
       "source_path": "ui/scripts/render-website-nginx.mjs",
       "target_path": "ui/scripts/render-website-nginx.mjs",
       "git_blob_sha1": "0edf2fd1ba1062f2b0226887abf8694bc8f1a769",
@@ -94,5 +52,60 @@
       "transfer": "verbatim"
     }
   ],
-  "adapted_files": []
+  "adapted_files": [
+    {
+      "source_path": "ui/src/components/pages/AiCapabilityPage.jsx",
+      "target_path": "ui/src/components/pages/AiCapabilityPage.jsx",
+      "source_git_blob_sha1": "2b0c0f055152e05af23bcc132456ad134f2ce441",
+      "bytes": 9839,
+      "target_git_blob_sha1": "e1554668f9f370320cf533b80cdde7e0b38f9ae9",
+      "target_bytes": 10166,
+      "changes": "Use current MUI Grid sizing and typography styles; expose interface cards as keyboard links; resolve machine-readable links through the canonical public-entry helper."
+    },
+    {
+      "source_path": "ui/src/components/pages/MarketingProtocolSupportCatalog.jsx",
+      "target_path": "ui/src/components/pages/MarketingProtocolSupportCatalog.jsx",
+      "source_git_blob_sha1": "5718f4a1ee33fd5ab8d2e5095a3824e218f12f2d",
+      "bytes": 656,
+      "target_git_blob_sha1": "0fe4a8145dadc55d17b59eaddac232c6b2b5ac0c",
+      "target_bytes": 782,
+      "changes": "Resolve the catalog source link through the canonical public-entry helper."
+    },
+    {
+      "source_path": "ui/src/components/landing/ProductCapabilitiesSection.jsx",
+      "target_path": "ui/src/components/landing/ProductCapabilitiesSection.jsx",
+      "source_git_blob_sha1": "de73d281e803542ff4f0f51321255626879ec2da",
+      "bytes": 3720,
+      "target_git_blob_sha1": "5d4009d39dee226050f9008da9131e5cb62e21a9",
+      "target_bytes": 3734,
+      "changes": "Use current MUI Grid sizing and typography styles while preserving content and callbacks."
+    },
+    {
+      "source_path": "ui/src/components/landing/EndUserExperienceSection.jsx",
+      "target_path": "ui/src/components/landing/EndUserExperienceSection.jsx",
+      "source_git_blob_sha1": "84faa1e2fddb8d53619a362ab1001309e83c3210",
+      "bytes": 5572,
+      "target_git_blob_sha1": "4e104de641dbf550e7048e285452067e988a73a2",
+      "target_bytes": 5668,
+      "changes": "Use current MUI Grid sizing and typography styles; expose the controlled journey selection through aria-pressed."
+    },
+    {
+      "source_path": "ui/src/components/landing/DeploymentModelsSection.jsx",
+      "target_path": "ui/src/components/landing/DeploymentModelsSection.jsx",
+      "source_git_blob_sha1": "e8a9ad5193db4c627bcd17c6d35f40054b6614d7",
+      "bytes": 8524,
+      "target_git_blob_sha1": "0cfbcb6130e8d28bc9029c3721a9ae3a0cb536f9",
+      "target_bytes": 8572,
+      "changes": "Use current MUI Grid sizing and typography styles; retain whole-card links without nested keyboard controls."
+    },
+    {
+      "source_path": "ui/src/components/landing/ProofLabSection.jsx",
+      "target_path": "ui/src/components/landing/ProofLabSection.jsx",
+      "source_git_blob_sha1": "6836204e406006c7d052c8ab5f9a23114067205f",
+      "bytes": 13613,
+      "target_git_blob_sha1": "7f4352cc913c7930d5ceacf840fd75abc8cdec6d",
+      "target_bytes": 13729,
+      "changes": "Use current MUI Grid sizing and typography/slot styles; expose controlled proof scenario selection through aria-pressed."
+    }
+  ]
 }

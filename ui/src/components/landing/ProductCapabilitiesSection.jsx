@@ -28,7 +28,7 @@ export default function ProductCapabilitiesSection({ t }) {
 
       <Grid container spacing={3}>
         {PRODUCTS.slice(0, 4).map((product) => (
-          <Grid item xs={12} sm={6} md={3} key={product.id}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }} key={product.id}>
             <Card
               elevation={2}
               sx={{
@@ -41,7 +41,7 @@ export default function ProductCapabilitiesSection({ t }) {
             >
               <CardContent sx={{ flexGrow: 1, textAlign: 'center' }}>
                 <Box sx={{ mb: 1 }}>{PRODUCT_ICONS[product.id]}</Box>
-                <Typography variant="h6" fontWeight={700} gutterBottom>
+                <Typography variant="h6" gutterBottom sx={{ fontWeight: 700 }}>
                   {product.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>

@@ -2,7 +2,6 @@ import { publicEntryHref } from '../../application/routing/publicEntry';
 import { Link } from 'react-router';
 import {
   Box,
-  Button,
   Card,
   CardActionArea,
   CardContent,
@@ -50,7 +49,7 @@ export default function DeploymentModelsSection({ t, onSelectMode }) {
         {t('landingPage.deploymentModels.title', DEPLOYMENT_MODELS.title)}
       </SectionHeading>
       <Grid container spacing={3} alignItems="stretch" sx={{ mb: 4 }}>
-        <Grid item xs={12} lg={7}>
+        <Grid size={{ xs: 12, lg: 7 }}>
           <Paper
             elevation={0}
             sx={{
@@ -65,7 +64,7 @@ export default function DeploymentModelsSection({ t, onSelectMode }) {
           </Paper>
         </Grid>
 
-        <Grid item xs={12} lg={5}>
+        <Grid size={{ xs: 12, lg: 5 }}>
           <Paper
             elevation={0}
             sx={{
@@ -78,7 +77,7 @@ export default function DeploymentModelsSection({ t, onSelectMode }) {
             }}
           >
             <Chip label="Architecture fit" color="info" variant="outlined" sx={{ fontWeight: 700, mb: 2 }} />
-            <Typography variant="h5" fontWeight={800} sx={{ mb: 1.5 }}>
+            <Typography variant="h5" sx={{ fontWeight: 800, mb: 1.5 }}>
               {t('landingPage.deploymentModels.panelTitle', 'Plan the operating responsibilities.')}
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5 }}>
@@ -100,7 +99,7 @@ export default function DeploymentModelsSection({ t, onSelectMode }) {
                     borderColor: 'grey.200',
                   }}
                 >
-                  <Typography variant="subtitle2" fontWeight={800} sx={{ mb: 0.5 }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 800, mb: 0.5 }}>
                     {item.question}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
@@ -144,7 +143,7 @@ export default function DeploymentModelsSection({ t, onSelectMode }) {
           const meta = DEPLOYMENT_MODE_META[mode.id] || DEPLOYMENT_MODE_META['customer-operated'];
 
           return (
-            <Grid item xs={12} md={4} key={mode.id}>
+            <Grid size={{ xs: 12, md: 4 }} key={mode.id}>
               <Card
                 elevation={2}
                 sx={{
@@ -173,7 +172,7 @@ export default function DeploymentModelsSection({ t, onSelectMode }) {
                       </Box>
                       <Chip label={mode.badge} size="small" color={meta.color} variant="outlined" sx={{ fontWeight: 700 }} />
                     </Box>
-                    <Typography variant="h6" fontWeight={800} gutterBottom>
+                    <Typography variant="h6" gutterBottom sx={{ fontWeight: 800 }}>
                       {mode.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5 }}>
@@ -202,14 +201,13 @@ export default function DeploymentModelsSection({ t, onSelectMode }) {
                         <Chip key={audience} label={audience} size="small" />
                       ))}
                     </Box>
-                    <Button
-                      variant="text"
+                    <Box
                       component="span"
-                      endIcon={<ArrowForwardIcon />}
-                      sx={{ mt: 'auto', alignSelf: 'flex-start', px: 0, fontWeight: 700 }}
+                      sx={{ display: 'inline-flex', alignItems: 'center', gap: 1, mt: 'auto', alignSelf: 'flex-start', color: 'primary.main', fontWeight: 700 }}
                     >
                       {mode.cta}
-                    </Button>
+                      <ArrowForwardIcon fontSize="small" />
+                    </Box>
                   </CardContent>
                 </CardActionArea>
               </Card>
