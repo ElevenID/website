@@ -19,50 +19,50 @@ i18n
   .init({
     // Fallback language
     fallbackLng: 'en',
-    
+
     // Supported languages
     supportedLngs: ['en', 'de', 'ja', 'es', 'fr', 'nl'],
-    
+
     // Debug mode (disable in production)
     debug: import.meta.env.DEV && import.meta.env.MODE !== 'test',
-    
+
     // Namespaces
     ns: I18N_NAMESPACES,
     defaultNS: 'common',
-    
+
     // Detection options
     detection: {
       // Order of detection methods
       order: publicEntry
         ? ['querystring', 'navigator', 'htmlTag']
         : ['querystring', 'cookie', 'localStorage', 'navigator', 'htmlTag'],
-      
+
       // Keys to look for
       lookupQuerystring: 'lng',
       lookupCookie: 'i18nextLng',
       lookupLocalStorage: 'i18nextLng',
-      
+
       // Cache user language
       caches: publicEntry ? [] : ['localStorage', 'cookie'],
-      
+
       // Only detect languages in supportedLngs
       checkWhitelist: true,
     },
-    
+
     // Backend options
     backend: {
       // Path to load translation files
       loadPath: staticAssetHref('/locales/{{lng}}/{{ns}}.json'),
-      
+
       // Allow cross-domain requests
       crossDomain: false,
     },
-    
+
     // Interpolation options
     interpolation: {
       // React already escapes values
       escapeValue: false,
-      
+
       // Format values
       format: (value, format, lng) => {
         if (format === 'uppercase') return value.toUpperCase();
@@ -73,7 +73,7 @@ i18n
         return value;
       },
     },
-    
+
     // React-specific options
     react: {
       // Keep the application shell mounted while translations load. This also

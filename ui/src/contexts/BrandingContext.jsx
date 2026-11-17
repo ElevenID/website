@@ -25,10 +25,10 @@ const BrandingContext = createContext({
 
 /**
  * BrandingProvider - Loads runtime branding configuration from /config.json
- * 
+ *
  * This allows per-deployment customization without rebuilding the app.
  * Organizations can mount their own config.json with custom branding.
- * 
+ *
  * TODO: Future feature - Org Profile Page for branding customization
  * - Allow orgs to configure: appName, logoUrl, primaryColor, secondaryColor, tagline
  * - Store org theme settings in database (org_settings table)

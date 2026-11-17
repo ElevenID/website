@@ -1,6 +1,6 @@
 /**
  * Analytics & Monitoring Utilities
- * 
+ *
  * Handles Google Analytics, performance monitoring, and Core Web Vitals tracking
  */
 
@@ -25,7 +25,7 @@ function logAnalytics(...args) {
 export const initAnalytics = () => {
   if (getPublicEntryCanonicalOrigin()) return;
   const GA_ID = getGoogleAnalyticsMeasurementId();
-  
+
   if (!GA_ID || typeof window === 'undefined') {
     logAnalytics('Analytics: GA_MEASUREMENT_ID not configured or SSR mode');
     return;
@@ -64,7 +64,7 @@ export const initAnalytics = () => {
 /**
  * Track page view
  * Call this on route changes
- * 
+ *
  * @param {string} path - Page path (e.g., '/pricing')
  * @param {string} title - Page title
  */
@@ -79,7 +79,7 @@ export const trackPageView = (path, title) => {
 
 /**
  * Track custom event
- * 
+ *
  * @param {string} eventName - Event name (e.g., 'signup_started')
  * @param {object} params - Event parameters
  */
@@ -139,13 +139,13 @@ export const trackEngagement = () => {
     const scrollPercentage = Math.round(
       (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100
     );
-    
+
     if (scrollPercentage > maxScroll) {
       maxScroll = scrollPercentage;
-      
+
       // Report at 25%, 50%, 75%, 100%
       if ([25, 50, 75, 100].includes(scrollPercentage)) {
-        trackEvent('scroll_depth', { 
+        trackEvent('scroll_depth', {
           scroll_percentage: scrollPercentage,
         });
       }

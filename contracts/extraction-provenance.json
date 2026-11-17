@@ -127,12 +127,6 @@
       "transfer": "verbatim"
     },
     {
-      "source_path": "ui/src/i18n/index.js",
-      "target_path": "ui/src/i18n/index.js",
-      "git_blob_sha1": "5a134f240ce2b241c8b5c822af268e198881f4ef",
-      "transfer": "verbatim"
-    },
-    {
       "source_path": "ui/src/utils/waitForFonts.js",
       "target_path": "ui/src/utils/waitForFonts.js",
       "git_blob_sha1": "ec8688fbec681f3cc7921a033e7c1a231e0f2538",
@@ -145,27 +139,9 @@
       "transfer": "verbatim"
     },
     {
-      "source_path": "ui/src/contexts/BrandingContext.jsx",
-      "target_path": "ui/src/contexts/BrandingContext.jsx",
-      "git_blob_sha1": "ab37c777fe493f11eab4075233fdd77eef480f9a",
-      "transfer": "verbatim"
-    },
-    {
-      "source_path": "ui/src/hooks/useBranding.js",
-      "target_path": "ui/src/hooks/useBranding.js",
-      "git_blob_sha1": "039cf94575068876b7c77914e5fccd9b41aeaada",
-      "transfer": "verbatim"
-    },
-    {
       "source_path": "ui/src/bootstrapRoot.jsx",
       "target_path": "ui/src/bootstrapRoot.jsx",
       "git_blob_sha1": "bdb31ce7d33ccac886f004257b2f12d26db227fd",
-      "transfer": "verbatim"
-    },
-    {
-      "source_path": "ui/src/utils/analytics.js",
-      "target_path": "ui/src/utils/analytics.js",
-      "git_blob_sha1": "78cdde9abca78e4f69dc6191a3cdd668b39841fe",
       "transfer": "verbatim"
     },
     {
@@ -307,6 +283,36 @@
       "target_path": "ui/src/application/routing/useSurfaceNavigate.js",
       "source_git_blob_sha1": "4685cd2b9f5ddbf4d48cc1c91166a7da45db7528",
       "changes": "Delegate document handoff decisions to shouldBrowserRedirect using the original destination; remove the redundant canonical rewrite check so fragment-only navigation stays in the current router."
+    },
+    {
+      "source_path": "ui/src/i18n/index.js",
+      "target_path": "ui/src/i18n/index.js",
+      "source_git_blob_sha1": "5a134f240ce2b241c8b5c822af268e198881f4ef",
+      "changes": "Remove inherited trailing whitespace; preserve runtime behavior."
+    },
+    {
+      "source_path": "ui/src/contexts/BrandingContext.jsx",
+      "target_path": "ui/src/contexts/BrandingContext.jsx",
+      "source_git_blob_sha1": "ab37c777fe493f11eab4075233fdd77eef480f9a",
+      "changes": "Remove inherited trailing whitespace; preserve runtime behavior."
+    },
+    {
+      "source_path": "ui/src/hooks/useBranding.js",
+      "target_path": "ui/src/hooks/useBranding.js",
+      "source_git_blob_sha1": "039cf94575068876b7c77914e5fccd9b41aeaada",
+      "changes": "Remove inherited trailing whitespace; preserve runtime behavior."
+    },
+    {
+      "source_path": "ui/src/utils/analytics.js",
+      "target_path": "ui/src/utils/analytics.js",
+      "source_git_blob_sha1": "78cdde9abca78e4f69dc6191a3cdd668b39841fe",
+      "changes": "Remove inherited trailing whitespace; preserve runtime behavior."
+    },
+    {
+      "source_path": "ui/vite.config.ts",
+      "target_path": "ui/scripts/mui-icon-compatibility.mjs",
+      "source_git_blob_sha1": "c5b2000bb311da5b4a54f4b18236d6b2edb1ee49",
+      "changes": "Extract and export the existing legacy MUI icon resolver; resolve packages from repository-root node_modules and accept an explicit dependency root for isolated fixture tests; preserve direct mjs and Outline-to-Outlined fallback behavior."
     }
   ],
   "ci_action_pins": {
