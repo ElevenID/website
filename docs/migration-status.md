@@ -1,32 +1,34 @@
 # Migration checkpoint
 
-## Current milestone: page, catalog, demo and composition foundations
+## Current milestone: crawler artifacts, build contracts and route wiring
 
-[Website PR #9](https://github.com/ElevenID/website/pull/9), branch `feat/website-demo-catalog-composition`, continues from accepted PR #8. It preserves **12 source files totaling 46,957 bytes**. Eight have complete dependencies for the expanded fixture; four entry/route composition files retain deferred imports.
+[Website PR #10](https://github.com/ElevenID/website/pull/10), branch `feat/website-crawler-build-routes`, continues from accepted PR #9. It preserves **four source files totaling 13,734 bytes**, adds actual Vite adapter checks, and exercises the real website/marketing route modules with explicit page boundaries.
 
-**All 272 tests passed on AWS** after correction: 54 native, 207 DOM across 19 files and 11 build records. The expanded suites first reproduced 40 targeted failures; all now pass. The fresh npm audit reported zero vulnerabilities, and the full PR whitespace check passed. Track final required CI and merge status on PR #9.
+The source-copy checkpoint passed the existing **272 tests** plus the two preserved production-contract cases and five Python crawler cases. The expanded baseline passed all 266 DOM cases and exposed 11 crawler-check failures among 33 build records. After correction, **all 353 records passed**: 54 native, 266 DOM across 20 files and 33 build. The fresh npm audit reported zero vulnerabilities. Track final hosted CI and merge status on PR #10. One build record also executes five Python cases; those cases are not added again to the aggregate.
 
 | Evidence | Revision/status |
 | --- | --- |
-| Accepted base, PR #8 | `fd5288e14660b4d296c70bee13b8a9182064a5d2` |
-| Source-copy commit | `33fac865efe571130cafeeb136de00ad89cba20c` |
-| Corrected functional commit | `2197809f17c92a27b3153bc3103cb174c00ffb2f` |
-| AWS-tested functional tree | `8fe0c90a703e154f2e313f892aba78fb8d1aa1e9` |
-| Final required CI and merge | Track PR #9 and its accepted-main receipt |
+| Accepted base, PR #9 | `7b477a0372b2058fc5ea71ba41bccbbf16afc575` |
+| Source-copy commit | `9d6dc382fdf5d76ed1d657b06e149a2a6950c76e` |
+| Source-copy tree | `d310635a29cce97a26ca6762b6671f75a4494083` |
+| Corrected functional commit | `9f058051860caaf7d709aa83fca5a260a6fd98bc` |
+| Verified functional tree | `b88fe9fa6579f4133daae029e589e95cdc5f7e97` |
+| Final expanded execution and audit | 353 passed; zero reported vulnerabilities |
+| Final required CI and merge | Track PR #10 for the final revision and accepted merge |
 
-Read [the batch 9 receipt](checkpoints/batch-9-demo-catalog-composition.md) for source groups, reviewed correction scope and fixture limits. Historical receipts, including [batch 8](checkpoints/batch-8-runtime-pages-build.md), remain unchanged; their resume instructions describe earlier stopping points.
+Read [the batch 10 receipt](checkpoints/batch-10-crawler-build-routes.md) for the source identities, crawler corrections, test counts and fixture limits. [Batch 9](checkpoints/batch-9-demo-catalog-composition.md) and earlier receipts remain historical.
 
 ## Resume and next batches
 
-1. Refresh PR #9 and its AWS receipt. If merged, begin from its accepted main; otherwise continue its existing branch and final checks. Preserve the existing environment, six-hour automatic stop and other workloads.
-2. Keep the original provenance pin `df6ec6c4bfee803d89c54e9333297f29f378cee3`. Source main still resolves to `a4fc3801b636e2cfd0753797e8fc0dc846b42a22`, so the [batch 8 metadata receipt](input-inventory/source-refresh-batch-8.json) for all 79 candidates plus the reconciled locale remains applicable. Refresh before later imports if source advances.
-3. Preserve the recorded WebsiteApp reconciliation: current blob `bb9616ba5618cac9899b4c487487b687a1caa51c` retains the `Start Verifying` CTA to `/verify`. Keep the other [source reconciliation decisions](input-inventory/source-reconciliation.json).
-4. Resolve the remaining WebsiteApp/WebsiteRoutes/marketingRoutes/entry graph using the [source audit](source-import-inventory.json) and [input inventory](input-inventory/README.md), with bounded reads and no diagram/SVG processing. Importing the composition files alone does not close that graph.
+1. Refresh PR #10. If merged, continue from its accepted main; otherwise continue its existing branch and remaining checks.
+2. Retain immutable provenance pin `df6ec6c4bfee803d89c54e9333297f29f378cee3`. The [batch 10 metadata receipt](input-inventory/source-refresh-batch-10.json) compares source main `9ff6e9779a020839ebeafc60095370725e9fb694` with the prior comparison. Identical `ui/` and `contracts/` subtrees preserve all 79 candidate identities and the reconciled locale. Root `.github/`, `release/`, `scripts/` and `tests/` changed and need separate review before use.
+3. Preserve the [recorded source reconciliation](input-inventory/source-reconciliation.json), including WebsiteApp's `Start Verifying` CTA to application-owned `/verify`. Preserve later intentional adaptations separately.
+4. Close the remaining page/data dependency graph using the [source audit](source-import-inventory.json) and [input inventory](input-inventory/README.md), with bounded reads and no SVG processing. Keep verified changes in cohesive PRs and maintain this compact checkpoint.
 
 ## Remaining qualification
 
-The expanded Vite fixture passed with eighteen actual inputs: the prior ten pages and eight new closed inputs. The website-shell DOM suite also passed with the deferred page boundary isolated and translation/analytics edges controlled; it does not execute the complete route graph.
+The route fixture uses the actual route modules, React Router, runtime configuration, unavailable page and public commerce implementation. Distinct page-boundary markers isolate page content and its data, diagram and blog dependencies. It establishes route selection, parameters, redirects and gates; it does not execute the complete pages or browser document handoffs.
 
-Large marketing/catalog/manifest data, remaining page dependencies, the immutable blog dependency, production asset corpus, crawler output, real metadata-image emission, prerender, Nginx/browser handoffs and release/rollback identity remain pending. Demo fixtures do not establish playback, manifest validity or cryptographic verification. DOM navigation recording and computed styles do not qualify HTTP handoffs or pixel layout.
+Crawler fixtures exercise small synthetic files, and commerce fixtures bind synthetic adapter identities and actual Vite output. They do not qualify generated production crawler output or a real commerce release. Large marketing/catalog/manifest inputs, the immutable blog dependency, production assets, full prerender, Nginx/browser handoffs and release/rollback identity remain pending.
 
-Retain website/application route ownership, withheld pricing and demo publication states. Commit and push verified batches promptly and keep this checkpoint compact.
+Retain website/application ownership, withheld pricing and demo publication states. Full website build qualification and production cutover remain future milestones.

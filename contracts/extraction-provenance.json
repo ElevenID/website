@@ -185,6 +185,18 @@
       "target_path": "ui/src/extensions/commerce/website.js",
       "git_blob_sha1": "65389d443cee08f542f724db98aca69140f87298",
       "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/scripts/production-build-contract.mjs",
+      "target_path": "ui/scripts/production-build-contract.mjs",
+      "git_blob_sha1": "ce50431b187494a7aef0d1d5000eaa9c172e285f",
+      "transfer": "verbatim"
+    },
+    {
+      "source_path": "ui/scripts/production-build-contract.test.mjs",
+      "target_path": "ui/scripts/production-build-contract.test.mjs",
+      "git_blob_sha1": "5b22fccc0768ae6732c3ee5aef1ed0e9be73170c",
+      "transfer": "verbatim"
     }
   ],
   "adapted_files": [
@@ -387,6 +399,18 @@
       "target_path": "ui/src/components/pages/ProtocolSupportCatalogView.jsx",
       "source_git_blob_sha1": "506c07af7d3c1f4f5800bc5976264a67e82a54a0",
       "changes": "Migrate Grid sizing, summary wrapping, metadata display and card-header alignment to supported MUI v9 props/sx without changing catalog data, grouping, labels or links."
+    },
+    {
+      "source_path": "ui/scripts/check_crawler_artifacts.py",
+      "target_path": "ui/scripts/check_crawler_artifacts.py",
+      "source_git_blob_sha1": "b22360ed56deafb53d2e2fafe410b651e4ff4b81",
+      "changes": "Apply the checked-in website route ownership to page URLs; exclude application routes, withheld pricing and resources; require only website-owned homepage/product pages; reject malformed canonical paths and XML locations; detect sitemap index cycles and page shards unreachable from the declared root sitemap."
+    },
+    {
+      "source_path": "ui/scripts/test_crawler_artifacts.py",
+      "target_path": "ui/scripts/test_crawler_artifacts.py",
+      "source_git_blob_sha1": "0567d5c28953b769e63403144a531415ae674cdf",
+      "changes": "Replace the legacy combined-site /docs fixture URL with the website-owned /developers route; preserve the five original regression cases."
     }
   ],
   "ci_action_pins": {

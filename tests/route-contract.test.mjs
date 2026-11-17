@@ -87,6 +87,8 @@ test('copied source and license retain their recorded Git blob identities', () =
     'ui/scripts/dev-server-origin.test.mjs',
     'ui/scripts/generated-text.mjs',
     'ui/scripts/generated-text.test.mjs',
+    'ui/scripts/production-build-contract.mjs',
+    'ui/scripts/production-build-contract.test.mjs',
     'ui/scripts/web-surface-contract.mjs',
     'ui/src/application/routing/appHandoff.js',
     'ui/src/application/routing/publicEntry.js',
