@@ -111,15 +111,17 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- \
-            ui/public/favicon.svg \\
-            ui/public/images/authors/aiko-tanaka.png \\
-            ui/public/images/authors/daniel-ortega.png \\
-            ui/public/images/authors/elena-kovacs.png \\
-            ui/public/images/authors/marcus-vale.png \\
-            ui/public/images/authors/nora-patel.png \\
-            ui/public/images/authors/sofia-rahman.png \\
-            ui/public/images/authors/victor-leclerc.png
+          files=(
+            "ui/public/favicon.svg"
+            "ui/public/images/authors/aiko-tanaka.png"
+            "ui/public/images/authors/daniel-ortega.png"
+            "ui/public/images/authors/elena-kovacs.png"
+            "ui/public/images/authors/marcus-vale.png"
+            "ui/public/images/authors/nora-patel.png"
+            "ui/public/images/authors/sofia-rahman.png"
+            "ui/public/images/authors/victor-leclerc.png"
+          )
+          git add -- "${files[@]}"
           git diff --cached --name-only
           test "$(git diff --cached --name-only | wc -l)" -eq 8
           git commit -m "assets: persist large public website resources"
