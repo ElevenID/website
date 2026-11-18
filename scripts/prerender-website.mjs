@@ -158,7 +158,7 @@ async function renderRoute(route) {
     ];
     let stdout;
     try {
-timeout: 70000, maxBuffer: 32 * 1024 * 1024
+      stdout = (await execute(chrome, args, { timeout: 70000, maxBuffer: 32 * 1024 * 1024 })).stdout;
     } catch (error) {
       throw new Error('Chrome failed to prerender ' + route + ': ' + String(error.stderr || error.message).slice(-5000));
     }
