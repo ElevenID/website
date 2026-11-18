@@ -3,7 +3,15 @@ import { fileURLToPath } from 'node:url';
 import { WEB_SURFACE_ROUTES } from '../ui/scripts/web-surface-contract.mjs';
 
 const manifestDirectory = fileURLToPath(new URL('../ui/public/demos/manifests/', import.meta.url));
-const invalidAliases = new Set(['/pricing', '/verification', '/issuance', '/privacy', '/terms']);
+const SITE_ORIGIN = 'https://elevenidllc.com';
+const canonicalAliases = Object.freeze({
+  '/verification': '/verifiable-credential-api',
+  '/issuance': '/open-badges-issuance',
+  '/privacy': '/privacy-policy',
+  '/terms': '/terms-of-service',
+  '/from-idv-to-verifiable-identity': '/why-verifiable-identity',
+  '/what-is-verifiable-identity': '/why-verifiable-identity',
+});
 
 function normalizeRoute(route) {
   if (typeof route !== 'string' || !route.startsWith('/') || route.includes('\\')
@@ -15,6 +23,18 @@ function normalizeRoute(route) {
     throw new Error('Unsafe website prerender route: ' + route);
   }
   return normalized;
+}
+
+// A same-origin URL is not enough: a homepage fallback at a legal or article
+// route must fail qualification even when it has valid SEO metadata.
+export function assertWebsiteRouteCanonical(plan, route, canonical) {
+  if (!Object.hasOwn(plan.canonicalPaths, route)) {
+    throw new Error('Canonical check received an unplanned website route: ' + route);
+  }
+  const expected = new URL(plan.canonicalPaths[route], SITE_ORIGIN).href;
+  if (canonical !== expected) {
+    throw new Error('Canonical mismatch on ' + route + ': expected ' + expected + ', received ' + canonical);
+  }
 }
 
 export async function createWebsitePrerenderPlan() {
@@ -53,6 +73,7 @@ export async function createWebsitePrerenderPlan() {
 
   const blogRoutes = Array.from(new Set([
     '/blog',
+    '/blog/foundations',
     ...tagPaths,
     ...BLOG_POSTS.map(({ slug }) => '/blog/' + slug),
     ...GUIDE_ARTICLE_SLUGS.map((slug) => '/blog/' + slug),
@@ -89,10 +110,14 @@ export async function createWebsitePrerenderPlan() {
   if (demoIndex.latest_approved_stack_version != null && !versions.has(demoIndex.latest_approved_stack_version)) {
     throw new Error('Latest approved demo release is not in the release catalog');
   }
+  const selectedDemoVersion = demoIndex.latest_approved_stack_version || demoIndex.latest_available_stack_version;
+  if (!versions.has(selectedDemoVersion)) {
+    throw new Error('Selected demo release is not in the release catalog');
+  }
 
   const staticRoutes = WEB_SURFACE_ROUTES.website.exact_paths
     .map(normalizeRoute)
-    .filter((route) => !invalidAliases.has(route) && !/\.[a-z0-9]+$/i.test(route));
+    .filter((route) => route !== '/pricing' && !/\.[a-z0-9]+$/i.test(route));
   const routes = Array.from(new Set([
     ...staticRoutes,
     ...blogRoutes,
@@ -103,5 +128,19 @@ export async function createWebsitePrerenderPlan() {
   if (!routes.includes('/') || routes.length < 40) {
     throw new Error('Website prerender plan is unexpectedly incomplete');
   }
-  return { routes, demoIndex };
+  const canonicalPaths = Object.fromEntries(routes.map((route) => {
+    let canonicalPath = canonicalAliases[route] || route;
+    if (route === '/demos') canonicalPath = '/demos/' + selectedDemoVersion;
+    if (route.startsWith('/demos/latest/')) {
+      canonicalPath = route.replace('/demos/latest/', '/demos/' + demoIndex.latest_approved_stack_version + '/');
+    }
+    const postSlug = /^\/blog\/([^/]+)$/.exec(route)?.[1];
+    const canonicalSlug = postSlug && ARTICLE_META[postSlug]?.canonicalSlug;
+    if (canonicalSlug) canonicalPath = normalizeRoute('/blog/' + canonicalSlug);
+    if (!routes.includes(canonicalPath)) {
+      throw new Error('Canonical target is absent from the prerender plan: ' + route + ' -> ' + canonicalPath);
+    }
+    return [route, canonicalPath];
+  }));
+  return { routes, demoIndex, canonicalPaths };
 }

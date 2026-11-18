@@ -20,6 +20,15 @@ test('batch 13 imported bytes match selected source blobs',()=>{
    assert.equal(entry.selected_sha,'4976c8554dfd03b1bd7387a0251cd3cdcdc3416b');
    continue;
   }
+  if (entry.path === 'ui/src/generated/demoManifests.generated.js') {
+   const adaptation = JSON.parse(readFileSync(new URL('../contracts/extraction-provenance-batch-22.json',import.meta.url),'utf8')).adapted_files[0];
+   assert.equal(adaptation.path,entry.path);
+   assert.equal(adaptation.source_original_blob,entry.selected_sha);
+   assert.equal(adaptation.previous_extracted_blob,entry.selected_sha);
+   assert.equal(content.length,adaptation.current_bytes);
+   assert.equal(hash(content),adaptation.current_blob);
+   continue;
+  }
   assert.equal(content.length,entry.bytes,entry.path);
   assert.equal(hash(content),entry.selected_sha,entry.path);
   assert.ok(entry.selected_revision==='original-pin'||entry.selected_revision==='reconciled-current');

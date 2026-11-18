@@ -9,11 +9,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { websiteBuildRevision } from '../ui/scripts/web-surface-build-contract.mjs';
 import { renderWebsiteNginx } from '../ui/scripts/render-website-nginx.mjs';
+import { assertWebsiteSource, writeQualificationReceipt } from './lib/qualification-evidence.mjs';
 
 const root = realpathSync(fileURLToPath(new URL('../', import.meta.url)));
 const dist = realpathSync(path.join(root, 'ui/dist-website'));
 const sourceSha = process.env.MARTY_WEBSITE_SOURCE_SHA;
 assert.match(sourceSha || '', /^[a-f0-9]{40}$/, 'An exact production website source SHA is required');
+assertWebsiteSource({ root, sourceSha });
 const revision = websiteBuildRevision({
   sourceSha,
   pages: 'public',
@@ -77,7 +79,7 @@ try {
   assert.equal(labels['com.elevenid.website.route-contract-sha256'], routeContractSha);
   assert.match(info.Id || '', /^sha256:[a-f0-9]{64}$/);
   assert.ok(info.Config.ExposedPorts?.['80/tcp'], 'Website image must expose port 80');
-  console.log(JSON.stringify({
+  const result = {
     qualified: 'website-static-container-build',
     image,
     image_id: info.Id,
@@ -86,7 +88,9 @@ try {
     route_contract_sha256: routeContractSha,
     base_image: 'nginx:1.29.1-alpine@sha256:42a516af16b852e33b7682d5ef8acbd5d13fe08fecadc7ed98605ba5e3b26ab8',
     registry_published: false,
-  }));
+  };
+  writeQualificationReceipt({ root, stage: 'image-build', result });
+  console.log(JSON.stringify(result));
 } finally {
   rmSync(context, { recursive: true, force: true });
 }

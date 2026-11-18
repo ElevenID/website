@@ -162,3 +162,14 @@ test('demo non-file output is rejected before replacing the other generated arti
   assert.equal(await readFile(fixture.schema, 'utf8'), '{"retained":true}\n');
   assert.deepEqual(await readdir(fixture.module), []);
 });
+
+test('committed generated demo exports preserve the exact source catalog and every release manifest', async () => {
+  const generated = await import('../../ui/src/generated/demoManifests.generated.js');
+  const sourceIndex = JSON.parse(await readFile(new URL('../../ui/public/demos/manifests/index.json', import.meta.url), 'utf8'));
+  assert.deepEqual(generated.DEMO_INDEX, sourceIndex);
+  assert.deepEqual(Object.keys(generated.DEMO_MANIFESTS).sort(), sourceIndex.releases.map((entry) => entry.stack_version).sort());
+  for (const release of sourceIndex.releases) {
+    const source = JSON.parse(await readFile(new URL('../../ui/public/demos/manifests/' + release.stack_version + '.json', import.meta.url), 'utf8'));
+    assert.deepEqual(generated.DEMO_MANIFESTS[release.stack_version], source);
+  }
+});

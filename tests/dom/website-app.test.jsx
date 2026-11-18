@@ -76,6 +76,7 @@ afterEach(() => {
 describe('website composition chrome with the deferred route boundary isolated', () => {
   it('preserves the reconciled verification CTA, sign-in return and branding', async () => {
     await renderWebsite();
+    expect(document.querySelector('[data-website-error-boundary]')).toBeNull();
     expect(cta()).not.toBeNull();
     expect(cta().getAttribute('href')).toBe('/verify');
     const login = within(screen.getByRole('banner')).getByRole('link', { name: 'Login' });
@@ -119,7 +120,33 @@ describe('website composition chrome with the deferred route boundary isolated',
     routeFixture.fail = true;
     vi.spyOn(console, 'error').mockImplementation(() => {});
     mountWebsite();
-    expect(await screen.findByRole('heading', { name: 'This page could not be loaded.' })).toBeTruthy();
+    const heading = await screen.findByRole('heading', { name: 'This page could not be loaded.' });
+    expect(heading.closest('[data-website-error-boundary]')?.getAttribute('data-website-error-boundary')).toBe('true');
     expect(screen.getByRole('link', { name: 'Reload website' }).getAttribute('href')).toBe('/');
+  });
+
+  it('marks a caught render failure after startup even when valid route metadata survives', async () => {
+    await renderWebsite();
+    const canonical = document.createElement('link');
+    canonical.rel = 'canonical';
+    canonical.href = 'https://elevenidllc.com/resources';
+    document.head.appendChild(canonical);
+    document.documentElement.classList.add('app-ready');
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    try {
+      routeFixture.fail = true;
+      fireEvent.click(screen.getByRole('tab', { name: 'Resources' }));
+      const heading = await screen.findByRole('heading', { name: 'This page could not be loaded.' });
+      expect(window.location.pathname).toBe('/resources');
+      expect(document.documentElement.classList.contains('app-ready')).toBe(true);
+      expect(document.querySelector('[data-app-loading]')).toBeNull();
+      expect(canonical.href).toBe('https://elevenidllc.com/resources');
+      expect(heading.closest('[data-website-error-boundary="true"]')).not.toBeNull();
+      expect(screen.queryByTestId('website-route-boundary')).toBeNull();
+      expect(screen.getByRole('link', { name: 'Reload website' }).getAttribute('href')).toBe('/');
+    } finally {
+      canonical.remove();
+      document.documentElement.classList.remove('app-ready');
+    }
   });
 });

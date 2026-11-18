@@ -4,9 +4,11 @@ ElevenID's public website, product information, blog and public demonstrations.
 
 ## Current migration
 
-[PR #13](https://github.com/ElevenID/website/pull/13) now contains **all 79 source candidates** from the original extraction inventory, including large page/data modules and diagrams. A standalone Vite **development-audience** build has passed [hosted CI](https://github.com/ElevenID/website/actions/runs/44135521693/job/134223871973) with 1,147 transformed modules, 66 JavaScript chunks and 576 passing native/DOM/build/HTTP checks.
+[PR #13](https://github.com/ElevenID/website/pull/13) contains **all 79 source candidates and all 46 selected public assets** from the original extraction inventory, including the large page/data modules, diagrams and illustrations.
 
-**It is not yet a production release.** All 46 selected public assets are now committed, while complete Chromium prerendering/SEO, real browser handoffs, digest-pinned image publishing and rollback remain under qualification. [Latest checkpoint](docs/migration-status.md) · [Detailed receipt](docs/checkpoints/batch-13-complete-source-bundle.md).
+The [standalone qualification workflow](.github/workflows/standalone-qualification.yml) builds on a clean website-only checkout, renders **262 public routes**, validates each route's expected canonical, and tests the exact built image through Nginx. It preserves source-bound, byte-hashed qualification evidence as a downloadable Actions artifact. The historical source/asset replay is a separate [migration audit](.github/workflows/migration-qualification.yml).
+
+**A qualified build is not yet a published production release.** Image publication, authenticated producer admission, real application/OIDC handoff and retained-slot host rollback remain separate gates. [Latest checkpoint](docs/migration-status.md) · [Qualification and evidence](docs/standalone-qualification.md).
 
 ## Development and tests
 
@@ -22,9 +24,11 @@ node scripts/verify-standalone-bundle.mjs
 
 `npm run build:website` generates the demo module before the website-only TypeScript/Vite stages. Its development output does not have production provenance.
 
+For production-mode qualification, use an exact clean Git checkout, Chrome and Docker, then follow [the qualification procedure](docs/standalone-qualification.md). Its output records a local Docker image ID, not a published registry digest or signed release.
+
 ## Ownership
 
-The [web surface contract](contracts/web-surface-routes.json) reserves public marketing/blog/demo pages. Login, authentication callbacks, consoles, APIs, `/verify` and unknown routes remain application-owned; pricing remains withheld. The source `marty-ui` remains authoritative during migration and no production cutover is authorized.
+The [web surface contract](contracts/web-surface-routes.json) reserves public marketing/blog/demo pages. Login, authentication callbacks, consoles, APIs, `/verify` and unknown routes remain application-owned; pricing remains withheld. The existing `marty-ui` release producers remain authoritative for published artifacts until standalone producer admission is qualified. Source extraction does not activate a production cutover.
 
 The exact source and extracted adaptation identities are preserved in [provenance](contracts/extraction-provenance.json), [batch 13](contracts/extraction-provenance-batch-13.json), [batch 14](contracts/extraction-provenance-batch-14.json) and later resource/adaptation shards. These are extraction receipts, not signing attestations. Preserve immutable blog v0.1.9 and private commerce boundaries.
 

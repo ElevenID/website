@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "purpose": "post-extraction-adaptation-record",
+  "source_repository": "ElevenID/marty-ui",
+  "immutable_source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "extends": "contracts/extraction-provenance-batch-21.json",
+  "batch": "22-generated-demo-source-closure",
+  "adapted_files": [
+    {
+      "path": "ui/src/generated/demoManifests.generated.js",
+      "source_original_blob": "4c7f75f3fcba17a439501d6774b52c2ea36e1de6",
+      "previous_extracted_blob": "4c7f75f3fcba17a439501d6774b52c2ea36e1de6",
+      "current_blob": "aee8f43b078b7a803a25f3640b34c7eb233be036",
+      "current_bytes": 93633,
+      "change": "Commit the existing generator's deterministic JSON.parse output so a clean standalone build does not rewrite tracked source. Index, release manifests, publication states and evidence remain identical to their committed JSON inputs."
+    }
+  ],
+  "tests": [
+    "tests/extraction-batch-13.test.mjs",
+    "tests/build/demo-generation.test.mjs"
+  ]
+}

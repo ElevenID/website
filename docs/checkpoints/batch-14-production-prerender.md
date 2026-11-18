@@ -1,5 +1,7 @@
 # Batch 14 — production prerender qualification
 
+Historical checkpoint. Its final run completed successfully after this note was written. [Batch 15/current status](../migration-status.md) records that result, the subsequent review fixes, and the distinct source-merge and production-activation gates.
+
 PR #13 remains draft and main remains unchanged. The eight previously deferred large public assets are now persisted in the website repository at commit `8ad4b340a4ec7e325e72bb8adfa00492b0bd966b`; each blob was copied from immutable marty-ui source commit `df6ec6c4bfee803d89c54e9333297f29f378cee3` and verified by Git blob identity before commit.
 
 The production-identity qualification reached the full generated route plan and successfully prerendered hundreds of blog, author, marketing, and demo routes. It then found a route-specific readiness problem on `/security`: the page had no missing same-origin resources, no browser error, `app-ready` was present, `data-app-loading` was absent, and the rendered page had its expected content, but the source `PrerenderReadySignal` did not produce the `app-rendered` event observed by the harness.

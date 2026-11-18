@@ -1,1 +1,4 @@
 node_modules/
+.qualification/
+ui/dist-website/
+__pycache__/

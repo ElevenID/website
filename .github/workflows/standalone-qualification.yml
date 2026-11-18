@@ -1,0 +1,85 @@
+name: Website standalone qualification
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: website-standalone-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  qualification:
+    name: Standalone production qualification
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      CHROME_PATH: /usr/bin/google-chrome
+      MARTY_WEBSITE_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      MARTY_PRODUCTION_PAGES: public
+    steps:
+      # This job never checks out the source application. Migration replay is
+      # independently audited by migration-qualification.yml.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24.22.1'
+      - name: Install website-only pinned dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Build and verify independent development fixture
+        env:
+          MARTY_WEBSITE_SOURCE_SHA: development
+          MARTY_WEBSITE_ALLOW_DEVELOPMENT: 'true'
+        run: |
+          npm run build:website
+          node scripts/verify-standalone-bundle.mjs
+          node scripts/verify-public-assets.mjs
+      - name: Qualify real rendered pages and isolated application handoff
+        run: node scripts/qualify-rendered-website.mjs
+      - name: Build production output and prerender every public route
+        run: |
+          npm run build:website:production
+          node scripts/verify-public-assets.mjs
+      - name: Build the standalone image with a pinned Nginx base
+        run: node scripts/build-website-image.mjs
+      - name: Qualify the exact built image through Nginx
+        run: node scripts/qualify-website-nginx.mjs
+      - name: Bind successful stages to source and output bytes
+        run: node scripts/website-qualification.mjs finalize
+      # Qualification receipts are unsigned test evidence, never production
+      # intake receipts. There is no registry login, push, or signing permission.
+      - name: Preserve qualification evidence
+        id: evidence
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: web-qualification-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .qualification/*.json
+          include-hidden-files: true
+          if-no-files-found: error
+          overwrite: false
+          retention-days: 14
+      - name: Record artifact identity
+        env:
+          QUALIFICATION_ARTIFACT_ID: ${{ steps.evidence.outputs.artifact-id }}
+          QUALIFICATION_ARTIFACT_URL: ${{ steps.evidence.outputs.artifact-url }}
+          QUALIFICATION_ARTIFACT_DIGEST: ${{ steps.evidence.outputs.artifact-digest }}
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { appendFileSync } from 'node:fs';
+          const { QUALIFICATION_ARTIFACT_ID: id, QUALIFICATION_ARTIFACT_URL: url,
+            QUALIFICATION_ARTIFACT_DIGEST: digest, MARTY_WEBSITE_SOURCE_SHA: sha } = process.env;
+          assert.match(id, /^[1-9][0-9]*$/);
+          assert.match(digest, /^[a-f0-9]{64}$/);
+          assert.equal(url, `https://github.com/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}/artifacts/${id}`);
+          appendFileSync(process.env.GITHUB_STEP_SUMMARY,
+            `## Website qualification\n\nSource: \`${sha}\`\n\n[Evidence artifact ${id}](${url})\n\nArchive SHA-256: \`${digest}\`\n\nUnsigned qualification only. No registry publication, live application handoff, or production deployment.\n`);
+          NODE

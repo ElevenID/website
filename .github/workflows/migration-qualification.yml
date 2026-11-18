@@ -1,4 +1,4 @@
-name: Website migration qualification
+name: Website migration provenance
 
 on:
   pull_request:
@@ -13,9 +13,9 @@ concurrency:
 
 jobs:
   complete-assets:
-    name: Complete asset migration and browser fixture
+    name: Migration asset provenance
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -44,36 +44,3 @@ jobs:
           test -d .migration-source/.git
           rm -rf -- .migration-source
           test ! -e .migration-source
-      - name: Install website-only pinned dependencies
-        run: npm ci --no-audit --no-fund
-      - name: Build complete development fixture without source checkout
-        env:
-          MARTY_WEBSITE_SOURCE_SHA: development
-          MARTY_WEBSITE_ALLOW_DEVELOPMENT: 'true'
-          MARTY_PRODUCTION_PAGES: public
-        run: |
-          npm run build:website
-          node scripts/verify-standalone-bundle.mjs
-          node scripts/verify-public-assets.mjs
-      - name: Qualify real rendered pages and application document handoff fixture
-        env:
-          CHROME_PATH: /usr/bin/google-chrome
-        run: node scripts/qualify-rendered-website.mjs
-      - name: Build production-identity site and prerender every public route
-        env:
-          CHROME_PATH: /usr/bin/google-chrome
-          MARTY_WEBSITE_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-          MARTY_PRODUCTION_PAGES: public
-        run: |
-          npm run build:website:production
-          node scripts/verify-public-assets.mjs
-      - name: Build digest-pinned standalone website image
-        env:
-          MARTY_WEBSITE_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-          MARTY_PRODUCTION_PAGES: public
-        run: node scripts/build-website-image.mjs
-      - name: Qualify the built website image through Nginx
-        env:
-          MARTY_WEBSITE_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-          MARTY_PRODUCTION_PAGES: public
-        run: node scripts/qualify-website-nginx.mjs

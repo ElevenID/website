@@ -5,13 +5,15 @@ import { randomUUID } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { JSDOM } from 'jsdom';
-import { createWebsitePrerenderPlan } from './website-prerender-plan.mjs';
+import { assertWebsiteRouteCanonical, createWebsitePrerenderPlan } from './website-prerender-plan.mjs';
 import { websiteBuildRevision } from '../ui/scripts/web-surface-build-contract.mjs';
+import { assertWebsiteSource, writeQualificationReceipt } from './lib/qualification-evidence.mjs';
 
 const root = realpathSync(fileURLToPath(new URL('../', import.meta.url)));
 const dist = realpathSync(path.join(root, 'ui/dist-website'));
 const sourceSha = process.env.MARTY_WEBSITE_SOURCE_SHA;
 assert.match(sourceSha || '', /^[a-f0-9]{40}$/, 'Exact production source SHA is required');
+assertWebsiteSource({ root, sourceSha });
 const revision = websiteBuildRevision({ sourceSha, pages: 'public', revision: process.env.MARTY_WEBSITE_REVISION });
 const image = process.env.WEBSITE_IMAGE || `elevenid-website:${revision}`;
 assert.equal(image, `elevenid-website:${revision}`, 'Only the exact source-revision image may be qualified');
@@ -73,7 +75,7 @@ try {
     '--tmpfs', '/var/run:rw,noexec,nosuid,size=8m',
     '--tmpfs', '/var/cache/nginx:rw,noexec,nosuid,size=16m',
     '--security-opt', 'no-new-privileges:true', '--pids-limit', '64',
-    '--name', containerName, image,
+    '--name', containerName, imageInfo.Id,
   ]);
   const binding = docker(['port', containerId, '80/tcp']);
   assert.ok(binding.startsWith('127.0.0.1:') && Number(binding.slice('127.0.0.1:'.length)) > 0,
@@ -100,8 +102,10 @@ try {
       assert.ok(document.querySelector('meta[name="prerender-status-code"][content="200"]'), 'Prerender marker missing: ' + route);
       assert.ok(document.querySelector('#root h1, #root h2, #root h3, #root h4, #root h5, #root h6'),
         'Rendered heading missing: ' + route);
+      assert.equal(document.querySelector('[data-app-loading], [data-website-error-boundary]'), null,
+        'Loading or error fallback served by Nginx: ' + route);
       const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute('href');
-      assert.ok(canonical && new URL(canonical).origin === 'https://elevenidllc.com', 'Canonical missing or invalid: ' + route);
+      assertWebsiteRouteCanonical(plan, route, canonical);
       pageResults.push({ route, canonical });
       if (route === '/') indexHtml = response.body;
       document.defaultView.close();
@@ -191,7 +195,7 @@ try {
   const missingAsset = await request(`/_website/${revision}/assets/missing.js`);
   assert.equal(missingAsset.status, 404, 'Missing versioned asset must not fall back to HTML');
 
-  console.log(JSON.stringify({
+  const result = {
     qualified: 'production-website-image',
     source_sha: sourceSha,
     revision,
@@ -206,7 +210,9 @@ try {
       version: entry.stack_version, state: entry.publication_state, coverage: entry.coverage_state,
     })),
     repository: release.repository,
-  }));
+  };
+  writeQualificationReceipt({ root, stage: 'nginx', result });
+  console.log(JSON.stringify(result));
 } finally {
   if (containerId) {
     try { docker(['rm', '--force', containerId]); } catch {}
