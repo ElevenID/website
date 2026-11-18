@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { BrandingProvider } from '../../ui/src/contexts/BrandingContext.jsx';
 import { useBranding } from '../../ui/src/hooks/useBranding.js';
 
@@ -75,6 +75,6 @@ describe('runtime branding integration', () => {
     fetch.mockResolvedValue(success({ appName: 'Deployment brand' }));
     mount();
     await screen.findByText('Ready');
-    expect(document.title).toBe('Deployment brand');
+    await waitFor(() => expect(document.title).toBe('Deployment brand'));
   });
 });
