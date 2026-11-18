@@ -108,9 +108,11 @@ try {
   assert.ok(indexHtml, 'Homepage was not included in the route plan');
 
   const release = JSON.parse(readFileSync(path.join(dist, 'marty-website-release.json'), 'utf8'));
-  const scriptMatch = indexHtml.match(/<script[^>]+src=["']([^"']+\\.js)["']/i);
-  assert.ok(scriptMatch, 'Homepage has no emitted JavaScript entry');
-  const immutableAsset = new URL(scriptMatch[1], 'https://elevenidllc.com').pathname;
+  const scriptPaths = Array.from(indexHtml.matchAll(/<script\\b[^>]*\\bsrc=["']([^"']+\\.js)["']/gi), (match) => match[1]);
+  const immutableAsset = scriptPaths
+    .map((source) => new URL(source, 'https://elevenidllc.com').pathname)
+    .find((pathname) => pathname.startsWith(`/_website/${revision}/assets/`));
+  assert.ok(immutableAsset, 'Homepage has no immutable Vite JavaScript entry');
   const resources = [
     ['/robots.txt', /User-agent: \\*/],
     ['/sitemap.xml', /<urlset/],
