@@ -10,7 +10,7 @@ test('production prerender accepts explicit app-ready fallback without weakening
   assert.match(source, /data-app-loading/);
   assert.match(source, /#root h1/);
   assert.match(source, /readinessCounts/);
-  assert.match(source, /}, 25000\\);/);
+  assert.ok(source.includes('}, 25000);'));
   assert.match(source, /--run-all-compositor-stages-before-draw/);
   assert.match(source, /--virtual-time-budget=45000/);
   assert.match(source, /htmlElement\.removeAttribute\('data-website-render-source'\)/);
