@@ -43,7 +43,7 @@ const instrumentation = [
   "function appReadyFallback() { var ready = document.documentElement.classList.contains('app-ready') && !document.querySelector('[data-app-loading]') && document.querySelector('#root h1, #root h2, #root h3, #root h4, #root h5, #root h6'); if (ready) markWebsiteRendered('app-ready-fallback'); }",
   "document.addEventListener('app-rendered', function () { markWebsiteRendered('signal'); });",
   "new MutationObserver(appReadyFallback).observe(document.documentElement, { attributes: true, childList: true, subtree: true });",
-  "setTimeout(function () { appReadyFallback(); if (document.documentElement.getAttribute('data-website-rendered') !== 'true') document.documentElement.setAttribute('data-website-render-source', 'timeout'); }, 12000);",
+  "setTimeout(function () { appReadyFallback(); if (document.documentElement.getAttribute('data-website-rendered') !== 'true') document.documentElement.setAttribute('data-website-render-source', 'timeout'); }, 25000);",
   "window.addEventListener('error', function (event) { if (event.target === window) document.documentElement.setAttribute('data-website-error', event.message || 'script error'); }, true);",
   "window.addEventListener('unhandledrejection', function (event) { var reason = event.reason; document.documentElement.setAttribute('data-website-error', reason && reason.message ? reason.message : 'unhandled rejection'); });",
   '</script>',

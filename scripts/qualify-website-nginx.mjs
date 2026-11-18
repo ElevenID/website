@@ -153,7 +153,7 @@ try {
     '.svg': 'image/svg+xml',
     '.ico': ['image/x-icon', 'image/vnd.microsoft.icon'],
     '.json': 'application/json',
-    '.xml': ['application/xml', 'application/rss+xml'],
+    '.xml': ['application/xml', 'application/rss+xml', 'text/xml'],
     '.txt': 'text/plain',
     '.js': ['application/javascript', 'text/javascript'],
   };
