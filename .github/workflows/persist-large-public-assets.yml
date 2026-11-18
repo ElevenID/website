@@ -29,6 +29,7 @@ jobs:
           repository: ElevenID/marty-ui
           ref: df6ec6c4bfee803d89c54e9333297f29f378cee3
           path: .migration-source
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
             ui/public/favicon.svg
             ui/public/images/authors/aiko-tanaka.png
