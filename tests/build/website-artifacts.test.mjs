@@ -28,7 +28,7 @@ for (const [name, change] of [
   ['repository', (value) => { value.repository = 'ElevenID/marty-ui'; }],
   ['audience', (value) => { value.audience = 'development'; }],
   ['surface', (value) => { value.surface = 'application'; }],
-  ['schema', (value) => { value.schema = 'marty.website-image/v2'; }],
+  ['schema', (value) => { value.schema = 'marty.website-image/v1'; }],
   ['route ownership', (value) => { value.route_contract.sha256 = `sha256:${'0'.repeat(64)}`; }],
   ['unclaimed commerce', (value) => { value.commerce_extension = { repository: 'other', source_sha: fixtureCommerceSha }; }],
   ['unknown metadata', (value) => { value.unreviewed = true; }],

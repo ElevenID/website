@@ -93,11 +93,12 @@ test('commerce configuration is explicit, normalized and confined to a full webs
 
 test('website release metadata names this repository, source inputs and the route contract', () => {
   assert.deepEqual(websiteReleaseMetadata({ sourceSha }), {
-    schema: 'marty.website-image/v1', audience: 'production', surface: 'website',
+    schema: 'marty.website-image/v2', audience: 'production', surface: 'website',
     repository: 'ElevenID/website', source_sha: sourceSha, revision: sourceSha,
     production_pages: 'public', route_contract: WEB_ROUTE_CONTRACT, commerce_extension: null,
   });
   const full = websiteReleaseMetadata({ sourceSha, commerceSha, pages: 'full' });
+  assert.equal(full.schema, 'marty.website-image/v1');
   assert.equal(full.revision, `${sourceSha}-${commerceSha}`);
   assert.deepEqual(full.commerce_extension, { repository: 'ElevenID/marty-subscriptions', source_sha: commerceSha });
 });

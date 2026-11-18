@@ -38,7 +38,7 @@ function fixture(t) {
   const sourceSha = git(root, 'rev-parse', 'HEAD');
   const options = { root, sourceSha, workflow: null };
   put(root, 'ui/dist-website/marty-website-release.json', JSON.stringify({
-    schema: 'marty.website-image/v1', repository: 'ElevenID/website', surface: 'website',
+    schema: 'marty.website-image/v2', repository: 'ElevenID/website', surface: 'website',
     audience: 'production', production_pages: 'public', source_sha: sourceSha, revision: sourceSha,
     commerce_extension: null, route_contract: { version: 1, sha256: routeDigest },
   }) + '\n');

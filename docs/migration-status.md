@@ -1,6 +1,6 @@
-# Migration checkpoint — standalone qualification and durable evidence
+# Migration checkpoint — standalone release contract and consumer compatibility
 
-Continue [website PR #13](https://github.com/ElevenID/website/pull/13), branch `feat/complete-website-source-graph`, until its reviewed source milestone is merged. Refresh the PR and its exact-head Actions results before continuing; do not infer current status from a historical checkpoint.
+[Website PR #13](https://github.com/ElevenID/website/pull/13) is merged at `e65be9c615fd8ccddc2d4753d098ebbc0e826d2a`. Its final source tree passed [Website CI](https://github.com/ElevenID/website/actions/runs/44395320515) and [standalone production qualification](https://github.com/ElevenID/website/actions/runs/44395321376) on main. Refresh current PR and Actions results before continuing from this checkpoint.
 
 ## Recovered November 18 checkpoint
 
@@ -26,10 +26,16 @@ See [qualification procedure and evidence](standalone-qualification.md). The aut
 
 The approved [independent release plan](https://github.com/ElevenID/marty-ui/blob/main/docs/independent-website-release.md#first-cutover) separates reviewed source changes from subsequent protected-main signing and live-host qualification. The earlier Batch 14 wording conflated those gates. Merge this extraction milestone only after review and exact-head source/build/contract/browser/HTTP checks pass. A source merge does not publish or activate a website image.
 
+## Milestone 16 — standalone producer contract
+
+This batch defines closed v2 website build-plan, release and image contracts for `ElevenID/website`, its reserved `.github/workflows/production-website-release.yml` publisher identity and `ghcr.io/elevenid/website`. The plan binds eleven source input hashes, the clean exact source, the final output inventory, public routes, public-only pages, a pinned Nginx base and the inspected Linux amd64 image platform. The qualification workflow now verifies that it can construct this plan from the same fully qualified output. Its evidence remains unsigned.
+
+The coordinated `marty-ui` consumer changes admit this identity only for website receipts and its own image. Application, backend and outer composition authorities stay with their existing producers. Legacy public/private v1 receipts remain supported, and the optional composition website owner defaults to `ElevenID/marty-ui`. Shared synthetic fixtures verify cross-language canonical hashing; role, original-evidence, composition and retained-slot tests cover the new boundary. See the [standalone release contract](standalone-release-contract.md).
+
+The future publisher identity is reserved in the contract; this batch does not install or invoke a signing/publishing workflow. A v2 object or the qualified local Docker image ID cannot replace original cryptographic proof and a registry manifest digest.
+
 ## Next development milestone
 
-Define the standalone website producer contract and add role-scoped compatibility in the existing release consumers. Preserve old public/private producer identities and retained release evidence. The existing `website_release.py` plan assumes the old Dockerfile and dependency graph; changing repository strings alone is unsafe. Do not globally allow `ElevenID/website` to sign application, backend or composition subjects.
+Implement the hosted protected-main publisher, qualify digest publication and original signatures, then exercise authenticated cross-owner intake/composition against real artifacts. Bind the published registry manifest to the exact qualified image bytes. Follow with real application/OIDC handoff and promotion/retained-slot rollback on the existing isolated host. Only after website release ownership has moved and the remaining application build is self-contained should `marty-ui` become `application`.
 
-Then qualify signed image publication, cross-owner composition, real application/OIDC handoff, and promotion/retained-slot rollback on the existing isolated host. Only after website release ownership has moved and the remaining application build is self-contained should `marty-ui` become `application`.
-
-No production traffic change, image publication, private-commerce exposure, source deletion or repository rename is part of this checkpoint. AWS was signed out during recovery; local checks and GitHub-hosted qualification were used without changing cloud resources.
+No production traffic change, image publication, private-commerce exposure, source deletion or repository rename is part of this checkpoint. AWS was signed out during the earlier recovery; local checks and GitHub-hosted qualification continue without changing cloud resources.

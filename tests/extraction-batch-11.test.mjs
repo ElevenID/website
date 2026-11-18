@@ -6,6 +6,9 @@ import { test } from 'node:test';
 const provenance = JSON.parse(readFileSync(
   new URL('../contracts/extraction-provenance-batch-11.json', import.meta.url), 'utf8',
 ));
+const releaseAdaptation = JSON.parse(readFileSync(
+  new URL('../contracts/extraction-provenance-batch-23.json', import.meta.url), 'utf8',
+));
 const expectedPaths = [
   'ui/nginx.website.conf',
   'ui/nginx.website.headers.conf',
@@ -47,7 +50,13 @@ test('batch 11 preserved and adapted files match their recorded blob identities'
       const hash = createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
       if (adapted) {
         assert.ok(entry.changes.length > 0, entry.target_path);
-        assert.equal(hash, entry.target_git_blob_sha1, entry.target_path);
+        const current = releaseAdaptation.adapted_files.find((item) => item.path === entry.target_path);
+        if (current) {
+          assert.equal(current.source_original_blob, entry.source_git_blob_sha1);
+          assert.equal(current.previous_extracted_blob, entry.target_git_blob_sha1);
+          assert.equal(bytes.length, current.current_bytes);
+          assert.equal(hash, current.current_blob, entry.target_path);
+        } else assert.equal(hash, entry.target_git_blob_sha1, entry.target_path);
       } else {
         assert.equal(entry.transfer, 'verbatim');
         assert.equal(bytes.length, entry.bytes, entry.target_path);
