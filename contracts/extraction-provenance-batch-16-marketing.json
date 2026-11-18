@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "source_repository": "ElevenID/marty-ui",
+  "source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "kind": "marketing-public-locales",
+  "files": [
+    {
+      "path": "ui/public/locales/de/marketing.json",
+      "sha": "cd8fd539c568e8fcee00b0677698de908cc379d7",
+      "ref": "df6ec6c4bfee803d89c54e9333297f29f378cee3"
+    },
+    {
+      "path": "ui/public/locales/en/marketing.json",
+      "sha": "abd0a07db30845792adebff0d281241ebfcd666a",
+      "ref": "fe4a0b76bee9461a62d26b5a656b1cce9b875915"
+    },
+    {
+      "path": "ui/public/locales/es/marketing.json",
+      "sha": "a00e404a1423187063c1f23830b15215e7bf8139",
+      "ref": "df6ec6c4bfee803d89c54e9333297f29f378cee3"
+    },
+    {
+      "path": "ui/public/locales/fr/marketing.json",
+      "sha": "b32931e8f36b5e0241f06a8eec45efc75ad5fdb3",
+      "ref": "df6ec6c4bfee803d89c54e9333297f29f378cee3"
+    },
+    {
+      "path": "ui/public/locales/ja/marketing.json",
+      "sha": "d6bb4769221efba36252d9ce138a41f98d5ec5f8",
+      "ref": "df6ec6c4bfee803d89c54e9333297f29f378cee3"
+    },
+    {
+      "path": "ui/public/locales/nl/marketing.json",
+      "sha": "81b4f538f904c6710cbdcd2102c5f661cf40a754",
+      "ref": "df6ec6c4bfee803d89c54e9333297f29f378cee3"
+    }
+  ]
+}

@@ -50,7 +50,10 @@ export function websiteAssetsPlugin(revision) {
       if (!id.replace(/\\/g, '/').includes('/@elevenid/marty-blog/')) return null;
       // The pinned blog package publishes local public image URLs in its data.
       // Rewrite those owned assets; links and external image origins stay intact.
-      const transformed = code.replace(/(["'`])\/images(?=\/|["'`])/g, `$1${base}images`);
+      const transformed = code
+        .replace(/(["'`])\/images(?=\/|["'`])/g, `$1${base}images`)
+        .replace(/(["'`])\/logo512\.png(?=["'`])/g, `$1${base}logo512.png`)
+        .replace(/(["'`])https:\/\/elevenidllc\.com\/logo512\.png(?=["'`])/g, `$1https://elevenidllc.com${base}logo512.png`);
       return transformed === code ? null : { code: transformed, map: null };
     },
   };

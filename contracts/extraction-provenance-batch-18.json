@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "purpose": "post-extraction-adaptation-record",
+  "extends": "contracts/extraction-provenance-batch-17-social.json",
+  "source_repository": "ElevenID/marty-ui",
+  "immutable_source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "adapted_files": [
+    {
+      "path": "ui/scripts/build-web-surface.mjs",
+      "source_original_blob": "7ffefb9d6109b12fc39d6b89accfbc358f656d03",
+      "previous_extracted_blob": "838dff8947aeece58debcdb1680a345c9f433d5f",
+      "current_blob": "65b11b77591adbf341fd39c469bb808382c724cc",
+      "current_bytes": 3314,
+      "change": "Resolve TypeScript 7 native CLI via validated package file path; preserve failure guards and fixture compatibility."
+    }
+  ]
+}

@@ -1,44 +1,37 @@
 # Website
 
-ElevenID's public website, product information and marketing experiences.
+ElevenID's public website, product information, blog and public demonstrations.
 
-## Migration status
+## Current migration
 
-This repository is being extracted from [ElevenID/marty-ui](https://github.com/ElevenID/marty-ui). Route and asset contracts, runtime foundations, selected public pages, catalog/demo helpers and build/server contracts are preserved here. The complete production website and release producer still require qualification.
+[PR #13](https://github.com/ElevenID/website/pull/13) contains **all 79 source candidates and all 46 selected public assets** from the original extraction inventory, including the large page/data modules, diagrams and illustrations.
 
-[Batch 12](docs/checkpoints/batch-12-pages-build-runtime.md), grouped in [PR #12](https://github.com/ElevenID/website/pull/12), adds **seven source files totaling 45,628 bytes**, each below 16 KiB. It covers the identity, protocol and standards pages; a small wallet-schema projection; and website generation, build and public runtime scripts. The page adaptations preserve accessible navigation and existing route handoffs. The build work checks generated inputs, stage ordering and public startup settings with bounded fixtures.
+The [standalone qualification workflow](.github/workflows/standalone-qualification.yml) builds on a clean website-only checkout, renders **262 public routes**, validates each route's expected canonical, and tests the exact built image through Nginx. It preserves source-bound, byte-hashed qualification evidence as a downloadable Actions artifact. The historical source/asset replay is a separate [migration audit](.github/workflows/migration-qualification.yml).
 
-Final validation passed **548 records**: `npm test` passed 528 records in 64.77 seconds (61 native, 345 DOM across 24 files and 122 build), and the separate HTTP suite passed 20 records in 0.77 seconds. There were no failures, cancellations or skips. This adds **92 records** to batch 11. Fresh dependency audit: zero vulnerabilities at every severity (exit 0). Five Python cases inside an existing build record are reported separately without double counting.
+**A qualified build is not yet a published production release.** Image publication, authenticated producer admission, real application/OIDC handoff and retained-slot host rollback remain separate gates. [Latest checkpoint](docs/migration-status.md) · [Qualification and evidence](docs/standalone-qualification.md).
 
-The original 79-file source candidate inventory now has **61 paths present and 18 deferred**. Those 18 comprise ten large inputs/page/service/catalog bodies and eight diagram modules or their barrel. The **86 provenance targets** are a separate count that also includes build and other extracted files.
+## Development and tests
 
-Source preservation uses the immutable [`df6ec6c4bfee803d89c54e9333297f29f378cee3`](https://github.com/ElevenID/marty-ui/tree/df6ec6c4bfee803d89c54e9333297f29f378cee3) snapshot. [Original provenance](contracts/extraction-provenance.json), the [batch 11 shard](contracts/extraction-provenance-batch-11.json) and the [batch 12 shard](contracts/extraction-provenance-batch-12.json) retain original identities and separate later adaptations. They are extraction records, not release attestations or a transfer of Git history.
-
-Start with the compact [current migration checkpoint](docs/migration-status.md). [Batch 11](docs/checkpoints/batch-11-sections-release-routing.md) and earlier receipts remain historical.
-
-## Run the checks
-
-Use Node.js **24.22.1**, pinned in CI, and **Python 3.10 or newer** for the standard-library crawler CLI and tests:
+Node.js **24.22.1** is pinned in CI. Python 3.10+ is required for crawler tests, and Docker is required for the separate pinned Nginx HTTP suite.
 
 ```sh
-npm ci
+npm ci --no-audit --no-fund
 npm test
+npm run test:nginx
+MARTY_WEBSITE_SOURCE_SHA=development MARTY_WEBSITE_ALLOW_DEVELOPMENT=true npm run build:website
+node scripts/verify-standalone-bundle.mjs
 ```
 
-`npm test` runs native contract checks, isolated React/DOM suites and Vite/crawler/build fixtures. [package.json](package.json) lists the individual commands. Build checks require development dependencies, including the pinned `jsdom` package for inert HTML inspection. Python requires no third-party packages.
+`npm run build:website` generates the demo module before the website-only TypeScript/Vite stages. Its development output does not have production provenance.
 
-The separate `npm run test:nginx` command requires Docker and the official image `nginx@sha256:785835ea65db4bba6f021acc0f3be91b0fef76a53fe41f8588c6698d2aed0606`. Required CI pulls that exact image and runs the HTTP suite explicitly.
+For production-mode qualification, use an exact clean Git checkout, Chrome and Docker, then follow [the qualification procedure](docs/standalone-qualification.md). Its output records a local Docker image ID, not a published registry digest or signed release.
 
-These checks qualify selected modules and contracts. The build-runner fixture executes Vite while instrumenting the TypeScript stage. The production runner requires the complete configuration and dependencies and rejects an incomplete checkout. Marketing/blog data, SVG/diagrams, the production asset corpus, complete prerender and real browser/application handoffs remain deferred.
+## Ownership
 
-## Route ownership
+The [web surface contract](contracts/web-surface-routes.json) reserves public marketing/blog/demo pages. Login, authentication callbacks, consoles, APIs, `/verify` and unknown routes remain application-owned; pricing remains withheld. The existing `marty-ui` release producers remain authoritative for published artifacts until standalone producer admission is qualified. Source extraction does not activate a production cutover.
 
-[`contracts/web-surface-routes.json`](contracts/web-surface-routes.json) reserves explicit public routes and prefixes for the website. Other routes belong to the application, including login, authentication callbacks, consoles, API routes and unknown paths. Route ownership does not make a page available: pricing remains reserved and withheld.
-
-Source paths are retained during extraction. Their `application/routing` directory name describes their origin; the extracted helpers and React boundary run from this independent repository. Preserve the reconciled `Start Verifying` CTA to application-owned `/verify` and existing demo publication states.
-
-Production source, workflows and routing remain in `marty-ui` while the replacement is qualified. Production cutover is a later milestone.
+The exact source and extracted adaptation identities are preserved in [provenance](contracts/extraction-provenance.json), [batch 13](contracts/extraction-provenance-batch-13.json), [batch 14](contracts/extraction-provenance-batch-14.json) and later resource/adaptation shards. These are extraction receipts, not signing attestations. Preserve immutable blog v0.1.9 and private commerce boundaries.
 
 ## License
 
-AGPL-3.0-only. See [LICENSE](LICENSE), preserved from the source repository.
+AGPL-3.0-only. See [LICENSE](LICENSE).

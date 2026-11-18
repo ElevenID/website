@@ -39,7 +39,10 @@ const configNames = ['vite.config.ts', 'vite.config.mts', 'vite.config.js', 'vit
 const configs = configNames.filter((name) => existsSync(path.join(uiRoot, name)));
 if (configs.length !== 1) throw new Error('Website build requires exactly one Vite configuration');
 const config = requiredFile(path.join(uiRoot, configs[0]), configs[0]);
-const tsc = packageBinary('typescript/bin/tsc', 'TypeScript');
+// TypeScript 7 publishes an extensionless native CLI. Resolve its package
+// directory, then validate the declared executable without requiring it as JS.
+const typescriptPackage = packageBinary('typescript/package.json', 'TypeScript');
+const tsc = requiredFile(path.join(path.dirname(typescriptPackage), 'bin/tsc'), 'TypeScript CLI');
 const vitePackage = packageBinary('vite/package.json', 'Vite');
 const vite = requiredFile(path.join(path.dirname(vitePackage), 'bin/vite.js'), 'Vite CLI');
 const env = { ...process.env, MARTY_UI_SURFACE: 'website', MARTY_WEBSITE_SOURCE_SHA: sourceSha };

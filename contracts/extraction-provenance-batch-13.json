@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "purpose": "source-extraction-record",
+  "source_repository": "ElevenID/marty-ui",
+  "immutable_source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "current_source_commit": "fe4a0b76bee9461a62d26b5a656b1cce9b875915",
+  "extends": "contracts/extraction-provenance-batch-12.json",
+  "batch": "13-large-public-content",
+  "source_paths": [
+    {
+      "path": "contracts/protocol-support-catalog.json",
+      "bytes": 21034,
+      "mode": "100644",
+      "original_sha": "4bd05ca7b2f5be09bea9489aee8c2bba2c65c734",
+      "selected_sha": "4bd05ca7b2f5be09bea9489aee8c2bba2c65c734",
+      "selected_revision": "original-pin"
+    },
+    {
+      "path": "ui/src/generated/demoManifests.generated.js",
+      "bytes": 136834,
+      "mode": "100644",
+      "original_sha": "4c7f75f3fcba17a439501d6774b52c2ea36e1de6",
+      "selected_sha": "4c7f75f3fcba17a439501d6774b52c2ea36e1de6",
+      "selected_revision": "original-pin"
+    },
+    {
+      "path": "ui/src/components/LandingPageContent.jsx",
+      "bytes": 81010,
+      "mode": "100644",
+      "original_sha": "a8c8d3a0ee9ff0ba140b3b91ee14b4d179bd02bc",
+      "selected_sha": "07e7a07003aef819e424cb7ae6ded6722640669f",
+      "selected_revision": "reconciled-current"
+    },
+    {
+      "path": "ui/src/data/marketingContent.js",
+      "bytes": 37770,
+      "mode": "100644",
+      "original_sha": "19afb2feb6e66e0b3c3c29b15c8ab1548deb369b",
+      "selected_sha": "930654cc94c8a2a958a114b86c66e26afd368166",
+      "selected_revision": "reconciled-current"
+    },
+    {
+      "path": "ui/src/components/pages/DemoPages.jsx",
+      "bytes": 33921,
+      "mode": "100644",
+      "original_sha": "4976c8554dfd03b1bd7387a0251cd3cdcdc3416b",
+      "selected_sha": "4976c8554dfd03b1bd7387a0251cd3cdcdc3416b",
+      "selected_revision": "original-pin"
+    },
+    {
+      "path": "ui/src/components/pages/PublicIAPages.jsx",
+      "bytes": 23375,
+      "mode": "100644",
+      "original_sha": "54f3a9b34fa8254c9907794154bb5bbed33c76ee",
+      "selected_sha": "fa46177013b543e2d7d909479d02c681c8006551",
+      "selected_revision": "reconciled-current"
+    },
+    {
+      "path": "ui/src/components/ProductPage.jsx",
+      "bytes": 21638,
+      "mode": "100644",
+      "original_sha": "b34814b99d67667695eedd833455e46b22a43b8e",
+      "selected_sha": "b34814b99d67667695eedd833455e46b22a43b8e",
+      "selected_revision": "original-pin"
+    },
+    {
+      "path": "ui/src/components/pages/LegalPages.jsx",
+      "bytes": 20810,
+      "mode": "100644",
+      "original_sha": "f76c7a00c6f3f67b077f06e1c7b8eae05fbf37ff",
+      "selected_sha": "f76c7a00c6f3f67b077f06e1c7b8eae05fbf37ff",
+      "selected_revision": "original-pin"
+    },
+    {
+      "path": "ui/src/services/demoManifestService.js",
+      "bytes": 17722,
+      "mode": "100644",
+      "original_sha": "5788a5b7e7e0d3a77fedb14dfbbc19f576ae6696",
+      "selected_sha": "5788a5b7e7e0d3a77fedb14dfbbc19f576ae6696",
+      "selected_revision": "original-pin"
+    },
+    {
+      "path": "ui/src/components/pages/VerifiableCredentialApiPage.jsx",
+      "bytes": 17485,
+      "mode": "100644",
+      "original_sha": "ad2b7bcd519d64258c49144ceadd2afa24577f8a",
+      "selected_sha": "c14b91af44171793b34d8f026cb3eafcb1b315f0",
+      "selected_revision": "reconciled-current"
+    }
+  ],
+  "scope_note": "Copied public source paths verbatim from selected source blobs; no production build, binary assets, deployment or cutover asserted."
+}

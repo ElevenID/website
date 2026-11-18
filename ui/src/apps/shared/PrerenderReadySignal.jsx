@@ -3,6 +3,12 @@ import { useLocation } from 'react-router';
 import { waitForFonts } from '../../utils/waitForFonts';
 import i18n from '../../i18n';
 
+function isApplicationReady() {
+  return document.documentElement.classList.contains('app-ready')
+    && !document.querySelector('[data-app-loading]')
+    && Boolean(document.querySelector('#root h1, #root h2, #root h3, #root h4, #root h5, #root h6'));
+}
+
 function PrerenderReadySignal() {
   const location = useLocation();
 
@@ -30,7 +36,12 @@ function PrerenderReadySignal() {
 
     const waitForTranslations = () => {
       const namespaces = Array.isArray(i18n.options.ns) ? i18n.options.ns : [];
-      const translationsReady = i18n.loadNamespaces(namespaces).catch(() => {});
+      let translationsReady;
+      try {
+        translationsReady = Promise.resolve(i18n.loadNamespaces(namespaces)).catch(() => {});
+      } catch {
+        translationsReady = Promise.resolve();
+      }
       return waitForCompletion((finish) => {
         const timeout = window.setTimeout(finish, 10000);
         translationsReady.then(finish);
@@ -42,10 +53,27 @@ function PrerenderReadySignal() {
       if (!document.querySelector('[data-app-loading]')) return Promise.resolve();
 
       return waitForCompletion((finish) => {
+        const timeout = window.setTimeout(finish, 10000);
         const observer = new MutationObserver(() => {
           if (!document.querySelector('[data-app-loading]')) finish();
         });
         observer.observe(document.body, { childList: true, subtree: true });
+        return () => {
+          window.clearTimeout(timeout);
+          observer.disconnect();
+        };
+      });
+    };
+
+    const waitForApplicationReady = () => {
+      if (isApplicationReady()) return Promise.resolve();
+
+      return waitForCompletion((finish) => {
+        const observer = new MutationObserver(() => {
+          if (isApplicationReady()) finish();
+        });
+        observer.observe(document.documentElement, { attributes: true, childList: true, subtree: true });
+        if (isApplicationReady()) finish();
         return () => observer.disconnect();
       });
     };
@@ -67,7 +95,13 @@ function PrerenderReadySignal() {
       });
     };
 
-    Promise.all([waitForFonts(), waitForTranslations(), waitForAppContent(), waitForRouteContent()]).then(() => {
+    Promise.all([
+      waitForFonts(),
+      waitForTranslations(),
+      waitForAppContent(),
+      waitForRouteContent(),
+      waitForApplicationReady(),
+    ]).then(() => {
       if (cancelled) return;
       frame = requestAnimationFrame(() => {
         frame = null;

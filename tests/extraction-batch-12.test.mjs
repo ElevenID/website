@@ -38,6 +38,12 @@ test('batch 12 preserved and adapted files match their recorded blob identities'
     for (const entry of entries) {
       const file = new URL(`../${entry.target_path}`, import.meta.url);
       assert.ok(lstatSync(file).isFile(), entry.target_path);
+      // Later adaptations keep the original checkpoint identity immutable.
+      // Batch 18 owns the current TypeScript 7 CLI adaptation and tests its blob.
+      if (entry.target_path === 'ui/scripts/build-web-surface.mjs') {
+        assert.equal(entry.target_git_blob_sha1, '838dff8947aeece58debcdb1680a345c9f433d5f');
+        continue;
+      }
       const bytes = readFileSync(file);
       const hash = createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
       if (adapted) {

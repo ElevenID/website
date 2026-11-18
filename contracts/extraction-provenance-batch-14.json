@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "purpose": "source-extraction-record",
+  "source_repository": "ElevenID/marty-ui",
+  "immutable_source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "extends": "contracts/extraction-provenance-batch-13.json",
+  "batch": "14-diagram-closure",
+  "source_paths": [
+    {
+      "path": "ui/src/components/diagrams/InteractiveProtocolMap.jsx",
+      "mode": "100644",
+      "source_sha": "14a1a63e109726d5befcf0152161500c2d3b06cf",
+      "bytes": 19805
+    },
+    {
+      "path": "ui/src/components/diagrams/UnifiedIdentityFlowDiagram.jsx",
+      "mode": "100644",
+      "source_sha": "4e4aad84fc99fe8aaadc28675661e7318b3bc7c5",
+      "bytes": 6855
+    },
+    {
+      "path": "ui/src/components/diagrams/IdentityTransactionDiagram.jsx",
+      "mode": "100644",
+      "source_sha": "772358530070a592eb1d1b32f7473900cbbe5f26",
+      "bytes": 4127
+    },
+    {
+      "path": "ui/src/components/diagrams/TrustModelDiagram.jsx",
+      "mode": "100644",
+      "source_sha": "cbeb41e11c28873594f9ab58527022d4a5fa6f19",
+      "bytes": 3899
+    },
+    {
+      "path": "ui/src/components/diagrams/StandardsStackDiagram.jsx",
+      "mode": "100644",
+      "source_sha": "6d8b3838344884f23610784cd3b7191d7a56cfad",
+      "bytes": 3738
+    },
+    {
+      "path": "ui/src/components/diagrams/DeploymentModelDiagram.jsx",
+      "mode": "100644",
+      "source_sha": "2414b6a868fcbad17cda889070f79e5f7d528abc",
+      "bytes": 3669
+    },
+    {
+      "path": "ui/src/components/diagrams/CredentialFlowDiagram.jsx",
+      "mode": "100644",
+      "source_sha": "bbb31f7701f325dc4e1eeb09f368a5f14b50086f",
+      "bytes": 3408
+    },
+    {
+      "path": "ui/src/components/diagrams/index.js",
+      "mode": "100644",
+      "source_sha": "3ad3f7966dc7ed95b1519dba416152fa8932b0f7",
+      "bytes": 649
+    }
+  ],
+  "scope_note": "Preserved source diagram files without modifications. This does not establish a production bundle or asset completeness."
+}

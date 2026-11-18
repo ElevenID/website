@@ -1,5 +1,7 @@
 # Website input inventory
 
+**Latest checkpoint — PR #13:** All 79 original source candidate paths are now present, including the 10 large public modules and 8 diagram files. A separate selected-public-asset inventory has 38 of 46 paths present and eight large binary paths remaining. The latest independent Vite smoke (development audience) passed with 1,147 transformed modules and 66 JavaScript chunks; it does not qualify production prerender, complete assets or release. See [batch 13](../checkpoints/batch-13-complete-source-bundle.md) for exact evidence. The batch 12 counts below are historical.
+
 This directory records source, asset, build and test evidence for the website extraction.
 
 ## Evidence and scope
@@ -15,7 +17,7 @@ The source refresh retains **74 original-pin matches, five reconciled source mat
 
 ## Candidate closure and provenance counts
 
-The original [79-file source candidate inventory](../source-import-inventory.json) now has **61 paths present and 18 deferred**. The deferred set comprises ten large inputs/page/service/catalog bodies and eight diagram modules or their barrel. No remaining unimported, non-diagram candidate in that inventory is smaller than 16 KiB.
+The original [79-file source candidate inventory](../source-import-inventory.json) has **79 paths present and zero missing** on PR #13. Its original 61/18 split is preserved in the batch 12 receipt. The separate public-asset transfer has 38 of 46 selected resources; eight large binary resources remain to import with exact Git-blob verification.
 
 The provenance chain contains **86 targets**, a separate set that includes build and other extracted files. Do not treat that total as the number of original source candidates or as evidence that the full website graph is complete.
 

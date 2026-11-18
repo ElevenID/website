@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "source_repository": "ElevenID/marty-ui",
+  "source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "kind": "demo-poster-assets",
+  "files": [
+    {
+      "path": "ui/public/images/demos/2026.07.0/canvas-learning-achievement.png",
+      "sha": "731ca20b1ac843f4474756de602758cefa593a4b"
+    },
+    {
+      "path": "ui/public/images/demos/2026.07.0/credential-lifecycle.png",
+      "sha": "cd0a7092ab73742b6ea3dae111b81ae128255b38"
+    },
+    {
+      "path": "ui/public/images/demos/2026.07.0/first-party-browser-wallet.png",
+      "sha": "f91543a0c2068a558d4192a359f90ee2da5fde5b"
+    },
+    {
+      "path": "ui/public/images/demos/2026.07.0/independent-wallet-interoperability.png",
+      "sha": "60ae406833c24a74de784cc4907a7b28c5277669"
+    },
+    {
+      "path": "ui/public/images/demos/2026.07.0/membership-badge-login.png",
+      "sha": "1cbcf99aad65fb4693fd1da13a0cc55a5bc685d1"
+    },
+    {
+      "path": "ui/public/images/demos/2026.07.0/organization-primitives.png",
+      "sha": "f7a73f6c9dfccb1003f12334403acabb2936f60b"
+    },
+    {
+      "path": "ui/public/images/demos/2026.08.0/portfolio-draft.svg",
+      "sha": "35335854b93f1399d5a3d7aeafff784449cf6c9b"
+    }
+  ]
+}

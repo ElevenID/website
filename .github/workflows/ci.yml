@@ -3,7 +3,7 @@ name: Website CI
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, feat/complete-website-source-graph]
   merge_group:
     types: [checks_requested]
 
@@ -35,3 +35,11 @@ jobs:
         run: npm test
       - name: Verify website HTTP routing
         run: npm run test:nginx
+      - name: Build standalone website with development identity
+        env:
+          MARTY_WEBSITE_SOURCE_SHA: development
+          MARTY_WEBSITE_ALLOW_DEVELOPMENT: 'true'
+          MARTY_PRODUCTION_PAGES: public
+        run: |
+          npm run build:website
+          node scripts/verify-standalone-bundle.mjs

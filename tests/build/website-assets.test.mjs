@@ -76,6 +76,7 @@ test('real Vite build preserves website asset emission contracts', { timeout: 30
   await write('node_modules/@elevenid/marty-blog/index.js', [
     'export default {',
     '  owned: "/images/photo.txt", directory: "/images",',
+    '  defaultLogo: "/logo512.png", absoluteDefaultLogo: "https://elevenidllc.com/logo512.png",',
     '  external: "https://cdn.example/images/photo.txt",',
     '  similar: "/images-other/photo.txt", route: "/blog/example"',
     '};',
@@ -150,6 +151,9 @@ test('real Vite build preserves website asset emission contracts', { timeout: 30
   await t.test('bundles scoped blog image rewriting without rewriting unrelated URLs', () => {
     assert.ok(entry.code.includes(base + 'images/photo.txt'));
     assert.ok(entry.code.includes(base + 'images'));
+    assert.ok(entry.code.includes(base + 'logo512.png'));
+    assert.ok(entry.code.includes('https://elevenidllc.com' + base + 'logo512.png'));
+    assert.ok(!entry.code.includes('https://elevenidllc.com/logo512.png'));
     assert.match(entry.code, /["']\/images\/local\.txt["']/);
     assert.ok(entry.code.includes('https://cdn.example/images/photo.txt'));
     assert.ok(entry.code.includes('/images-other/photo.txt'));

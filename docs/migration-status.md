@@ -1,38 +1,35 @@
-# Migration checkpoint
+# Migration checkpoint — standalone qualification and durable evidence
 
-## Current milestone: educational pages, build inputs and public runtime
+Continue [website PR #13](https://github.com/ElevenID/website/pull/13), branch `feat/complete-website-source-graph`, until its reviewed source milestone is merged. Refresh the PR and its exact-head Actions results before continuing; do not infer current status from a historical checkpoint.
 
-[Website PR #12](https://github.com/ElevenID/website/pull/12) continues from accepted PR #11 at `57adcea498bb77935bdbd08ca49654eea44db878`. It preserves **seven source files totaling 45,628 bytes**, each below 16 KiB, and groups page qualification with generation, build and public startup contracts.
+## Recovered November 18 checkpoint
 
-Final validation passed **548 records**: `npm test` passed 528 records in 64.77 seconds (61 native, 345 DOM across 24 files and 122 build), and the separate HTTP suite passed 20 records in 0.77 seconds. There were no failures, cancellations or skips. This adds **92 records** to batch 11. Fresh dependency audit: zero vulnerabilities at every severity (exit 0). Five Python cases inside an existing build record are reported separately without double counting.
+- All **79/79** original source candidates and **46/46** selected public assets are committed. The eight large assets total **16,574,562 bytes**, imported from immutable marty-ui source `df6ec6c4bfee803d89c54e9333297f29f378cee3` at website commit `8ad4b340a4ec7e325e72bb8adfa00492b0bd966b`.
+- The last chat's final head, `1ba942da211d3cf236369d45427c0e7205a4794f`, finished successfully after its checkpoint was written: [Website CI](https://github.com/ElevenID/website/actions/runs/44265461081) and [migration qualification](https://github.com/ElevenID/website/actions/runs/44265460945).
+- That historical qualification checked 257 routes, 253 canonical URLs, 46 assets, a local image built from a pinned Nginx base, 57 HTTP resource checks and 19 denied application/private paths. Its application handoff was an isolated fixture.
+- The architecture plan [marty-ui #1969](https://github.com/ElevenID/marty-ui/pull/1969) and initial installer-consumer extraction [platform #1](https://github.com/ElevenID/platform/pull/1) are merged. Neither establishes standalone website release admission or a complete platform installer.
 
-The exact source-copy checkpoint passed 458 combined records; its [required hosted CI](https://github.com/ElevenID/website/actions/runs/44009299256/job/133792151996) passed. The corrected educational-page checkpoint passed 482 native/DOM/build records in 61.39 seconds; its [required hosted CI](https://github.com/ElevenID/website/actions/runs/44010150926/job/133794951739) also passed.
+## Batch 15 changes
 
-| Evidence | Revision/status |
-| --- | --- |
-| Accepted base, PR #11 | `57adcea498bb77935bdbd08ca49654eea44db878` |
-| Exact source-copy commit | `5cc954693cb4de0ac3938a1f0871d68d1a0e47ab` |
-| Exact source-copy tree | `c03207086ede15bf72698cdabab1dd82a3147a22` |
-| Corrected educational-page commit | `dbc26e6e059a9a4de8a6d072b22571ec8bc83180` |
-| Corrected educational-page tree | `c383b62a87ecd6d7e43374e387e6eef1597633cf` |
-| Corrected functional commit | `6e76d883132773b11a2b694438a7a53d34a619cc` |
-| Verified functional tree | `ba71d9f93cf9812e5db77a9cd4e82d406df466b2` |
-| Final required CI and merge | Track PR #12 for the final revision and accepted merge |
+Review found gaps not covered by the earlier green run. The current qualification now:
 
-Read [the batch 12 receipt](checkpoints/batch-12-pages-build-runtime.md) for the source identities, behavior changes and qualification limits. [Batch 11](checkpoints/batch-11-sections-release-routing.md) and earlier receipts remain historical.
+1. Includes `/privacy`, `/terms`, `/verification`, `/issuance` and `/blog/foundations`, bringing the plan to **262 routes / 254 canonical paths**. Every rendered and HTTP-served route must match its own canonical identity, so a homepage fallback cannot pass as another page.
+2. Rejects caught React error pages and remaining loading markers. Readiness fallback becomes eligible only after 25 seconds; normal `app-rendered` evidence takes precedence. Behavioral tests exercise errors, loaders, demo settlement and the signal/fallback race.
+3. Builds on a fresh runner that never checks out `marty-ui`. Exact source-asset replay remains a separate migration audit.
+4. Requires a clean checkout matching the claimed source SHA and records four successful stages against the same final distribution bytes. Nginx starts the exact inspected local image ID.
+5. Uploads a bounded `web-qualification-RUN-ATTEMPT` artifact with per-file hashes, input identities, workflow context and stage receipts. These are explicitly unsigned qualification records, not production intake evidence.
+6. Commits the existing demo generator's normalized output. The previous import retained an older serialization that the first build rewrote; the generated exports now match every committed JSON input without dirtying the checkout. Original blob identity remains in the extraction history and the adaptation receipt.
 
-## Resume and next batches
+See [qualification procedure and evidence](standalone-qualification.md). The authoritative acceptance result is the associated **Website contracts**, **Migration asset provenance** and **Standalone production qualification** checks on the final source head.
 
-1. Refresh PR #12. If merged, continue from its accepted main; otherwise use its existing branch and remaining checks.
-2. Retain immutable source pin `df6ec6c4bfee803d89c54e9333297f29f378cee3`. The [batch 12 metadata receipt](input-inventory/source-refresh-batch-12.json) confirms comparison main remains `9ff6e9779a020839ebeafc60095370725e9fb694`. Unchanged UI/contracts trees preserve the prior candidate identities and reconciled locale. The selected root startup script was checked separately; other changed root files need their own inspection before use.
-3. Preserve the [source reconciliation](input-inventory/source-reconciliation.json), including `Start Verifying` to application-owned `/verify`, and the [batch 12 provenance chain](../contracts/extraction-provenance-batch-12.json). Later adaptations must retain their original source identities.
-4. The original [79-file candidate inventory](source-import-inventory.json) now has **61 present and 18 deferred**: ten large inputs/page/service/catalog bodies and eight diagram modules/barrel. There are no remaining unimported, non-diagram candidates below 16 KiB in that inventory. Continue suitable bounded build/release work; completing the page graph requires resolving those large-input and diagram deferrals.
-5. Keep related verified commits in cohesive PRs. Preserve website/application ownership, withheld pricing and DRAFT/PARTIAL demo publication states.
+## Source merge versus release activation
 
-## Remaining qualification
+The approved [independent release plan](https://github.com/ElevenID/marty-ui/blob/main/docs/independent-website-release.md#first-cutover) separates reviewed source changes from subsequent protected-main signing and live-host qualification. The earlier Batch 14 wording conflated those gates. Merge this extraction milestone only after review and exact-head source/build/contract/browser/HTTP checks pass. A source merge does not publish or activate a website image.
 
-The three educational pages execute with real React, MUI, i18n, metadata and routing helpers. Small marketing/blog inputs and named diagram boundaries keep production content and the immutable blog package deferred. Link semantics, router transitions and recorded document-load calls do not establish real browser handoffs.
+## Next development milestone
 
-Generator and startup checks use synthetic inputs. Vite executes in the build-runner fixture, while TypeScript invocation is instrumented. Complete production configuration and dependencies remain required; the runner rejects an incomplete checkout. Startup supports the tested single-line generated metadata forms, and file replacements are individually atomic rather than a transaction across the output corpus.
+Define the standalone website producer contract and add role-scoped compatibility in the existing release consumers. Preserve old public/private producer identities and retained release evidence. The existing `website_release.py` plan assumes the old Dockerfile and dependency graph; changing repository strings alone is unsafe. Do not globally allow `ElevenID/website` to sign application, backend or composition subjects.
 
-Production assets, complete crawler/prerender output, the real blog/commerce packages, browser/application handoffs, deployed release identity and rollback remain unqualified. The existing Nginx fixture evidence must be replayed against the complete production output before deployment acceptance. Production cutover is a later milestone.
+Then qualify signed image publication, cross-owner composition, real application/OIDC handoff, and promotion/retained-slot rollback on the existing isolated host. Only after website release ownership has moved and the remaining application build is self-contained should `marty-ui` become `application`.
+
+No production traffic change, image publication, private-commerce exposure, source deletion or repository rename is part of this checkpoint. AWS was signed out during recovery; local checks and GitHub-hosted qualification were used without changing cloud resources.

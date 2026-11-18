@@ -1,0 +1,690 @@
+{
+  "schema_version": 1,
+  "purpose": "website-blog-social-image-assets",
+  "source_repository": "ElevenID/marty-blog",
+  "source_tag": "v0.1.9",
+  "source_commit": "587274a4e1d4281f8fa4d71cea212141759f0435",
+  "package_release": "@elevenid/marty-blog@0.1.9",
+  "expected_post_slugs": [
+    "why-identity-needs-a-protocol",
+    "trust-profiles-explained",
+    "business-case-for-credential-portability",
+    "cryptographic-trust-anchors-primer",
+    "credential-templates-designing-what-gets-issued",
+    "presentation-policies-minimum-disclosure",
+    "eudi-wallet-readiness",
+    "deployment-profiles-from-design-to-production",
+    "zero-knowledge-predicates-identity",
+    "flows-orchestrating-identity-lifecycle",
+    "compliance-profiles-bridging-regulation",
+    "sd-jwt-selective-disclosure-deep-dive",
+    "cedar-policies-for-identity-governance",
+    "introducing-mip",
+    "mip-json-schemas-walkthrough",
+    "post-quantum-readiness-in-identity",
+    "building-trust-registries-at-scale",
+    "offline-verification-design-patterns",
+    "holder-binding-beyond-biometrics",
+    "mip-and-open-badges-education-credentials",
+    "conformance-testing-for-implementers",
+    "revocation-strategies-compared",
+    "five-primitives-in-one-picture",
+    "minimum-disclosure-is-a-policy-problem",
+    "same-trust-model-different-runtime",
+    "one-protocol-many-ecosystems",
+    "why-marty-is-ready-for-evaluation",
+    "infrastructure-economics-migration",
+    "deployment-profiles-in-practice",
+    "offline-verification-guide",
+    "compliance-profiles-in-practice",
+    "deploy-airline-boarding",
+    "deploy-enterprise-access",
+    "selective-disclosure",
+    "deploy-age-verification",
+    "deploy-membership-credentials",
+    "impl-oid4vci",
+    "impl-oid4vp",
+    "what-is-digital-identity",
+    "four-actors-of-identity-systems",
+    "issuers-holders-verifiers-explained",
+    "credential-lifecycle",
+    "why-identity-depends-on-cryptography",
+    "public-key-infrastructure-explained",
+    "understanding-trust-anchors",
+    "certificate-chains-and-validation",
+    "how-passport-pki-works",
+    "understanding-csca-certificates",
+    "what-icao-9303-specifies",
+    "mobile-driving-licenses-iso-18013-5",
+    "how-governments-build-identity-pki",
+    "how-credential-issuance-works",
+    "verifiable-credentials-explained",
+    "presentation-protocols",
+    "interoperability-between-credential-formats",
+    "what-is-a-digital-identity-wallet",
+    "device-binding-and-credential-security",
+    "selective-disclosure-in-wallets",
+    "wallet-ux-design-for-identity",
+    "why-identity-systems-must-protect-privacy",
+    "data-minimization-in-identity",
+    "selective-disclosure-explained",
+    "privacy-vs-compliance",
+    "identity-governance-models",
+    "rbac-vs-abac",
+    "policy-engines-for-identity-systems",
+    "governing-credential-ecosystems",
+    "trust-registries-explained",
+    "federation-in-identity-systems",
+    "verifier-infrastructure",
+    "discovering-trusted-issuers",
+    "why-the-marty-protocol-exists",
+    "the-marty-identity-model",
+    "trust-profile-evaluation-and-failure-handling",
+    "credential-templates-explained-deep",
+    "presentation-policies-explained-deep",
+    "deployment-profiles-explained-deep",
+    "how-everything-works-together",
+    "mobile-wallet-architectures",
+    "secure-enclave-credential-storage",
+    "credential-portability-across-wallets",
+    "eudi-wallet-model-explained"
+  ],
+  "entries": [
+    {
+      "target_path": "ui/public/images/social/elevenid-blog-default.png",
+      "source_path": "public/images/social/elevenid-blog-default.png",
+      "source_sha": "9951e3ffcbb5c6813321fc9f78e1a3bdb35418a1",
+      "bytes": 200787,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/why-identity-needs-a-protocol.png",
+      "source_path": "public/images/social/why-identity-needs-a-protocol.png",
+      "source_sha": "33212d6e3902e59eb606e3eb2179ac763a870434",
+      "bytes": 193331,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/trust-profiles-explained.png",
+      "source_path": "public/images/social/trust-profiles-explained.png",
+      "source_sha": "2dcc9dfd8cdfdbdde05eea54c7ce9dee50b296a8",
+      "bytes": 233816,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/business-case-for-credential-portability.png",
+      "source_path": "public/images/social/business-case-for-credential-portability.png",
+      "source_sha": "b291d61e4743e646d8155a3e91c7983096d52811",
+      "bytes": 210510,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/cryptographic-trust-anchors-primer.png",
+      "source_path": "public/images/social/cryptographic-trust-anchors-primer.png",
+      "source_sha": "8e8656df42d15ea990b6a1ec335a0b2154ef18a0",
+      "bytes": 205588,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/credential-templates-designing-what-gets-issued.png",
+      "source_path": "public/images/social/credential-templates-designing-what-gets-issued.png",
+      "source_sha": "28f2e8944f1ac273179c0c245cfffbaa1ef97d31",
+      "bytes": 161829,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/presentation-policies-minimum-disclosure.png",
+      "source_path": "public/images/social/presentation-policies-minimum-disclosure.png",
+      "source_sha": "dc0c0bf092fbcf9d5f4e79fc0fa9649ae94361ba",
+      "bytes": 150505,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/eudi-wallet-readiness.png",
+      "source_path": "public/images/social/eudi-wallet-readiness.png",
+      "source_sha": "e39d3682dd8ab1a213da96cdddb0651b0dcaaaab",
+      "bytes": 133960,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/deployment-profiles-from-design-to-production.png",
+      "source_path": "public/images/social/deployment-profiles-from-design-to-production.png",
+      "source_sha": "a0d52051e784087d6662249da34e9d3fb5578e3c",
+      "bytes": 133787,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/zero-knowledge-predicates-identity.png",
+      "source_path": "public/images/social/zero-knowledge-predicates-identity.png",
+      "source_sha": "9e403699cf6511b01466e775a2b219a3b4f58942",
+      "bytes": 193249,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/flows-orchestrating-identity-lifecycle.png",
+      "source_path": "public/images/social/flows-orchestrating-identity-lifecycle.png",
+      "source_sha": "f35e44489093d4d65f64f5885c08d96272d5b6da",
+      "bytes": 187941,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/compliance-profiles-bridging-regulation.png",
+      "source_path": "public/images/social/compliance-profiles-bridging-regulation.png",
+      "source_sha": "ad0c759a64200ffbd4f17def92bcffbc50c2a516",
+      "bytes": 209664,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/sd-jwt-selective-disclosure-deep-dive.png",
+      "source_path": "public/images/social/sd-jwt-selective-disclosure-deep-dive.png",
+      "source_sha": "0c8aff866932bad23e3dde5a6308ded53d4650de",
+      "bytes": 142419,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/cedar-policies-for-identity-governance.png",
+      "source_path": "public/images/social/cedar-policies-for-identity-governance.png",
+      "source_sha": "a28b2f875c7edd42a2f09c59d8248f08d3bcf7d3",
+      "bytes": 143557,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/introducing-mip.png",
+      "source_path": "public/images/social/introducing-mip.png",
+      "source_sha": "0c21078721861b51fc6aac1a1104b772bada1515",
+      "bytes": 178348,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/mip-json-schemas-walkthrough.png",
+      "source_path": "public/images/social/mip-json-schemas-walkthrough.png",
+      "source_sha": "0e4391626a6aa7d59752a1da5229e9fb6e73a2bd",
+      "bytes": 143367,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/post-quantum-readiness-in-identity.png",
+      "source_path": "public/images/social/post-quantum-readiness-in-identity.png",
+      "source_sha": "58c97f5400b5abb947200c59fb00d54eba54ab50",
+      "bytes": 130219,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/building-trust-registries-at-scale.png",
+      "source_path": "public/images/social/building-trust-registries-at-scale.png",
+      "source_sha": "5fef59db1174b9563b672a632f89f1312de541ed",
+      "bytes": 153976,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/offline-verification-design-patterns.png",
+      "source_path": "public/images/social/offline-verification-design-patterns.png",
+      "source_sha": "61a6947f266af8b143712c195b8e821a6dc7e618",
+      "bytes": 218759,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/holder-binding-beyond-biometrics.png",
+      "source_path": "public/images/social/holder-binding-beyond-biometrics.png",
+      "source_sha": "cfc816e62d8cd391b7202eac7dc04a85aec8c508",
+      "bytes": 192008,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/mip-and-open-badges-education-credentials.png",
+      "source_path": "public/images/social/mip-and-open-badges-education-credentials.png",
+      "source_sha": "74bbb764ef2ed9dd1695018b359341621c0f8b6e",
+      "bytes": 242668,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/conformance-testing-for-implementers.png",
+      "source_path": "public/images/social/conformance-testing-for-implementers.png",
+      "source_sha": "1a031ad78e8dc447100a552053d80bdc9a87339d",
+      "bytes": 246892,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/revocation-strategies-compared.png",
+      "source_path": "public/images/social/revocation-strategies-compared.png",
+      "source_sha": "324b1547cb8618565036d8ba5e82cbb4ba4a8dd2",
+      "bytes": 203548,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/five-primitives-in-one-picture.png",
+      "source_path": "public/images/social/five-primitives-in-one-picture.png",
+      "source_sha": "b1113a3cc127eaa9c25848308d19e3a9f2298b59",
+      "bytes": 225528,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/minimum-disclosure-is-a-policy-problem.png",
+      "source_path": "public/images/social/minimum-disclosure-is-a-policy-problem.png",
+      "source_sha": "1ac85ddf221f4148948a80078cd8c4e9a2695abf",
+      "bytes": 181834,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/same-trust-model-different-runtime.png",
+      "source_path": "public/images/social/same-trust-model-different-runtime.png",
+      "source_sha": "13e597904e87affc7c3f58f33dd63a71b8a3745e",
+      "bytes": 193069,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/one-protocol-many-ecosystems.png",
+      "source_path": "public/images/social/one-protocol-many-ecosystems.png",
+      "source_sha": "5c2ca52c0f6d389bf44606c5184b6b77395b3787",
+      "bytes": 169915,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/why-marty-is-ready-for-evaluation.png",
+      "source_path": "public/images/social/why-marty-is-ready-for-evaluation.png",
+      "source_sha": "a25ce90312a8aefd83e96869b876d517e7246e71",
+      "bytes": 174001,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/infrastructure-economics-migration.png",
+      "source_path": "public/images/social/infrastructure-economics-migration.png",
+      "source_sha": "54ec9769acf893e922bd1f00f8d6a49d02061235",
+      "bytes": 220821,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/deployment-profiles-in-practice.png",
+      "source_path": null,
+      "source_sha": "9951e3ffcbb5c6813321fc9f78e1a3bdb35418a1",
+      "bytes": 200787,
+      "kind": "default-fallback",
+      "derived_from": "public/images/social/elevenid-blog-default.png"
+    },
+    {
+      "target_path": "ui/public/images/social/offline-verification-guide.png",
+      "source_path": null,
+      "source_sha": "9951e3ffcbb5c6813321fc9f78e1a3bdb35418a1",
+      "bytes": 200787,
+      "kind": "default-fallback",
+      "derived_from": "public/images/social/elevenid-blog-default.png"
+    },
+    {
+      "target_path": "ui/public/images/social/compliance-profiles-in-practice.png",
+      "source_path": null,
+      "source_sha": "9951e3ffcbb5c6813321fc9f78e1a3bdb35418a1",
+      "bytes": 200787,
+      "kind": "default-fallback",
+      "derived_from": "public/images/social/elevenid-blog-default.png"
+    },
+    {
+      "target_path": "ui/public/images/social/deploy-airline-boarding.png",
+      "source_path": null,
+      "source_sha": "9951e3ffcbb5c6813321fc9f78e1a3bdb35418a1",
+      "bytes": 200787,
+      "kind": "default-fallback",
+      "derived_from": "public/images/social/elevenid-blog-default.png"
+    },
+    {
+      "target_path": "ui/public/images/social/deploy-enterprise-access.png",
+      "source_path": null,
+      "source_sha": "9951e3ffcbb5c6813321fc9f78e1a3bdb35418a1",
+      "bytes": 200787,
+      "kind": "default-fallback",
+      "derived_from": "public/images/social/elevenid-blog-default.png"
+    },
+    {
+      "target_path": "ui/public/images/social/selective-disclosure.png",
+      "source_path": "public/images/social/selective-disclosure.png",
+      "source_sha": "114b54c5c19180131648ddd53e6446d8c320b62f",
+      "bytes": 168839,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/deploy-age-verification.png",
+      "source_path": null,
+      "source_sha": "9951e3ffcbb5c6813321fc9f78e1a3bdb35418a1",
+      "bytes": 200787,
+      "kind": "default-fallback",
+      "derived_from": "public/images/social/elevenid-blog-default.png"
+    },
+    {
+      "target_path": "ui/public/images/social/deploy-membership-credentials.png",
+      "source_path": null,
+      "source_sha": "9951e3ffcbb5c6813321fc9f78e1a3bdb35418a1",
+      "bytes": 200787,
+      "kind": "default-fallback",
+      "derived_from": "public/images/social/elevenid-blog-default.png"
+    },
+    {
+      "target_path": "ui/public/images/social/impl-oid4vci.png",
+      "source_path": null,
+      "source_sha": "9951e3ffcbb5c6813321fc9f78e1a3bdb35418a1",
+      "bytes": 200787,
+      "kind": "default-fallback",
+      "derived_from": "public/images/social/elevenid-blog-default.png"
+    },
+    {
+      "target_path": "ui/public/images/social/impl-oid4vp.png",
+      "source_path": null,
+      "source_sha": "9951e3ffcbb5c6813321fc9f78e1a3bdb35418a1",
+      "bytes": 200787,
+      "kind": "default-fallback",
+      "derived_from": "public/images/social/elevenid-blog-default.png"
+    },
+    {
+      "target_path": "ui/public/images/social/what-is-digital-identity.png",
+      "source_path": "public/images/social/what-is-digital-identity.png",
+      "source_sha": "0e0a04e4c0bdbbf4b9f24021965eddad197b8502",
+      "bytes": 215863,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/four-actors-of-identity-systems.png",
+      "source_path": "public/images/social/four-actors-of-identity-systems.png",
+      "source_sha": "d44fd0e350398fa072e97e1b889facc4be398b68",
+      "bytes": 207163,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/issuers-holders-verifiers-explained.png",
+      "source_path": "public/images/social/issuers-holders-verifiers-explained.png",
+      "source_sha": "e8eae9e43662487ef39b93c4f34b7b0a7a7c1cec",
+      "bytes": 226355,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/credential-lifecycle.png",
+      "source_path": "public/images/social/credential-lifecycle.png",
+      "source_sha": "451d2377d94c597f46a3556c31eb85903723657f",
+      "bytes": 295392,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/why-identity-depends-on-cryptography.png",
+      "source_path": "public/images/social/why-identity-depends-on-cryptography.png",
+      "source_sha": "23bc7933be311904d5867c1b711abe3d727035c1",
+      "bytes": 153050,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/public-key-infrastructure-explained.png",
+      "source_path": "public/images/social/public-key-infrastructure-explained.png",
+      "source_sha": "40f90005cfe4c3d0a7a2f329e4f993056d41bfdd",
+      "bytes": 171326,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/understanding-trust-anchors.png",
+      "source_path": "public/images/social/understanding-trust-anchors.png",
+      "source_sha": "9d7db5d882e62c27c725fc2af2f19106facc0c83",
+      "bytes": 220044,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/certificate-chains-and-validation.png",
+      "source_path": "public/images/social/certificate-chains-and-validation.png",
+      "source_sha": "49559e17d0f61c8e79af0f6213929e0029e10eb9",
+      "bytes": 194593,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/how-passport-pki-works.png",
+      "source_path": "public/images/social/how-passport-pki-works.png",
+      "source_sha": "76a4cf463994993aef04f03d1eec95584e30f1b2",
+      "bytes": 224932,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/understanding-csca-certificates-v2.png",
+      "source_path": "public/images/social/understanding-csca-certificates-v2.png",
+      "source_sha": "79af84bf1a2304342d3ff900991ff8b9e845c5ac",
+      "bytes": 230633,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/what-icao-9303-specifies.png",
+      "source_path": "public/images/social/what-icao-9303-specifies.png",
+      "source_sha": "f504ec41a86d8815b4700ffffde1d48076d5e36e",
+      "bytes": 211092,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/mobile-driving-licenses-iso-18013-5.png",
+      "source_path": "public/images/social/mobile-driving-licenses-iso-18013-5.png",
+      "source_sha": "9ab368c270148fb36166dd50a9bf0c088c3005da",
+      "bytes": 220099,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/how-governments-build-identity-pki.png",
+      "source_path": "public/images/social/how-governments-build-identity-pki.png",
+      "source_sha": "c4216f0176d9c2fbcb1e0c4ffa88bdebb6d44e36",
+      "bytes": 215759,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/how-credential-issuance-works.png",
+      "source_path": "public/images/social/how-credential-issuance-works.png",
+      "source_sha": "10c6a6104db9177afb9b85c78af97f1db54895ab",
+      "bytes": 224253,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/verifiable-credentials-explained.png",
+      "source_path": "public/images/social/verifiable-credentials-explained.png",
+      "source_sha": "31323ab63a0d31b0b67061acaabf1a0e7db65b22",
+      "bytes": 162809,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/presentation-protocols.png",
+      "source_path": "public/images/social/presentation-protocols.png",
+      "source_sha": "4a9bea94efa8943cafe268db4aa3cd0492f2c7fa",
+      "bytes": 173963,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/interoperability-between-credential-formats.png",
+      "source_path": "public/images/social/interoperability-between-credential-formats.png",
+      "source_sha": "74f68299b7a445d559069d3f97c9d913a94a41ea",
+      "bytes": 209593,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/what-is-a-digital-identity-wallet.png",
+      "source_path": "public/images/social/what-is-a-digital-identity-wallet.png",
+      "source_sha": "3f28c9f398e47374d590693340d8bf6b856fc32e",
+      "bytes": 171087,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/device-binding-and-credential-security.png",
+      "source_path": "public/images/social/device-binding-and-credential-security.png",
+      "source_sha": "5387c8f5a7267ea9e7b47b8c9beee6726ca04b50",
+      "bytes": 174829,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/selective-disclosure-in-wallets.png",
+      "source_path": "public/images/social/selective-disclosure-in-wallets.png",
+      "source_sha": "fab91487b9b2b5318464a3360ef6783fa92ae013",
+      "bytes": 206934,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/wallet-ux-design-for-identity.png",
+      "source_path": "public/images/social/wallet-ux-design-for-identity.png",
+      "source_sha": "a8476b6411800c6d353938d669e25021361725d6",
+      "bytes": 203014,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/why-identity-systems-must-protect-privacy.png",
+      "source_path": "public/images/social/why-identity-systems-must-protect-privacy.png",
+      "source_sha": "0a2fc83c75f93ec54a287eca647c9256d02ed579",
+      "bytes": 202233,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/data-minimization-in-identity.png",
+      "source_path": "public/images/social/data-minimization-in-identity.png",
+      "source_sha": "2efd3aa5edcdca78d9d8ee88df1d7791e62602ca",
+      "bytes": 133799,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/selective-disclosure-explained.png",
+      "source_path": null,
+      "source_sha": "9951e3ffcbb5c6813321fc9f78e1a3bdb35418a1",
+      "bytes": 200787,
+      "kind": "default-fallback",
+      "derived_from": "public/images/social/elevenid-blog-default.png"
+    },
+    {
+      "target_path": "ui/public/images/social/privacy-vs-compliance.png",
+      "source_path": "public/images/social/privacy-vs-compliance.png",
+      "source_sha": "c7c069d001075ac906d8b2475d037068d645822d",
+      "bytes": 162870,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/identity-governance-models.png",
+      "source_path": "public/images/social/identity-governance-models.png",
+      "source_sha": "e980f0fac962ff5f9222167139d0c05c4fe8daa3",
+      "bytes": 195751,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/rbac-vs-abac.png",
+      "source_path": "public/images/social/rbac-vs-abac.png",
+      "source_sha": "ccab90213e7b89adf6a0304a6a1b468f50fecca4",
+      "bytes": 191080,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/policy-engines-for-identity-systems.png",
+      "source_path": "public/images/social/policy-engines-for-identity-systems.png",
+      "source_sha": "cc44e28982ae31122a3b31fd09ec7a502e3382a7",
+      "bytes": 191753,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/governing-credential-ecosystems.png",
+      "source_path": "public/images/social/governing-credential-ecosystems.png",
+      "source_sha": "41976164efbb04e77e96fa7b137387e36a4601ba",
+      "bytes": 181590,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/trust-registries-explained.png",
+      "source_path": "public/images/social/trust-registries-explained.png",
+      "source_sha": "6e8fb44039521412d19bc98294f09d8c51a349fd",
+      "bytes": 210879,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/federation-in-identity-systems.png",
+      "source_path": "public/images/social/federation-in-identity-systems.png",
+      "source_sha": "d5d09ebeb4f09c9ddf313a2ba51dafe596c37ce5",
+      "bytes": 187529,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/verifier-infrastructure.png",
+      "source_path": "public/images/social/verifier-infrastructure.png",
+      "source_sha": "c538b9b9e5d7ecfa8c3969bc9b249e2098cccc73",
+      "bytes": 152648,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/discovering-trusted-issuers.png",
+      "source_path": "public/images/social/discovering-trusted-issuers.png",
+      "source_sha": "4eab5ea38a60aa2d9b78546991be2820c6471cf1",
+      "bytes": 196331,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/why-the-marty-protocol-exists.png",
+      "source_path": "public/images/social/why-the-marty-protocol-exists.png",
+      "source_sha": "9d74bf4ca41d6884d8378203177cbdf452f73b5f",
+      "bytes": 171176,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/the-marty-identity-model.png",
+      "source_path": "public/images/social/the-marty-identity-model.png",
+      "source_sha": "010193c4cc9d2d6b3f580e5123652cd886e29a52",
+      "bytes": 178054,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/trust-profile-evaluation-and-failure-handling.png",
+      "source_path": "public/images/social/trust-profile-evaluation-and-failure-handling.png",
+      "source_sha": "1ec045a4bf1a64405621cddd39ff8aa2ac7db584",
+      "bytes": 179996,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/credential-templates-explained-deep.png",
+      "source_path": "public/images/social/credential-templates-explained-deep.png",
+      "source_sha": "451bd775f186b4907aa3a1eba324b93185f7c399",
+      "bytes": 186626,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/presentation-policies-explained-deep.png",
+      "source_path": "public/images/social/presentation-policies-explained-deep.png",
+      "source_sha": "a0521bbf2b6971a7f705d87606dea1979235e6d8",
+      "bytes": 182288,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/deployment-profiles-explained-deep.png",
+      "source_path": "public/images/social/deployment-profiles-explained-deep.png",
+      "source_sha": "b4f47736a5e0df3c116c1f41098f0db783c17370",
+      "bytes": 209296,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/how-everything-works-together.png",
+      "source_path": "public/images/social/how-everything-works-together.png",
+      "source_sha": "680a0fb90d9aa46357491a6ee6f46d6b159eb862",
+      "bytes": 194244,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/mobile-wallet-architectures.png",
+      "source_path": "public/images/social/mobile-wallet-architectures.png",
+      "source_sha": "191c5cc17539a5600f7ef2b0ee58b99d684aadb2",
+      "bytes": 220942,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/secure-enclave-credential-storage.png",
+      "source_path": "public/images/social/secure-enclave-credential-storage.png",
+      "source_sha": "1776b0500f624e127746d96438d2dbe9d84dfb03",
+      "bytes": 185561,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/credential-portability-across-wallets.png",
+      "source_path": "public/images/social/credential-portability-across-wallets.png",
+      "source_sha": "51227cf1556a5fa74171ae946b3422b3ecb0628e",
+      "bytes": 161095,
+      "kind": "source"
+    },
+    {
+      "target_path": "ui/public/images/social/eudi-wallet-model-explained.png",
+      "source_path": "public/images/social/eudi-wallet-model-explained.png",
+      "source_sha": "041fe04a8b465bea35a7c8c1a34c97ede11aacfa",
+      "bytes": 183277,
+      "kind": "source"
+    }
+  ],
+  "notes": [
+    "The npm package ships compiled modules but not the repository public image directory.",
+    "Ten referenced social image filenames are absent from the pinned source asset tree; the generic ElevenID blog preview is copied to those exact paths to avoid broken social metadata.",
+    "Only LinkedIn/default social images used by the public website are imported; master and platform-specific exports remain outside the website runtime."
+  ]
+}

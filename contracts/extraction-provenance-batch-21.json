@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "purpose": "post-extraction-adaptation-record",
+  "source_repository": "ElevenID/marty-ui",
+  "immutable_source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "extends": "contracts/extraction-provenance-batch-20.json",
+  "batch": "21-render-error-qualification",
+  "adapted_files": [
+    {
+      "path": "ui/src/apps/website/WebsiteApp.jsx",
+      "source_original_blob": "51789b621ae64442135789314c7857ff393a6cf0",
+      "previous_extracted_blob": "bb9616ba5618cac9899b4c487487b687a1caa51c",
+      "current_blob": "b6f11a49ee04d0bbb65d9e351d9f424dd87f773c",
+      "current_bytes": 4104,
+      "change": "Mark the existing caught-render-error fallback so production qualification rejects its heading even when startup and route metadata remain valid. Preserve the visible error message and reload link."
+    }
+  ],
+  "tests": [
+    "tests/dom/website-app.test.jsx"
+  ]
+}

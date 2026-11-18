@@ -19,7 +19,7 @@ class WebsiteErrorBoundary extends Component {
   state = { failed: false };
   static getDerivedStateFromError() { return { failed: true }; }
   render() {
-    return this.state.failed ? <main><h1>This page could not be loaded.</h1><a href="/">Reload website</a></main> : this.props.children;
+    return this.state.failed ? <main data-website-error-boundary="true"><h1>This page could not be loaded.</h1><a href="/">Reload website</a></main> : this.props.children;
   }
 }
 
