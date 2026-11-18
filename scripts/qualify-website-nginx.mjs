@@ -93,7 +93,7 @@ try {
       assert.equal(response.headers.get('x-content-type-options'), 'nosniff', route);
       assert.equal(response.headers.get('x-frame-options'), 'SAMEORIGIN', route);
       assert.equal(response.headers.get('referrer-policy'), 'strict-origin-when-cross-origin', route);
-      assert.ok((response.headers.get('content-security-policy') || '').includes(\"default-src 'self'\"), 'Content security policy missing: ' + route);
+      assert.ok((response.headers.get('content-security-policy') || '').includes("default-src 'self'"), 'Content security policy missing: ' + route);
       const document = new JSDOM(response.body).window.document;
       assert.ok(document.querySelector('meta[name="prerender-status-code"][content="200"]'), 'Prerender marker missing: ' + route);
       assert.ok(document.querySelector('#root h1, #root h2, #root h3, #root h4, #root h5, #root h6'), 'Rendered heading missing: ' + route);
