@@ -33,7 +33,7 @@ test('production image health probe compares the actual newline returned by Ngin
 });
 
 test('production qualification checks out the exact source SHA used in release identity', () => {
-  const exactRef = String.raw`ref: ${{ github.event.pull_request.head.sha || github.sha }}`;
+  const exactRef = 'ref: ${{ github.event.pull_request.head.sha || github.sha }}';
   assert.ok(migrationWorkflow.includes(exactRef));
   assert.ok(migrationWorkflow.includes('MARTY_WEBSITE_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}'));
 });
