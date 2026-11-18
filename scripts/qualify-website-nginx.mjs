@@ -44,14 +44,14 @@ async function waitForReady() {
   while (Date.now() < deadline) {
     try {
       const response = await request('/healthz');
-      if (response.status === 200 && response.body === 'ok\\n') return;
+      if (response.status === 200 && response.body === 'ok\n') return;
       lastError = new Error('Nginx health returned ' + response.status);
     } catch (error) { lastError = error; }
     await new Promise((resolve) => setTimeout(resolve, 100));
   }
   let logs = '';
   try { logs = docker(['logs', containerId]); } catch {}
-  throw new Error('Production Nginx did not become ready: ' + (lastError?.message || 'unknown') + '\\n' + logs.slice(-6000));
+  throw new Error('Production Nginx did not become ready: ' + (lastError?.message || 'unknown') + '\n' + logs.slice(-6000));
 }
 const plan = await createWebsitePrerenderPlan();
 const routes = plan.routes;
@@ -76,7 +76,7 @@ try {
     image,
   ]);
   const binding = docker(['port', containerId, '80/tcp']);
-  assert.match(binding, /^127\\.0\\.0\\.1:\\d+$/, 'Nginx must bind to loopback only');
+  assert.ok(binding.startsWith('127.0.0.1:') && Number(binding.slice('127.0.0.1:'.length)) > 0, 'Nginx must bind to loopback only');
   origin = 'http://' + binding;
   await waitForReady();
 
@@ -88,12 +88,12 @@ try {
       const route = routes[cursor++];
       const response = await request(route);
       assert.equal(response.status, 200, 'Nginx page route ' + route);
-      assert.match(response.headers.get('content-type') || '', /text\\/html/, route);
+      assert.ok((response.headers.get('content-type') || '').includes('text/html'), 'Expected HTML response: ' + route);
       assert.equal(response.headers.get('x-marty-website-revision'), revision, route);
       assert.equal(response.headers.get('x-content-type-options'), 'nosniff', route);
       assert.equal(response.headers.get('x-frame-options'), 'SAMEORIGIN', route);
       assert.equal(response.headers.get('referrer-policy'), 'strict-origin-when-cross-origin', route);
-      assert.match(response.headers.get('content-security-policy') || '', /default-src 'self'/, route);
+      assert.ok((response.headers.get('content-security-policy') || '').includes(\"default-src 'self'\"), 'Content security policy missing: ' + route);
       const document = new JSDOM(response.body).window.document;
       assert.ok(document.querySelector('meta[name="prerender-status-code"][content="200"]'), 'Prerender marker missing: ' + route);
       assert.ok(document.querySelector('#root h1, #root h2, #root h3, #root h4, #root h5, #root h6'), 'Rendered heading missing: ' + route);
@@ -108,13 +108,19 @@ try {
   assert.ok(indexHtml, 'Homepage was not included in the route plan');
 
   const release = JSON.parse(readFileSync(path.join(dist, 'marty-website-release.json'), 'utf8'));
-  const scriptPaths = Array.from(indexHtml.matchAll(/<script\\b[^>]*\\bsrc=["']([^"']+\\.js)["']/gi), (match) => match[1]);
+  const indexDocument = new JSDOM(indexHtml);
+  const scriptPaths = Array.from(indexDocument.window.document.querySelectorAll('script[src]'), (script) => script.getAttribute('src'))
+    .filter((source) => {
+      try { return new URL(source, 'https://elevenidllc.com').pathname.endsWith('.js'); }
+      catch { return false; }
+    });
+  indexDocument.window.close();
   const immutableAsset = scriptPaths
     .map((source) => new URL(source, 'https://elevenidllc.com').pathname)
     .find((pathname) => pathname.startsWith(`/_website/${revision}/assets/`));
   assert.ok(immutableAsset, 'Homepage has no immutable Vite JavaScript entry');
   const resources = [
-    ['/robots.txt', /User-agent: \\*/],
+    ['/robots.txt', 'User-agent: *'],
     ['/sitemap.xml', /<urlset/],
     ['/sitemap-index.xml', /<sitemapindex/],
     ['/llms.txt', /ElevenID/i],
@@ -128,7 +134,10 @@ try {
     const response = await request(route);
     assert.equal(response.status, 200, 'Nginx resource ' + route);
     assert.equal(response.headers.get('x-marty-website-revision'), revision, route);
-    if (pattern) assert.match(response.body, pattern, route);
+    if (pattern) {
+      if (typeof pattern === 'string') assert.ok(response.body.includes(pattern), route);
+      else assert.match(response.body, pattern, route);
+    }
   }
   const runtime = await request('/_website/runtime-config.js');
   assert.equal(runtime.status, 200);
