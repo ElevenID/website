@@ -5,9 +5,11 @@ import { fileURLToPath } from 'node:url';
 import { JSDOM } from 'jsdom';
 import { websiteBuildRevision } from '../ui/scripts/web-surface-build-contract.mjs';
 import { createWebsitePrerenderPlan } from './website-prerender-plan.mjs';
+import { structuredDataImageUrls } from './lib/structured-data-assets.mjs';
 
 const root = realpathSync(fileURLToPath(new URL('../', import.meta.url)));
 const dist = realpathSync(path.join(root, 'ui/dist-website'));
+const SITE_ORIGIN = 'https://elevenidllc.com';
 const sourceSha = process.env.MARTY_WEBSITE_SOURCE_SHA;
 assert.match(sourceSha || '', /^[a-f0-9]{40}$/, 'Exact production source SHA is required');
 const revision = websiteBuildRevision({ sourceSha, pages: 'public', revision: process.env.MARTY_WEBSITE_REVISION });
@@ -63,7 +65,16 @@ for (const route of plan.routes) {
     requireRegularFile(path.resolve(dist, '.' + decodeURIComponent(ogUrl.pathname)), 'Social image for ' + route);
   }
   for (const script of document.querySelectorAll('script[type="application/ld+json"]')) {
-    assert.doesNotThrow(() => JSON.parse(script.textContent), 'Invalid JSON-LD in ' + route);
+    let data;
+    try { data = JSON.parse(script.textContent); } catch { assert.fail('Invalid JSON-LD in ' + route); }
+    for (const imageValue of structuredDataImageUrls(data)) {
+      const imageUrl = new URL(imageValue, SITE_ORIGIN);
+      assert.equal(imageUrl.protocol, 'https:', 'Structured-data image must use HTTPS: ' + route);
+      if (imageUrl.origin === SITE_ORIGIN) {
+        requireRegularFile(path.resolve(dist, '.' + decodeURIComponent(imageUrl.pathname)),
+          'Structured-data image for ' + route);
+      }
+    }
   }
   if (!/noindex/i.test(document.querySelector('meta[name="robots"]')?.getAttribute('content') || '')) {
     canonicalUrls.add(canonicalUrl.href);

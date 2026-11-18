@@ -486,7 +486,7 @@ function DemoScenarioDetail({ manifest, scenario }) {
     '@type': 'VideoObject',
     name: `${scenario.title} - ${manifest.release_name} - ElevenID LLC v${manifest.stack_version}`,
     description: scenario.summary,
-    thumbnailUrl: [`https://elevenidllc.com${scenario.poster.src}`],
+    thumbnailUrl: [`https://elevenidllc.com${staticAssetHref(scenario.poster.src)}`],
     uploadDate: scenario.published_at,
     embedUrl: `https://www.youtube-nocookie.com/embed/${scenario.youtube_id}`,
   } : null;
