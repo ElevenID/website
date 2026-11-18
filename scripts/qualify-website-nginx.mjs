@@ -142,6 +142,34 @@ try {
       else assert.match(response.body, pattern, route);
     }
   }
+
+  // Verify every source-selected public resource through the actual image,
+  // not just the representative icons and crawler endpoints above.
+  const inventory = JSON.parse(readFileSync(path.join(root, 'docs/input-inventory/asset-inventory.json'), 'utf8'));
+  const selectedAssets = inventory.files.filter((entry) => inventory.categories[entry.category]?.disposition !== 'exclude');
+  assert.equal(selectedAssets.length, 46, 'Public asset acceptance inventory changed unexpectedly');
+  const expectedMime = {
+    '.png': /image\\/png/,
+    '.svg': /image\\/svg\\+xml/,
+    '.ico': /image\\/(?:x-icon|vnd\\.microsoft\\.icon)/,
+    '.json': /application\\/json/,
+    '.xml': /application\\/(?:rss\\+)?xml/,
+    '.txt': /text\\/plain/,
+    '.js': /(?:application|text)\\/javascript/,
+  };
+  for (const asset of selectedAssets) {
+    const route = asset.path === 'llms.txt' || asset.path === 'blog/rss.xml'
+      ? '/' + asset.path
+      : asset.path === 'runtime-config.js'
+        ? '/_website/runtime-config.js'
+        : `/_website/${revision}/${asset.path}`;
+    const response = await request(route);
+    assert.equal(response.status, 200, 'Nginx public asset ' + asset.path);
+    assert.equal(response.headers.get('x-marty-website-revision'), revision, asset.path);
+    const mime = expectedMime[path.extname(asset.path).toLowerCase()];
+    assert.ok(mime, 'No expected MIME contract for ' + asset.path);
+    assert.match(response.headers.get('content-type') || '', mime, asset.path);
+  }
   const runtime = await request('/_website/runtime-config.js');
   assert.equal(runtime.status, 200);
   assert.equal(runtime.headers.get('cache-control'), 'no-store');
@@ -165,7 +193,7 @@ try {
     image,
     image_id: imageInfo.Id,
     route_count: pageResults.length,
-    resource_checks: resources.length + 2,
+    resource_checks: resources.length + selectedAssets.length + 2,
     denied_route_checks: 13,
     security_headers: ['X-Marty-Website-Revision', 'X-Frame-Options', 'X-Content-Type-Options',
       'Referrer-Policy', 'Content-Security-Policy'],
