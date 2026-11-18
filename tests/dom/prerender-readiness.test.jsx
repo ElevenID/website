@@ -17,6 +17,7 @@ const markers = new Set();
 const frames = new Map();
 let nextFrame;
 let rendered;
+let hadAppReady;
 
 function deferred() {
   let resolve;
@@ -37,10 +38,13 @@ function renderReady(path = '/product') {
   let navigate;
   function Probe() {
     navigate = useNavigate();
-    return <PrerenderReadySignal />;
+    return <><h1>Rendered page</h1><PrerenderReadySignal /></>;
   }
+  const container = document.createElement('div');
+  container.id = 'root';
+  document.body.appendChild(container);
   return {
-    ...render(<MemoryRouter initialEntries={[path]}><Probe /></MemoryRouter>),
+    ...render(<MemoryRouter initialEntries={[path]}><Probe /></MemoryRouter>, { container }),
     navigate: (destination) => navigate(destination),
   };
 }
@@ -65,6 +69,8 @@ async function paint() {
 
 beforeEach(() => {
   vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+  hadAppReady = document.documentElement.classList.contains('app-ready');
+  document.documentElement.classList.add('app-ready');
   translations.load.mockReset().mockResolvedValue(undefined);
   setFonts(undefined);
   nextFrame = 1;
@@ -85,6 +91,7 @@ beforeEach(() => {
 
 afterEach(() => {
   cleanup();
+  if (!hadAppReady) document.documentElement.classList.remove('app-ready');
   document.removeEventListener('app-rendered', rendered);
   for (const observer of [...observers]) observer.disconnect();
   for (const element of markers) element.remove();
@@ -124,6 +131,27 @@ describe('prerender readiness and route lifecycle', () => {
     expect(rendered).toHaveBeenCalledTimes(1);
   });
 
+  it('waits for app-ready, a real heading and removal of the loading marker', async () => {
+    document.documentElement.classList.remove('app-ready');
+    const loading = marker('data-app-loading');
+    renderReady();
+    await settle();
+    expect(rendered).not.toHaveBeenCalled();
+    document.documentElement.classList.add('app-ready');
+    await settle();
+    expect(rendered).not.toHaveBeenCalled();
+    loading.remove();
+    await paint();
+    expect(rendered).toHaveBeenCalledTimes(1);
+  });
+
+  it('accepts a synchronous translation loader result without losing readiness', async () => {
+    translations.load.mockReturnValue(undefined);
+    renderReady();
+    await paint();
+    expect(rendered).toHaveBeenCalledTimes(1);
+  });
+
   it('waits for an actual demo settled-state mutation', async () => {
     const demo = marker('data-demo-render-state', 'loading');
     renderReady('/demos/latest/example');
@@ -159,7 +187,7 @@ describe('prerender readiness and route lifecycle', () => {
     marker('data-app-loading');
     const view = renderReady('/demos/latest/pending');
     await settle();
-    expect(observers.size).toBe(2);
+    expect(observers.size).toBe(3);
     expect(vi.getTimerCount()).toBeGreaterThan(0);
     view.unmount();
     expect(observers.size).toBe(0);
