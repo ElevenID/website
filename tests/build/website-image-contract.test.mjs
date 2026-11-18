@@ -26,6 +26,11 @@ test('image builder requires exact production identity and never publishes to a 
   assert.doesNotMatch(builder, /'push'|docker push/);
 });
 
+test('production image health probe compares the actual newline returned by Nginx', () => {
+  assert.ok(qualifier.includes(String.raw`response.body === 'ok\n'`));
+  assert.ok(!qualifier.includes(String.raw`response.body === 'ok\\n'`));
+});
+
 test('production HTTP qualification executes the built image with a read-only filesystem', () => {
   assert.match(qualifier, /elevenid-website:\$\{revision\}/);
   assert.match(qualifier, /docker\(\['image', 'inspect', image\]\)/);

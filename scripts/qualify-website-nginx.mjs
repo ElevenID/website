@@ -36,7 +36,7 @@ async function waitForReady() {
   while (Date.now() < deadline) {
     try {
       const response = await request('/healthz');
-      if (response.status === 200 && response.body === 'ok\\n') return;
+      if (response.status === 200 && response.body === 'ok\n') return;
       lastError = new Error('Nginx health returned ' + response.status);
     } catch (error) { lastError = error; }
     await new Promise((resolve) => setTimeout(resolve, 100));
