@@ -76,7 +76,7 @@ test('real Vite build preserves website asset emission contracts', { timeout: 30
   await write('node_modules/@elevenid/marty-blog/index.js', [
     'export default {',
     '  owned: "/images/photo.txt", directory: "/images",',
-    '  defaultLogo: "/logo512.png", absoluteDefaultLogo: "https://elevenidllc.com/logo512.png",',
+    '  defaultLogo: "/logo512.png", absoluteDefaultLogo: "https://elevenidllc.com/logo512.png",'
     '  external: "https://cdn.example/images/photo.txt",',
     '  similar: "/images-other/photo.txt", route: "/blog/example"',
     '};',
