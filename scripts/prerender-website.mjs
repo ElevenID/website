@@ -38,10 +38,14 @@ const shellPath = path.join(distRoot, 'index.html');
 const shell = readFileSync(shellPath, 'utf8');
 const instrumentation = [
   '<script data-website-prerender-instrumentation>',
-  'window.__ELEVENID_PRERENDER__ = { demoManifests: true };',
+  'window.__ELEVENID_PRERENDER__ = { demoManifests: true, readiness: "pending" };',
+  "function markWebsiteRendered(source) { if (document.documentElement.getAttribute('data-website-rendered') === 'true') return; document.documentElement.setAttribute('data-website-rendered', 'true'); document.documentElement.setAttribute('data-website-render-source', source); document.documentElement.setAttribute('data-website-final-path', window.location.pathname); }",
+  "function appReadyFallback() { var ready = document.documentElement.classList.contains('app-ready') && !document.querySelector('[data-app-loading]') && document.querySelector('#root h1, #root h2, #root h3, #root h4, #root h5, #root h6'); if (ready) markWebsiteRendered('app-ready-fallback'); }",
+  "document.addEventListener('app-rendered', function () { markWebsiteRendered('signal'); });",
+  "new MutationObserver(appReadyFallback).observe(document.documentElement, { attributes: true, childList: true, subtree: true });",
+  "setTimeout(function () { appReadyFallback(); if (document.documentElement.getAttribute('data-website-rendered') !== 'true') document.documentElement.setAttribute('data-website-render-source', 'timeout'); }, 12000);",
   "window.addEventListener('error', function (event) { if (event.target === window) document.documentElement.setAttribute('data-website-error', event.message || 'script error'); }, true);",
   "window.addEventListener('unhandledrejection', function (event) { var reason = event.reason; document.documentElement.setAttribute('data-website-error', reason && reason.message ? reason.message : 'unhandled rejection'); });",
-  "document.addEventListener('app-rendered', function () { document.documentElement.setAttribute('data-website-rendered', 'true'); document.documentElement.setAttribute('data-website-final-path', window.location.pathname); });",
   '</script>',
 ].join('\n');
 assert.ok(shell.includes('</head>'), 'Website shell has no head closing tag');
@@ -117,6 +121,7 @@ const chromeVersion = (await execute(chrome, ['--version'], { timeout: 10000 }))
 const loopbackAssetOrigin = /https?:\/\/(?:127\.0\.0\.1|localhost|\[::1\])(?::\d+)?(?=\/(?:_website\/[^/]+\/)?assets\/)/gi;
 const canonicalPages = new Map();
 const pageReceipts = [];
+const readinessCounts = { signal: 0, 'app-ready-fallback': 0, timeout: 0 };
 
 function writeAtomic(filename, contents) {
   const parent = path.dirname(filename);
@@ -168,14 +173,19 @@ async function renderRoute(route) {
     assert.ok(htmlElement, 'Chrome returned no document for ' + route);
     assert.equal(htmlElement.getAttribute('data-website-error'), null, 'Browser JavaScript error on ' + route);
     const readiness = htmlElement.getAttribute('data-website-rendered');
+    const readinessSource = htmlElement.getAttribute('data-website-render-source');
     if (readiness !== 'true') {
       const loading = Boolean(document.querySelector('[data-app-loading]'));
+      const appReady = htmlElement.classList.contains('app-ready');
       const rootText = document.querySelector('#root')?.textContent?.trim().slice(0, 400) || '';
       const routeMisses = misses.slice(missStart);
-      assert.equal(readiness, 'true', 'app-rendered was not observed on ' + route
-        + '; appLoading=' + loading + '; rootText=' + JSON.stringify(rootText)
+      assert.equal(readiness, 'true', 'Website readiness was not observed on ' + route
+        + '; appReady=' + appReady + '; appLoading=' + loading
+        + '; rootText=' + JSON.stringify(rootText)
         + '; missingResources=' + JSON.stringify(routeMisses));
     }
+    assert.ok(['signal', 'app-ready-fallback'].includes(readinessSource), 'Unexpected readiness source on ' + route + ': ' + readinessSource);
+    readinessCounts[readinessSource] += 1;
     assert.ok(htmlElement.classList.contains('app-ready'), 'Application startup did not finish on ' + route);
     const finalPath = htmlElement.getAttribute('data-website-final-path');
     assert.ok(finalPath && finalPath.startsWith('/'), 'Browser did not report a final route for ' + route);
@@ -224,6 +234,7 @@ async function renderRoute(route) {
     document.querySelector('script[data-website-prerender-instrumentation]')?.remove();
     htmlElement.removeAttribute('data-website-rendered');
     htmlElement.removeAttribute('data-website-final-path');
+    htmlElement.removeAttribute('data-website-render-source');
     htmlElement.removeAttribute('data-website-error');
     let statusMeta = document.querySelector('meta[name="prerender-status-code"]');
     if (!statusMeta) {
@@ -237,7 +248,7 @@ async function renderRoute(route) {
     assert.deepEqual(misses.slice(missStart), [], 'Missing same-origin resources on ' + route + ': ' + misses.slice(missStart).join(', '));
     writeAtomic(outputForRoute(route), renderedHtml);
     pageReceipts.push({
-      route, final_path: finalPath, title, canonical: canonicalUrl.href,
+      route, final_path: finalPath, title, canonical: canonicalUrl.href, readiness_source: readinessSource,
       description_length: description.length, has_json_ld: document.querySelectorAll('script[type="application/ld+json"]').length > 0,
       same_origin_requests: requests.length - requestStart,
     });
@@ -307,6 +318,7 @@ try {
     demo_latest_approved: plan.demoIndex.latest_approved_stack_version,
     demo_latest_available: plan.demoIndex.latest_available_stack_version,
     pages: pageReceipts.length,
+    readiness: readinessCounts,
   }));
 } finally {
   server.closeAllConnections();

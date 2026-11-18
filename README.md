@@ -4,9 +4,9 @@ ElevenID's public website, product information, blog and public demonstrations.
 
 ## Current migration
 
-[PR #13](https://github.com/ElevenID/website/pull/13) now contains **all 79 source candidates** from the original extraction inventory, including large page/data modules and diagrams. A standalone Vite **development-audience** build has passed [hosted CI](https://github.com/ElevenID/website/actions/runs/44135521693/job/134223871973) with 1,147 transformed modules, 66 JavaScript chunks and 552 passing native/DOM/build/HTTP checks.
+[PR #13](https://github.com/ElevenID/website/pull/13) now contains **all 79 source candidates** from the original extraction inventory, including large page/data modules and diagrams. A standalone Vite **development-audience** build has passed [hosted CI](https://github.com/ElevenID/website/actions/runs/44135521693/job/134223871973) with 1,147 transformed modules, 66 JavaScript chunks and 576 passing native/DOM/build/HTTP checks.
 
-**It is not yet a production release.** Eight large public binary assets, complete Chromium prerendering/SEO, real browser handoffs, digest-pinned image publishing and rollback still require qualification. [Latest checkpoint](docs/migration-status.md) · [Detailed receipt](docs/checkpoints/batch-13-complete-source-bundle.md).
+**It is not yet a production release.** All 46 selected public assets are now committed, while complete Chromium prerendering/SEO, real browser handoffs, digest-pinned image publishing and rollback remain under qualification. [Latest checkpoint](docs/migration-status.md) · [Detailed receipt](docs/checkpoints/batch-13-complete-source-bundle.md).
 
 ## Development and tests
 

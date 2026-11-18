@@ -3,7 +3,7 @@ name: Website CI
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, feat/complete-website-source-graph]
   merge_group:
     types: [checks_requested]
 
