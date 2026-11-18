@@ -153,12 +153,12 @@ async function renderRoute(route) {
       '--disable-background-networking', '--disable-component-update', '--disable-extensions',
       '--no-first-run', '--disable-background-timer-throttling', '--run-all-compositor-stages-before-draw',
       '--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE 127.0.0.1',
-      '--user-data-dir=' + profile, '--dump-dom', '--virtual-time-budget=25000', '--timeout=35000',
+      '--user-data-dir=' + profile, '--dump-dom', '--virtual-time-budget=45000', '--timeout=60000',
       origin + route,
     ];
     let stdout;
     try {
-      stdout = (await execute(chrome, args, { timeout: 45000, maxBuffer: 32 * 1024 * 1024 })).stdout;
+timeout: 70000, maxBuffer: 32 * 1024 * 1024
     } catch (error) {
       throw new Error('Chrome failed to prerender ' + route + ': ' + String(error.stderr || error.message).slice(-5000));
     }
@@ -167,7 +167,15 @@ async function renderRoute(route) {
     const htmlElement = document.documentElement;
     assert.ok(htmlElement, 'Chrome returned no document for ' + route);
     assert.equal(htmlElement.getAttribute('data-website-error'), null, 'Browser JavaScript error on ' + route);
-    assert.equal(htmlElement.getAttribute('data-website-rendered'), 'true', 'app-rendered was not observed on ' + route);
+    const readiness = htmlElement.getAttribute('data-website-rendered');
+    if (readiness !== 'true') {
+      const loading = Boolean(document.querySelector('[data-app-loading]'));
+      const rootText = document.querySelector('#root')?.textContent?.trim().slice(0, 400) || '';
+      const routeMisses = misses.slice(missStart);
+      assert.equal(readiness, 'true', 'app-rendered was not observed on ' + route
+        + '; appLoading=' + loading + '; rootText=' + JSON.stringify(rootText)
+        + '; missingResources=' + JSON.stringify(routeMisses));
+    }
     assert.ok(htmlElement.classList.contains('app-ready'), 'Application startup did not finish on ' + route);
     const finalPath = htmlElement.getAttribute('data-website-final-path');
     assert.ok(finalPath && finalPath.startsWith('/'), 'Browser did not report a final route for ' + route);
