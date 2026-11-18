@@ -1,0 +1,125 @@
+name: Persist large public website assets
+
+on:
+  push:
+    branches:
+      - feat/complete-website-source-graph
+
+permissions:
+  contents: write
+
+concurrency:
+  group: persist-large-public-assets
+  cancel-in-progress: true
+
+jobs:
+  persist:
+    name: Persist pinned large public assets
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: true
+          fetch-depth: 1
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: ElevenID/marty-ui
+          ref: df6ec6c4bfee803d89c54e9333297f29f378cee3
+          path: .migration-source
+          sparse-checkout: |
+            ui/public/favicon.svg
+            ui/public/images/authors/aiko-tanaka.png
+            ui/public/images/authors/daniel-ortega.png
+            ui/public/images/authors/elena-kovacs.png
+            ui/public/images/authors/marcus-vale.png
+            ui/public/images/authors/nora-patel.png
+            ui/public/images/authors/sofia-rahman.png
+            ui/public/images/authors/victor-leclerc.png
+          persist-credentials: false
+
+      - name: Verify source-bound blobs and persist exact files
+        shell: bash
+        run: |
+          set -euo pipefail
+          src=".migration-source/ui/public/favicon.svg"
+          dst="ui/public/favicon.svg"
+          test -f "$src"
+          actual="$(git -C .migration-source hash-object "$src")"
+          test "$actual" = "ddd6c72026f3e832695a8897746d705d192facc1"
+          mkdir -p "$(dirname "$dst")"
+          cp -p "$src" "$dst"
+          src=".migration-source/ui/public/images/authors/aiko-tanaka.png"
+          dst="ui/public/images/authors/aiko-tanaka.png"
+          test -f "$src"
+          actual="$(git -C .migration-source hash-object "$src")"
+          test "$actual" = "df3ae0d2d1bebc607698790b7e056e42568a55c5"
+          mkdir -p "$(dirname "$dst")"
+          cp -p "$src" "$dst"
+          src=".migration-source/ui/public/images/authors/daniel-ortega.png"
+          dst="ui/public/images/authors/daniel-ortega.png"
+          test -f "$src"
+          actual="$(git -C .migration-source hash-object "$src")"
+          test "$actual" = "d3b8c340a6bbb0e3508b2ddc8978ff3966efcba2"
+          mkdir -p "$(dirname "$dst")"
+          cp -p "$src" "$dst"
+          src=".migration-source/ui/public/images/authors/elena-kovacs.png"
+          dst="ui/public/images/authors/elena-kovacs.png"
+          test -f "$src"
+          actual="$(git -C .migration-source hash-object "$src")"
+          test "$actual" = "dbb406718d6fc7a358669e1a563b2d345da96c3b"
+          mkdir -p "$(dirname "$dst")"
+          cp -p "$src" "$dst"
+          src=".migration-source/ui/public/images/authors/marcus-vale.png"
+          dst="ui/public/images/authors/marcus-vale.png"
+          test -f "$src"
+          actual="$(git -C .migration-source hash-object "$src")"
+          test "$actual" = "d51f8bd97d0dbe2a0dc5b440d1c42784e448df7c"
+          mkdir -p "$(dirname "$dst")"
+          cp -p "$src" "$dst"
+          src=".migration-source/ui/public/images/authors/nora-patel.png"
+          dst="ui/public/images/authors/nora-patel.png"
+          test -f "$src"
+          actual="$(git -C .migration-source hash-object "$src")"
+          test "$actual" = "8547e60dedebd33a715927231e9d7b71652e7646"
+          mkdir -p "$(dirname "$dst")"
+          cp -p "$src" "$dst"
+          src=".migration-source/ui/public/images/authors/sofia-rahman.png"
+          dst="ui/public/images/authors/sofia-rahman.png"
+          test -f "$src"
+          actual="$(git -C .migration-source hash-object "$src")"
+          test "$actual" = "d5150fc8a455b9cb7666b52f54cc2b3d4f9f2347"
+          mkdir -p "$(dirname "$dst")"
+          cp -p "$src" "$dst"
+          src=".migration-source/ui/public/images/authors/victor-leclerc.png"
+          dst="ui/public/images/authors/victor-leclerc.png"
+          test -f "$src"
+          actual="$(git -C .migration-source hash-object "$src")"
+          test "$actual" = "2572d06f6aa4eaff5b3e9e6ce929e5d29c1441c0"
+          mkdir -p "$(dirname "$dst")"
+          cp -p "$src" "$dst"
+
+      - name: Remove source checkout
+        run: rm -rf -- .migration-source
+
+      - name: Commit exact asset set
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- \
+            ui/public/favicon.svg \\
+            ui/public/images/authors/aiko-tanaka.png \\
+            ui/public/images/authors/daniel-ortega.png \\
+            ui/public/images/authors/elena-kovacs.png \\
+            ui/public/images/authors/marcus-vale.png \\
+            ui/public/images/authors/nora-patel.png \\
+            ui/public/images/authors/sofia-rahman.png \\
+            ui/public/images/authors/victor-leclerc.png
+          git diff --cached --name-only
+          test "$(git diff --cached --name-only | wc -l)" -eq 8
+          git commit -m "assets: persist large public website resources"
+          git push origin HEAD:feat/complete-website-source-graph
