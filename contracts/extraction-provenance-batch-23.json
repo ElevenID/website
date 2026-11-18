@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "purpose": "post-extraction-adaptation-record",
+  "source_repository": "ElevenID/marty-ui",
+  "immutable_source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "extends": "contracts/extraction-provenance-batch-22.json",
+  "batch": "23-standalone-release-owner-contract",
+  "adapted_files": [
+    {
+      "path": "ui/scripts/web-surface-build-contract.mjs",
+      "source_original_blob": "bcb80076c5fca772ab834b52db505987314d932e",
+      "previous_extracted_blob": "6064d219c47558c7a8e5330cf23702ec60a18bc2",
+      "current_blob": "d6029086383a17e333c1db2bcb8fcd5a6cef2132",
+      "current_bytes": 4674,
+      "change": "Emit and test standalone public image metadata v2 while retaining the existing full-adapter v1 marker; the standalone release contract admits public pages only."
+    },
+    {
+      "path": "ui/scripts/web-surface-build-contract.test.mjs",
+      "source_original_blob": "530795a0d87269f5dd108c101f98080159133e7e",
+      "previous_extracted_blob": "7b14f5dc0147a6e6cb612fc24f4147e415529f09",
+      "current_blob": "647f06bc9595b954875689e0992e7745dc836323",
+      "current_bytes": 6491,
+      "change": "Emit and test standalone public image metadata v2 while retaining the existing full-adapter v1 marker; the standalone release contract admits public pages only."
+    }
+  ],
+  "tests": [
+    "tests/build/standalone-release-contract.test.mjs",
+    "tests/build/website-release.test.mjs",
+    "tests/build/qualification-evidence.test.mjs"
+  ]
+}

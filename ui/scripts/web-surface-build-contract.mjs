@@ -22,7 +22,9 @@ export function websiteBuildRevision({ sourceSha = 'development', commerceSha, p
 export function websiteReleaseMetadata({ sourceSha = 'development', commerceSha, pages = 'public', revision } = {}) {
   const websiteRevision = websiteBuildRevision({ sourceSha, commerceSha, pages, revision });
   return {
-    schema: 'marty.website-image/v1',
+    // Standalone public releases use the new owner contract. The retained full
+    // adapter keeps its historical marker and is not admitted by this producer.
+    schema: pages === 'public' ? 'marty.website-image/v2' : 'marty.website-image/v1',
     audience: sourceSha === 'development' ? 'development' : 'production',
     surface: 'website', repository: 'ElevenID/website', source_sha: sourceSha,
     revision: websiteRevision, production_pages: pages, route_contract: WEB_ROUTE_CONTRACT,

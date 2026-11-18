@@ -58,7 +58,7 @@ try {
   copyTreeNoSymlinks(dist, path.join(context, 'html'));
 
   execFileSync(docker, [
-    'build', '--pull', '--file', path.join(context, 'Dockerfile'),
+    'build', '--pull', '--platform', 'linux/amd64', '--file', path.join(context, 'Dockerfile'),
     '--tag', image,
     '--build-arg', 'WEBSITE_SOURCE_SHA=' + sourceSha,
     '--build-arg', 'WEBSITE_REVISION=' + revision,
@@ -70,6 +70,8 @@ try {
     encoding: 'utf8', timeout: 30000, maxBuffer: 4 * 1024 * 1024,
   }))[0];
   const labels = info.Config.Labels || {};
+  assert.equal(info.Os, 'linux', 'Website release image must target Linux');
+  assert.equal(info.Architecture, 'amd64', 'Website release image must target amd64');
   assert.equal(labels['org.opencontainers.image.source'], 'https://github.com/ElevenID/website');
   assert.equal(labels['org.opencontainers.image.revision'], sourceSha);
   assert.equal(labels['org.opencontainers.image.version'], revision);
@@ -85,6 +87,7 @@ try {
     image_id: info.Id,
     source_sha: sourceSha,
     revision,
+    platform: 'linux/amd64',
     route_contract_sha256: routeContractSha,
     base_image: 'nginx:1.29.1-alpine@sha256:42a516af16b852e33b7682d5ef8acbd5d13fe08fecadc7ed98605ba5e3b26ab8',
     registry_published: false,

@@ -54,6 +54,8 @@ jobs:
         run: node scripts/qualify-website-nginx.mjs
       - name: Bind successful stages to source and output bytes
         run: node scripts/website-qualification.mjs finalize
+      - name: Validate the standalone release plan against qualified bytes
+        run: node scripts/website-release-contract.mjs plan > "$RUNNER_TEMP/website-build-plan.json"
       # Qualification receipts are unsigned test evidence, never production
       # intake receipts. There is no registry login, push, or signing permission.
       - name: Preserve qualification evidence

@@ -10,6 +10,8 @@ The [standalone qualification workflow](.github/workflows/standalone-qualificati
 
 **A qualified build is not yet a published production release.** Image publication, authenticated producer admission, real application/OIDC handoff and retained-slot host rollback remain separate gates. [Latest checkpoint](docs/migration-status.md) · [Qualification and evidence](docs/standalone-qualification.md).
 
+The [standalone release contract](docs/standalone-release-contract.md) defines the website-only producer identity, v2 build/release/image data, exact source and output hashes, and compatibility with existing release consumers. The reserved publisher is not enabled by these contract changes.
+
 ## Development and tests
 
 Node.js **24.22.1** is pinned in CI. Python 3.10+ is required for crawler tests, and Docker is required for the separate pinned Nginx HTTP suite.
