@@ -149,13 +149,13 @@ try {
   const selectedAssets = inventory.files.filter((entry) => inventory.categories[entry.category]?.disposition !== 'exclude');
   assert.equal(selectedAssets.length, 46, 'Public asset acceptance inventory changed unexpectedly');
   const expectedMime = {
-    '.png': /image\\/png/,
-    '.svg': /image\\/svg\\+xml/,
-    '.ico': /image\\/(?:x-icon|vnd\\.microsoft\\.icon)/,
-    '.json': /application\\/json/,
-    '.xml': /application\\/(?:rss\\+)?xml/,
-    '.txt': /text\\/plain/,
-    '.js': /(?:application|text)\\/javascript/,
+    '.png': 'image/png',
+    '.svg': 'image/svg+xml',
+    '.ico': ['image/x-icon', 'image/vnd.microsoft.icon'],
+    '.json': 'application/json',
+    '.xml': ['application/xml', 'application/rss+xml'],
+    '.txt': 'text/plain',
+    '.js': ['application/javascript', 'text/javascript'],
   };
   for (const asset of selectedAssets) {
     const route = asset.path === 'llms.txt' || asset.path === 'blog/rss.xml'
@@ -168,7 +168,10 @@ try {
     assert.equal(response.headers.get('x-marty-website-revision'), revision, asset.path);
     const mime = expectedMime[path.extname(asset.path).toLowerCase()];
     assert.ok(mime, 'No expected MIME contract for ' + asset.path);
-    assert.match(response.headers.get('content-type') || '', mime, asset.path);
+    const contentType = response.headers.get('content-type') || '';
+    const acceptedMime = Array.isArray(mime) ? mime : [mime];
+    assert.ok(acceptedMime.some((value) => contentType.includes(value)),
+      'Unexpected MIME type for ' + asset.path + ': ' + contentType);
   }
   const runtime = await request('/_website/runtime-config.js');
   assert.equal(runtime.status, 200);
