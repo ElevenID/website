@@ -180,8 +180,10 @@ try {
   assert.match(immutable.headers.get('cache-control') || '', /max-age=31536000.*immutable/);
   assert.equal(immutable.headers.get('x-marty-website-revision'), revision);
 
-  for (const route of ['/pricing', '/pricing/', '/verify', '/console', '/applicant', '/admin', '/vendor',
-    '/dashboard', '/auth/callback', '/api/status', '/v1/credential', '/index.html', '/unknown.png']) {
+  const deniedRoutes = ['/pricing', '/pricing/', '/verify', '/docs', '/test-harness', '/login',
+    '/console', '/applicant', '/admin', '/vendor', '/dashboard', '/auth', '/auth/callback',
+    '/api', '/api/status', '/v1', '/v1/credential', '/index.html', '/unknown.png'];
+  for (const route of deniedRoutes) {
     assert.equal((await request(route)).status, 404, 'Withheld or application-owned path ' + route);
   }
   const dottedDemo = await request('/demos/2026.08.0');
@@ -197,7 +199,7 @@ try {
     image_id: imageInfo.Id,
     route_count: pageResults.length,
     resource_checks: resources.length + selectedAssets.length + 2,
-    denied_route_checks: 13,
+    denied_route_checks: deniedRoutes.length,
     security_headers: ['X-Marty-Website-Revision', 'X-Frame-Options', 'X-Content-Type-Options',
       'Referrer-Policy', 'Content-Security-Policy'],
     demo_publication: plan.demoIndex.releases.map((entry) => ({

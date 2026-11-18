@@ -5,6 +5,7 @@ import { test } from 'node:test';
 const dockerfile = readFileSync(new URL('../../Dockerfile.website', import.meta.url), 'utf8');
 const builder = readFileSync(new URL('../../scripts/build-website-image.mjs', import.meta.url), 'utf8');
 const qualifier = readFileSync(new URL('../../scripts/qualify-website-nginx.mjs', import.meta.url), 'utf8');
+const migrationWorkflow = readFileSync(new URL('../../.github/workflows/migration-qualification.yml', import.meta.url), 'utf8');
 
 test('website container uses a digest-pinned static Nginx base and explicit OCI identity', () => {
   assert.match(dockerfile, /^FROM nginx:1\.29\.1-alpine@sha256:[a-f0-9]{64}/m);
@@ -29,6 +30,12 @@ test('image builder requires exact production identity and never publishes to a 
 test('production image health probe compares the actual newline returned by Nginx', () => {
   assert.ok(qualifier.includes(String.raw`response.body === 'ok\n'`));
   assert.ok(!qualifier.includes(String.raw`response.body === 'ok\\n'`));
+});
+
+test('production qualification checks out the exact source SHA used in release identity', () => {
+  const exactRef = String.raw`ref: ${{ github.event.pull_request.head.sha || github.sha }}`;
+  assert.ok(migrationWorkflow.includes(exactRef));
+  assert.ok(migrationWorkflow.includes('MARTY_WEBSITE_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}'));
 });
 
 test('production HTTP qualification executes the built image with a read-only filesystem', () => {
