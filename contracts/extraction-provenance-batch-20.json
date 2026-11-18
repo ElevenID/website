@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "purpose": "post-extraction-adaptation-record",
+  "source_repository": "ElevenID/marty-ui",
+  "immutable_source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "extends": "contracts/extraction-provenance-batch-19.json",
+  "batch": "20-prerender-readiness",
+  "adapted_files": [
+    {
+      "path": "ui/src/apps/shared/PrerenderReadySignal.jsx",
+      "source_original_blob": "bf3bf2608a8263012d1499d2fd601c790287cf49",
+      "previous_extracted_blob": "6dcdb7673d8c4019f881a83c967e642ad672f683",
+      "current_blob": "a4c878e490734499c0757efb84f76d02be563215",
+      "current_bytes": 4179,
+      "change": "Bound app-loading observation; tolerate synchronous translation loader results; require app-ready, no loading marker, and a real root heading before emitting app-rendered."
+    }
+  ],
+  "tests": [
+    "tests/dom/prerender-readiness.test.jsx"
+  ]
+}
