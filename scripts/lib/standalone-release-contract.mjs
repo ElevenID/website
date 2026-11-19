@@ -108,7 +108,7 @@ export function standaloneProducer({ sourceSha, runId, runAttempt }) {
 }
 
 /** Construct an unsigned receipt subject; this does not publish or authenticate it.
- * registryManifestDigest must come from the future publisher's registry operation,
+ * registryManifestDigest must come from the publisher's verified registry operation,
  * never docker inspect's local image/config Id. Consumers verify the actual OCI
  * manifest and both original signatures before admitting this object.
  */

@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "purpose": "post-extraction-adaptation-record",
+  "source_repository": "ElevenID/marty-ui",
+  "immutable_source_commit": "983cc226ba4b11defc6f10d01404e52200e34bea",
+  "extends": "contracts/extraction-provenance-batch-23.json",
+  "batch": "24-standalone-protected-main-publisher",
+  "files": [
+    {
+      "source_path": "scripts/install_web_verifiers.sh",
+      "target_path": "scripts/install_web_verifiers.sh",
+      "source_git_blob_sha1": "661fad5047e92c98f38d07e91a48c7d35f8cc12a",
+      "current_blob": "661fad5047e92c98f38d07e91a48c7d35f8cc12a",
+      "current_bytes": 1446,
+      "change": "Copy the reviewed bounded GitHub CLI and Cosign installer unchanged for consumer-equivalent public proof verification."
+    }
+  ],
+  "adapted_files": [
+    {
+      "path": "scripts/website_release_proof.py",
+      "source_files": [
+        {
+          "path": "scripts/website_provenance.py",
+          "source_original_blob": "cd8ee0a16e2c8bc47c9856173c5bb1d8a3156e4d"
+        },
+        {
+          "path": "scripts/web_producer_evidence.py",
+          "source_original_blob": "052a4854abaaa8d4181bf9d95b9ee3d9fa525d77"
+        },
+        {
+          "path": "scripts/web_auth.py",
+          "source_original_blob": "ccba3a985fbfdc0ea36f20cee0d04712cf50a59d"
+        },
+        {
+          "path": "scripts/verify_installer_provenance.py",
+          "source_original_blob": "d355c41d760aa7db85422637b915d5747a045758"
+        },
+        {
+          "path": "scripts/website_release.py",
+          "source_original_blob": "5f1177b3a4fb12b7ef7e76011ef36320827b7def"
+        }
+      ],
+      "current_blob": "a52bc5fad7974ae9d7bcf32c9679caf6ae7b85f8",
+      "current_bytes": 16605,
+      "change": "Adapt only public standalone original-proof retention, certificate policy, bounded process/file handling and canonical route identity; use the fixed repository-local Node v2 validator and Python standard library, with no application, backend or private-commerce imports."
+    }
+  ],
+  "tests": [
+    "tests/extraction-batch-24.test.mjs",
+    "tests/build/website-release-proof.test.mjs",
+    "tests/build/website-publisher.test.mjs",
+    "tests/build/production-website-workflow.test.mjs",
+    "tests/build/published-image.test.mjs"
+  ]
+}
