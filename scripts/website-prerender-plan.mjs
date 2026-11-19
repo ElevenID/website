@@ -1,3 +1,4 @@
+import { platformDemoScenarios } from '../ui/src/services/platformDemoScenarios.js';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { WEB_SURFACE_ROUTES } from '../ui/scripts/web-surface-contract.mjs';
@@ -101,6 +102,8 @@ export async function createWebsitePrerenderPlan() {
       if (!scenario || typeof scenario.slug !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(scenario.slug)) {
         throw new Error('Website demo scenario has an invalid public slug in ' + version);
       }
+    }
+    for (const scenario of platformDemoScenarios(manifest.scenarios)) {
       demoRoutes.push('/demos/' + version + '/' + scenario.slug);
       if (demoIndex.latest_approved_stack_version === version) {
         demoRoutes.push('/demos/latest/' + scenario.slug);

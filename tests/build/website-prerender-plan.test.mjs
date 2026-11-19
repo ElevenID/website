@@ -77,3 +77,12 @@ test('draft and partial demo evidence remains preview-only and never becomes lat
     assert.equal(plan.routes.some((route) => route.startsWith('/demos/latest/')), false);
   }
 });
+
+
+test('retired provider demos are excluded from versioned and latest prerender routes', async () => {
+  const plan = await createWebsitePrerenderPlan();
+  for (const slug of ['canvas-learning-achievement', 'external-evidence-to-credential']) {
+    assert.equal(plan.routes.some(route => route.endsWith('/' + slug)), false, slug);
+    assert.equal(Object.keys(plan.canonicalPaths).some(route => route.endsWith('/' + slug)), false, slug);
+  }
+});

@@ -1,10 +1,11 @@
+import { modulePath } from './module-path.mjs';
 import { fileURLToPath } from 'node:url';
 
-const websiteRoutes = fileURLToPath(new URL('../../ui/src/apps/website/WebsiteRoutes.jsx', import.meta.url));
-const marketingRoutes = fileURLToPath(new URL('../../ui/src/variants/marketingRoutes.jsx', import.meta.url));
-const commerceFacade = fileURLToPath(new URL('../../ui/src/extensions/commerce/website.js', import.meta.url));
-const publicCommerceStub = fileURLToPath(new URL('../../ui/src/extensions/commerce/publicStub.jsx', import.meta.url));
-const websitePublicConfig = fileURLToPath(new URL('../../ui/src/variants/publicConfig.website.js', import.meta.url));
+const websiteRoutes = modulePath(fileURLToPath(new URL('../../ui/src/apps/website/WebsiteRoutes.jsx', import.meta.url)));
+const marketingRoutes = modulePath(fileURLToPath(new URL('../../ui/src/variants/marketingRoutes.jsx', import.meta.url)));
+const commerceFacade = modulePath(fileURLToPath(new URL('../../ui/src/extensions/commerce/website.js', import.meta.url)));
+const publicCommerceStub = modulePath(fileURLToPath(new URL('../../ui/src/extensions/commerce/publicStub.jsx', import.meta.url)));
+const websitePublicConfig = modulePath(fileURLToPath(new URL('../../ui/src/variants/publicConfig.website.js', import.meta.url)));
 const namespace = '\0website-route-boundary:';
 const jsxRuntimes = ['react/jsx-runtime', 'react/jsx-dev-runtime'];
 const marketingPassthrough = new Set(['react', 'react-router', ...jsxRuntimes]);
@@ -69,7 +70,8 @@ export function websiteRouteBoundaryPlugin() {
     name: 'website-routing-fixture-boundaries',
     enforce: 'pre',
     resolveId(source, importer) {
-      const parent = importer?.split('?')[0];
+      const parent = modulePath(importer);
+      const sourcePath = source.replaceAll("\\", '/');
       if (parent === websiteRoutes && source === '../../components/LandingPageContent') {
         return namespace + encodeURIComponent(source);
       } else if (parent === marketingRoutes && pageModules.has(source)) {
@@ -77,8 +79,8 @@ export function websiteRouteBoundaryPlugin() {
       } else if (parent === commerceFacade && source === '@marty/commerce-extension') {
         // Use the real checked-in public implementation, only at this facade.
         return publicCommerceStub;
-      } else if ((parent === marketingRoutes && !marketingPassthrough.has(source))
-        || (parent === websiteRoutes && !websitePassthrough.has(source))) {
+      } else if ((parent === marketingRoutes && !marketingPassthrough.has(sourcePath))
+        || (parent === websiteRoutes && !websitePassthrough.has(sourcePath))) {
         throw new Error(`Unlisted deferred route boundary: ${source}`);
       } else {
         return null;

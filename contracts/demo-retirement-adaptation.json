@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "purpose": "post-extraction-adaptation-record",
+  "source_repository": "ElevenID/marty-ui",
+  "immutable_source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "extends": "contracts/extraction-provenance-batch-24.json",
+  "adapted_files": [
+    {
+      "path": "ui/src/services/demoManifestService.js",
+      "source_original_blob": "5788a5b7e7e0d3a77fedb14dfbbc19f576ae6696",
+      "previous_extracted_blob": "5788a5b7e7e0d3a77fedb14dfbbc19f576ae6696",
+      "current_blob": "480730a375780b2888211f65f73e92ca01a8b8d0",
+      "current_bytes": 17977,
+      "change": "Apply the existing platform retirement policy to fetched/generated demo loading and raw detail lookup."
+    },
+    {
+      "path": "ui/src/components/pages/DemoPages.jsx",
+      "source_original_blob": "4976c8554dfd03b1bd7387a0251cd3cdcdc3416b",
+      "previous_extracted_blob": "72ff9b0b6568210b7075e14428f4e048b46de888",
+      "current_blob": "66aa82ecf8f35de439f19dc8af9d060fbc5a72b3",
+      "current_bytes": 33976,
+      "change": "Remove the retired provider from the current catalog search prompt."
+    }
+  ],
+  "added_files": [
+    {
+      "path": "ui/src/services/platformDemoScenarios.js",
+      "source_repository": "ElevenID/marty-ui",
+      "source_commit": "983cc226ba4b11defc6f10d01404e52200e34bea",
+      "source_path": "ui/src/services/platformDemoScenarios.js",
+      "git_blob_sha1": "026260f15657ed00a929a3a6fa2441e770509b68"
+    }
+  ],
+  "archive_policy": "Historical manifests, generated archive data, posters, original extraction receipts and signed evidence remain unchanged. This record covers active presentation only; it is not production qualification."
+}
