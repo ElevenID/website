@@ -1,0 +1,211 @@
+name: Standalone website release
+
+run-name: Standalone website from ${{ github.sha }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      expected_source_sha:
+        description: Exact protected-main website commit selected for this release
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-website-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: github.repository == 'ElevenID/website' && github.repository_id == '1459542519' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.ref_protected
+    name: Qualify and publish the standalone website
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+      attestations: write
+      artifact-metadata: write
+    env:
+      CHROME_PATH: /usr/bin/google-chrome
+      MARTY_WEBSITE_SOURCE_SHA: ${{ github.sha }}
+      MARTY_PRODUCTION_PAGES: public
+      IMAGE: ghcr.io/elevenid/website
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Require the exact protected-main producer
+        env:
+          EXPECTED_SOURCE_SHA: ${{ inputs.expected_source_sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_ACTIONS" = true
+          test "$GITHUB_SERVER_URL" = https://github.com
+          test "$GITHUB_REPOSITORY" = ElevenID/website
+          test "$GITHUB_REPOSITORY_ID" = 1459542519
+          test "$GITHUB_EVENT_NAME" = workflow_dispatch
+          test "$GITHUB_REF" = refs/heads/main
+          test "$GITHUB_REF_PROTECTED" = true
+          test "$GITHUB_WORKFLOW_REF" = ElevenID/website/.github/workflows/production-website-release.yml@refs/heads/main
+          test "$GITHUB_WORKFLOW_SHA" = "$GITHUB_SHA"
+          test "$RUNNER_ENVIRONMENT" = github-hosted
+          test "$RUNNER_OS" = Linux
+          test "$RUNNER_ARCH" = X64
+          [[ "$EXPECTED_SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          test "$GITHUB_SHA" = "$EXPECTED_SOURCE_SHA"
+          [[ "$GITHUB_RUN_ID" =~ ^[1-9][0-9]*$ ]]
+          [[ "$GITHUB_RUN_ATTEMPT" =~ ^[1-9][0-9]*$ ]]
+          test "$(git rev-parse 'HEAD^{commit}')" = "$GITHUB_SHA"
+          git merge-base --is-ancestor "$GITHUB_SHA" refs/remotes/origin/main
+          test -z "$(git status --porcelain --untracked-files=all)"
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24.22.1'
+      - name: Install website-only pinned dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Verify website contracts and HTTP routing
+        run: |
+          docker pull nginx@sha256:785835ea65db4bba6f021acc0f3be91b0fef76a53fe41f8588c6698d2aed0606
+          npm test
+          npm run test:nginx
+      # All build and qualification stages use this repository alone. The
+      # migration audit is not a runtime or release dependency.
+      - name: Build and verify independent development fixture
+        env:
+          MARTY_WEBSITE_SOURCE_SHA: development
+          MARTY_WEBSITE_ALLOW_DEVELOPMENT: 'true'
+        run: |
+          npm run build:website
+          node scripts/verify-standalone-bundle.mjs
+          node scripts/verify-public-assets.mjs
+      - name: Qualify real rendered pages and isolated application handoff
+        run: node scripts/qualify-rendered-website.mjs
+      - name: Build production output and prerender every public route
+        run: |
+          npm run build:website:production
+          node scripts/verify-public-assets.mjs
+      - name: Build the standalone image with a pinned Nginx base
+        run: node scripts/build-website-image.mjs
+      - name: Qualify the exact built image through Nginx
+        run: node scripts/qualify-website-nginx.mjs
+      - name: Bind successful stages to source and output bytes
+        run: node scripts/website-qualification.mjs finalize
+      - name: Validate the standalone release plan against qualified bytes
+        run: |
+          set -euo pipefail
+          umask 077
+          node scripts/website-release-contract.mjs plan > "$RUNNER_TEMP/website-build-plan.json"
+      - name: Prepare pinned publication and consumer verification tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          bash scripts/install_web_verifiers.sh "$RUNNER_TEMP/web-verifiers"
+          bash scripts/install_website_publisher_tools.sh "$RUNNER_TEMP/website-publisher-tools"
+          mkdir -m 700 "$RUNNER_TEMP/website-publisher-docker"
+      - name: Authenticate the website registry publication
+        uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550
+        env:
+          DOCKER_CONFIG: ${{ runner.temp }}/website-publisher-docker
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+          logout: true
+      - name: Publish and bind the already qualified image
+        id: publication
+        env:
+          WEBSITE_EXPECTED_SOURCE_SHA: ${{ inputs.expected_source_sha }}
+          DOCKER_CONFIG: ${{ runner.temp }}/website-publisher-docker
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          node scripts/publish-website-image.mjs \
+            --output-dir "$RUNNER_TEMP/website-release" \
+            --oras "$RUNNER_TEMP/website-publisher-tools/oras"
+      - name: Attest the verified registry manifest
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8
+        id: image_provenance
+        env:
+          DOCKER_CONFIG: ${{ runner.temp }}/website-publisher-docker
+        with:
+          subject-name: ${{ env.IMAGE }}
+          subject-digest: ${{ steps.publication.outputs.image_digest }}
+          push-to-registry: true
+      - name: Sign the immutable image and release receipt
+        env:
+          DIGEST: ${{ steps.publication.outputs.image_digest }}
+          DOCKER_CONFIG: ${{ runner.temp }}/website-publisher-docker
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          [[ "$DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]
+          cosign="$RUNNER_TEMP/web-verifiers/cosign"
+          "$cosign" sign --yes "$IMAGE@$DIGEST"
+          "$cosign" sign-blob --yes \
+            --bundle "$RUNNER_TEMP/website-release/website-release.json.sigstore.json" \
+            "$RUNNER_TEMP/website-release/website-release.json"
+      - name: Attest the exact website release receipt
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8
+        id: receipt_provenance
+        with:
+          subject-path: ${{ runner.temp }}/website-release/website-release.json
+      - name: Retain and anonymously verify original producer proofs
+        env:
+          SUBJECT_BUNDLE: ${{ steps.receipt_provenance.outputs.bundle-path }}
+          IMAGE_BUNDLE: ${{ steps.image_provenance.outputs.bundle-path }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          python scripts/website_release_proof.py \
+            --assets "$RUNNER_TEMP/website-release" \
+            --subject-bundle "$SUBJECT_BUNDLE" --image-bundle "$IMAGE_BUNDLE" \
+            --source-sha "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" --run-attempt "$GITHUB_RUN_ATTEMPT" \
+            --gh "$RUNNER_TEMP/web-verifiers/gh" --cosign "$RUNNER_TEMP/web-verifiers/cosign"
+      - name: Preserve the fixed original release proof set
+        id: release_artifact
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: web-website-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/website-release/website-release.json
+            ${{ runner.temp }}/website-release/website-release.json.sigstore.json
+            ${{ runner.temp }}/website-release/website-release.json.provenance.jsonl
+            ${{ runner.temp }}/website-release/image.provenance.jsonl
+            ${{ runner.temp }}/website-release/web-surface-routes.json
+          if-no-files-found: error
+          overwrite: false
+          retention-days: 90
+      - name: Record original artifact and published image identity
+        env:
+          RELEASE_ARTIFACT_ID: ${{ steps.release_artifact.outputs.artifact-id }}
+          RELEASE_ARTIFACT_URL: ${{ steps.release_artifact.outputs.artifact-url }}
+          RELEASE_ARTIFACT_DIGEST: ${{ steps.release_artifact.outputs.artifact-digest }}
+          PUBLISHED_IMAGE: ${{ steps.publication.outputs.image_reference }}
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { appendFileSync } from 'node:fs';
+          const { RELEASE_ARTIFACT_ID: id, RELEASE_ARTIFACT_URL: url,
+            RELEASE_ARTIFACT_DIGEST: digest, PUBLISHED_IMAGE: image,
+            MARTY_WEBSITE_SOURCE_SHA: source, GITHUB_RUN_ID: run, GITHUB_RUN_ATTEMPT: attempt } = process.env;
+          assert.match(id, /^[1-9][0-9]*$/);
+          assert.match(digest, /^[a-f0-9]{64}$/);
+          assert.match(image, /^ghcr\.io\/elevenid\/website@sha256:[a-f0-9]{64}$/);
+          assert.equal(url, `https://github.com/ElevenID/website/actions/runs/${run}/artifacts/${id}`);
+          const invocation = `https://github.com/ElevenID/website/actions/runs/${run}/attempts/${attempt}`;
+          appendFileSync(process.env.GITHUB_STEP_SUMMARY,
+            `## Standalone website publication\n\nSource: \`${source}\`\n\nPublished image: \`${image}\`\n\n` +
+            `[Original run ${run}, attempt ${attempt}](${invocation})\n\n[Release evidence artifact ${id}](${url})\n\n` +
+            `Archive SHA-256: \`sha256:${digest}\`\n\nSigned publication is ready for authenticated consumer qualification. Production traffic has not been selected.\n`);
+          NODE

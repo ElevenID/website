@@ -10,7 +10,7 @@ The [standalone qualification workflow](.github/workflows/standalone-qualificati
 
 **A qualified build is not yet a published production release.** Image publication, authenticated producer admission, real application/OIDC handoff and retained-slot host rollback remain separate gates. [Latest checkpoint](docs/migration-status.md) · [Qualification and evidence](docs/standalone-qualification.md).
 
-The [standalone release contract](docs/standalone-release-contract.md) defines the website-only producer identity, v2 build/release/image data, exact source and output hashes, and compatibility with existing release consumers. The reserved publisher is not enabled by these contract changes.
+The [standalone release contract](docs/standalone-release-contract.md) defines the website-only producer identity, v2 build/release/image data, exact source and output hashes, and compatibility with existing release consumers. The [manual protected-main publisher](docs/standalone-publication.md) repeats qualification, publishes the exact qualified image, verifies its registry identity, and signs and preserves the original five-file proof set. Merging its source does not dispatch a release or activate production traffic.
 
 ## Development and tests
 
