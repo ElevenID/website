@@ -109,11 +109,12 @@ jobs:
           umask 077
           bash scripts/install_web_verifiers.sh "$RUNNER_TEMP/web-verifiers"
           bash scripts/install_website_publisher_tools.sh "$RUNNER_TEMP/website-publisher-tools"
-          mkdir -m 700 "$RUNNER_TEMP/website-publisher-docker"
+          mkdir -m 700 "$RUNNER_TEMP/website-publisher-home"
+          mkdir -m 700 "$RUNNER_TEMP/website-publisher-home/.docker"
       - name: Authenticate the website registry publication
         uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550
         env:
-          DOCKER_CONFIG: ${{ runner.temp }}/website-publisher-docker
+          DOCKER_CONFIG: ${{ runner.temp }}/website-publisher-home/.docker
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -123,7 +124,7 @@ jobs:
         id: publication
         env:
           WEBSITE_EXPECTED_SOURCE_SHA: ${{ inputs.expected_source_sha }}
-          DOCKER_CONFIG: ${{ runner.temp }}/website-publisher-docker
+          DOCKER_CONFIG: ${{ runner.temp }}/website-publisher-home/.docker
         shell: bash
         run: |
           set -euo pipefail
@@ -135,7 +136,10 @@ jobs:
         uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8
         id: image_provenance
         env:
-          DOCKER_CONFIG: ${{ runner.temp }}/website-publisher-docker
+          # The pinned action's OCI helper reads os.homedir()/.docker/config.json
+          # and ignores DOCKER_CONFIG. Both tools use this same private file.
+          HOME: ${{ runner.temp }}/website-publisher-home
+          DOCKER_CONFIG: ${{ runner.temp }}/website-publisher-home/.docker
         with:
           subject-name: ${{ env.IMAGE }}
           subject-digest: ${{ steps.publication.outputs.image_digest }}
@@ -143,7 +147,7 @@ jobs:
       - name: Sign the immutable image and release receipt
         env:
           DIGEST: ${{ steps.publication.outputs.image_digest }}
-          DOCKER_CONFIG: ${{ runner.temp }}/website-publisher-docker
+          DOCKER_CONFIG: ${{ runner.temp }}/website-publisher-home/.docker
         shell: bash
         run: |
           set -euo pipefail

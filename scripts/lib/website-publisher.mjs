@@ -100,7 +100,9 @@ function preflight({ root, outputDirectory, oras, env }) {
   const executable = lstatSync(oras);
   assert.ok(executable.isFile() && executable.uid === process.getuid() && (executable.mode & 0o700) === 0o700
     && !(executable.mode & 0o077), 'Pinned ORAS executable must be private');
-  const dockerConfig = path.join(temporary, 'website-publisher-docker');
+  const authHome = path.join(temporary, 'website-publisher-home');
+  privateDirectory(authHome);
+  const dockerConfig = path.join(authHome, '.docker');
   assert.equal(env.DOCKER_CONFIG, dockerConfig, 'Use the isolated publisher registry configuration');
   privateDirectory(dockerConfig);
   regularBytes(path.join(dockerConfig, 'config.json'), MAX_JSON, { privateFile: true });

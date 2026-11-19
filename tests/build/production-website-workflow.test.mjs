@@ -1,9 +1,11 @@
 import assert from 'node:assert/strict';
 import { execFileSync, spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
+import { fileURLToPath } from 'node:url';
 
 const workflow = readFileSync(new URL('../../.github/workflows/production-website-release.yml', import.meta.url), 'utf8');
 
@@ -204,7 +206,8 @@ test('publication, signing, retained-proof verification and upload remain mandat
 test('registry credentials stay in private publication steps and never reach proof verification', () => {
   const tools = step('Prepare pinned publication and consumer verification tools');
   assert.match(tools, /umask 077/);
-  assert.match(tools, /mkdir -m 700 "\$RUNNER_TEMP\/website-publisher-docker"/);
+  assert.match(tools, /mkdir -m 700 "\$RUNNER_TEMP\/website-publisher-home"/);
+  assert.match(tools, /mkdir -m 700 "\$RUNNER_TEMP\/website-publisher-home\/\.docker"/);
   assert.match(tools, /bash scripts\/install_web_verifiers\.sh "\$RUNNER_TEMP\/web-verifiers"/);
   assert.match(tools, /bash scripts\/install_website_publisher_tools\.sh "\$RUNNER_TEMP\/website-publisher-tools"/);
   const login = step('Authenticate the website registry publication');
@@ -216,11 +219,13 @@ test('registry credentials stay in private publication steps and never reach pro
     'Attest the verified registry manifest', 'Sign the immutable image and release receipt',
   ];
   for (const name of authenticated) {
-    assert.match(step(name), /DOCKER_CONFIG: \$\{\{ runner\.temp \}\}\/website-publisher-docker/);
+    assert.match(step(name), /DOCKER_CONFIG: \$\{\{ runner\.temp \}\}\/website-publisher-home\/\.docker/);
   }
   assert.equal([...workflow.matchAll(/DOCKER_CONFIG:/g)].length, authenticated.length);
+  assert.equal([...workflow.matchAll(/^\s+HOME:/gm)].length, 1, 'Only image attestation receives the private publisher home');
+  assert.match(step('Attest the verified registry manifest'), /HOME: \$\{\{ runner\.temp \}\}\/website-publisher-home/);
   assert.doesNotMatch(workflow, /GH_TOKEN:|GITHUB_TOKEN:|secrets\./);
-  assert.doesNotMatch(step('Retain and anonymously verify original producer proofs'), /DOCKER_CONFIG|github\.token/);
+  assert.doesNotMatch(step('Retain and anonymously verify original producer proofs'), /DOCKER_CONFIG|HOME:|github\.token/);
 });
 
 test('the attested subjects are the actual immutable publication and only its receipt', () => {
@@ -292,4 +297,61 @@ test('a malformed publication digest cannot enter the signer', (t) => {
   const fixture = signerFixture(t);
   assert.notEqual(fixture.run({ DIGEST: 'latest' }).status, 0);
   assert.deepEqual(fixture.commands(), []);
+});
+
+test('the pinned OCI fixture module bodies match the independently checked action bundle bytes', () => {
+  const fixture = readFileSync(new URL('../fixtures/pinned-attest-registry-credentials.cjs', import.meta.url), 'utf8');
+  // Independently extracted from dist/index.js Git blob
+  // de7bd536a3d24f9562db4507f84abd094ab2cf29 at actions/attest@508db95dd578ae2727ebd6217d5ba78e4fbda05d.
+  const expected = [
+    ['62691', ',\n96666: ', 'f6806703d4c32371a70cdda4a8d250888d4ad3e587384b38ca2ed0f3eb83a118'],
+    ['96666', '\n};\n\nconst cache = new Map();', 'c558015e396ddc8583cdb6064c9f64585c6e40f294854ead9b2678aae66b0ea2'],
+  ];
+  for (const [identifier, endMarker, digest] of expected) {
+    const marker = '\n' + identifier + ': ';
+    const position = fixture.indexOf(marker);
+    assert.notEqual(position, -1, 'Missing pinned module ' + identifier);
+    const start = position + marker.length;
+    const end = fixture.indexOf(endMarker, start);
+    assert.ok(end > start, 'Missing end of pinned module ' + identifier);
+    const actual = createHash('sha256').update(fixture.slice(start, end)).digest('hex');
+    assert.equal(actual, digest, 'Pinned OCI module ' + identifier + ' differs from the reviewed upstream bytes');
+  }
+});
+
+test('the exact pinned OCI helper requires the attestation step private home, not DOCKER_CONFIG alone', (t) => {
+  const root = mkdtempSync(path.join(os.tmpdir(), 'website-attestation-auth-'));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const ordinaryHome = path.join(root, 'ordinary-home');
+  const publisherHome = path.join(root, 'website-publisher-home');
+  for (const directory of [ordinaryHome, publisherHome]) {
+    mkdirSync(directory, { mode: 0o700 });
+    mkdirSync(path.join(directory, '.docker'), { mode: 0o700 });
+  }
+  writeFileSync(path.join(ordinaryHome, '.docker/config.json'), '{"auths":{}}\n', { mode: 0o600 });
+  writeFileSync(path.join(publisherHome, '.docker/config.json'), JSON.stringify({ auths: {
+    'ghcr.io': { auth: Buffer.from('synthetic-user:synthetic-token').toString('base64') },
+  } }) + '\n', { mode: 0o600 });
+  const reader = fileURLToPath(new URL('../fixtures/pinned-attest-registry-credentials.cjs', import.meta.url));
+  const program = `
+    const assert = require('node:assert/strict');
+    const { getRegistryCredentials } = require(process.argv[1]);
+    assert.deepEqual(getRegistryCredentials('ghcr.io/elevenid/website'), {
+      headers: undefined, username: 'synthetic-user', password: 'synthetic-token',
+    });
+  `;
+  const invoke = (home) => spawnSync(process.execPath, ['-e', program, reader], {
+    cwd: root, env: { HOME: home, DOCKER_CONFIG: path.join(publisherHome, '.docker') },
+    encoding: 'utf8', timeout: 10000,
+  });
+  const oldConfiguration = invoke(ordinaryHome);
+  assert.notEqual(oldConfiguration.status, 0);
+  assert.match(oldConfiguration.stderr, /No credentials found for registry ghcr\.io/);
+  const compatibleConfiguration = invoke(publisherHome);
+  assert.equal(compatibleConfiguration.status, 0, compatibleConfiguration.stderr);
+  assert.equal(readFileSync(path.join(ordinaryHome, '.docker/config.json'), 'utf8'), '{"auths":{}}\n',
+    'Compatibility must not copy credentials into the ordinary runner home');
+  // The action pin is part of the fixture's documented provenance. An action
+  // upgrade needs a fresh lookup-compatibility check against its shipped code.
+  assert.match(step('Attest the verified registry manifest'), /attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8/);
 });

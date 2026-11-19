@@ -21,6 +21,8 @@ The job checks the repository's numeric ID (`1459542519`), manual dispatch event
 
 The workflow grants its release job only `contents: read`, `packages: write`, `id-token: write`, `attestations: write` and `artifact-metadata: write`. All actions use immutable commit pins. The job uses the repository's built-in `GITHUB_TOKEN`; it does not require a cross-repository application checkout or an application credential. The image and proofs must be publicly readable at the registry because public release verification runs without registry authentication. A newly created GHCR package may require its owner to configure public visibility before the first complete release can pass that verification.
 
+Publication credentials occupy one private `RUNNER_TEMP/website-publisher-home/.docker/config.json` file. Docker, ORAS and Cosign receive that directory through step-scoped `DOCKER_CONFIG`. The pinned attestation action's OCI helper instead reads `os.homedir()/.docker/config.json` and ignores `DOCKER_CONFIG`, so only the image-attestation process receives the private publisher home as its `HOME`. Credentials are neither copied into the ordinary runner home nor passed to the anonymous proof verifier. The offline regression fixture preserves the actual credential lookup and image-name parser from the pinned action bundle to check this compatibility boundary.
+
 ## Qualification and publication sequence
 
 1. Install the exact website dependency lockfile and run the contract, component, build and Nginx routing tests.
