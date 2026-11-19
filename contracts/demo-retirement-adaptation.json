@@ -3,7 +3,7 @@
   "purpose": "post-extraction-adaptation-record",
   "source_repository": "ElevenID/marty-ui",
   "immutable_source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
-  "extends": "contracts/extraction-provenance-batch-23.json",
+  "extends": "contracts/extraction-provenance-batch-24.json",
   "adapted_files": [
     {
       "path": "ui/src/services/demoManifestService.js",
