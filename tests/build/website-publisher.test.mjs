@@ -54,11 +54,11 @@ function fixture(t, { omitStage, beforeCommand } = {}) {
     WEBSITE_EXPECTED_SOURCE_SHA: sourceSha, MARTY_PRODUCTION_PAGES: 'public',
     GITHUB_RUN_ID: '1234567890', GITHUB_RUN_ATTEMPT: '2',
     RUNNER_ENVIRONMENT: 'github-hosted', RUNNER_OS: 'Linux', RUNNER_ARCH: 'X64',
-    DOCKER_CONFIG: path.join(runner, 'website-publisher-docker'),
+    DOCKER_CONFIG: path.join(runner, 'website-publisher-home/.docker'),
     GITHUB_OUTPUT: put(runner, '_runner_file_commands/output', ''),
   };
   const oras = put(runner, 'website-publisher-tools/oras', '#!/bin/sh\nexit 81\n', 0o700);
-  put(runner, 'website-publisher-docker/config.json', '{}\n');
+  put(runner, 'website-publisher-home/.docker/config.json', '{}\n');
   const options = { root, sourceSha, workflow: publisherContext(env).workflow };
   const metadata = websiteReleaseMetadata({ sourceSha });
   put(root, 'ui/dist-website/marty-website-release.json', JSON.stringify(metadata) + '\n');
@@ -205,6 +205,9 @@ test('refuses reused output, source-local staging, alternative tools and unsafe 
   chmodSync(path.join(f.env.DOCKER_CONFIG, 'config.json'), 0o644);
   assert.throws(() => publishQualifiedWebsite(f), /must be private/);
   chmodSync(path.join(f.env.DOCKER_CONFIG, 'config.json'), 0o600);
+  chmodSync(path.dirname(f.env.DOCKER_CONFIG), 0o755);
+  assert.throws(() => publishQualifiedWebsite(f), /private owned directory/);
+  chmodSync(path.dirname(f.env.DOCKER_CONFIG), 0o700);
   rmSync(f.oras);
   symlinkSync('/bin/true', f.oras);
   assert.throws(() => publishQualifiedWebsite(f), /symlinks/);
