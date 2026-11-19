@@ -1,3 +1,4 @@
+import { platformDemoScenarios } from './platformDemoScenarios';
 import { DEMO_INDEX, DEMO_MANIFESTS } from '../generated/demoManifests.generated';
 import WALLET_SCHEMA from '../generated/demoWalletSchema.generated.json';
 
@@ -294,9 +295,11 @@ export async function loadDemoManifest(stackVersion, { signal } = {}) {
   assert(source, `ElevenID LLC v${stackVersion} does not have a published manifest.`);
   const manifest = validateDemoManifest(source);
   assert(manifest.stack_version === stackVersion, 'The requested ElevenID LLC release does not match the manifest.');
-  return manifest;
+  const scenarios = platformDemoScenarios(manifest.scenarios);
+  assert(scenarios.length > 0, 'This release has no platform-owned demo scenarios.');
+  return { ...manifest, scenarios };
 }
 
 export function findDemoScenario(manifest, slug) {
-  return manifest.scenarios.find((scenario) => scenario.slug === slug) || null;
+  return platformDemoScenarios(manifest.scenarios).find((scenario) => scenario.slug === slug) || null;
 }

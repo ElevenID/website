@@ -1,10 +1,11 @@
+import { modulePath } from './fixtures/module-path.mjs';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { educationContentBoundaryPlugin } from './fixtures/education-content-boundaries.mjs';
 
 const root = new URL('../', import.meta.url);
-const absolute = (path) => fileURLToPath(new URL(path, root));
+const absolute = (path) => modulePath(fileURLToPath(new URL(path, root)));
 const page = (name) => absolute(`ui/src/components/${name}.jsx`);
 const resolve = educationContentBoundaryPlugin().resolveId;
 

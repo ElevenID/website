@@ -1,7 +1,8 @@
+import { modulePath } from './module-path.mjs';
 import { fileURLToPath } from 'node:url';
 
 const root = new URL('../../', import.meta.url);
-const absolute = (path) => fileURLToPath(new URL(path, root));
+const absolute = (path) => modulePath(fileURLToPath(new URL(path, root)));
 const marketingData = absolute('tests/fixtures/marketing-section-data.mjs');
 const catalogData = absolute('tests/fixtures/marketing-support-catalog.json');
 const diagram = absolute('tests/fixtures/marketing-diagram-boundary.jsx');
@@ -43,7 +44,7 @@ export function marketingContentBoundaryPlugin() {
     name: 'bounded-marketing-content-fixtures',
     enforce: 'pre',
     resolveId(source, importer) {
-      const parent = importer?.split('?')[0];
+      const parent = modulePath(importer);
       const imports = allowed.get(parent);
       if (!imports) return null;
       if (!imports.has(source)) throw new Error(`Unlisted marketing component boundary: ${source}`);

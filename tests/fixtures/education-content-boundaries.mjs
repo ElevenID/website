@@ -1,7 +1,8 @@
+import { modulePath } from './module-path.mjs';
 import { fileURLToPath } from 'node:url';
 
 const root = new URL('../../', import.meta.url);
-const absolute = (path) => fileURLToPath(new URL(path, root));
+const absolute = (path) => modulePath(fileURLToPath(new URL(path, root)));
 const component = (name) => absolute(`ui/src/components/${name}.jsx`);
 const icon = (name) => `@mui/icons-material/${name}`;
 const common = [
@@ -32,7 +33,7 @@ export function educationContentBoundaryPlugin() {
     name: 'bounded-education-content-fixtures',
     enforce: 'pre',
     resolveId(source, importer) {
-      const imports = allowed.get(importer?.split('?')[0]);
+      const imports = allowed.get(modulePath(importer));
       if (!imports) return null;
       if (!imports.has(source)) throw new Error(`Unlisted education page boundary: ${source}`);
       return fixtures.get(source) ?? null;
