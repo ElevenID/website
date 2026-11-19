@@ -1,6 +1,6 @@
 # Standalone website release contract
 
-This milestone defines the public website producer's data contract and the consumer rules needed to accept it in a later signed release. It adds a versioned contract alongside the existing application and private website contracts. It does not add or enable a publisher, push an image, sign a receipt, select a production release, or change a host.
+Milestone 16 defined the public website producer's data contract and the consumer rules needed to accept its signed releases. Milestone 17 installs the [manual protected-main publisher](standalone-publication.md) that implements that contract. Publishing and verifying a real release remains a separate operation from merging the source; production selection and host changes are later qualification gates.
 
 The implementation is split between the producer in this repository and the existing web release consumers in `ElevenID/marty-ui`. The producer is `scripts/lib/standalone-release-contract.mjs`; the planning command is `scripts/website-release-contract.mjs`. Consumer validation lives in `website_release.py`, with role policy in `website_producer_policy.py` and original-proof checks in `website_provenance.py`.
 
@@ -10,7 +10,7 @@ The implementation is split between the producer in this repository and the exis
 | --- | --- |
 | Repository | `ElevenID/website` |
 | Numeric repository ID | `1459542519` |
-| Reserved signer workflow | `.github/workflows/production-website-release.yml` |
+| Signer workflow | `.github/workflows/production-website-release.yml` |
 | Signer ref | `refs/heads/main` |
 | Image repository | `ghcr.io/elevenid/website` |
 | Platform | `linux/amd64` |
@@ -20,7 +20,7 @@ The implementation is split between the producer in this repository and the exis
 | Release-receipt schema | `marty.website-release/v2` |
 | Image metadata schema | `marty.website-image/v2` |
 
-The signer workflow path is reserved policy, not an installed publisher. The current `standalone-qualification.yml` workflow is a separate, unsigned qualification workflow. Its workflow identity cannot stand in for the reserved release identity.
+The signer workflow accepts only manual dispatch for an explicitly selected protected-main commit. The `standalone-qualification.yml` workflow remains a separate, unsigned qualification workflow. Its workflow identity cannot stand in for the release identity.
 
 Source and revision are the same exact 40-character lowercase Git commit SHA from this repository. Run ID and run attempt are positive decimal strings. A later signed receipt must bind both to the original successful main release attempt. Branch names, abbreviated SHAs, mutable image tags and application-repository SHAs cannot replace these values.
 
@@ -76,7 +76,7 @@ For the plan digest, JavaScript recursively sorts object keys, serializes with t
 
 ## Release receipt and proof boundary
 
-The pure release factory defines the future `marty.website-release/v2` subject. It contains the exact source/revision, public audience, null commerce extension, original producer identity, fixed image coordinate with a manifest digest, complete v2 build plan and its digest, and expected v2 image metadata. The validator requires those representations to agree. The factory does not sign or authenticate any of them.
+The pure release factory defines the `marty.website-release/v2` subject. It contains the exact source/revision, public audience, null commerce extension, original producer identity, fixed image coordinate with a manifest digest, complete v2 build plan and its digest, and expected v2 image metadata. The validator requires those representations to agree. The factory does not sign or authenticate any of them. The read-only `website-release-contract.mjs validate --receipt ABSOLUTE_PATH` command applies this complete closed schema to a bounded local receipt; cryptographic verification follows separately.
 
 Three identifiers must remain distinct:
 
@@ -86,7 +86,7 @@ Three identifiers must remain distinct:
 | Output inventory digest | The listed static output paths and bytes | No |
 | `image.digest` in a signed release | The published OCI manifest selected at the fixed registry coordinate | Only after original image proof and registry verification |
 
-Each may use SHA-256 syntax. Syntax validation cannot establish which bytes were hashed. The factory's `registryManifestDigest` argument therefore must come from an actual registry publication operation in a later publisher. Renaming a local image ID does not establish a manifest, registry presence, signature or provenance. Consumers verify the OCI reference itself as well as the original receipt.
+Each may use SHA-256 syntax. Syntax validation cannot establish which bytes were hashed. The publisher supplies the factory's `registryManifestDigest` argument only after hashing the unchanged registry manifest, binding its configuration digest to the qualified local image ID, and pulling the exact digest to compare platform, ordered RootFS layers and repository identity. Renaming a local image ID does not establish a manifest, registry presence, signature or provenance. Consumers verify the OCI reference itself as well as the original receipt.
 
 The retained website proof set remains exactly:
 
@@ -120,11 +120,11 @@ Legacy public and private v1 receipts remain valid through their existing schema
 
 The extraction's retained full adapter still emits its historical v1 metadata. It is outside the standalone public release contract. Development metadata can identify the development build but cannot pass the production release validator.
 
-## Reviewed milestone and subsequent publisher work
+## Reviewed milestones and operational qualification
 
-This milestone's acceptance boundary is the contract, qualified plan generation, role-scoped consumer admission, unchanged legacy compatibility, and tests of cross-repository composition and retained slots. Tests must cover substituted owners and roles, wrong workflow/ref/run attempts, nested extra fields, mixed v1/v2 envelopes, altered plan digests, unsigned qualification supplied as a release, public/private mismatch and retained legacy rollback inputs.
+Milestone 16 completed the contract, qualified plan generation, role-scoped consumer admission, unchanged legacy compatibility, and tests of cross-repository composition and retained slots. Its tests cover substituted owners and roles, wrong workflow/ref/run attempts, nested extra fields, mixed v1/v2 envelopes, altered plan digests, unsigned qualification supplied as a release, public/private mismatch and retained legacy rollback inputs.
 
-The later publisher must establish the remaining facts before it can create an admissible release:
+The milestone 17 publisher implements the following publication and original-proof checks. Their operational acceptance requires a real successful manual run and subsequent consumer qualification:
 
 1. Run from the exact protected-main source under the reserved workflow and repository identity, with pinned release tools and narrowly scoped publication/signing permissions.
 2. Reproduce the complete qualification, preserve its source and output identity, and publish the exact qualified container. Record the registry's actual manifest digest, resolve the expected platform, and verify the pulled image and metadata against the qualified image and static output. A local config ID must never be reported as the manifest digest.
@@ -132,4 +132,4 @@ The later publisher must establish the remaining facts before it can create an a
 4. Retain the complete fixed proof set in the exact original run-attempt artifact and demonstrate original-proof intake and cross-repository composition using those real published bytes.
 5. Qualify the selected combined application's compatibility marker and actual host/application handoff, including retained-slot rollback and existing credential/OpenBao safeguards, before any production activation.
 
-Those steps require later implementation and qualification. This contract milestone neither performs them nor changes the existing production workflow defaults.
+The source implements steps 1–3 and fixed artifact retention in step 4. Real original-proof intake/composition in step 4 and host/application qualification in step 5 remain subsequent operational gates. Existing production workflow defaults remain unchanged.

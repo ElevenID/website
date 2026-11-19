@@ -1,6 +1,6 @@
-# Migration checkpoint — standalone release contract and consumer compatibility
+# Migration checkpoint — standalone protected-main publisher
 
-[Website PR #13](https://github.com/ElevenID/website/pull/13) is merged at `e65be9c615fd8ccddc2d4753d098ebbc0e826d2a`. Its final source tree passed [Website CI](https://github.com/ElevenID/website/actions/runs/44395320515) and [standalone production qualification](https://github.com/ElevenID/website/actions/runs/44395321376) on main. Refresh current PR and Actions results before continuing from this checkpoint.
+Milestone 16 is merged in both repositories: [website PR #14](https://github.com/ElevenID/website/pull/14) at `aac683df865e6adec1d250bf1b9621e204f6675d` and [marty-ui PR #1997](https://github.com/ElevenID/marty-ui/pull/1997) at `983cc226ba4b11defc6f10d01404e52200e34bea`. Website [main CI](https://github.com/ElevenID/website/actions/runs/44412287658) and [standalone qualification](https://github.com/ElevenID/website/actions/runs/44412288659) passed. The consumer's final required merge-group [CI](https://github.com/ElevenID/marty-ui/actions/runs/44431689631) and [Helm](https://github.com/ElevenID/marty-ui/actions/runs/44431689706) passed before its normal squash-queue merge. Refresh current PR and Actions results before continuing from this checkpoint.
 
 ## Recovered November 18 checkpoint
 
@@ -32,10 +32,18 @@ This batch defines closed v2 website build-plan, release and image contracts for
 
 The coordinated `marty-ui` consumer changes admit this identity only for website receipts and its own image. Application, backend and outer composition authorities stay with their existing producers. Legacy public/private v1 receipts remain supported, and the optional composition website owner defaults to `ElevenID/marty-ui`. Shared synthetic fixtures verify cross-language canonical hashing; role, original-evidence, composition and retained-slot tests cover the new boundary. See the [standalone release contract](standalone-release-contract.md).
 
-The future publisher identity is reserved in the contract; this batch does not install or invoke a signing/publishing workflow. A v2 object or the qualified local Docker image ID cannot replace original cryptographic proof and a registry manifest digest.
+Milestone 16 reserved the publisher identity without installing or invoking it. A v2 object or the qualified local Docker image ID cannot replace original cryptographic proof and a registry manifest digest.
+
+## Milestone 17 — protected-main publisher source
+
+The new [publication workflow](standalone-publication.md) accepts a manual dispatch naming an exact protected-main source. It repeats the website-only qualification, publishes that same local image, fetches and hashes the raw registry manifest with pinned ORAS, and verifies its configuration, platform, RootFS and immutable repository identity after a digest pull. It rechecks clean source and all qualified bytes before creating the v2 release subject.
+
+The workflow signs and attests the receipt and image with pinned tools and actions. It retains the original bundles verbatim and runs the consumer-equivalent checks in isolated anonymous verifier environments. Only a successful proof check can upload the exact five-file `web-website-RUN-ATTEMPT` artifact. A current publisher run cannot assert that its own Actions attempt has completed successfully; subsequent original-artifact intake supplies that gate.
+
+The new source and offline negative tests establish the implementation. Actual publication needs a manual main run, public GHCR visibility for anonymous verification, and original signed artifact/intake results. A source merge or passing unsigned qualification alone does not complete those operational gates. Tool-copy and proof-policy adaptation lineage is recorded in `contracts/extraction-provenance-batch-24.json` against the merged consumer source.
 
 ## Next development milestone
 
-Implement the hosted protected-main publisher, qualify digest publication and original signatures, then exercise authenticated cross-owner intake/composition against real artifacts. Bind the published registry manifest to the exact qualified image bytes. Follow with real application/OIDC handoff and promotion/retained-slot rollback on the existing isolated host. Only after website release ownership has moved and the remaining application build is self-contained should `marty-ui` become `application`.
+Complete a real protected-main publisher run and qualify authenticated cross-owner intake/composition against its original artifact. The consumer's separately scoped `WEBSITE_RELEASE_READ_TOKEN` is needed for website Actions archive intake; its existing job token remains scoped to application/composition work. Follow with real application/OIDC handoff and promotion/retained-slot rollback on the existing isolated host. Only after website release ownership has moved and the remaining application build is self-contained should `marty-ui` become `application`.
 
-No production traffic change, image publication, private-commerce exposure, source deletion or repository rename is part of this checkpoint. AWS was signed out during the earlier recovery; local checks and GitHub-hosted qualification continue without changing cloud resources.
+This checkpoint records publisher implementation, not a completed published release. Production traffic, private commerce, source deletion and repository renaming remain outside this milestone. Local checks and GitHub-hosted qualification continue without changing cloud resources.
