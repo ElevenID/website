@@ -1,4 +1,24 @@
-# Migration checkpoint — standalone protected-main publisher
+# Migration checkpoint — published website and signed composition
+
+## Current continuation checkpoint
+
+Refreshed November 19, 2026 (America/Denver): standalone signed website publication and authenticated cross-owner composition are complete. Application source packaging and actual application/OIDC and isolated-host acceptance remain separate work. The historical milestones below retain their original source-specific evidence.
+
+### Accepted composition selection
+
+The original [publisher run `44449706828`, attempt 2](https://github.com/ElevenID/website/actions/runs/44449706828/attempts/2) succeeded from protected-main source `7ec0707aa348939a0e48e6a26b24fb1af8671b9b` after the registry credential correction in [PR #16](https://github.com/ElevenID/website/pull/16). Its original artifact is `web-website-44449706828-2`, ID `14495945528`. The preceding attempt did not complete and is not the selected release.
+
+The successful [composition run `44594894023`, attempt 1](https://github.com/ElevenID/marty-ui/actions/runs/44594894023/attempts/1), on `marty-ui` source `6daf2a216fbc6e16472a06977b21f33896f372f5`, authenticated those original website proofs together with application run `42385654811/1` and its selected backend `v1.1.273`. It signed and uploaded `web-composition-44594894023-1`, artifact ID `14564688078`. The [consumer checkpoint](https://github.com/ElevenID/marty-ui/blob/main/docs/restructuring/website-composition-checkpoint.md) records the exact source, archive, proof and composition identities.
+
+These remain the accepted composition inputs. The composition records `runtime_tested: false` and `billing_journey_tested: false`; signing and intake do not establish host or authenticated-journey success.
+
+### Newer website publication
+
+The inspected website `main` source is `79f7d60f737ead799ca33c5b91bc349c7e5df419`. It includes merged [PR #17](https://github.com/ElevenID/website/pull/17), which filters retired provider demos, and [PR #18](https://github.com/ElevenID/website/pull/18), which returns HTTP 410 for their retired permalinks. Its [main CI](https://github.com/ElevenID/website/actions/runs/44671843297), [standalone qualification](https://github.com/ElevenID/website/actions/runs/44671843247) and [protected-main publisher `44671855574/1`](https://github.com/ElevenID/website/actions/runs/44671855574/attempts/1) all completed successfully.
+
+GitHub reports the latest original artifact as `web-website-44671855574-1`, ID `14600337685`, with 22,756 archive bytes and SHA-256 `70905ab6fb9a0ffdb5147fe54f8aafee24f2f4a2a5838bffa5c411bc9927ef7e`. This refresh checked run and artifact metadata; it did not independently download or cryptographically reverify this newest archive. Its successful publication does not replace the older release pinned by the accepted composition.
+
+## Historical milestone 16 acceptance
 
 Milestone 16 is merged in both repositories: [website PR #14](https://github.com/ElevenID/website/pull/14) at `aac683df865e6adec1d250bf1b9621e204f6675d` and [marty-ui PR #1997](https://github.com/ElevenID/marty-ui/pull/1997) at `983cc226ba4b11defc6f10d01404e52200e34bea`. Website [main CI](https://github.com/ElevenID/website/actions/runs/44412287658) and [standalone qualification](https://github.com/ElevenID/website/actions/runs/44412288659) passed. The consumer's final required merge-group [CI](https://github.com/ElevenID/marty-ui/actions/runs/44431689631) and [Helm](https://github.com/ElevenID/marty-ui/actions/runs/44431689706) passed before its normal squash-queue merge. Refresh current PR and Actions results before continuing from this checkpoint.
 
@@ -40,10 +60,12 @@ The new [publication workflow](standalone-publication.md) accepts a manual dispa
 
 The workflow signs and attests the receipt and image with pinned tools and actions. It retains the original bundles verbatim and runs the consumer-equivalent checks in isolated anonymous verifier environments. Only a successful proof check can upload the exact five-file `web-website-RUN-ATTEMPT` artifact. A current publisher run cannot assert that its own Actions attempt has completed successfully; subsequent original-artifact intake supplies that gate.
 
-The new source and offline negative tests establish the implementation. Actual publication needs a manual main run, public GHCR visibility for anonymous verification, and original signed artifact/intake results. A source merge or passing unsigned qualification alone does not complete those operational gates. Tool-copy and proof-policy adaptation lineage is recorded in `contracts/extraction-provenance-batch-24.json` against the merged consumer source.
+The source and offline negative tests established the implementation. The subsequent successful protected-main publication and original signed intake are recorded in the current checkpoint above; a source merge or passing unsigned qualification alone did not establish those operational results. Tool-copy and proof-policy adaptation lineage is recorded in `contracts/extraction-provenance-batch-24.json` against the merged consumer source.
 
 ## Next development milestone
 
-Complete a real protected-main publisher run and qualify authenticated cross-owner intake/composition against its original artifact. The consumer's separately scoped `WEBSITE_RELEASE_READ_TOKEN` is needed for website Actions archive intake; its existing job token remains scoped to application/composition work. Follow with real application/OIDC handoff and promotion/retained-slot rollback on the existing isolated host. Only after website release ownership has moved and the remaining application build is self-contained should `marty-ui` become `application`.
+Continue the independent application work in [marty-ui PR #2004](https://github.com/ElevenID/marty-ui/pull/2004) and its [continuation plan](https://github.com/ElevenID/marty-ui/blob/main/docs/restructuring/README.md). The next development boundary is a portable application source archive with a fresh consumer installation, build, tests and runtime qualification outside the original checkout. Keep the accepted composition inputs pinned while that work proceeds.
 
-This checkpoint records publisher implementation, not a completed published release. Production traffic, private commerce, source deletion and repository renaming remain outside this milestone. Local checks and GitHub-hosted qualification continue without changing cloud resources.
+Actual application/OIDC handoff, isolated-host promotion, retained-slot rollback and recovery remain open. The separately scoped website read credential remains confined to website Actions intake; application and composition work retain their existing job-token scope. Only after the remaining source and release acceptance gates pass should `marty-ui` become `application`.
+
+This checkpoint records completed publication and signed composition, without claiming production activation. Production traffic, private commerce, source deletion and repository renaming remain outside this documentation update.
