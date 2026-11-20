@@ -159,6 +159,18 @@ http {
     assert.match((await expectStatus('/demos/2026.09.0', 200)).body, /Fixture home/);
   });
 
+  test('retired demo URLs return Gone, including latest and trailing-slash aliases', async () => {
+    for (const release of ['2026.07.0', '2026.08.0', 'latest']) {
+      for (const slug of ['canvas-learning-achievement', 'external-evidence-to-credential']) {
+        for (const suffix of ['', '/']) {
+          const response = await expectStatus(`/demos/${release}/${slug}${suffix}`, 410);
+          assert.doesNotMatch(response.body, /Fixture home/);
+        }
+      }
+    }
+    assert.match((await expectStatus('/demos/2026.07.0', 200)).body, /Fixture numeric demo/);
+  });
+
   test('pricing and encoded pricing paths remain withheld even when files exist', async () => {
     for (const route of ['/pricing', '/pricing/', '/pricing/checkout', '/%70ricing', '/pricing%2fcheckout']) {
       const response = await expectStatus(route, 404);

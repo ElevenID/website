@@ -3,6 +3,7 @@ import { pathToFileURL } from 'node:url';
 import { WEB_SURFACE_ROUTES } from './web-surface-contract.mjs';
 import { websiteBuildRevision } from './web-surface-build-contract.mjs';
 import { websiteAssetBase } from './website-assets.mjs';
+import { RETIRED_DEMO_SLUGS } from '../src/services/platformDemoScenarios.js';
 
 export function renderWebsiteNginx(revision) {
   websiteAssetBase(revision); // Reject arbitrary text in the generated configuration.
@@ -25,6 +26,10 @@ export function renderWebsiteNginx(revision) {
   for (const prefix of WEB_SURFACE_ROUTES.website.path_prefixes) {
     if (prefix === '/_website/') continue; // Resource policy is stronger than page fallbacks.
     lines.push(`location ${prefix} {`, '    try_files $uri/index.html /index.html;', '    expires -1;', '}');
+  }
+  if (WEB_SURFACE_ROUTES.website.path_prefixes.includes('/demos/')) {
+    const retiredSlugs = RETIRED_DEMO_SLUGS.join('|');
+    lines.push(`location ~ "^/demos/[^/]+/(${retiredSlugs})/?$" {`, '    return 410;', '}');
   }
   for (const pattern of WEB_SURFACE_ROUTES.website.filename_patterns) {
     lines.push(`location ~ ${pattern} {`, '    try_files $uri =404;', '    expires -1;', '}');

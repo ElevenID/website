@@ -190,6 +190,15 @@ try {
   for (const route of deniedRoutes) {
     assert.equal((await request(route)).status, 404, 'Withheld or application-owned path ' + route);
   }
+  const retiredRoutes = [
+    '/demos/2026.07.0/canvas-learning-achievement',
+    '/demos/2026.08.0/external-evidence-to-credential/',
+    '/demos/latest/canvas-learning-achievement/',
+    '/demos/latest/external-evidence-to-credential',
+  ];
+  for (const route of retiredRoutes) {
+    assert.equal((await request(route)).status, 410, 'Retired demo permalink ' + route);
+  }
   const dottedDemo = await request('/demos/2026.08.0');
   assert.equal(dottedDemo.status, 200, 'Numeric dotted demo version must remain a page route');
   const missingAsset = await request(`/_website/${revision}/assets/missing.js`);
@@ -203,7 +212,7 @@ try {
     image_id: imageInfo.Id,
     route_count: pageResults.length,
     resource_checks: resources.length + selectedAssets.length + 2,
-    denied_route_checks: deniedRoutes.length,
+    denied_route_checks: deniedRoutes.length + retiredRoutes.length,
     security_headers: ['X-Marty-Website-Revision', 'X-Frame-Options', 'X-Content-Type-Options',
       'Referrer-Policy', 'Content-Security-Policy'],
     demo_publication: plan.demoIndex.releases.map((entry) => ({
