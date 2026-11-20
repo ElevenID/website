@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "purpose": "post-extraction-adaptation-record",
+  "source_repository": "ElevenID/marty-ui",
+  "immutable_source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "extends": "contracts/extraction-provenance-batch-24.json",
+  "batch": "25-retired-demo-http-status",
+  "adapted_files": [
+    {
+      "path": "ui/scripts/render-website-nginx.mjs",
+      "source_original_blob": "0edf2fd1ba1062f2b0226887abf8694bc8f1a769",
+      "previous_extracted_blob": "6f6575071b47eef9e7fd56978fc6c752772ece2f",
+      "current_blob": "b6f33a3b76ae43fe37c1e072dde004f493dece04",
+      "current_bytes": 2462,
+      "change": "Return HTTP 410 for retired demo permalinks, including versioned and latest aliases."
+    }
+  ],
+  "tests": [
+    "tests/nginx/website-nginx.test.mjs",
+    "scripts/qualify-website-nginx.mjs"
+  ]
+}
