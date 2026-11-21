@@ -1,4 +1,5 @@
 node_modules/
 .qualification/
+.demo-browser/
 ui/dist-website/
 __pycache__/

@@ -103,6 +103,14 @@ describe('AI capability page composition', () => {
     }
   });
 
+  it('does not advertise unsupported CLI or universal agent capabilities', () => {
+    mount();
+    for (const unsupported of [
+      '@elevenid/marty-cli', 'marty verify start', 'marty creds issue',
+      'All commands support', 'primary interface for AI agents',
+    ]) expect(document.body.textContent).not.toContain(unsupported);
+  });
+
   it('uses safe separate-tab links for machine-readable interfaces and the catalog source', () => {
     mount();
     const links = [
