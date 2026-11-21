@@ -44,8 +44,8 @@
       "source_blob": "c7887a4e237457a90a08beb977b468deba208e8d",
       "source_sha256": "0aca4a4ad44fba235aeeaa7a5e23d6537105965951030756e95c2146987945c8",
       "source_bytes": 10856,
-      "current_sha256": "51e56c4cbc41424588b07e555cd86e0409c353aef4c79e9dd4cb095bb67e8755",
-      "current_bytes": 12768
+      "current_sha256": "2f48e6665cd2eb9bfd60debdbc40ce945030bd3f56263cb4cdc87cfa9fb4d989",
+      "current_bytes": 13096
     },
     {
       "path": "tests/playwright.demo-platform.config.mjs",

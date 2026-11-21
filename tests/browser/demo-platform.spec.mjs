@@ -60,7 +60,8 @@ async function observeBrowser(page, { consent = false } = {}) {
     if (consent && url.origin === 'https://www.youtube-nocookie.com' && /^\/embed\/[A-Za-z0-9_-]{11}$/.test(url.pathname)) {
       telemetry.youtube.push(url.href);
       // A local response proves consent and iframe navigation, not remote playback.
-      await route.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><title>Local privacy-player response</title>' });
+      await route.fulfill({ status: 200, contentType: 'text/html',
+        body: '<!doctype html><title>Local privacy-player response</title><body><p data-testid="privacy-player-fixture">Local privacy-player response</p></body>' });
       return;
     }
     telemetry.external.push(url.href);
@@ -207,12 +208,14 @@ test('historical public videos wait for consent and use a local privacy-enhanced
       await expect(player).toHaveAttribute('src', new RegExp(`^https://www\\.youtube-nocookie\\.com/embed/${scenario.youtube_id}\\?`));
       await expect(player).toHaveAttribute('src', /cc_load_policy=1/);
       await expect.poll(() => telemetry.youtube.length).toBeGreaterThan(before);
-      await expect(player.contentFrame().locator('title')).toHaveText('Local privacy-player response');
+      await expect(player.contentFrame().getByTestId('privacy-player-fixture')).toBeVisible();
+      await expect(player.contentFrame().getByTestId('privacy-player-fixture')).toHaveText('Local privacy-player response');
       const chapter = scenario.chapters.find(({ start_seconds }) => start_seconds > 0);
       if (chapter) {
         await page.getByRole('button', { name: literalPattern(chapter.title) }).click();
         await expect(player).toHaveAttribute('src', new RegExp(`(?:\\?|&)start=${chapter.start_seconds}(?:&|$)`));
-        await expect(player.contentFrame().locator('title')).toHaveText('Local privacy-player response');
+        await expect(player.contentFrame().getByTestId('privacy-player-fixture')).toBeVisible();
+        await expect(player.contentFrame().getByTestId('privacy-player-fixture')).toHaveText('Local privacy-player response');
       }
       checked++;
     }
