@@ -1,6 +1,8 @@
 # Standalone website publication
 
-The `Standalone website release` workflow publishes the public website from this repository's selected protected-main commit. Its fixed signer identity is `.github/workflows/production-website-release.yml@refs/heads/main`; its image coordinate is `ghcr.io/elevenid/website`. The release subject uses the [v2 standalone contract](standalone-release-contract.md).
+The `Standalone website release` workflow publishes the public website from this repository's selected protected-main commit. Its fixed signer identity is `.github/workflows/production-website-release.yml@refs/heads/main`; its image coordinate is `ghcr.io/elevenid/website`. The release subject uses the [v3 standalone contract](standalone-release-contract.md).
+
+The previously accepted v2 publications and composition retain their original source, run, attempt and proof bytes. The Bun v3 source change requires a new explicitly selected publication and consumer qualification before its output is used.
 
 Publication includes a fresh complete qualification of the selected source, a registry manifest bound to the qualified container, and original receipt and image signatures. The website release can then enter the existing authenticated intake and composition flow in `ElevenID/marty-ui`.
 
@@ -25,13 +27,13 @@ Publication credentials occupy one private `RUNNER_TEMP/website-publisher-home/.
 
 ## Qualification and publication sequence
 
-1. Install the exact website dependency lockfile and run the contract, component, build and Nginx routing tests.
+1. Validate both lock identities, install `bun.lock` with pinned Bun 1.4.4 and `bun install --frozen-lockfile --linker=hoisted` and run the contract, component, build and Nginx routing tests.
 2. Build the independent development fixture and verify its browser routes and isolated application handoff.
 3. Build the production static tree, prerender every public route, and verify public assets and final output.
 4. Build the pinned-base `linux/amd64` container and qualify that exact local image through Nginx.
-5. Finalize the source and output evidence and create the v2 plan from the unchanged checkout and output bytes.
+5. Finalize the source and output evidence and create the v3 plan from the unchanged checkout and output bytes.
 6. Publish the already qualified image, resolve the registry's actual manifest, pull its immutable digest, and verify the manifest and pulled image against the qualified image identity.
-7. Create the v2 release subject, sign and attest the published image and receipt, then verify the retained original proofs with the same pinned GitHub CLI and Cosign versions used by consumers.
+7. Create the v3 release subject, sign and attest the published image and receipt, then verify the retained original proofs with the same pinned GitHub CLI and Cosign versions used by consumers.
 8. Upload only the fixed release proof set under the original run-attempt artifact name.
 
 The registry operation does not rebuild the container. The local image/config ID, static output inventory digest and registry manifest digest remain distinct values. The published manifest must identify the qualified image configuration, and the immutable pulled image must match the qualified Linux amd64 image and filesystem identity. Only the verified registry manifest digest can become `image.digest` in `website-release.json`.
@@ -52,7 +54,7 @@ It contains exactly five files and is retained for 90 days:
 
 | File | Purpose |
 | --- | --- |
-| `website-release.json` | V2 subject binding source, qualified build plan, image metadata and published registry manifest |
+| `website-release.json` | V3 subject binding source, qualified build plan, image metadata and published registry manifest |
 | `website-release.json.sigstore.json` | Original Cosign blob-signature bundle for the exact subject bytes |
 | `website-release.json.provenance.jsonl` | Original GitHub SLSA provenance bundle for the receipt |
 | `image.provenance.jsonl` | Original GitHub SLSA provenance bundle for the immutable published image |

@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "purpose": "post-extraction-adaptation-record",
+  "source_repository": "ElevenID/marty-ui",
+  "immutable_source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "extends": "contracts/extraction-provenance-batch-25.json",
+  "previous_website_source": "bc769d8d5caf9c44945a192b9916e03b87902eb7",
+  "batch": "26-bun-and-development-parity",
+  "adapted_files": [
+    {
+      "path": "ui/scripts/web-surface-build-contract.mjs",
+      "source_original_blob": "bcb80076c5fca772ab834b52db505987314d932e",
+      "previous_extracted_blob": "d6029086383a17e333c1db2bcb8fcd5a6cef2132",
+      "current_blob": "0d92ed8d71af86ade6c985d95b941fbe3f452534",
+      "current_bytes": 4674,
+      "change": "Emit the Bun v3 public image marker; the release validator retains the exact original v2 contract and signed evidence."
+    },
+    {
+      "path": "ui/scripts/web-surface-build-contract.test.mjs",
+      "source_original_blob": "530795a0d87269f5dd108c101f98080159133e7e",
+      "previous_extracted_blob": "647f06bc9595b954875689e0992e7745dc836323",
+      "current_blob": "f4709dc584afc2fdcce3119c89f5b44a3f62d0e1",
+      "current_bytes": 6491,
+      "change": "Verify the new public v3 marker while preserving the full-adapter v1 boundary."
+    },
+    {
+      "path": "ui/scripts/website-assets.mjs",
+      "source_original_blob": "0cf0fee406e2d4c1888f254e0b7867a9092149d4",
+      "previous_extracted_blob": "60c22621dfb61d848123494d88ebd8a1d4d3368a",
+      "current_blob": "b8733602982248c54843ed971ddcd9ce881dcec6",
+      "current_bytes": 5576,
+      "change": "Serve website-owned runtime, branding, locale, demo and image resources in development with the same path mapping and manifest rewriting as production; reject missing assets before the Vite SPA fallback."
+    }
+  ],
+  "tests": [
+    "tests/package-manager.test.mjs",
+    "tests/build/website-development.test.mjs",
+    "tests/build/standalone-release-contract.test.mjs",
+    "tests/build/qualification-evidence.test.mjs"
+  ]
+}

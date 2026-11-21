@@ -12,6 +12,9 @@ const releaseAdaptation = JSON.parse(readFileSync(
 const retirementAdaptation = JSON.parse(readFileSync(
   new URL('../contracts/extraction-provenance-batch-25.json', import.meta.url), 'utf8',
 ));
+const regressionAdaptation = JSON.parse(readFileSync(
+  new URL('../contracts/extraction-provenance-batch-26.json', import.meta.url), 'utf8',
+));
 const expectedPaths = [
   'ui/nginx.website.conf',
   'ui/nginx.website.headers.conf',
@@ -53,14 +56,16 @@ test('batch 11 preserved and adapted files match their recorded blob identities'
       const hash = createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
       if (adapted) {
         assert.ok(entry.changes.length > 0, entry.target_path);
-        const current = [...releaseAdaptation.adapted_files, ...retirementAdaptation.adapted_files]
-          .find((item) => item.path === entry.target_path);
-        if (current) {
+        const adaptations = [...releaseAdaptation.adapted_files, ...retirementAdaptation.adapted_files,
+          ...regressionAdaptation.adapted_files].filter((item) => item.path === entry.target_path);
+        let expectedBlob = entry.target_git_blob_sha1;
+        for (const current of adaptations) {
           assert.equal(current.source_original_blob, entry.source_git_blob_sha1);
-          assert.equal(current.previous_extracted_blob, entry.target_git_blob_sha1);
-          assert.equal(bytes.length, current.current_bytes);
-          assert.equal(hash, current.current_blob, entry.target_path);
-        } else assert.equal(hash, entry.target_git_blob_sha1, entry.target_path);
+          assert.equal(current.previous_extracted_blob, expectedBlob);
+          expectedBlob = current.current_blob;
+        }
+        assert.equal(hash, expectedBlob, entry.target_path);
+        if (adaptations.length) assert.equal(bytes.length, adaptations.at(-1).current_bytes);
       } else {
         assert.equal(entry.transfer, 'verbatim');
         assert.equal(bytes.length, entry.bytes, entry.target_path);

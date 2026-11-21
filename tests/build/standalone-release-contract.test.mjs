@@ -17,6 +17,7 @@ import { websiteReleaseMetadata } from '../../ui/scripts/web-surface-build-contr
 const repository = fileURLToPath(new URL('../../', import.meta.url));
 const fixture = JSON.parse(readFileSync(new URL('../../contracts/fixtures/standalone-website-release-v2.json', import.meta.url), 'utf8'));
 const release = fixture.release;
+const bunFixture = JSON.parse(readFileSync(new URL('../../contracts/fixtures/standalone-website-release-v3.json', import.meta.url), 'utf8'));
 const LOCAL_IMAGE = 'sha256:' + 'c'.repeat(64);
 const hash = (bytes) => 'sha256:' + createHash('sha256').update(bytes).digest('hex');
 
@@ -25,10 +26,47 @@ test('the shared Node/Python synthetic fixture fixes the v2 envelope and canonic
   assert.equal(releasePlanDigest(release.build_plan), 'sha256:651dc6a6bf9ed66ba7b2a58edfe72a6efd266924fa71f4a82aa514ddd7b8f609');
   assert.deepEqual(validateStandaloneRelease(release), release);
   const plan = createStandaloneBuildPlan({ sourceSha: release.source_sha, inputSha256: release.build_plan.input_sha256,
-    output: release.build_plan.output, routeContract: release.build_plan.route_contract });
+    output: release.build_plan.output, routeContract: release.build_plan.route_contract, version: 2 });
   assert.deepEqual(createStandaloneRelease({ buildPlan: plan, imageMetadata: standaloneImageMetadata(plan),
     registryManifestDigest: release.image.digest, runId: '1234567890', runAttempt: '2' }), release);
   assert.equal(hash(canonicalReleaseJson(plan)), release.build_plan_sha256);
+});
+
+test('the Bun v3 contract binds both locks, preserves Node/Python parity and leaves v2 evidence valid', () => {
+  const record = bunFixture.release;
+  assert.equal(bunFixture.purpose, 'synthetic-contract-fixture-not-release-evidence');
+  assert.deepEqual(validateStandaloneRelease(record), record);
+  assert.equal(record.build_plan.package_manager, 'bun@1.4.4');
+  assert.equal(record.build_plan.dependency_lock, 'bun.lock');
+  assert.match(record.build_plan.input_sha256['bun.lock'], /^sha256:/);
+  assert.match(record.build_plan.input_sha256['package-lock.json'], /^sha256:/);
+  const plan = createStandaloneBuildPlan({ sourceSha: record.source_sha, inputSha256: record.build_plan.input_sha256,
+    output: record.build_plan.output, routeContract: record.build_plan.route_contract });
+  assert.deepEqual(createStandaloneRelease({ buildPlan: plan, imageMetadata: standaloneImageMetadata(plan),
+    registryManifestDigest: record.image.digest, runId: record.producer.run_id, runAttempt: record.producer.run_attempt }), record);
+  assert.equal(releasePlanDigest(plan), record.build_plan_sha256);
+  assert.deepEqual(validateStandaloneRelease(release), release);
+});
+
+for (const [label, mutate] of [
+  ['floating Bun', (r) => { r.build_plan.package_manager = 'bun@latest'; }],
+  ['npm replacement', (r) => { r.build_plan.dependency_lock = 'package-lock.json'; }],
+  ['missing Bun input', (r) => { delete r.build_plan.input_sha256['bun.lock']; }],
+  ['missing npm reference', (r) => { delete r.build_plan.input_sha256['package-lock.json']; }],
+  ['v2 envelope around v3 plan', (r) => { r.schema = 'marty.website-release/v2'; }],
+  ['v2 image marker', (r) => { r.image_metadata.schema = 'marty.website-image/v2'; }],
+]) {
+  test('Bun release rejects ' + label, () => {
+    const record = structuredClone(bunFixture.release);
+    mutate(record);
+    assert.throws(() => validateStandaloneRelease(record));
+  });
+}
+
+test('the historical v2 shape cannot acquire unsigned Bun identity fields', () => {
+  const old = structuredClone(release);
+  old.build_plan.package_manager = 'bun@1.4.4';
+  assert.throws(() => validateStandaloneRelease(old));
 });
 
 for (const [label, mutate] of [

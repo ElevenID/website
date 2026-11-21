@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from 'node:fs';
+import { lstatSync, readFileSync, readdirSync, realpathSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -10,29 +10,71 @@ export function websiteAssetBase(revision) {
 export function websiteAssetsPlugin(revision) {
   const base = websiteAssetBase(revision);
   const publicRoot = fileURLToPath(new URL('../public/', import.meta.url));
+  let building = true;
+  const selected = (relative) => !relative.endsWith('.html')
+    && (!/^locales\/[^/]+\//.test(relative) || /\/(?:common|marketing)\.json$/.test(relative));
+  const assetName = (relative) => relative === 'runtime-config.js' ? '_website/runtime-config.js'
+    : ['llms.txt', 'blog/rss.xml'].includes(relative) ? relative : `${base.slice(1)}${relative}`;
+  function assetSource(relative) {
+    let source = readFileSync(path.join(publicRoot, relative));
+    if (relative === 'manifest.json') {
+      const manifest = JSON.parse(source.toString());
+      manifest.icons = manifest.icons.map((icon) => ({ ...icon, src: `${base}${icon.src.replace(/^\//, '')}` }));
+      manifest.start_url = '/';
+      manifest.scope = '/';
+      source = Buffer.from(`${JSON.stringify(manifest)}\n`);
+    }
+    return source;
+  }
   return {
     name: 'website-assets',
     enforce: 'pre',
+    configResolved(config) { building = config.command === 'build'; },
+    configureServer(server) {
+      // publicDir is disabled so production and development share the same
+      // website-owned URLs. Vite's SPA fallback must never answer asset reads.
+      server.middlewares.use((request, response, next) => {
+        const requested = (request.url || '').split('?', 1)[0];
+        if (!requested.startsWith('/_website/') && requested !== '/llms.txt' && requested !== '/blog/rss.xml') {
+          return next();
+        }
+        const reject = (status) => { response.statusCode = status; response.end(); };
+        if (request.method !== 'GET' && request.method !== 'HEAD') return reject(405);
+        let decoded;
+        try { decoded = decodeURIComponent(requested); } catch { return reject(404); }
+        const relative = decoded === '/_website/runtime-config.js' ? 'runtime-config.js'
+          : decoded === '/llms.txt' || decoded === '/blog/rss.xml' ? decoded.slice(1)
+            : decoded.startsWith(base) ? decoded.slice(base.length) : null;
+        if (!relative || relative.includes('\\') || /[\x00-\x1f\x7f]/.test(relative)
+          || relative.split('/').some((segment) => !segment || segment === '.' || segment === '..')
+          || !selected(relative) || '/' + assetName(relative) !== decoded) return reject(404);
+        const absolute = path.join(publicRoot, relative);
+        try {
+          if (!lstatSync(absolute).isFile() || realpathSync(absolute) !== absolute) return reject(404);
+          const source = assetSource(relative);
+          const types = { '.js': 'text/javascript', '.json': 'application/json', '.xml': 'application/xml',
+            '.txt': 'text/plain', '.svg': 'image/svg+xml', '.png': 'image/png', '.ico': 'image/x-icon',
+            '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.woff2': 'font/woff2' };
+          response.setHeader('Content-Type', types[path.extname(relative)] || 'application/octet-stream');
+          response.setHeader('Content-Length', source.length);
+          response.setHeader('Cache-Control', 'no-store');
+          response.end(request.method === 'HEAD' ? undefined : source);
+        } catch (error) {
+          if (error.code === 'ENOENT' || error.code === 'ENOTDIR') return reject(404);
+          next(error);
+        }
+      });
+    },
     buildStart() {
+      if (!building) return;
       const emitDirectory = (directory, prefix = '') => {
         for (const entry of readdirSync(directory, { withFileTypes: true })) {
           const relative = prefix ? `${prefix}/${entry.name}` : entry.name;
           const absolute = path.join(directory, entry.name);
           if (entry.isDirectory()) { emitDirectory(absolute, relative); continue; }
-          if (!entry.isFile() || relative.endsWith('.html')) continue;
+          if (!entry.isFile() || !selected(relative)) continue;
           // Product translations and test harnesses do not belong in the website.
-          if (/^locales\/[^/]+\//.test(relative) && !/\/(?:common|marketing)\.json$/.test(relative)) continue;
-          let source = readFileSync(absolute);
-          if (relative === 'manifest.json') {
-            const manifest = JSON.parse(source.toString());
-            manifest.icons = manifest.icons.map((icon) => ({ ...icon, src: `${base}${icon.src.replace(/^\//, '')}` }));
-            manifest.start_url = '/';
-            manifest.scope = '/';
-            source = `${JSON.stringify(manifest)}\n`;
-          }
-          const fileName = relative === 'runtime-config.js' ? '_website/runtime-config.js'
-            : ['llms.txt', 'blog/rss.xml'].includes(relative) ? relative : `${base.slice(1)}${relative}`;
-          this.emitFile({ type: 'asset', fileName, source });
+          this.emitFile({ type: 'asset', fileName: assetName(relative), source: assetSource(relative) });
         }
       };
       emitDirectory(publicRoot);
