@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "purpose": "post-extraction-adaptation-record",
+  "source_repository": "ElevenID/marty-ui",
+  "immutable_source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "extends": "contracts/extraction-provenance-batch-26.json",
+  "previous_website_source": "7a505074558219239850ff1681275facd42c369b",
+  "adapted_website_source": "78174699a0ad5e534b8f75d5db2c399d09d8b9c7",
+  "batch": "27-full-standalone-producer-contract",
+  "adapted_files": [
+    {
+      "path": "ui/scripts/production-build-contract.mjs",
+      "source_original_blob": "ce50431b187494a7aef0d1d5000eaa9c172e285f",
+      "previous_extracted_blob": "ce50431b187494a7aef0d1d5000eaa9c172e285f",
+      "current_blob": "7a023a422456cea6df4f897d040984167fdd3d22",
+      "current_bytes": 2955,
+      "change": "Require absolute private adapter selection, exact source identity, and bounded regular source/identity files without symlink components before selecting the website adapter."
+    },
+    {
+      "path": "ui/scripts/web-surface-build-contract.mjs",
+      "source_original_blob": "bcb80076c5fca772ab834b52db505987314d932e",
+      "previous_extracted_blob": "0d92ed8d71af86ade6c985d95b941fbe3f452534",
+      "current_blob": "695127519815b06c7cf165907722d61cda4ad923",
+      "current_bytes": 5224,
+      "change": "Bind explicit build environment selection to both exact sources and emit the full-only v4 marker while preserving public v3 metadata and private module exclusions."
+    },
+    {
+      "path": "ui/scripts/web-surface-build-contract.test.mjs",
+      "source_original_blob": "530795a0d87269f5dd108c101f98080159133e7e",
+      "previous_extracted_blob": "f4709dc584afc2fdcce3119c89f5b44a3f62d0e1",
+      "current_blob": "64d6abff7c83b5f22ee46ce3b093ba2477228171",
+      "current_bytes": 6491,
+      "change": "Expect the new full v4 marker while retaining the existing public v3 and both-source identity assertions."
+    }
+  ],
+  "tests": [
+    "tests/extraction-batch-27.test.mjs",
+    "tests/route-contract.test.mjs",
+    "tests/extraction-batch-11.test.mjs",
+    "tests/build/full-standalone-release-contract.test.mjs",
+    "tests/build/full-website-build.test.mjs"
+  ]
+}

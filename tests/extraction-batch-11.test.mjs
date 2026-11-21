@@ -15,6 +15,9 @@ const retirementAdaptation = JSON.parse(readFileSync(
 const regressionAdaptation = JSON.parse(readFileSync(
   new URL('../contracts/extraction-provenance-batch-26.json', import.meta.url), 'utf8',
 ));
+const fullProducerAdaptation = JSON.parse(readFileSync(
+  new URL('../contracts/extraction-provenance-batch-27.json', import.meta.url), 'utf8',
+));
 const expectedPaths = [
   'ui/nginx.website.conf',
   'ui/nginx.website.headers.conf',
@@ -57,7 +60,8 @@ test('batch 11 preserved and adapted files match their recorded blob identities'
       if (adapted) {
         assert.ok(entry.changes.length > 0, entry.target_path);
         const adaptations = [...releaseAdaptation.adapted_files, ...retirementAdaptation.adapted_files,
-          ...regressionAdaptation.adapted_files].filter((item) => item.path === entry.target_path);
+          ...regressionAdaptation.adapted_files, ...fullProducerAdaptation.adapted_files]
+          .filter((item) => item.path === entry.target_path);
         let expectedBlob = entry.target_git_blob_sha1;
         for (const current of adaptations) {
           assert.equal(current.source_original_blob, entry.source_git_blob_sha1);
