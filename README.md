@@ -10,23 +10,30 @@ The [standalone qualification workflow](.github/workflows/standalone-qualificati
 
 **Standalone signed publication and cross-owner composition are qualified.** The original [publisher run `44449706828`, attempt 2](https://github.com/ElevenID/website/actions/runs/44449706828/attempts/2) supplied the website selected by the successful [composition run `44594894023`, attempt 1](https://github.com/ElevenID/marty-ui/actions/runs/44594894023/attempts/1). A newer successful website publication does not change that composition's pinned inputs. Actual application/OIDC handoff, isolated-host promotion and retained-slot rollback remain separate gates. [Latest checkpoint](docs/migration-status.md) · [Qualification and evidence](docs/standalone-qualification.md).
 
-The [standalone release contract](docs/standalone-release-contract.md) defines the website-only producer identity, v2 build/release/image data, exact source and output hashes, and compatibility with existing release consumers. The [manual protected-main publisher](docs/standalone-publication.md) repeats qualification, publishes the exact qualified image, verifies its registry identity, and signs and preserves the original five-file proof set. Merging its source does not dispatch a release or activate production traffic.
+The [standalone release contract](docs/standalone-release-contract.md) defines the website-only producer identity, Bun v3 build/release/image data with retained v2 compatibility, exact source and output hashes, and compatibility with existing release consumers. The [manual protected-main publisher](docs/standalone-publication.md) repeats qualification, publishes the exact qualified image, verifies its registry identity, and signs and preserves the original five-file proof set. Merging its source does not dispatch a release or activate production traffic.
 
 ## Development and tests
 
-Node.js **24.22.1** is pinned in CI. Python 3.10+ is required for crawler tests, and Docker is required for the separate pinned Nginx HTTP suite.
+Bun **1.4.4** installs dependencies and runs package scripts. Node.js **24.22.1** is pinned in CI for website tooling and the test runtime. Python 3.10+ is required for crawler tests, and Docker is required for the separate pinned Nginx HTTP suite.
 
 ```sh
-npm ci --no-audit --no-fund
-npm test
-npm run test:nginx
-MARTY_WEBSITE_SOURCE_SHA=development MARTY_WEBSITE_ALLOW_DEVELOPMENT=true npm run build:website
+node scripts/verify-package-manager.mjs
+bun install --frozen-lockfile --linker=hoisted
+bun run test
+bun run test:nginx
+MARTY_WEBSITE_SOURCE_SHA=development MARTY_WEBSITE_ALLOW_DEVELOPMENT=true bun run build:website
 node scripts/verify-standalone-bundle.mjs
 ```
 
-`npm run build:website` generates the demo module before the website-only TypeScript/Vite stages. Its development output does not have production provenance.
+`bun run dev` serves the website at Vite's printed local URL with runtime configuration, branding, translations, images and demo manifests in the same website-owned namespaces used by builds. Set `VITE_DEV_PUBLIC_ORIGIN=https://your-development-host:8443` when an existing development edge supplies the public origin; HMR keeps that exact host and port. Application-owned sign-in and verification journeys still require the separate application/edge.
+
+`packageManager` pins Bun, and `bun.lock` is the install lock. `package-lock.json` remains the reviewed compatibility/reference lock. `node scripts/verify-package-manager.mjs` verifies that both locks describe identical package versions, sources and integrity values. Node 24 remains the JavaScript runtime for the build and test commands.
+
+`bun run build:website` generates the demo module before the website-only TypeScript/Vite stages. Its development output does not have production provenance.
 
 For production-mode qualification, use an exact clean Git checkout, Chrome and Docker, then follow [the qualification procedure](docs/standalone-qualification.md). Its output records a local Docker image ID, not a published registry digest or signed release.
+
+The [regression audit](docs/extraction-regression-audit.md) records the Bun and local-development repairs and their validation. These source changes do not replace the accepted signed publication/composition checkpoint above.
 
 ## Ownership
 

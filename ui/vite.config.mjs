@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { websiteAssetBase, websiteAssetsPlugin } from './scripts/website-assets.mjs';
 import { websiteBuildRevision, webSurfaceBuildContractPlugin } from './scripts/web-surface-build-contract.mjs';
 import { muiIconMjsCompatibilityPlugin } from './scripts/mui-icon-compatibility.mjs';
+import { devServerOrigin } from './scripts/dev-server-origin.mjs';
 
 const uiRoot = fileURLToPath(new URL('.', import.meta.url));
 const sourceSha = process.env.MARTY_WEBSITE_SOURCE_SHA || 'development';
@@ -19,6 +20,10 @@ export default defineConfig({
   // doubles every entry/preload URL and prevents the browser from starting.
   base: '/',
   define: { 'import.meta.env.VITE_WEBSITE_ASSET_BASE': JSON.stringify(assetBase) },
+  server: {
+    ...devServerOrigin(process.env),
+    headers: { 'Cache-Control': 'no-store' },
+  },
   resolve: {
     alias: {
       '@ui-public-config': fileURLToPath(new URL('./src/variants/publicConfig.website.js', import.meta.url)),

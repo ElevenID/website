@@ -32,21 +32,26 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
         with:
           node-version: '24.22.1'
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version: '1.4.4'
       - name: Install website-only pinned dependencies
-        run: npm ci --no-audit --no-fund
+        run: |
+          node scripts/verify-package-manager.mjs
+          bun install --frozen-lockfile --linker=hoisted
       - name: Build and verify independent development fixture
         env:
           MARTY_WEBSITE_SOURCE_SHA: development
           MARTY_WEBSITE_ALLOW_DEVELOPMENT: 'true'
         run: |
-          npm run build:website
+          bun run build:website
           node scripts/verify-standalone-bundle.mjs
           node scripts/verify-public-assets.mjs
       - name: Qualify real rendered pages and isolated application handoff
         run: node scripts/qualify-rendered-website.mjs
       - name: Build production output and prerender every public route
         run: |
-          npm run build:website:production
+          bun run build:website:production
           node scripts/verify-public-assets.mjs
       - name: Build the standalone image with a pinned Nginx base
         run: node scripts/build-website-image.mjs

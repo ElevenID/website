@@ -16,9 +16,9 @@ The implementation is split between the producer in this repository and the exis
 | Platform | `linux/amd64` |
 | Production pages | `public` |
 | Commerce extension | `null` |
-| Build-plan schema | `marty.website-build-plan/v2` |
-| Release-receipt schema | `marty.website-release/v2` |
-| Image metadata schema | `marty.website-image/v2` |
+| Build-plan schema | `marty.website-build-plan/v3` |
+| Release-receipt schema | `marty.website-release/v3` |
+| Image metadata schema | `marty.website-image/v3` |
 
 The signer workflow accepts only manual dispatch for an explicitly selected protected-main commit. The `standalone-qualification.yml` workflow remains a separate, unsigned qualification workflow. Its workflow identity cannot stand in for the release identity.
 
@@ -26,13 +26,15 @@ Source and revision are the same exact 40-character lowercase Git commit SHA fro
 
 ## Exact build inputs and output
 
-The v2 plan describes the build that this repository actually performs: a static output tree built with the root dependency lockfile and packaged by `Dockerfile.website`. Its fixed `build_kind` is `prebuilt-static`; it does not describe the legacy `docker/ui.Dockerfile` website target or require an application checkout.
+The v3 plan describes the build that this repository actually performs: a static output tree built with the root dependency lockfile and packaged by `Dockerfile.website`. Its fixed `build_kind` is `prebuilt-static`; it does not describe the legacy `docker/ui.Dockerfile` website target or require an application checkout.
+
+The v3 plan fixes `package_manager` to `bun@1.4.4` and `dependency_lock` to `bun.lock`. Frozen Bun installation preserves the npm reference lock's complete package version/source/integrity identity set; Node 24 remains the build and test runtime. The planner verifies the two locks against the declared manifest.
 
 The plan records raw-file SHA-256 fingerprints for this closed set of source inputs:
 
 | Input group | Files |
 | --- | --- |
-| Dependencies | `package.json`, `package-lock.json` |
+| Dependencies | `package.json`, `bun.lock`, `package-lock.json` |
 | Container | `Dockerfile.website`, `scripts/build-website-image.mjs` |
 | Routes and rendering | `contracts/web-surface-routes.json`, `scripts/prerender-website.mjs`, `scripts/website-prerender-plan.mjs` |
 | Nginx | `ui/nginx.website.conf`, `ui/nginx.website.headers.conf`, `ui/scripts/render-website-nginx.mjs` |
@@ -68,7 +70,7 @@ First complete the production-mode source, prerender, output, image and HTTP che
 node scripts/website-release-contract.mjs plan
 ```
 
-`MARTY_WEBSITE_SOURCE_SHA` must still identify the qualified clean checkout. The command re-runs the qualification finalizer, rechecks all stage receipts against the current output, hashes the source inputs, and compares the built `marty-website-release.json` with the expected v2 image metadata. It prints the plan to standard output. Keep captured output outside the tracked source tree and outside the qualification directory's closed receipt set.
+`MARTY_WEBSITE_SOURCE_SHA` must still identify the qualified clean checkout. The command re-runs the qualification finalizer, rechecks all stage receipts against the current output, hashes the source inputs, and compares the built `marty-website-release.json` with the expected v3 image metadata. It prints the plan to standard output. Keep captured output outside the tracked source tree and outside the qualification directory's closed receipt set.
 
 The command emits a build plan only. It does not convert `website-qualification.json` into a release receipt or infer a registry digest from its local image ID. Repeated finalization is permitted only when the existing evidence bytes still match.
 
@@ -76,7 +78,7 @@ For the plan digest, JavaScript recursively sorts object keys, serializes with t
 
 ## Release receipt and proof boundary
 
-The pure release factory defines the `marty.website-release/v2` subject. It contains the exact source/revision, public audience, null commerce extension, original producer identity, fixed image coordinate with a manifest digest, complete v2 build plan and its digest, and expected v2 image metadata. The validator requires those representations to agree. The factory does not sign or authenticate any of them. The read-only `website-release-contract.mjs validate --receipt ABSOLUTE_PATH` command applies this complete closed schema to a bounded local receipt; cryptographic verification follows separately.
+The pure release factory defines the `marty.website-release/v3` subject. It contains the exact source/revision, public audience, null commerce extension, original producer identity, fixed image coordinate with a manifest digest, complete v3 build plan and its digest, and expected v3 image metadata. The validator requires those representations to agree. The factory does not sign or authenticate any of them. The read-only `website-release-contract.mjs validate --receipt ABSOLUTE_PATH` command applies this complete closed schema to a bounded local receipt; cryptographic verification follows separately.
 
 Three identifiers must remain distinct:
 
@@ -108,13 +110,15 @@ The new repository is admitted only for the `website` role and only for its own 
 
 | Producer | Website | Application | Composition | Stable backend |
 | --- | --- | --- | --- | --- |
-| `ElevenID/website` | Public v2 only | Rejected | Rejected | Rejected |
+| `ElevenID/website` | Public v2 and v3 only | Rejected | Rejected | Rejected |
 | Existing `ElevenID/marty-ui` producer | Existing public v1 | Existing combined application | Existing public authority | Existing stable producer contract |
 | Existing private subscriptions producer | Existing private/full v1 | Existing private application | Existing private authority | Existing backend linkage remains unchanged |
 
 Application and composition verification use their explicit roles. Legacy generic proof callers remain restricted to legacy repositories. The new website identity cannot sign an application compatibility receipt, outer composition, backend inventory or another owner's image into acceptance.
 
 A composition may pair the new standalone website with an existing combined public application from a different source SHA. It must retain each original producer identity, source, run, attempt and proof files. Website and application must agree on audience and the exact route contract. The backend remains bound to the selected original application release. No relabeling of a website commit as an application commit is permitted.
+
+Previously signed standalone v2 receipts remain valid through their unchanged closed schema: npm `package-lock.json`, the original eleven input fingerprints, and v2 image metadata. They cannot gain a Bun field or be wrapped in a v3 envelope. V3 adds the Bun lock fingerprint and package-manager identity while retaining the npm lock fingerprint; matching v3 plan, receipt and image versions are mandatory. The shared v2 fixture and its original canonical digest are unchanged, and a separate v3 fixture verifies JavaScript/Python parity.
 
 Legacy public and private v1 receipts remain valid through their existing schema, repository, workflow and image coordinates. Existing private registry credential handling remains in force. Retained website slots admit the new public image in addition to the legacy public and private images; private revisions keep their original commerce-source form. Rollback continues to reauthenticate the retained composition and original proofs, while preserving the currently adopted product baseline and OpenBao controls.
 
@@ -132,4 +136,6 @@ The milestone 17 publisher implements the following publication and original-pro
 4. Retain the complete fixed proof set in the exact original run-attempt artifact and demonstrate original-proof intake and cross-repository composition using those real published bytes.
 5. Qualify the selected combined application's compatibility marker and actual host/application handoff, including retained-slot rollback and existing credential/OpenBao safeguards, before any production activation.
 
-The source implements steps 1–3 and fixed artifact retention in step 4. Real original-proof intake/composition in step 4 and host/application qualification in step 5 remain subsequent operational gates. Existing production workflow defaults remain unchanged.
+These milestone statements describe the original v2 contract and publisher history. The accepted v2 publication and composition are recorded in [migration-status.md](migration-status.md); this Bun v3 change does not supersede them. A future v3 publication needs its own complete qualification.
+
+The original v2 publication and cross-owner composition completed steps 1–4 as recorded in the migration checkpoint. Actual host/application qualification in step 5 remains separate. This Bun v3 source requires its own future publication and consumer qualification; the accepted v2 composition remains selected.

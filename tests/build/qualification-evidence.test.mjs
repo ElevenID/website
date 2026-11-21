@@ -28,6 +28,8 @@ function fixture(t) {
   const root = mkdtempSync(path.join(os.tmpdir(), 'website-evidence-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   put(root, '.gitignore', '.qualification/\nui/dist-website/\n');
+  put(root, 'package.json', '{"name":"website","packageManager":"bun@1.4.4"}\n');
+  put(root, 'bun.lock', '{"lockfileVersion":2}\n');
   put(root, 'package-lock.json', '{"lockfileVersion":3}\n');
   put(root, 'Dockerfile.website', 'FROM scratch\n');
   put(root, 'contracts/web-surface-routes.json', JSON.stringify(JSON.parse(canonicalRoute), null, 2) + '\n');
@@ -38,7 +40,7 @@ function fixture(t) {
   const sourceSha = git(root, 'rev-parse', 'HEAD');
   const options = { root, sourceSha, workflow: null };
   put(root, 'ui/dist-website/marty-website-release.json', JSON.stringify({
-    schema: 'marty.website-image/v2', repository: 'ElevenID/website', surface: 'website',
+    schema: 'marty.website-image/v3', repository: 'ElevenID/website', surface: 'website',
     audience: 'production', production_pages: 'public', source_sha: sourceSha, revision: sourceSha,
     commerce_extension: null, route_contract: { version: 1, sha256: routeDigest },
   }) + '\n');
@@ -105,7 +107,10 @@ test('complete evidence identifies exact bytes and local image without claiming 
   ]);
   assert.equal(evidence.output_manifest.sha256,
     'sha256:' + createHash('sha256').update(readFileSync(path.join(context.root, '.qualification/website-output-manifest.json'))).digest('hex'));
-  assert.equal(Object.keys(evidence.inputs).length, 4);
+  assert.deepEqual(Object.keys(evidence.inputs).sort(), [
+    'Dockerfile.website', 'bun.lock', 'contracts/web-surface-routes.json',
+    'package-lock.json', 'package.json', 'scripts/website-prerender-plan.mjs',
+  ]);
   assert.ok(!JSON.stringify(evidence).includes('"image_id"'));
   assert.deepEqual(finalizeQualificationEvidence(context.options), evidence, 'same finalization is idempotent');
 });

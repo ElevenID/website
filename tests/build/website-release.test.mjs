@@ -39,7 +39,7 @@ test('real Vite static and lazy public output emits website release identity', a
   assert.ok(chunks.some((chunk) => chunk.dynamicImports.length > 0));
   const metadata = JSON.parse(await readFile(path.join(root, 'dist/marty-website-release.json'), 'utf8'));
   assert.deepEqual(metadata, {
-    schema: 'marty.website-image/v2', audience: 'production', surface: 'website', repository: 'ElevenID/website',
+    schema: 'marty.website-image/v3', audience: 'production', surface: 'website', repository: 'ElevenID/website',
     source_sha: fixtureSourceSha, revision: fixtureSourceSha, production_pages: 'public',
     route_contract: WEB_ROUTE_CONTRACT, commerce_extension: null,
   });

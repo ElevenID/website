@@ -6,18 +6,19 @@ The separate migration-provenance workflow compares selected assets with their o
 
 ## Run from a clean checkout
 
-Use the repository's Node 24 dependencies, Python 3.10+, Chrome and Docker. The CI reference environment is Ubuntu 24.04 with Node 24.22.1. Do not change a shared Docker daemon or running installation to run these checks.
+Use Bun 1.4.4 and the repository's Node 24 dependencies, Python 3.10+, Chrome and Docker. The CI reference environment is Ubuntu 24.04 with Node 24.22.1. Do not change a shared Docker daemon or running installation to run these checks.
 
 ```sh
-npm ci --no-audit --no-fund
-npm test
-npm run test:nginx
+node scripts/verify-package-manager.mjs
+bun install --frozen-lockfile --linker=hoisted
+bun run test
+bun run test:nginx
 export MARTY_WEBSITE_SOURCE_SHA="$(git rev-parse HEAD)"
 export MARTY_PRODUCTION_PAGES=public
 export CHROME_PATH=/usr/bin/google-chrome
-npm run build:website:production
+bun run build:website:production
 node scripts/verify-public-assets.mjs
-npm run build:website:image
+bun run build:website:image
 node scripts/qualify-website-nginx.mjs
 node scripts/website-qualification.mjs finalize
 ```

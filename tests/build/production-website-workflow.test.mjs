@@ -147,13 +147,14 @@ test('the publisher uses only the fixed manual protected-main release job and pe
 test('the publisher performs all standalone qualification stages before generating its release plan', () => {
   const operations = [
     'Require the exact protected-main producer',
-    'npm ci --no-audit --no-fund',
-    'npm test',
-    'npm run test:nginx',
+    'node scripts/verify-package-manager.mjs',
+    'bun install --frozen-lockfile --linker=hoisted',
+    'bun run test',
+    'bun run test:nginx',
     'Build and verify independent development fixture',
     'node scripts/verify-standalone-bundle.mjs',
     'node scripts/qualify-rendered-website.mjs',
-    'npm run build:website:production',
+    'bun run build:website:production',
     'node scripts/build-website-image.mjs',
     'node scripts/qualify-website-nginx.mjs',
     'node scripts/website-qualification.mjs finalize',

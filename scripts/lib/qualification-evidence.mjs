@@ -21,7 +21,7 @@ const QUALIFIED = Object.freeze({
   nginx: 'production-website-image',
 });
 const INPUTS = Object.freeze([
-  'package-lock.json', 'Dockerfile.website', 'contracts/web-surface-routes.json',
+  'package.json', 'package-lock.json', 'bun.lock', 'Dockerfile.website', 'contracts/web-surface-routes.json',
   'scripts/website-prerender-plan.mjs',
 ]);
 const KNOWN_FILES = new Set([
@@ -224,7 +224,7 @@ function outputSnapshot(root, sourceSha) {
   positive(files.length, 'Website output file count');
   const releaseBytes = regularBytes(root, path.join(dist, 'marty-website-release.json'), 'Website release metadata');
   const release = JSON.parse(releaseBytes.toString('utf8'));
-  assert.equal(release.schema, 'marty.website-image/v2');
+  assert.equal(release.schema, 'marty.website-image/v3');
   assert.equal(release.repository, REPOSITORY);
   assert.equal(release.surface, 'website');
   assert.equal(release.audience, 'production');
