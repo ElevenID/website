@@ -122,7 +122,7 @@ Previously signed standalone v2 receipts remain valid through their unchanged cl
 
 Legacy public and private v1 receipts remain valid through their existing schema, repository, workflow and image coordinates. Existing private registry credential handling remains in force. Retained website slots admit the new public image in addition to the legacy public and private images; private revisions keep their original commerce-source form. Rollback continues to reauthenticate the retained composition and original proofs, while preserving the currently adopted product baseline and OpenBao controls.
 
-The extraction's retained full adapter still emits its historical v1 metadata. It is outside the standalone public release contract. Development metadata can identify the development build but cannot pass the production release validator.
+The [full standalone v4 contract](full-standalone-release-contract.md) binds this website source to an exact private adapter source and the original subscriptions workflow/image authority. It is outside the standalone public producer contract. Historical private v1 subjects remain unchanged. Development metadata can identify the development build but cannot pass a production release validator.
 
 ## Reviewed milestones and operational qualification
 

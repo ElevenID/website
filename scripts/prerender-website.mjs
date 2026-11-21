@@ -10,7 +10,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
 import { JSDOM } from 'jsdom';
-import { websiteBuildRevision } from '../ui/scripts/web-surface-build-contract.mjs';
+import { websiteBuildSelection, websiteReleaseMetadata } from '../ui/scripts/web-surface-build-contract.mjs';
 import { assertWebsiteRouteCanonical, createWebsitePrerenderPlan } from './website-prerender-plan.mjs';
 import { installPrerenderReadiness } from './lib/prerender-readiness.mjs';
 import { assertWebsiteSource, writeQualificationReceipt } from './lib/qualification-evidence.mjs';
@@ -19,20 +19,14 @@ const execute = promisify(execFile);
 const SITE_ORIGIN = 'https://elevenidllc.com';
 const repositoryRoot = realpathSync(fileURLToPath(new URL('../', import.meta.url)));
 const distRoot = realpathSync(path.join(repositoryRoot, 'ui/dist-website'));
-const sourceSha = process.env.MARTY_WEBSITE_SOURCE_SHA;
-const pages = process.env.MARTY_PRODUCTION_PAGES || 'public';
+const selection = websiteBuildSelection();
+const { sourceSha, revision } = selection;
 assert.match(sourceSha || '', /^[a-f0-9]{40}$/, 'Production prerender requires an exact website source SHA');
 assertWebsiteSource({ root: repositoryRoot, sourceSha });
-assert.equal(pages, 'public', 'This repository only publishes the public website');
-const revision = websiteBuildRevision({ sourceSha, pages, revision: process.env.MARTY_WEBSITE_REVISION });
 const releasePath = path.join(distRoot, 'marty-website-release.json');
 assert.ok(existsSync(releasePath), 'Website release metadata is missing');
 const release = JSON.parse(readFileSync(releasePath, 'utf8'));
-assert.equal(release.audience, 'production');
-assert.equal(release.source_sha, sourceSha);
-assert.equal(release.revision, revision);
-assert.equal(release.production_pages, 'public');
-assert.equal(release.commerce_extension, null);
+assert.deepEqual(release, websiteReleaseMetadata(selection), 'Prerender metadata differs from selected sources');
 
 const plan = await createWebsitePrerenderPlan();
 const routes = plan.routes;
@@ -322,7 +316,7 @@ try {
     pages: pageReceipts.length,
     readiness: readinessCounts,
   };
-  writeQualificationReceipt({ root: repositoryRoot, stage: 'prerender', result });
+  writeQualificationReceipt({ root: repositoryRoot, ...selection, stage: 'prerender', result });
   console.log(JSON.stringify(result));
 } finally {
   server.closeAllConnections();

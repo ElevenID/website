@@ -98,7 +98,7 @@ test('website release metadata names this repository, source inputs and the rout
     production_pages: 'public', route_contract: WEB_ROUTE_CONTRACT, commerce_extension: null,
   });
   const full = websiteReleaseMetadata({ sourceSha, commerceSha, pages: 'full' });
-  assert.equal(full.schema, 'marty.website-image/v1');
+  assert.equal(full.schema, 'marty.website-image/v4');
   assert.equal(full.revision, `${sourceSha}-${commerceSha}`);
   assert.deepEqual(full.commerce_extension, { repository: 'ElevenID/marty-subscriptions', source_sha: commerceSha });
 });

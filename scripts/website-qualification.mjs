@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
+import { websiteBuildSelection } from '../ui/scripts/web-surface-build-contract.mjs';
 import {
   finalizeQualificationEvidence, prepareQualificationEvidence,
 } from './lib/qualification-evidence.mjs';
@@ -9,7 +10,7 @@ assert.equal(extra.length, 0, 'Usage: website-qualification.mjs prepare|finalize
 assert.ok(['prepare', 'finalize'].includes(operation), 'Usage: website-qualification.mjs prepare|finalize');
 const options = {
   root: fileURLToPath(new URL('../', import.meta.url)),
-  sourceSha: process.env.MARTY_WEBSITE_SOURCE_SHA,
+  ...websiteBuildSelection(),
 };
 if (operation === 'prepare') {
   prepareQualificationEvidence(options);

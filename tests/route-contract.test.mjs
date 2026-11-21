@@ -122,6 +122,9 @@ test('copied source and license retain their recorded Git blob identities', () =
     source_git_blob_sha1: '0cf0fee406e2d4c1888f254e0b7867a9092149d4',
     changes: 'Reject non-string revisions before validation or interpolation; preserve valid primitive string behavior.',
   }]);
+  const fullProducerAdaptation = JSON.parse(readFileSync(
+    new URL('../contracts/extraction-provenance-batch-27.json', import.meta.url), 'utf8',
+  ));
   for (const entry of provenance.files) {
     assert.equal(entry.source_path, entry.target_path);
     assert.equal(entry.transfer, 'verbatim');
@@ -129,6 +132,14 @@ test('copied source and license retain their recorded Git blob identities', () =
     assert.ok(lstatSync(file).isFile(), entry.target_path);
     const bytes = readFileSync(file);
     const hash = createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
-    assert.equal(hash, entry.git_blob_sha1, entry.target_path);
+    const adaptations = fullProducerAdaptation.adapted_files.filter((item) => item.path === entry.target_path);
+    let expectedBlob = entry.git_blob_sha1;
+    for (const current of adaptations) {
+      assert.equal(current.source_original_blob, entry.git_blob_sha1);
+      assert.equal(current.previous_extracted_blob, expectedBlob);
+      expectedBlob = current.current_blob;
+    }
+    assert.equal(hash, expectedBlob, entry.target_path);
+    if (adaptations.length) assert.equal(bytes.length, adaptations.at(-1).current_bytes);
   }
 });

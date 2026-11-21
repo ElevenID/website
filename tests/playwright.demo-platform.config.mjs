@@ -1,10 +1,11 @@
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import { defineConfig } from '@playwright/test';
+import { demoBrowserBuildSelection } from '../scripts/lib/demo-browser-qualification.mjs';
 
 const origin = process.env.WEBSITE_DEMO_TEST_ORIGIN;
 assert.match(origin || '', /^http:\/\/127\.0\.0\.1:[1-9][0-9]*$/, 'Demo browser tests require the owned loopback Nginx origin');
-assert.match(process.env.WEBSITE_DEMO_TEST_REVISION || '', /^[a-f0-9]{40}$/, 'Demo browser tests require an exact website revision');
+demoBrowserBuildSelection();
 const executablePath = process.env.CHROME_PATH;
 assert.ok(executablePath && path.isAbsolute(executablePath), 'CHROME_PATH must identify the installed browser');
 const evidence = process.env.WEBSITE_DEMO_BROWSER_OUTPUT_DIR;

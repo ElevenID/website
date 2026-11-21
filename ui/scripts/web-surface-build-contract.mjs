@@ -1,6 +1,6 @@
 import { WEB_ROUTE_CONTRACT } from './web-surface-contract.mjs';
 
-const isSourceSha = (value) => typeof value === 'string' && /^[a-f0-9]{40}$/.test(value);
+const isSourceSha = (value) => typeof value === 'string' && value.length === 40 && /^[a-f0-9]{40}$/.test(value);
 const normalizedId = (value) => {
   if (typeof value !== 'string') throw new TypeError('Module identity must be a string');
   return value.replace(/\\/g, '/').split('?', 1)[0];
@@ -19,12 +19,23 @@ export function websiteBuildRevision({ sourceSha = 'development', commerceSha, p
   return expected;
 }
 
+export function websiteBuildSelection(env = process.env) {
+  const sourceSha = env.MARTY_WEBSITE_SOURCE_SHA || 'development';
+  const pages = env.MARTY_PRODUCTION_PAGES || 'public';
+  const commerceSha = env.MARTY_COMMERCE_SOURCE_SHA;
+  if (pages === 'public' && env.MARTY_COMMERCE_EXTENSION_PATH) {
+    throw new Error('Public website cannot configure a private entry');
+  }
+  return { sourceSha, pages, commerceSha,
+    revision: websiteBuildRevision({ sourceSha, pages, commerceSha, revision: env.MARTY_WEBSITE_REVISION }) };
+}
+
 export function websiteReleaseMetadata({ sourceSha = 'development', commerceSha, pages = 'public', revision } = {}) {
   const websiteRevision = websiteBuildRevision({ sourceSha, commerceSha, pages, revision });
   return {
-    // Standalone public releases use the new owner contract. The retained full
-    // adapter keeps its historical marker and is not admitted by this producer.
-    schema: pages === 'public' ? 'marty.website-image/v3' : 'marty.website-image/v1',
+    // The full marker binds both sources; only its original private producer
+    // can authenticate the matching v4 release. Public v3 remains unchanged.
+    schema: pages === 'public' ? 'marty.website-image/v3' : 'marty.website-image/v4',
     audience: sourceSha === 'development' ? 'development' : 'production',
     surface: 'website', repository: 'ElevenID/website', source_sha: sourceSha,
     revision: websiteRevision, production_pages: pages, route_contract: WEB_ROUTE_CONTRACT,

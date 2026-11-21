@@ -2,15 +2,15 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { fileURLToPath } from 'node:url';
 import { websiteAssetBase, websiteAssetsPlugin } from './scripts/website-assets.mjs';
-import { websiteBuildRevision, webSurfaceBuildContractPlugin } from './scripts/web-surface-build-contract.mjs';
+import { websiteBuildSelection, webSurfaceBuildContractPlugin } from './scripts/web-surface-build-contract.mjs';
+import { productionBuildContract, productionBuildContractPlugin } from './scripts/production-build-contract.mjs';
 import { muiIconMjsCompatibilityPlugin } from './scripts/mui-icon-compatibility.mjs';
 import { devServerOrigin } from './scripts/dev-server-origin.mjs';
 
 const uiRoot = fileURLToPath(new URL('.', import.meta.url));
-const sourceSha = process.env.MARTY_WEBSITE_SOURCE_SHA || 'development';
-const pages = process.env.MARTY_PRODUCTION_PAGES || 'public';
-if (pages !== 'public') throw new Error('The standalone public website does not include private commerce');
-const revision = websiteBuildRevision({ sourceSha, pages, revision: process.env.MARTY_WEBSITE_REVISION });
+const { sourceSha, pages, commerceSha, revision } = websiteBuildSelection();
+const commerceEntry = productionBuildContract({ pages, surface: 'website',
+  extensionPath: process.env.MARTY_COMMERCE_EXTENSION_PATH, sourceSha: commerceSha });
 const assetBase = websiteAssetBase(revision);
 
 export default defineConfig({
@@ -27,7 +27,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@ui-public-config': fileURLToPath(new URL('./src/variants/publicConfig.website.js', import.meta.url)),
-      '@marty/commerce-extension': fileURLToPath(new URL('./src/extensions/commerce/publicStub.jsx', import.meta.url)),
+      '@marty/commerce-extension': commerceEntry
+        || fileURLToPath(new URL('./src/extensions/commerce/publicStub.jsx', import.meta.url)),
       'react-router-dom': 'react-router',
     },
     dedupe: ['react', 'react-dom', 'react/jsx-runtime', 'react/jsx-dev-runtime',
@@ -40,7 +41,9 @@ export default defineConfig({
   },
   plugins: [
     muiIconMjsCompatibilityPlugin(),
-    webSurfaceBuildContractPlugin({ surface: 'website', sourceSha, revision, pages }),
+    webSurfaceBuildContractPlugin({ surface: 'website', sourceSha, revision, pages, commerceSha,
+      commerceEntry: commerceEntry || undefined }),
+    ...(commerceEntry ? [productionBuildContractPlugin(commerceEntry)] : []),
     websiteAssetsPlugin(revision),
     react(),
   ],
@@ -48,7 +51,8 @@ export default defineConfig({
     outDir: 'dist-website',
     assetsDir: `${assetBase.slice(1)}assets`,
     emptyOutDir: true,
-    sourcemap: true,
+    // Full builds must never publish raw private modules in source maps.
+    sourcemap: pages === 'public',
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       input: { main: fileURLToPath(new URL('./index.html', import.meta.url)) },
