@@ -18,7 +18,7 @@ test('website container uses a digest-pinned static Nginx base and explicit OCI 
 
 test('image builder requires exact production identity and never publishes to a registry', () => {
   assert.match(builder, /An exact production website source SHA is required/);
-  assert.match(builder, /websiteBuildRevision/);
+  assert.match(builder, /websiteBuildSelection/);
   assert.match(builder, /copyTreeNoSymlinks/);
   assert.match(builder, /docker, \[/);
   assert.match(builder, /'build', '--pull'/);

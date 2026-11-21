@@ -44,8 +44,8 @@
       "source_blob": "c7887a4e237457a90a08beb977b468deba208e8d",
       "source_sha256": "0aca4a4ad44fba235aeeaa7a5e23d6537105965951030756e95c2146987945c8",
       "source_bytes": 10856,
-      "current_sha256": "2f48e6665cd2eb9bfd60debdbc40ce945030bd3f56263cb4cdc87cfa9fb4d989",
-      "current_bytes": 13096
+      "current_sha256": "4264f72c320ca432426b2b38eddb7bdcb1d8396f9efcd53d570f9a1dd0cf34a8",
+      "current_bytes": 13177
     },
     {
       "path": "tests/playwright.demo-platform.config.mjs",
@@ -53,8 +53,8 @@
       "source_blob": "b685db793e196feb395828a98186fcccd54c60e1",
       "source_sha256": "6f378b349401242ee60a77136dd12cf8458657dee09ef1a975db29988e5306fe",
       "source_bytes": 975,
-      "current_sha256": "ed74b290e801f2e4ad74d7b94babd532631999b20026b6296c5e339fa3ec21a1",
-      "current_bytes": 1730
+      "current_sha256": "5f8ff6f103d93a75a06f56853ee8b910d3e80b4ca2bb3673269a4040adaa1082",
+      "current_bytes": 1716
     }
   ],
   "adaptations": [
@@ -64,7 +64,8 @@
     "Keep the current portfolio and byte-pinned historical August rules separate.",
     "Run six public-demo browser behaviors against the exact website production image and versioned resource namespace.",
     "Require sandboxed non-root Chrome and controlled local font/player fixtures; report six exact tests with no skip/retry.",
-    "Retain the external product deployment binding test outside website-only qualification."
+    "Retain the external product deployment binding test outside website-only qualification.",
+    "Bind the same six browser behaviors to explicit full website and private-source revisions without changing their original product evidence or publication authority."
   ],
   "scope": "Read-only public manifest consistency checks; no recorder authentication, video publishing, product release approval, or live activation."
 }

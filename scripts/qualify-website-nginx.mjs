@@ -6,16 +6,16 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { JSDOM } from 'jsdom';
 import { assertWebsiteRouteCanonical, createWebsitePrerenderPlan } from './website-prerender-plan.mjs';
-import { websiteBuildRevision } from '../ui/scripts/web-surface-build-contract.mjs';
+import { websiteBuildSelection, websiteReleaseMetadata } from '../ui/scripts/web-surface-build-contract.mjs';
 import { assertWebsiteSource, writeQualificationReceipt } from './lib/qualification-evidence.mjs';
 import { qualifyDemoBrowser } from './lib/demo-browser-qualification.mjs';
 
 const root = realpathSync(fileURLToPath(new URL('../', import.meta.url)));
 const dist = realpathSync(path.join(root, 'ui/dist-website'));
-const sourceSha = process.env.MARTY_WEBSITE_SOURCE_SHA;
+const selection = websiteBuildSelection();
+const { sourceSha, revision, pages, commerceSha } = selection;
 assert.match(sourceSha || '', /^[a-f0-9]{40}$/, 'Exact production source SHA is required');
 assertWebsiteSource({ root, sourceSha });
-const revision = websiteBuildRevision({ sourceSha, pages: 'public', revision: process.env.MARTY_WEBSITE_REVISION });
 const image = process.env.WEBSITE_IMAGE || `elevenid-website:${revision}`;
 assert.equal(image, `elevenid-website:${revision}`, 'Only the exact source-revision image may be qualified');
 const containerName = 'website-production-' + randomUUID();
@@ -52,19 +52,20 @@ async function waitForReady() {
 const plan = await createWebsitePrerenderPlan();
 const routes = plan.routes;
 const release = JSON.parse(readFileSync(path.join(dist, 'marty-website-release.json'), 'utf8'));
-assert.equal(release.audience, 'production');
-assert.equal(release.source_sha, sourceSha);
-assert.equal(release.revision, revision);
-assert.equal(release.production_pages, 'public');
-assert.equal(release.commerce_extension, null);
+assert.deepEqual(release, websiteReleaseMetadata(selection), 'HTTP qualification metadata differs from selected sources');
 const imageInfo = JSON.parse(docker(['image', 'inspect', image]))[0];
 const imageLabels = imageInfo.Config.Labels || {};
-assert.equal(imageLabels['org.opencontainers.image.source'], 'https://github.com/ElevenID/website');
-assert.equal(imageLabels['org.opencontainers.image.revision'], sourceSha);
+assert.equal(imageLabels['org.opencontainers.image.source'],
+  pages === 'full' ? 'https://github.com/ElevenID/marty-subscriptions' : 'https://github.com/ElevenID/website');
+assert.equal(imageLabels['org.opencontainers.image.revision'], pages === 'full' ? commerceSha : sourceSha);
 assert.equal(imageLabels['org.opencontainers.image.version'], revision);
 assert.equal(imageLabels['com.elevenid.website.repository'], 'ElevenID/website');
 assert.equal(imageLabels['com.elevenid.website.audience'], 'production');
-assert.equal(imageLabels['com.elevenid.website.pages'], 'public');
+assert.equal(imageLabels['com.elevenid.website.pages'], pages);
+if (pages === 'full') {
+  assert.equal(imageLabels['com.elevenid.website.source-sha'], sourceSha);
+  assert.equal(imageLabels['com.elevenid.website.commerce-source-sha'], commerceSha);
+}
 assert.equal(imageLabels['com.elevenid.website.route-contract-sha256'], release.route_contract.sha256);
 assert.match(imageInfo.Id || '', /^sha256:[a-f0-9]{64}$/);
 assert.ok(imageInfo.Config.ExposedPorts?.['80/tcp'], 'Website image must expose port 80');
@@ -185,8 +186,8 @@ try {
   assert.match(immutable.headers.get('cache-control') || '', /max-age=31536000.*immutable/);
   assert.equal(immutable.headers.get('x-marty-website-revision'), revision);
 
-  const deniedRoutes = ['/pricing', '/pricing/', '/verify', '/docs', '/test-harness', '/login',
-    '/console', '/applicant', '/admin', '/vendor', '/dashboard', '/auth', '/auth/callback',
+  const deniedRoutes = ['/pricing', '/pricing/', '/pricing/checkout', '/verify', '/docs', '/test-harness', '/login',
+    '/console', '/console/org/setup', '/console/org/billing', '/applicant', '/admin', '/vendor', '/dashboard', '/auth', '/auth/callback',
     '/api', '/api/status', '/v1', '/v1/credential', '/index.html', '/unknown.png'];
   for (const route of deniedRoutes) {
     assert.equal((await request(route)).status, 404, 'Withheld or application-owned path ' + route);
@@ -220,9 +221,9 @@ try {
       version: entry.stack_version, state: entry.publication_state, coverage: entry.coverage_state,
     })),
     repository: release.repository,
-    demo_browser: qualifyDemoBrowser({ root, origin, sourceSha, revision, imageId: imageInfo.Id }),
+    demo_browser: qualifyDemoBrowser({ root, origin, ...selection, imageId: imageInfo.Id }),
   };
-  writeQualificationReceipt({ root, stage: 'nginx', result });
+  writeQualificationReceipt({ root, ...selection, stage: 'nginx', result });
   console.log(JSON.stringify(result));
 } finally {
   if (containerId) {

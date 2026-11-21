@@ -1,9 +1,12 @@
 import { readFileSync } from 'node:fs';
 import { test, expect } from '@playwright/test';
 import { platformDemoScenarios, RETIRED_DEMO_SLUGS } from '../../ui/src/services/platformDemoScenarios.js';
+import { demoBrowserBuildSelection } from '../../scripts/lib/demo-browser-qualification.mjs';
+import { websiteReleaseMetadata } from '../../ui/scripts/web-surface-build-contract.mjs';
 
 const origin = process.env.WEBSITE_DEMO_TEST_ORIGIN;
-const revision = process.env.WEBSITE_DEMO_TEST_REVISION;
+const selection = demoBrowserBuildSelection();
+const { revision } = selection;
 const assetBase = `/_website/${revision}`;
 const source = (name) => JSON.parse(readFileSync(new URL('../../ui/public/demos/manifests/' + name, import.meta.url), 'utf8'));
 const sourceIndex = source('index.json');
@@ -27,10 +30,7 @@ async function jsonResource(request, route) {
 }
 async function loadDemoIndex(request) {
   const marker = await jsonResource(request, '/marty-website-release.json');
-  expect(marker.source_sha).toBe(revision);
-  expect(marker.revision).toBe(revision);
-  expect(marker.audience).toBe('production');
-  expect(marker.repository).toBe('ElevenID/website');
+  expect(marker).toEqual(websiteReleaseMetadata(selection));
   const index = await jsonResource(request, assetBase + '/demos/manifests/index.json');
   expect(index).toEqual(sourceIndex);
   return index;

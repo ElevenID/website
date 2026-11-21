@@ -8,6 +8,7 @@ import {
   rmSync, writeFileSync,
 } from 'node:fs';
 import path from 'node:path';
+import { websiteBuildRevision } from '../../ui/scripts/web-surface-build-contract.mjs';
 
 const REPOSITORY = 'ElevenID/website';
 const REPOSITORY_ID = '1459542519';
@@ -152,48 +153,74 @@ export function qualificationWorkflowFromEnvironment(env = process.env) {
     run_id: env.GITHUB_RUN_ID,
     run_attempt: env.GITHUB_RUN_ATTEMPT,
   };
-  validateWorkflow(workflow);
+  const pages = env.MARTY_PRODUCTION_PAGES || 'public';
+  const commerceSha = env.MARTY_COMMERCE_SOURCE_SHA;
+  validateWorkflow(workflow, { pages, commerceSha });
+  if (pages === 'full') assert.equal(env.GITHUB_SHA, commerceSha, 'Private workflow source differs from commerce source');
   return workflow;
 }
-function validateWorkflow(workflow) {
+function validateWorkflow(workflow, { pages = 'public', commerceSha } = {}) {
   if (workflow === null) return;
   plainObject(workflow, 'Workflow context');
   assert.deepEqual(Object.keys(workflow).sort(), [
     'repository', 'repository_id', 'workflow_ref', 'workflow_sha', 'event_name', 'ref', 'run_id', 'run_attempt',
   ].sort(), 'Workflow context has unexpected fields');
-  assert.equal(workflow.repository, REPOSITORY);
-  assert.equal(workflow.repository_id, REPOSITORY_ID);
-  assert.match(workflow.workflow_ref || '', /^ElevenID\/website\/\.github\/workflows\/[A-Za-z0-9_.-]+\.ya?ml@refs\/[A-Za-z0-9_./-]+$/,
-    'Invalid workflow ref');
+  if (pages === 'full') {
+    assert.equal(workflow.repository, 'ElevenID/marty-subscriptions');
+    assert.equal(workflow.repository_id, '1207411806');
+    assert.equal(workflow.workflow_ref,
+      'ElevenID/marty-subscriptions/.github/workflows/production-ui-release.yml@refs/heads/main');
+    assert.equal(workflow.workflow_sha, commerceSha, 'Private workflow must bind the selected commerce source');
+    assert.equal(workflow.event_name, 'workflow_dispatch');
+    assert.equal(workflow.ref, 'refs/heads/main');
+  } else {
+    assert.equal(pages, 'public', 'Unknown qualification audience');
+    assert.equal(commerceSha, undefined, 'Public qualification cannot select private source');
+    assert.equal(workflow.repository, REPOSITORY);
+    assert.equal(workflow.repository_id, REPOSITORY_ID);
+    assert.match(workflow.workflow_ref || '', /^ElevenID\/website\/\.github\/workflows\/[A-Za-z0-9_.-]+\.ya?ml@refs\/[A-Za-z0-9_./-]+$/,
+      'Invalid workflow ref');
+  }
   assert.match(workflow.workflow_sha || '', SHA, 'Exact workflow SHA is required separately from checkout source');
   assert.match(workflow.event_name || '', /^[a-z][a-z0-9_]*$/, 'Invalid workflow event');
   assert.match(workflow.ref || '', /^refs\/[A-Za-z0-9_./-]+$/, 'Invalid workflow ref context');
   for (const name of ['run_id', 'run_attempt']) assert.match(workflow[name] || '', /^[1-9][0-9]*$/, 'Invalid ' + name);
 }
-function inputFingerprints(root) {
-  return Object.fromEntries(INPUTS.map((filename) => [filename, sha256(regularBytes(root, filename, filename))]));
+function selectedIdentity({ sourceSha, pages = 'public', commerceSha }) {
+  const revision = websiteBuildRevision({ sourceSha, pages, commerceSha });
+  assert.match(sourceSha || '', SHA, 'Qualification requires an exact website source');
+  const full = pages === 'full';
+  return { revision, full, version: full ? 2 : 1,
+    fields: full ? { production_pages: 'full',
+      commerce_extension: { repository: 'ElevenID/marty-subscriptions', source_sha: commerceSha } } : {} };
 }
-function contextFor({ root, sourceSha, workflow }) {
+function inputFingerprints(root, full) {
+  const inputs = INPUTS.map((filename) => full && filename === 'Dockerfile.website' ? 'Dockerfile.website.full' : filename);
+  return Object.fromEntries(inputs.map((filename) => [filename, sha256(regularBytes(root, filename, filename))]));
+}
+function contextFor({ root, sourceSha, workflow, pages = 'public', commerceSha }) {
   const source = assertWebsiteSource({ root, sourceSha });
-  validateWorkflow(workflow);
+  const identity = selectedIdentity({ sourceSha, pages, commerceSha });
+  validateWorkflow(workflow, { pages, commerceSha });
   return {
-    schema: 'marty.website-qualification-context/v1', repository: REPOSITORY,
-    ...source, revision: sourceSha, workflow, inputs: inputFingerprints(root),
+    schema: `marty.website-qualification-context/v${identity.version}`, repository: REPOSITORY,
+    ...source, revision: identity.revision, ...identity.fields, workflow, inputs: inputFingerprints(root, identity.full),
     ...LIMITATIONS,
   };
 }
-function requireContext(root, sourceSha, directory, workflow) {
-  const expected = contextFor({ root, sourceSha, workflow });
+function requireContext(root, sourceSha, directory, workflow, pages, commerceSha) {
+  const expected = contextFor({ root, sourceSha, workflow, pages, commerceSha });
   assert.deepEqual(readJson(root, directory, 'qualification-context.json'), expected,
     'Qualification context differs from this checkout or workflow attempt; prepare a fresh run');
   return expected;
 }
 
 /** Clear only known evidence files after checking every directory entry. */
-export function prepareQualificationEvidence({ root, sourceSha, directory, workflow = qualificationWorkflowFromEnvironment() }) {
+export function prepareQualificationEvidence({ root, sourceSha, directory, pages = 'public', commerceSha,
+  workflow = qualificationWorkflowFromEnvironment() }) {
   const repositoryRoot = rootDirectory(root);
   const destination = receiptDirectory(repositoryRoot, directory);
-  const context = contextFor({ root: repositoryRoot, sourceSha, workflow });
+  const context = contextFor({ root: repositoryRoot, sourceSha, workflow, pages, commerceSha });
   if (existsSync(destination)) {
     // receiptDirectory already validated all names and file types before any removal.
     for (const filename of readdirSync(destination)) rmSync(path.join(destination, filename));
@@ -202,7 +229,8 @@ export function prepareQualificationEvidence({ root, sourceSha, directory, workf
   return context;
 }
 
-function outputSnapshot(root, sourceSha) {
+function outputSnapshot(root, sourceSha, pages = 'public', commerceSha) {
+  const identity = selectedIdentity({ sourceSha, pages, commerceSha });
   const dist = contained(root, 'ui/dist-website', 'Website output');
   assert.ok(lstatSync(dist).isDirectory(), 'Website output must be a directory');
   const files = [];
@@ -215,6 +243,11 @@ function outputSnapshot(root, sourceSha) {
       if (stat.isDirectory()) { visit(filename); continue; }
       assert.ok(stat.isFile(), 'Website output must contain only regular files and directories');
       const bytes = regularBytes(root, filename, 'Website output file');
+      if (identity.full) {
+        assert.ok(!/\.(?:map|[jt]sx|tsx?)$/i.test(name), 'Full website output cannot contain private source or source maps');
+        assert.ok(!['package.json', 'package-lock.json', 'bun.lock', 'commerce-source.json'].includes(name)
+          && !name.startsWith('.env'), 'Full website output cannot contain development inputs');
+      }
       totalBytes += bytes.length;
       assert.ok(totalBytes <= 512 * 1024 * 1024 && files.length < 10000, 'Website output exceeds qualification bounds');
       files.push({ path: path.relative(dist, filename).split(path.sep).join('/'), bytes: bytes.length, sha256: sha256(bytes) });
@@ -224,14 +257,20 @@ function outputSnapshot(root, sourceSha) {
   positive(files.length, 'Website output file count');
   const releaseBytes = regularBytes(root, path.join(dist, 'marty-website-release.json'), 'Website release metadata');
   const release = JSON.parse(releaseBytes.toString('utf8'));
-  assert.equal(release.schema, 'marty.website-image/v3');
+  assert.deepEqual(Object.keys(release).sort(), ['schema', 'repository', 'surface', 'audience',
+    'production_pages', 'source_sha', 'revision', 'commerce_extension', 'route_contract'].sort(),
+  'Built website metadata fields differ');
+  assert.equal(release.schema, identity.full ? 'marty.website-image/v4' : 'marty.website-image/v3');
   assert.equal(release.repository, REPOSITORY);
   assert.equal(release.surface, 'website');
   assert.equal(release.audience, 'production');
-  assert.equal(release.production_pages, 'public');
+  assert.equal(release.production_pages, pages);
   assert.equal(release.source_sha, sourceSha, 'Built website source differs from checkout');
-  assert.equal(release.revision, sourceSha, 'Built website revision differs from checkout');
-  assert.equal(release.commerce_extension, null, 'Qualification cannot contain private commerce');
+  assert.equal(release.revision, identity.revision, 'Built website revision differs from selected sources');
+  assert.deepEqual(release.commerce_extension, identity.full ? identity.fields.commerce_extension : null,
+    identity.full ? 'Qualification commerce identity differs from selected sources' : 'Qualification cannot contain private commerce');
+  assert.deepEqual(Object.keys(release.route_contract || {}).sort(), ['sha256', 'version']);
+  assert.equal(release.route_contract.version, 1);
   assert.match(release.route_contract?.sha256 || '', DIGEST, 'Built website requires its route contract digest');
   assert.equal(release.route_contract.sha256,
     sha256(canonicalJson(JSON.parse(regularBytes(root, 'contracts/web-surface-routes.json', 'Source route contract').toString('utf8')))),
@@ -245,14 +284,14 @@ function outputSnapshot(root, sourceSha) {
   };
 }
 
-function normalizeResult(stage, supplied, sourceSha) {
+function normalizeResult(stage, supplied, sourceSha, revision = sourceSha) {
   assert.ok(STAGES.includes(stage), 'Unknown website qualification stage');
   plainObject(supplied, 'Qualification result');
   // Round-trip rejects undefined/cyclic data and retains only ordinary JSON data.
   const result = JSON.parse(JSON.stringify(supplied));
   assert.equal(result.qualified, QUALIFIED[stage], 'Stage result does not identify the required qualification');
   assert.equal(result.source_sha, sourceSha, 'Stage result source differs from checkout');
-  assert.equal(result.revision, sourceSha, 'Stage result revision differs from checkout');
+  assert.equal(result.revision, revision, 'Stage result revision differs from selected sources');
   if ('repository' in result) assert.equal(result.repository, REPOSITORY);
   if (stage === 'prerender') {
     for (const name of ['route_count', 'canonical_count', 'sitemap_count', 'pages']) positive(result[name], name);
@@ -274,7 +313,7 @@ function normalizeResult(stage, supplied, sourceSha) {
     if ('local_image_id' in result && 'image_id' in result) assert.equal(result.local_image_id, result.image_id);
     result.local_image_id = imageId;
     delete result.image_id;
-    assert.equal(result.image, 'elevenid-website:' + sourceSha, 'Image tag differs from checkout');
+    assert.equal(result.image, 'elevenid-website:' + revision, 'Image tag differs from selected sources');
     assert.ok(!('image_digest' in result) && !('registry_digest' in result), 'Local image ID is not a registry digest');
   }
   if (stage === 'image-build') {
@@ -289,16 +328,17 @@ function normalizeResult(stage, supplied, sourceSha) {
 
 /** Record one successful stage against the current bytes and prepared attempt. */
 export function writeQualificationReceipt({ root, stage, result, sourceSha = result?.source_sha,
-  directory, workflow = qualificationWorkflowFromEnvironment() }) {
+  directory, pages = 'public', commerceSha, workflow = qualificationWorkflowFromEnvironment() }) {
   const repositoryRoot = rootDirectory(root);
   const destination = receiptDirectory(repositoryRoot, directory);
-  const context = requireContext(repositoryRoot, sourceSha, destination, workflow);
-  const normalized = normalizeResult(stage, result, sourceSha);
-  const output = outputSnapshot(repositoryRoot, sourceSha).summary;
+  const identity = selectedIdentity({ sourceSha, pages, commerceSha });
+  const context = requireContext(repositoryRoot, sourceSha, destination, workflow, pages, commerceSha);
+  const normalized = normalizeResult(stage, result, sourceSha, identity.revision);
+  const output = outputSnapshot(repositoryRoot, sourceSha, pages, commerceSha).summary;
   if (stage === 'image-build') assert.equal(normalized.route_contract_sha256, output.route_contract_sha256);
   const receipt = {
-    schema: 'marty.website-qualification-stage/v1', stage, repository: REPOSITORY,
-    source_sha: sourceSha, source_tree_sha: context.source_tree_sha, revision: sourceSha,
+    schema: `marty.website-qualification-stage/v${identity.version}`, stage, repository: REPOSITORY,
+    source_sha: sourceSha, source_tree_sha: context.source_tree_sha, revision: identity.revision, ...identity.fields,
     workflow, inputs: context.inputs, output, result: normalized, ...LIMITATIONS,
   };
   // An output mutation is an immediate failure, even before the finalizer runs.
@@ -308,6 +348,7 @@ export function writeQualificationReceipt({ root, stage, result, sourceSha = res
     assert.deepEqual(prior.output, output, 'Website output changed between qualification stages');
     assert.deepEqual(prior.workflow, workflow, 'Qualification stages belong to different workflow attempts');
     assert.equal(prior.source_sha, sourceSha, 'Qualification stages belong to different sources');
+    assert.equal(prior.revision, identity.revision, 'Qualification stages belong to different private sources');
   }
   writeOnce(repositoryRoot, destination, stage + '.json', receipt);
   return receipt;
@@ -315,20 +356,21 @@ export function writeQualificationReceipt({ root, stage, result, sourceSha = res
 
 /** Recheck all evidence and current bytes; never authenticate or admit a release. */
 export function finalizeQualificationEvidence({ root, sourceSha, directory,
-  workflow = qualificationWorkflowFromEnvironment() }) {
+  pages = 'public', commerceSha, workflow = qualificationWorkflowFromEnvironment() }) {
   const repositoryRoot = rootDirectory(root);
   const destination = receiptDirectory(repositoryRoot, directory);
-  const context = requireContext(repositoryRoot, sourceSha, destination, workflow);
-  const snapshot = outputSnapshot(repositoryRoot, sourceSha);
+  const identity = selectedIdentity({ sourceSha, pages, commerceSha });
+  const context = requireContext(repositoryRoot, sourceSha, destination, workflow, pages, commerceSha);
+  const snapshot = outputSnapshot(repositoryRoot, sourceSha, pages, commerceSha);
   const stages = {};
   const receiptHashes = {};
   for (const stage of STAGES) {
     const filename = stage + '.json';
     const receipt = readJson(repositoryRoot, destination, filename);
-    const normalized = normalizeResult(stage, receipt.result, sourceSha);
+    const normalized = normalizeResult(stage, receipt.result, sourceSha, identity.revision);
     const expected = {
-      schema: 'marty.website-qualification-stage/v1', stage, repository: REPOSITORY,
-      source_sha: sourceSha, source_tree_sha: context.source_tree_sha, revision: sourceSha,
+      schema: `marty.website-qualification-stage/v${identity.version}`, stage, repository: REPOSITORY,
+      source_sha: sourceSha, source_tree_sha: context.source_tree_sha, revision: identity.revision, ...identity.fields,
       workflow, inputs: context.inputs, output: snapshot.summary, result: normalized, ...LIMITATIONS,
     };
     assert.deepEqual(receipt, expected, 'Qualification receipt differs from the current source/output/attempt: ' + stage);
@@ -342,15 +384,16 @@ export function finalizeQualificationEvidence({ root, sourceSha, directory,
   assert.equal(stages['image-build'].route_contract_sha256, snapshot.summary.route_contract_sha256,
     'Image route contract differs from verified website output');
   const manifest = {
-    schema: 'marty.website-output-inventory/v1', repository: REPOSITORY, source_sha: sourceSha,
+    schema: `marty.website-output-inventory/v${identity.version}`, repository: REPOSITORY, source_sha: sourceSha,
+    ...(identity.full ? { revision: identity.revision, ...identity.fields } : {}),
     ...snapshot.summary, files: snapshot.files,
   };
   writeOnce(repositoryRoot, destination, 'website-output-manifest.json', manifest);
   const evidence = {
-    schema: 'marty.website-qualification/v1',
+    schema: `marty.website-qualification/v${identity.version}`,
     purpose: 'unsigned-build-and-http-qualification-only',
     repository: REPOSITORY, source_sha: sourceSha, source_tree_sha: context.source_tree_sha,
-    revision: sourceSha, production_pages: 'public', workflow, inputs: context.inputs,
+    revision: identity.revision, production_pages: pages, ...identity.fields, workflow, inputs: context.inputs,
     output: snapshot.summary,
     output_manifest: { file: 'website-output-manifest.json', sha256: sha256(json(manifest)) },
     local_image_id: stages.nginx.local_image_id,

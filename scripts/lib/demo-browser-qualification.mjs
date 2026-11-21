@@ -5,6 +5,7 @@ import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { lstatSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { websiteBuildRevision, websiteBuildSelection } from '../../ui/scripts/web-surface-build-contract.mjs';
 
 export const DEMO_BROWSER_TEST_TITLES = Object.freeze([
   ...['mobile-320', 'mobile-390', 'tablet-768', 'desktop-1440'].map((viewport) =>
@@ -51,13 +52,24 @@ export function validateDemoBrowserReport(report) {
   return { executed: 6, passed: 6, skipped: 0, retried: 0 };
 }
 
-export function qualifyDemoBrowser({ root, origin, sourceSha, revision, imageId, chrome = process.env.CHROME_PATH }) {
+export function demoBrowserBuildSelection(env = process.env) {
+  const pages = env.WEBSITE_DEMO_TEST_PAGES || 'public';
+  const sourceSha = env.WEBSITE_DEMO_TEST_SOURCE_SHA
+    || (pages === 'public' ? env.WEBSITE_DEMO_TEST_REVISION : undefined);
+  assert.ok(typeof sourceSha === 'string' && sourceSha.length === 40, 'Demo browser requires an exact website source');
+  return websiteBuildSelection({ MARTY_WEBSITE_SOURCE_SHA: sourceSha, MARTY_PRODUCTION_PAGES: pages,
+    MARTY_COMMERCE_SOURCE_SHA: env.WEBSITE_DEMO_TEST_COMMERCE_SHA,
+    MARTY_WEBSITE_REVISION: env.WEBSITE_DEMO_TEST_REVISION });
+}
+
+export function qualifyDemoBrowser({ root, origin, sourceSha, revision, pages = 'public', commerceSha,
+  imageId, chrome = process.env.CHROME_PATH }) {
   assert.equal(realpathSync(root), root, 'Demo browser root must be the actual website checkout');
   assert.match(origin || '', /^http:\/\/127\.0\.0\.1:[1-9][0-9]*$/, 'Demo browser may only target the owned loopback container');
   const port = Number(new URL(origin).port);
   assert.ok(port > 0 && port <= 65535, 'Demo browser loopback port is invalid');
   assert.match(sourceSha || '', /^[a-f0-9]{40}$/, 'Demo browser source must be exact');
-  assert.equal(revision, sourceSha, 'Demo browser revision must match source');
+  assert.equal(revision, websiteBuildRevision({ sourceSha, pages, commerceSha }), 'Demo browser revision must match selected sources');
   assert.match(imageId || '', /^sha256:[a-f0-9]{64}$/, 'Demo browser image must be immutable');
   assert.ok(chrome && path.isAbsolute(chrome), 'An installed CHROME_PATH is required');
   assert.ok(process.getuid?.() !== 0, 'Sandboxed demo browser qualification requires a non-root user');
@@ -76,6 +88,8 @@ export function qualifyDemoBrowser({ root, origin, sourceSha, revision, imageId,
     LANG: 'C.UTF-8', TZ: 'UTC', CI: 'true', CHROME_PATH: chrome,
     PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1',
     WEBSITE_DEMO_TEST_ORIGIN: origin, WEBSITE_DEMO_TEST_REVISION: revision,
+    WEBSITE_DEMO_TEST_SOURCE_SHA: sourceSha, WEBSITE_DEMO_TEST_PAGES: pages,
+    ...(pages === 'full' ? { WEBSITE_DEMO_TEST_COMMERCE_SHA: commerceSha } : {}),
     WEBSITE_DEMO_BROWSER_OUTPUT_DIR: directory,
   };
   let result;
@@ -96,6 +110,8 @@ export function qualifyDemoBrowser({ root, origin, sourceSha, revision, imageId,
   const counts = validateDemoBrowserReport(JSON.parse(bytes));
   const summary = {
     ...counts, source_sha: sourceSha, revision, local_image_id: imageId,
+    ...(pages === 'full' ? { production_pages: 'full',
+      commerce_extension: { repository: 'ElevenID/marty-subscriptions', source_sha: commerceSha } } : {}),
     chromium_sandbox: true,
     report: path.relative(root, path.join(directory, 'report.json')).split(path.sep).join('/'),
     report_sha256: 'sha256:' + createHash('sha256').update(bytes).digest('hex'),

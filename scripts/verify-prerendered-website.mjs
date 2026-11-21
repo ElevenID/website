@@ -3,7 +3,7 @@ import { existsSync, lstatSync, readFileSync, realpathSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { JSDOM } from 'jsdom';
-import { websiteBuildRevision } from '../ui/scripts/web-surface-build-contract.mjs';
+import { websiteBuildSelection, websiteReleaseMetadata } from '../ui/scripts/web-surface-build-contract.mjs';
 import { assertWebsiteRouteCanonical, createWebsitePrerenderPlan } from './website-prerender-plan.mjs';
 import { structuredDataImageUrls } from './lib/structured-data-assets.mjs';
 import { assertWebsiteSource, writeQualificationReceipt } from './lib/qualification-evidence.mjs';
@@ -11,18 +11,12 @@ import { assertWebsiteSource, writeQualificationReceipt } from './lib/qualificat
 const root = realpathSync(fileURLToPath(new URL('../', import.meta.url)));
 const dist = realpathSync(path.join(root, 'ui/dist-website'));
 const SITE_ORIGIN = 'https://elevenidllc.com';
-const sourceSha = process.env.MARTY_WEBSITE_SOURCE_SHA;
+const selection = websiteBuildSelection();
+const { sourceSha, revision } = selection;
 assert.match(sourceSha || '', /^[a-f0-9]{40}$/, 'Exact production source SHA is required');
 assertWebsiteSource({ root, sourceSha });
-const revision = websiteBuildRevision({ sourceSha, pages: 'public', revision: process.env.MARTY_WEBSITE_REVISION });
 const metadata = JSON.parse(readFileSync(path.join(dist, 'marty-website-release.json'), 'utf8'));
-assert.equal(metadata.repository, 'ElevenID/website');
-assert.equal(metadata.surface, 'website');
-assert.equal(metadata.audience, 'production');
-assert.equal(metadata.source_sha, sourceSha);
-assert.equal(metadata.revision, revision);
-assert.equal(metadata.production_pages, 'public');
-assert.equal(metadata.commerce_extension, null);
+assert.deepEqual(metadata, websiteReleaseMetadata(selection), 'Verified metadata differs from selected sources');
 
 function requireRegularFile(filename, label) {
   assert.ok(filename.startsWith(dist + path.sep), label + ' escaped the website output');
@@ -146,5 +140,5 @@ const result = {
     version: release.stack_version, publication: release.publication_state, coverage: release.coverage_state,
   })),
 };
-writeQualificationReceipt({ root, stage: 'output-verification', result });
+writeQualificationReceipt({ root, ...selection, stage: 'output-verification', result });
 console.log(JSON.stringify(result));
