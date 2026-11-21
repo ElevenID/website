@@ -8,6 +8,7 @@ import { JSDOM } from 'jsdom';
 import { assertWebsiteRouteCanonical, createWebsitePrerenderPlan } from './website-prerender-plan.mjs';
 import { websiteBuildRevision } from '../ui/scripts/web-surface-build-contract.mjs';
 import { assertWebsiteSource, writeQualificationReceipt } from './lib/qualification-evidence.mjs';
+import { qualifyDemoBrowser } from './lib/demo-browser-qualification.mjs';
 
 const root = realpathSync(fileURLToPath(new URL('../', import.meta.url)));
 const dist = realpathSync(path.join(root, 'ui/dist-website'));
@@ -219,6 +220,7 @@ try {
       version: entry.stack_version, state: entry.publication_state, coverage: entry.coverage_state,
     })),
     repository: release.repository,
+    demo_browser: qualifyDemoBrowser({ root, origin, sourceSha, revision, imageId: imageInfo.Id }),
   };
   writeQualificationReceipt({ root, stage: 'nginx', result });
   console.log(JSON.stringify(result));

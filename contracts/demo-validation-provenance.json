@@ -1,0 +1,70 @@
+{
+  "schema": "elevenid.website-demo-validation-import/v1",
+  "source_repository": "ElevenID/marty-ui",
+  "source_commit": "3cf4a7000b2e1d6b21c819151b0bd2b91269d4d2",
+  "source_files": [
+    {
+      "path": "scripts/validate_demo_manifests.py",
+      "source_blob": "62ed279b7305e8a32c667a87209f53b1ed71d58e",
+      "source_sha256": "ebf123409f724d8bc8065ec6dcf17d0e03912166cded8c0ef632ad70f7a78c36",
+      "source_bytes": 28432,
+      "current_sha256": "01decf76365ae387245eb302ccdcb2a73f0cf7ba45c2371d07cc2a90b0dfacac",
+      "current_bytes": 30887
+    },
+    {
+      "path": "scripts/demo_asset_hashes.py",
+      "source_blob": "0ad7a5d4d90034acd4568a63257a2051a66b1365",
+      "source_sha256": "a53430b488d5c27c3c0f9c894da4e164d0f16e80177583a3ea349ec5b71131f8",
+      "source_bytes": 441
+    },
+    {
+      "path": "deploy-config/catalog/demo-portfolio-v3.json",
+      "source_blob": "44ad885faf7eabbfbd397aa48d349bb79bcaa397",
+      "source_sha256": "26cc837a471a3c84a379dd9714a044595c5b6f46f7d0f856fea23ec4a05d1ac8",
+      "source_bytes": 4004
+    },
+    {
+      "path": "contracts/demo-portfolio-2026-08-reference.json",
+      "source_blob": "94f923be845fa1df245b6f1ef930b8f20c2d044b",
+      "source_sha256": "871b892b1e8ea949b6d41c3ddba3335dd97429c1a1b4b7c22ba0985944baecfb",
+      "source_bytes": 3429
+    },
+    {
+      "path": "tests/fixtures/demo_manifest_validation_test.py",
+      "source_path": "tests/unit/test_demo_manifest_validation.py",
+      "source_blob": "2e2a20081b33b3d5b3561f116fe012bbb2be8039",
+      "source_sha256": "6b038076e4fc71f67442cdd93e7271d177b9b12c7585f5da9af644ca932610f2",
+      "source_bytes": 20573,
+      "current_sha256": "bbffd46e180e15e1dae5e4459930a2246abee72ead9deb96e74030e654190241",
+      "current_bytes": 25911
+    },
+    {
+      "path": "tests/browser/demo-platform.spec.mjs",
+      "source_path": "tests/e2e/public/demo-platform.spec.js",
+      "source_blob": "c7887a4e237457a90a08beb977b468deba208e8d",
+      "source_sha256": "0aca4a4ad44fba235aeeaa7a5e23d6537105965951030756e95c2146987945c8",
+      "source_bytes": 10856,
+      "current_sha256": "2f48e6665cd2eb9bfd60debdbc40ce945030bd3f56263cb4cdc87cfa9fb4d989",
+      "current_bytes": 13096
+    },
+    {
+      "path": "tests/playwright.demo-platform.config.mjs",
+      "source_path": "tests/playwright.demo-platform.config.js",
+      "source_blob": "b685db793e196feb395828a98186fcccd54c60e1",
+      "source_sha256": "6f378b349401242ee60a77136dd12cf8458657dee09ef1a975db29988e5306fe",
+      "source_bytes": 975,
+      "current_sha256": "ed74b290e801f2e4ad74d7b94babd532631999b20026b6296c5e339fa3ec21a1",
+      "current_bytes": 1730
+    }
+  ],
+  "adaptations": [
+    "Resolve the website-owned catalog without an application operator-catalog dependency.",
+    "Read the already extracted wallet schema projection; the legacy full root schema is not a v2 publication schema.",
+    "Require actual readiness booleans and contained ordinary source/poster files.",
+    "Keep the current portfolio and byte-pinned historical August rules separate.",
+    "Run six public-demo browser behaviors against the exact website production image and versioned resource namespace.",
+    "Require sandboxed non-root Chrome and controlled local font/player fixtures; report six exact tests with no skip/retry.",
+    "Retain the external product deployment binding test outside website-only qualification."
+  ],
+  "scope": "Read-only public manifest consistency checks; no recorder authentication, video publishing, product release approval, or live activation."
+}
