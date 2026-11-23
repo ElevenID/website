@@ -114,6 +114,23 @@ export function fullStandaloneProducer({ commerceSha, runId, runAttempt }) {
     source_sha: commerceSha, ref: FULL_STANDALONE_REF, run_id: runId, run_attempt: runAttempt };
 }
 
+/** Check declared custody for unsigned recording; signed producer approval and
+ * cryptographic admission remain the original private producer's responsibility. */
+export function assertFullStandaloneRecordingContext({ env = process.env, commerceSha, runId, runAttempt }) {
+  fullStandaloneProducer({ commerceSha, runId, runAttempt });
+  for (const [name, value] of Object.entries({
+    GITHUB_ACTIONS: 'true', GITHUB_SERVER_URL: 'https://github.com',
+    GITHUB_REPOSITORY: FULL_STANDALONE_REPOSITORY, GITHUB_REPOSITORY_ID: FULL_STANDALONE_REPOSITORY_ID,
+    GITHUB_EVENT_NAME: 'workflow_dispatch', GITHUB_REF: FULL_STANDALONE_REF,
+    GITHUB_WORKFLOW_REF: `${FULL_STANDALONE_REPOSITORY}/${FULL_STANDALONE_WORKFLOW}@${FULL_STANDALONE_REF}`,
+    GITHUB_SHA: commerceSha, GITHUB_WORKFLOW_SHA: commerceSha,
+    GITHUB_RUN_ID: runId, GITHUB_RUN_ATTEMPT: runAttempt,
+    RUNNER_OS: 'Linux', RUNNER_ARCH: 'X64',
+  })) assert.equal(env[name], value, 'Unsigned recording requires original private producer context: ' + name);
+  assert.ok(['github-hosted', 'self-hosted'].includes(env.RUNNER_ENVIRONMENT),
+    'Unsigned recording requires original private producer context: RUNNER_ENVIRONMENT');
+}
+
 /** Unsigned subject only. The private original producer must scan the final
  * image, publish that exact image, sign/attest it and retain verified proofs. */
 export function createFullStandaloneRelease({ buildPlan, imageMetadata, registryManifestDigest, runId, runAttempt }) {
