@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { copyFileSync, lstatSync, mkdirSync, readFileSync, readdirSync, realpathSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { pagesLoginRedirect } from './lib/pages-login-redirect.mjs';
 import { createWebsitePrerenderPlan } from './website-prerender-plan.mjs';
 import { assertWebsiteSource } from './lib/qualification-evidence.mjs';
 import { websiteBuildSelection, websiteReleaseMetadata } from '../ui/scripts/web-surface-build-contract.mjs';
@@ -18,6 +19,7 @@ assert.equal(process.argv.length, 3, 'Supply a fresh output directory outside th
 const output = path.resolve(process.argv[2]);
 const outputParent = realpathSync(path.dirname(output));
 assert.ok(!path.resolve(outputParent, path.basename(output)).startsWith(realpathSync(root) + path.sep));
+const loginRedirect = pagesLoginRedirect(process.env.MARTY_WEBSITE_APPLICATION_ORIGIN);
 const { routes } = await createWebsitePrerenderPlan();
 mkdirSync(output); // Refuse an existing upload directory, including partially assembled output.
 let fileCount = 0;
@@ -52,6 +54,7 @@ for (const route of routes) {
 for (const name of ['robots.txt', 'sitemap.xml', 'sitemap-index.xml', 'llms.txt', 'blog/rss.xml',
   'marty-website-release.json', '_website/runtime-config.js']) copy(name);
 assets('_website/' + selection.revision);
+if (loginRedirect) write('_redirects', loginRedirect);
 write('healthz', 'ok\n');
 write('404.html', '<!doctype html><html lang="en"><meta charset="utf-8"><title>Page not found | ElevenID</title><main><h1>Page not found</h1><a href="/">ElevenID home</a></main></html>\n');
 

@@ -8,7 +8,7 @@ ElevenID's public website, product information, blog and public demonstrations.
 
 The [standalone qualification workflow](.github/workflows/standalone-qualification.yml) builds on a clean website-only checkout, renders the public route plan, validates each route's expected canonical, and tests the exact built image through Nginx. It preserves source-bound, byte-hashed qualification evidence as a downloadable Actions artifact. The historical source/asset replay is a separate [migration audit](.github/workflows/migration-qualification.yml).
 
-**Standalone signed publication and cross-owner composition are qualified.** The original [publisher run `44449706828`, attempt 2](https://github.com/ElevenID/website/actions/runs/44449706828/attempts/2) supplied the website selected by the successful [composition run `44594894023`, attempt 1](https://github.com/ElevenID/marty-ui/actions/runs/44594894023/attempts/1). A newer successful website publication does not change that composition's pinned inputs. Actual application/OIDC handoff, isolated-host promotion and retained-slot rollback remain separate gates. [Latest checkpoint](docs/migration-status.md) · [Qualification and evidence](docs/standalone-qualification.md).
+**Standalone signed publication and cross-owner composition are qualified.** The original [publisher run `44449706828`, attempt 2](https://github.com/ElevenID/website/actions/runs/44449706828/attempts/2) supplied the website selected by the successful [composition run `44594894023`, attempt 1](https://github.com/ElevenID/marty-ui/actions/runs/44594894023/attempts/1). A newer successful website publication does not change that composition's pinned inputs. Actual application/OIDC handoff, isolated-host promotion and retained-slot rollback remain separate gates. [Latest checkpoint](docs/migration-status.md) Â· [Qualification and evidence](docs/standalone-qualification.md).
 
 The [standalone release contract](docs/standalone-release-contract.md) defines the website-only producer identity, Bun v3 build/release/image data with retained v2 compatibility, exact source and output hashes, and compatibility with existing release consumers. The [manual protected-main publisher](docs/standalone-publication.md) repeats qualification, publishes the exact qualified image, verifies its registry identity, and signs and preserves the original five-file proof set. Merging its source does not dispatch a release or activate production traffic.
 
@@ -54,3 +54,11 @@ The standalone qualification workflow prepares a Direct Upload candidate from th
 For a local candidate, use the pinned production toolchain and a clean checkout. Set `MARTY_WEBSITE_SOURCE_SHA` to the full checkout SHA and `CHROME_PATH` to the supported Chromium executable. Run `bun install --frozen-lockfile --linker=hoisted`, `bun run build:website:production`, then `node scripts/prepare-cloudflare-pages.mjs <fresh-output-directory>`. The output directory must have an existing parent outside the checkout.
 
 Pages serves prerendered public pages, feeds and revisioned assets. The included Pages status handler preserves HTTP 410 for retired demo permalinks and HTTP 404 for the internal index document. Only demo subpaths and the exact index document invoke it. These invocations count against the Workers Free allowance. The project needs no secret bindings. Verify the returned revision, CSP, assets, runtime config caching, demo statuses, and application-route 404s at the preview URL before attaching a production domain. Retain the current production origin for rollback.
+
+The website Login link uses `/login?next=%2Fconsole`. For separate website and
+application hosts, set the repository variable `MARTY_WEBSITE_APPLICATION_ORIGIN`
+to the canonical HTTPS origin of the qualified application, then rebuild the
+Pages artifact. Local packaging accepts the same environment variable. This emits
+one temporary redirect for `/login`. An unset variable keeps the isolated preview's
+application routes closed. Verify the redirect destination, return path and login
+screen on the deployed candidate before directing the public domain to Pages.
