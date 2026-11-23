@@ -46,3 +46,11 @@ The exact source and extracted adaptation identities are preserved in [provenanc
 ## License
 
 AGPL-3.0-only. See [LICENSE](LICENSE).
+
+### Cloudflare Pages website
+
+The standalone qualification workflow prepares a Direct Upload candidate from the verified public prerender. Its artifact name includes the full website commit. Download and extract the artifact for that commit, then upload its contents to the separate Pages preview project. The authorization UI has its own Pages project.
+
+For a local candidate, use the pinned production toolchain and a clean checkout. Set `MARTY_WEBSITE_SOURCE_SHA` to the full checkout SHA and `CHROME_PATH` to the supported Chromium executable. Run `bun install --frozen-lockfile --linker=hoisted`, `bun run build:website:production`, then `node scripts/prepare-cloudflare-pages.mjs <fresh-output-directory>`. The output directory must have an existing parent outside the checkout.
+
+Pages serves prerendered public pages, feeds and revisioned assets. The included Pages status handler preserves HTTP 410 for retired demo permalinks and HTTP 404 for the internal index document. Only demo subpaths and the exact index document invoke it. These invocations count against the Workers Free allowance. The project needs no secret bindings. Verify the returned revision, CSP, assets, runtime config caching, demo statuses, and application-route 404s at the preview URL before attaching a production domain. Retain the current production origin for rollback.
