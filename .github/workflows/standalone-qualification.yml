@@ -53,6 +53,15 @@ jobs:
         run: |
           bun run build:website:production
           node scripts/verify-public-assets.mjs
+      - name: Prepare the Cloudflare Pages preview from the verified public build
+        run: node scripts/prepare-cloudflare-pages.mjs "$RUNNER_TEMP/website-pages"
+      - name: Preserve the website Pages candidate
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: website-pages-${{ env.MARTY_WEBSITE_SOURCE_SHA }}
+          path: ${{ runner.temp }}/website-pages/
+          if-no-files-found: error
+          retention-days: 1
       - name: Build the standalone image with a pinned Nginx base
         run: node scripts/build-website-image.mjs
       - name: Qualify the exact built image through Nginx
