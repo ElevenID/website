@@ -19,5 +19,9 @@ COPY nginx.website.routes.conf /etc/nginx/marty-website-routes.conf
 COPY nginx.website.headers.conf /etc/nginx/marty-website-headers.conf
 COPY html/ /usr/share/nginx/html/
 
+# Public static content must be readable by nginx regardless of the producer umask.
+RUN find /usr/share/nginx/html -type d -exec chmod 0755 {} + \
+    && find /usr/share/nginx/html -type f -exec chmod 0644 {} +
+
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
