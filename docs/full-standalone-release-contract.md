@@ -178,3 +178,15 @@ inputs. The complete real website graph also builds with a synthetic disabled
 private adapter. Those tests establish build and contract behavior; they do
 not establish a signed publication, real private build, deployed billing
 journey or production activation.
+
+### Private runner context for unsigned recording
+
+The full recorder accepts the original private workflow on GitHub-hosted runners
+and on the isolated, one-job self-hosted runner qualified by the private producer.
+Both retain the exact private repository ID, main workflow/ref, source commit,
+run/attempt, Linux and X64 checks. Unknown runner classes are refused.
+
+This step captures unsigned metadata. The private producer must still verify its
+protected release approval, sign and attest the original subjects, and retain
+the proofs. Consumers independently authenticate the image, original job and
+signed approval before admission. Recording a subject does not qualify a release.

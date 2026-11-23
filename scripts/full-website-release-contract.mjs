@@ -8,8 +8,7 @@ import { websiteBuildSelection } from '../ui/scripts/web-surface-build-contract.
 import { canonicalReleaseJson } from './lib/standalone-release-contract.mjs';
 import { finalizeQualificationEvidence, qualificationWorkflowFromEnvironment } from './lib/qualification-evidence.mjs';
 import {
-  FULL_STANDALONE_REF, FULL_STANDALONE_REPOSITORY, FULL_STANDALONE_REPOSITORY_ID, FULL_STANDALONE_WORKFLOW,
-  createFullStandaloneRelease, fullStandaloneImageMetadata, fullStandalonePlanFromQualification, validateFullStandaloneRelease,
+  assertFullStandaloneRecordingContext, createFullStandaloneRelease, fullStandaloneImageMetadata, fullStandalonePlanFromQualification, validateFullStandaloneRelease,
 } from './lib/full-standalone-release-contract.mjs';
 
 const usage = 'Usage: full-website-release-contract.mjs plan | validate --receipt ABSOLUTE_PATH | '
@@ -58,17 +57,9 @@ if (operation === 'plan') {
 } else if (operation === 'record') {
   const parameters = argumentsFor(['--image-digest', '--run-id', '--run-attempt', '--output']);
   const options = selectedQualification();
-  const env = process.env;
-  for (const [name, value] of Object.entries({
-    GITHUB_ACTIONS: 'true', GITHUB_SERVER_URL: 'https://github.com',
-    GITHUB_REPOSITORY: FULL_STANDALONE_REPOSITORY, GITHUB_REPOSITORY_ID: FULL_STANDALONE_REPOSITORY_ID,
-    GITHUB_EVENT_NAME: 'workflow_dispatch', GITHUB_REF: FULL_STANDALONE_REF,
-    GITHUB_WORKFLOW_REF: `${FULL_STANDALONE_REPOSITORY}/${FULL_STANDALONE_WORKFLOW}@${FULL_STANDALONE_REF}`,
-    GITHUB_SHA: options.commerceSha, GITHUB_WORKFLOW_SHA: options.commerceSha,
-    GITHUB_RUN_ID: parameters['--run-id'], GITHUB_RUN_ATTEMPT: parameters['--run-attempt'],
-    RUNNER_ENVIRONMENT: 'github-hosted', RUNNER_OS: 'Linux', RUNNER_ARCH: 'X64',
-  })) assert.equal(env[name], value, 'Unsigned recording requires original private producer context: ' + name);
-  options.workflow = qualificationWorkflowFromEnvironment(env);
+  assertFullStandaloneRecordingContext({ commerceSha: options.commerceSha,
+    runId: parameters['--run-id'], runAttempt: parameters['--run-attempt'] });
+  options.workflow = qualificationWorkflowFromEnvironment(process.env);
   const plan = fullStandalonePlanFromQualification(options);
   const evidence = finalizeQualificationEvidence(options);
   assert.notEqual(parameters['--image-digest'], evidence.local_image_id, 'A local image ID is not a registry manifest digest');

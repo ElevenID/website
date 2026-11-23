@@ -7,7 +7,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 import {
-  FULL_STANDALONE_INPUT_PATHS, fullStandalonePlanDigest, fullStandalonePlanFromQualification,
+  FULL_STANDALONE_INPUT_PATHS, assertFullStandaloneRecordingContext, fullStandalonePlanDigest, fullStandalonePlanFromQualification,
   validateFullStandaloneBuildPlan, validateFullStandaloneRelease,
 } from '../../scripts/lib/full-standalone-release-contract.mjs';
 import { canonicalReleaseJson, validateStandaloneRelease } from '../../scripts/lib/standalone-release-contract.mjs';
@@ -190,3 +190,40 @@ test('the full receipt CLI validates only v4 and refuses local unsigned recordin
     '--run-id', '123456', '--run-attempt', '1', '--output', path.join(directory, 'not-produced.json')], { env, stdio: 'pipe' }),
   (error) => /original private producer context/.test(error.stderr.toString()));
 });
+
+function recordingEnvironment(runner) {
+  return {
+    GITHUB_ACTIONS: 'true', GITHUB_SERVER_URL: 'https://github.com',
+    GITHUB_REPOSITORY: 'ElevenID/marty-subscriptions', GITHUB_REPOSITORY_ID: '1207411806',
+    GITHUB_EVENT_NAME: 'workflow_dispatch', GITHUB_REF: 'refs/heads/main',
+    GITHUB_WORKFLOW_REF: 'ElevenID/marty-subscriptions/.github/workflows/production-ui-release.yml@refs/heads/main',
+    GITHUB_SHA: COMMERCE, GITHUB_WORKFLOW_SHA: COMMERCE,
+    GITHUB_RUN_ID: '123456', GITHUB_RUN_ATTEMPT: '1',
+    RUNNER_ENVIRONMENT: runner, RUNNER_OS: 'Linux', RUNNER_ARCH: 'X64',
+  };
+}
+for (const runner of ['github-hosted', 'self-hosted']) {
+  test('unsigned full recording recognizes the original private ' + runner + ' context', () => {
+    assert.doesNotThrow(() => assertFullStandaloneRecordingContext({
+      env: recordingEnvironment(runner), commerceSha: COMMERCE, runId: '123456', runAttempt: '1',
+    }));
+  });
+}
+for (const [field, value] of Object.entries({
+  GITHUB_ACTIONS: 'false', GITHUB_SERVER_URL: 'https://example.invalid',
+  GITHUB_REPOSITORY: 'ElevenID/website', GITHUB_REPOSITORY_ID: '1459542519',
+  GITHUB_EVENT_NAME: 'pull_request', GITHUB_REF: 'refs/heads/feature',
+  GITHUB_WORKFLOW_REF: 'ElevenID/website/.github/workflows/production-website-release.yml@refs/heads/main',
+  GITHUB_SHA: 'c'.repeat(40), GITHUB_WORKFLOW_SHA: 'c'.repeat(40),
+  GITHUB_RUN_ID: '999999', GITHUB_RUN_ATTEMPT: '2', RUNNER_OS: 'Windows', RUNNER_ARCH: 'ARM64',
+  RUNNER_ENVIRONMENT: 'local',
+})) {
+  test('both unsigned recording runner classes retain the ' + field + ' guard', () => {
+    for (const runner of ['github-hosted', 'self-hosted']) {
+      assert.throws(() => assertFullStandaloneRecordingContext({
+        env: { ...recordingEnvironment(runner), [field]: value },
+        commerceSha: COMMERCE, runId: '123456', runAttempt: '1',
+      }), new RegExp('original private producer context: ' + field));
+    }
+  });
+}
