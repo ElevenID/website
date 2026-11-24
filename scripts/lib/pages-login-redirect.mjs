@@ -7,5 +7,5 @@ export function pagesLoginRedirect(origin) {
     || url.hostname.endsWith('.elevenid-public-website.pages.dev')) {
     throw new Error('Expected a separate canonical HTTPS application origin');
   }
-  return `/login ${origin}/login 302\n`;
+  return `/login ${origin}/login 302\n/verify ${origin}/verify 302\n`;
 }

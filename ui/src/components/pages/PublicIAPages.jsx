@@ -2,6 +2,7 @@ import { Box, Button, Chip, Divider, Grid, Paper, Typography } from '@mui/materi
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import { Link as RouterLink } from 'react-router';
+import { publicEntryHref } from '../../application/routing/publicEntry';
 import { SHOW_PUBLIC_CTA } from '@ui-public-config';
 import { SEOHead } from '../seo';
 import {
@@ -41,8 +42,10 @@ function PageFrame({ title, description, canonicalPath, keywords, eyebrow, actio
             {actions.map((action) => (
               <Button
                 key={action.path}
-                component={RouterLink}
-                to={action.path}
+                component={action.path === '/verify' ? 'a' : RouterLink}
+                {...(action.path === '/verify'
+                  ? { href: publicEntryHref(action.path) }
+                  : { to: action.path })}
                 variant={action.variant || 'contained'}
                 size="large"
                 startIcon={action.startIcon}

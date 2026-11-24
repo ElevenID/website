@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "purpose": "post-extraction-adaptation-record",
+  "source_repository": "ElevenID/marty-ui",
+  "immutable_source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "extends": "contracts/extraction-provenance-batch-27.json",
+  "adapted_files": [
+    {
+      "path": "ui/src/components/LandingPageContent.jsx",
+      "source_original_blob": "a8c8d3a0ee9ff0ba140b3b91ee14b4d179bd02bc",
+      "previous_extracted_blob": "07e7a07003aef819e424cb7ae6ded6722640669f",
+      "current_blob": "a454043ecaa7b26a6d743f9655539e87c4dd8f99",
+      "current_bytes": 81251,
+      "change": "Use document navigation for verification hero, quick-start and footer actions on the separate Pages host."
+    },
+    {
+      "path": "ui/src/components/pages/PublicIAPages.jsx",
+      "source_original_blob": "54f3a9b34fa8254c9907794154bb5bbed33c76ee",
+      "previous_extracted_blob": "fa46177013b543e2d7d909479d02c681c8006551",
+      "current_blob": "d59b649482b10892ac0f7dc1b2f1a063f7417872",
+      "current_bytes": 23597,
+      "change": "Use document navigation for verification actions on the public solution pages."
+    },
+    {
+      "path": "ui/src/components/pages/VerifiableCredentialApiPage.jsx",
+      "source_original_blob": "ad2b7bcd519d64258c49144ceadd2afa24577f8a",
+      "previous_extracted_blob": "c14b91af44171793b34d8f026cb3eafcb1b315f0",
+      "current_blob": "9415d96f7b74e8ee4d80ed8f97fee9affa2489b5",
+      "current_bytes": 17570,
+      "change": "Send the verification CTA to the application as a document navigation."
+    },
+    {
+      "path": "ui/src/apps/website/WebsiteApp.jsx",
+      "source_original_blob": "51789b621ae64442135789314c7857ff393a6cf0",
+      "previous_extracted_blob": "b6f11a49ee04d0bbb65d9e351d9f424dd87f773c",
+      "current_blob": "a18840c688d6df75fbf0147ba31f63fd734d4b6c",
+      "current_bytes": 4103,
+      "change": "Send the website navigation verification CTA to the application as a document navigation."
+    }
+  ],
+  "scope_note": "Preserves source extraction identity while recording the separate Pages application handoff; no production cutover asserted."
+}

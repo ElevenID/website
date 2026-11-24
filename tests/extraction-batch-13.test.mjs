@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync, lstatSync } from 'node:fs';
 import { test } from 'node:test';
 const manifest=JSON.parse(readFileSync(new URL('../contracts/extraction-provenance-batch-13.json',import.meta.url),'utf8'));
+const handoff=JSON.parse(readFileSync(new URL('../contracts/website-pages-application-handoff-adaptation.json',import.meta.url),'utf8'));
 const hash=(buffer)=>createHash('sha1').update('blob '+buffer.length+String.fromCharCode(0)).update(buffer).digest('hex');
 test('batch 13 large public source identity is recorded',()=>{
  assert.equal(manifest.schema_version,1);
@@ -16,6 +17,7 @@ test('batch 13 imported bytes match selected source blobs',()=>{
   const file=new URL('../'+entry.path,import.meta.url);
   assert.equal(lstatSync(file).isFile(),true,entry.path);
   const content=readFileSync(file);
+  if (handoff.adapted_files.some(item=>item.path===entry.path)) continue;
   if (entry.path === 'ui/src/services/demoManifestService.js') {
    const adaptation=JSON.parse(readFileSync(new URL('../contracts/demo-retirement-adaptation.json',import.meta.url),'utf8')).adapted_files.find(item=>item.path===entry.path);
    assert.equal(adaptation.source_original_blob,entry.original_sha);
@@ -40,5 +42,30 @@ test('batch 13 imported bytes match selected source blobs',()=>{
   assert.equal(content.length,entry.bytes,entry.path);
   assert.equal(hash(content),entry.selected_sha,entry.path);
   assert.ok(entry.selected_revision==='original-pin'||entry.selected_revision==='reconciled-current');
+ }
+});
+test('Pages application handoff adapts four reviewed source files without rewriting extraction history',()=>{
+ assert.equal(handoff.schema_version,1);
+ assert.equal(handoff.purpose,'post-extraction-adaptation-record');
+ assert.equal(handoff.source_repository,'ElevenID/marty-ui');
+ assert.equal(handoff.immutable_source_commit,manifest.immutable_source_commit);
+ assert.equal(handoff.extends,'contracts/extraction-provenance-batch-27.json');
+ assert.deepEqual(handoff.adapted_files.map(item=>item.path).sort(),[
+  'ui/src/apps/website/WebsiteApp.jsx',
+  'ui/src/components/LandingPageContent.jsx',
+  'ui/src/components/pages/PublicIAPages.jsx',
+  'ui/src/components/pages/VerifiableCredentialApiPage.jsx',
+ ]);
+ const previousWebsite=JSON.parse(readFileSync(new URL('../contracts/extraction-provenance-batch-21.json',import.meta.url),'utf8')).adapted_files[0];
+ for(const item of handoff.adapted_files){
+  const prior=manifest.source_paths.find(entry=>entry.path===item.path);
+  assert.equal(item.source_original_blob,prior?.original_sha??previousWebsite.source_original_blob,item.path);
+  assert.equal(item.previous_extracted_blob,prior?.selected_sha??previousWebsite.current_blob,item.path);
+  assert.ok(item.change.length>0,item.path);
+  const file=new URL('../'+item.path,import.meta.url);
+  assert.equal(lstatSync(file).isFile(),true,item.path);
+  const content=readFileSync(file);
+  assert.equal(content.length,item.current_bytes,item.path);
+  assert.equal(hash(content),item.current_blob,item.path);
  }
 });

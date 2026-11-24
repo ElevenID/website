@@ -1,4 +1,5 @@
 import { useSurfaceNavigate } from '../../application/routing/useSurfaceNavigate';
+import { publicEntryHref } from '../../application/routing/publicEntry';
 /**
  * Verifiable Credential API Page
  * 
@@ -350,7 +351,7 @@ function VerifiableCredentialApiPage() {
             : 'Explore the API and documentation, then discuss the commercial scope your organization needs.'}
         </Typography>
         <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-          {SHOW_PUBLIC_CTA && <Button variant="contained" size="large" onClick={() => navigate('/verify')} sx={{ bgcolor: 'white', color: 'primary.main' }}>Start Verifying</Button>}
+          {SHOW_PUBLIC_CTA && <Button component="a" href={publicEntryHref('/verify')} variant="contained" size="large" sx={{ bgcolor: 'white', color: 'primary.main' }}>Start Verifying</Button>}
           {SHOW_PUBLIC_PRICING_BUTTONS && (
             <FutureFeatureButton
               variant="contained"
