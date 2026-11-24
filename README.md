@@ -73,3 +73,6 @@ it to the separate staging Pages project, and verify `/login?next=%2Fconsole`
 and the website's Start Verifying links reach the candidate console. Repeat
 qualification using the accepted
 production console origin before the public-domain cutover.
+
+Use the [Cloudflare Pages production cutover runbook](docs/cloudflare-pages-production-cutover.md)
+to qualify the exact public candidate, record the domain change, and verify rollback.
