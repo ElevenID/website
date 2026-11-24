@@ -992,7 +992,14 @@ function LandingPageContent({ isLoading = false }) {
                 '&:hover': { transform: 'translateY(-4px)', boxShadow: 4 },
               }}
             >
-              <CardActionArea component={Link} to={publicEntryHref(destination.path)} onClick={() => handleQuickStartSelection(destination)} sx={{ height: '100%' }}>
+              <CardActionArea
+                component={destination.path === '/verify' ? 'a' : Link}
+                {...(destination.path === '/verify'
+                  ? { href: publicEntryHref(destination.path) }
+                  : { to: publicEntryHref(destination.path) })}
+                onClick={() => handleQuickStartSelection(destination)}
+                sx={{ height: '100%' }}
+              >
                 <CardContent sx={{ p: 3.5, height: '100%', display: 'flex', flexDirection: 'column' }}>
                   <Typography variant="overline" sx={{ color: 'text.secondary', letterSpacing: 1.2 }}>
                     {destination.role}
