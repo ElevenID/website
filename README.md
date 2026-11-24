@@ -62,3 +62,12 @@ Pages artifact. Local packaging accepts the same environment variable. This emit
 one temporary redirect for `/login`. An unset variable keeps the isolated preview's
 application routes closed. Verify the redirect destination, return path and login
 screen on the deployed candidate before directing the public domain to Pages.
+
+For a staging upload, manually dispatch the standalone qualification workflow
+on protected `main` with `application_origin` set to the candidate console's
+HTTPS origin. The per-run input overrides the repository variable only for that
+candidate; it does not change the production build setting. Download the
+`website-pages-<commit>` artifact before its one-day retention expires, upload
+it to the separate staging Pages project, and verify `/login?next=%2Fconsole`
+redirects to the candidate console. Repeat qualification using the accepted
+production console origin before the public-domain cutover.
