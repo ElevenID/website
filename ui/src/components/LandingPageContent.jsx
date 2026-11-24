@@ -807,8 +807,8 @@ function LandingPageContent({ isLoading = false }) {
               </Box>
               <Box sx={{ display: 'flex', gap: 2, justifyContent: { xs: 'center', lg: 'flex-start' }, flexWrap: 'wrap' }}>
                 {SHOW_PUBLIC_CTA && <Button
-                  component={Link}
-                  to={publicEntryHref('/verify')}
+                  component="a"
+                  href={publicEntryHref('/verify')}
                   onClick={() => handleLandingCtaClick({
                     section: 'hero',
                     ctaId: 'start_verifying',
@@ -1880,8 +1880,8 @@ function LandingPageContent({ isLoading = false }) {
         </Typography>
         <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
           {SHOW_PUBLIC_CTA && <Button
-            component={Link}
-            to={publicEntryHref('/verify')}
+            component="a"
+            href={publicEntryHref('/verify')}
             onClick={() => handleLandingCtaClick({
               section: 'footer',
               ctaId: 'start_verifying',
