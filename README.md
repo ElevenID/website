@@ -59,10 +59,24 @@ The website Login link uses `/login?next=%2Fconsole`. For separate website and
 application hosts, set the repository variable `MARTY_WEBSITE_APPLICATION_ORIGIN`
 to the canonical HTTPS origin of the qualified application, then rebuild the
 Pages artifact. Local packaging accepts the same environment variable. This emits
-temporary redirects for `/login` and `/verify`. An unset variable keeps the isolated preview's
+temporary redirects for `/login`, `/verify`, `/docs`, and `/docs/*`, retaining
+the documentation path and incoming query string. Other unknown paths still
+return the website's 404. An unset variable keeps the isolated preview's
 application routes closed. Verify the redirect destination, return path and login
 screen, and the verification entry route on the deployed candidate before
 directing the public domain to Pages.
+
+Check the actual Pages redirect and 404 behavior against a deployed preview or
+local Wrangler Pages instance:
+
+```sh
+MARTY_PAGES_TEST_ORIGIN=https://your-preview.pages.dev \
+MARTY_PAGES_TEST_APPLICATION_ORIGIN=https://your-console.example.com \
+node --test tests/http/pages-application-handoff.test.mjs
+```
+
+The HTTP checks keep redirects unfollowed and verify their destination, encoded
+query strings, documentation subpaths, and the unchanged unknown-route boundary.
 
 For a staging upload, manually dispatch the standalone qualification workflow
 on protected `main` with `application_origin` set to the candidate console's
