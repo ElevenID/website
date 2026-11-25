@@ -7,5 +7,9 @@ export function pagesLoginRedirect(origin) {
     || url.hostname.endsWith('.elevenid-public-website.pages.dev')) {
     throw new Error('Expected a separate canonical HTTPS application origin');
   }
-  return `/login ${origin}/login 302\n/verify ${origin}/verify 302\n`;
+  // Documentation belongs to the application too. Keep the wildcard beneath
+  // /docs/ so unrelated or unknown website paths still reach the website 404.
+  // Destinations have no query override: Pages preserves the incoming query.
+  return `/login ${origin}/login 302\n/verify ${origin}/verify 302\n`
+    + `/docs ${origin}/docs 302\n/docs/* ${origin}/docs/:splat 302\n`;
 }

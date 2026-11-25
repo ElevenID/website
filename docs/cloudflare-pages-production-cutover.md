@@ -38,7 +38,11 @@ API, and Supabase handoff.
    assets, CSP, cache headers, `/index.html` 404, `/console` 404, and retired
    `/demos/<release>/<slug>` routes 410. Check `/login?next=%2Fconsole` and a
    Start Verifying link against the accepted console origin with return parameters
-   intact. Record statuses and `Location` values.
+   intact. Follow an Open API docs action and check `/docs`, `/docs/quickstart`,
+   and documentation query strings reach that same console origin. Keep unknown
+   website paths, including `/docs-extra`, at 404. The HTTP handoff check in the
+   README exercises these redirect and boundary cases. Record statuses and
+   `Location` values.
 3. Before replacing the current production deployment, capture the three custom
    domain associations, DNS records and proxy state, redirects or rules, current
    deployment ID, Free plan status, and an available previous production
