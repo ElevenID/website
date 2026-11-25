@@ -1,70 +1,65 @@
-# ElevenID public website: Cloudflare Pages production cutover
+# ElevenID public website: Cloudflare Pages production operation
 
-This runbook moves `www.elevenidllc.com` and the apex redirect to the separately
-qualified public website Pages project. It does not move the console or API to
-Pages. Keep the current public origin available until the new domain is verified.
+The public marketing website is deployed separately from the console, authorization
+UI, and API. The `elevenid-public-website` Cloudflare Pages project currently serves
+`elevenidllc.com`, `www.elevenidllc.com`, and `web-next.elevenidllc.com`. All three
+custom domains were Active with SSL enabled in the Cloudflare dashboard on
+2026-11-25. The apex currently serves the Pages site directly.
 
-## Current checkpoint and owners
+## Verified checkpoint and remaining dependency
 
-On 2026-11-24, `web-next.elevenidllc.com` served the Pages candidate and
-`www.elevenidllc.com` served the current public site. The candidate login link
-redirected to `console-next.elevenidllc.com`; its static login page loaded.
-`api-next.elevenidllc.com/health` returned HTTP 530. These are observations,
-not a production acceptance result. The deployment operator owns the Cloudflare
-domain association and DNS change; the application owner must first accept the
-console, Auth, Flow, API, and Supabase handoff at the intended production origins.
+On 2026-11-25, Cloudflare listed `8f5913d0.elevenid-public-website.pages.dev` as
+the current Production/main deployment. The three custom domains returned the
+website release revision `6ef043be8c7f907c254945a924ddccf76d299c37`.
+The previous `9f413383` deployment remained available in the deployment history.
+The live `www` route returned `/` and `/healthz` as 200, `/index.html` and
+`/console` as 404, and `/login?next=%2Fconsole` as 302 to
+`https://console.elevenidllc.com/login?next=%2Fconsole`.
 
-## Entry gates
+These checks establish static website delivery. They do not establish that the
+Supabase-native console sign-in, authorization UI, API, or account return path is
+accepted for production. Keep the current console and API routes until their
+separate acceptance and recovery checks pass. The deployment operator owns Pages
+and DNS changes; the application owner owns acceptance of the console, Auth/Flow,
+API, and Supabase handoff.
 
-1. Record the website and console source commits, Pages deployment IDs and
-   immutable preview URLs, qualification runs, and intended production console
-   origin in the existing deployment audit. Use the accepted application origin
-   in a fresh `main` dispatch of `Website standalone qualification`. The
-   `application_origin` input applies only to that run. Download
-   `website-pages-<full website commit>` before its one-day artifact retention
-   ends. Upload the extracted contents to the public website staging Pages
-   project, preserving POSIX `/` paths in a ZIP made on Windows.
-2. Confirm the console's production login and verification routes work with a
-   real account; the API and Auth/Flow health and functional checks pass; the
-   Supabase redirect and Site URL configuration names the accepted origins; and
-   a successful sign-in returns to the console. A 200 response from a static
-   login page alone does not satisfy this gate. Keep the domain unchanged if
-   any dependency is unhealthy or its acceptance evidence is missing.
-3. At the immutable website preview URL, check the release JSON revision against
-   the qualified commit, `/healthz`, public pages, sitemap, feed, revisioned
-   assets, CSP and cache headers. Check that `/login?next=%2Fconsole` and a
-   Start Verifying link redirect to the accepted console origin with their
-   return parameters intact. Check retired demo URLs return 410, the direct
-   `/index.html` returns 404, and `/console` plus other application routes
-   return 404. Record response status and `Location` values.
-4. In Cloudflare immediately before changing traffic, capture the current
-   `www` and apex DNS records, proxy state, Pages custom-domain associations,
-   current public deployment, redirects or rules, and the candidate project's
-   Free plan status. Record the exact values and a rollback owner in the audit.
-   Verify that attaching the domain will not displace a needed console, Auth,
-   API, or tunnel route. Do not guess the DNS target from a public lookup.
+## Qualify a website update
 
-## Switch and verify
+1. Record the website and console source commits, intended console origin, Pages
+   deployment ID, immutable preview URL, qualification run, and rollback owner in
+   the existing deployment audit. Check the host storage budget before a large
+   local build. Use the accepted console origin in a fresh protected `main`
+   dispatch of `Website standalone qualification`; its `application_origin` input
+   applies only to that run. Download `website-pages-<full website commit>` before
+   the one-day artifact retention ends. Preserve POSIX `/` paths when preparing
+   the Windows upload ZIP.
+2. At the immutable preview URL, match the release JSON revision to the qualified
+   commit. Check `/`, `/healthz`, public pages, sitemap, feed, robots, revisioned
+   assets, CSP, cache headers, `/index.html` 404, `/console` 404, and retired
+   `/demos/<release>/<slug>` routes 410. Check `/login?next=%2Fconsole` and a
+   Start Verifying link against the accepted console origin with return parameters
+   intact. Record statuses and `Location` values.
+3. Before replacing the current production deployment, capture the three custom
+   domain associations, DNS records and proxy state, redirects or rules, current
+   deployment ID, Free plan status, and an available previous production
+   deployment as the rollback target in the audit. Confirm the
+   update does not displace the console, authorization, API, or tunnel routes.
+4. Upload the qualified artifact to `elevenid-public-website` through the normal
+   Pages deployment path. Read back the new Production/main deployment ID and
+   immutable URL from Cloudflare. From outside the host, repeat the route, TLS,
+   release revision, redirect, and cache checks on the immutable URL and all three
+   custom domains. Compare the served release bytes with the uploaded artifact.
+5. When the console and native Auth/Flow are accepted, complete a real sign-in and
+   return to the console from the website login link. Record the account journey
+   separately from static route checks. Review Pages and the limited Worker route
+   usage and errors during the initial window. Keep the project on the Free plan.
 
-1. Associate `www.elevenidllc.com` with the qualified public website Pages
-   project and make the matching Cloudflare DNS change using the target shown
-   for that project. Preserve the apex-to-`www` redirect. Change only the
-   recorded website records or association, using the normal Cloudflare path.
-2. From outside the host, verify TLS and HTTP for apex-to-`www`, the homepage,
-   `/healthz`, release JSON revision, public pages, assets, sitemap and feed.
-   Verify the login and verification redirects, then complete an actual
-   sign-in and console return. Repeat the 410 and 404 checks above on `www`.
-   Check Cloudflare's domain and deployment views agree with the observed
-   revision. Record times, exact deployment ID, statuses, and any deviations.
-3. Watch the relevant Cloudflare Free usage and error views during the initial
-   window, including Pages and the limited Worker route for demo statuses.
-   This cutover must not enable a paid plan or add paid bindings.
+## Roll back a website update
 
-## Roll back
-
-If the revision, TLS, redirects, functional sign-in, status semantics, or
-availability checks fail, restore the captured previous `www` association and
-DNS record through Cloudflare, retaining the previous public deployment. Verify
-the apex redirect and previous public site from outside the host. Record the
-failure, restored values, observed revision, and the next owner action in the
-deployment audit. Do not switch the console or API as a website rollback step.
+If the release revision, TLS, routing, redirect behavior, or availability differs
+from the qualified artifact, select the recorded previous Pages deployment through
+Cloudflare's [Pages rollback path](https://developers.cloudflare.com/pages/configuration/rollbacks/).
+Restore only any website DNS or custom-domain
+association that this update changed. Verify the previous revision and website
+routes on the apex, `www`, and `web-next` from outside the host. Record the failure,
+restored deployment ID, observed revision, and next owner action in the audit.
