@@ -142,6 +142,16 @@ const QUICK_START_PATHS = [
     icon: <FlightTakeoffIcon sx={{ fontSize: 36, color: 'secondary.main' }} />,
   },
   {
+    id: 'agent-identity',
+    role: 'Agent builders',
+    title: 'Give Agents Scoped Authority',
+    description: 'Understand the acting identity, who it represents, and the exact operations it may request through an approved grant.',
+    details: ['agent identity', 'explicit delegation', 'decision evidence'],
+    cta: 'Explore Agent Identity',
+    path: '/ai',
+    icon: <PolicyIcon sx={{ fontSize: 36, color: 'primary.main' }} />,
+  },
+  {
     id: 'build-with-elevenid',
     role: 'Developers',
     title: 'Build With ElevenID',
@@ -437,7 +447,7 @@ function LandingPageContent({ isLoading = false }) {
       <>
         <SEOHead
           title="Verifiable Identity Infrastructure"
-          description="Marty is customer-operated software for portable credentials, applicant and document verification, and Travel Trust. Explore defined workflows and release-specific evidence."
+          description="Explore Marty for verifiable credentials, document checks, Travel Trust, and agent identity and delegation. Learn the trust model and release-specific capabilities."
           canonicalPath="/"
           structuredData={organizationSchema()}
           keywords={[
@@ -541,7 +551,7 @@ function LandingPageContent({ isLoading = false }) {
   const proofClaims = [
     {
       category: t('proofStrip.interoperability', 'Scope'),
-      label: t('landingPage.proofStrip.claims.w3c', PROOF_STRIP.claims?.[0]?.label || 'One Marty product, three use cases'),
+      label: t('landingPage.proofStrip.claims.w3c', PROOF_STRIP.claims?.[0]?.label || 'Credentials, trust, and agent authority'),
     },
     {
       category: t('proofStrip.offlineVerification', 'Evaluation'),
@@ -679,7 +689,7 @@ function LandingPageContent({ isLoading = false }) {
       {/* SEO Meta Tags */}
       <SEOHead
         title="Verifiable Identity Infrastructure"
-        description="Marty is customer-operated software for portable credentials, applicant and document verification, and Travel Trust. Explore defined workflows and release-specific evidence."
+        description="Explore Marty for verifiable credentials, document checks, Travel Trust, and agent identity and delegation. Learn the trust model and release-specific capabilities."
         canonicalPath="/"
         structuredData={organizationSchema()}
         keywords={[
@@ -694,6 +704,8 @@ function LandingPageContent({ isLoading = false }) {
           'SD-JWT',
           'OID4VP',
           'Marty Identity Protocol',
+          'agent identity',
+          'agent delegation',
           'MIP',
           'open standard',
         ]}
@@ -965,7 +977,7 @@ function LandingPageContent({ isLoading = false }) {
       </Box>
       <Section bgcolor="grey.50" sx={{ py: { xs: 5, md: 6 } }}>
         <SectionHeading
-          subtitle="Whether you are evaluating identity infrastructure, integrating verification, or deploying credentials, jump directly to the path that fits."
+          subtitle="Explore credential verification, issuance, agent authority, or the APIs for your integration."
           sx={{ mb: 4 }}
         >
           Start where you are
@@ -976,7 +988,7 @@ function LandingPageContent({ isLoading = false }) {
             gap: 3,
             gridTemplateColumns: {
               xs: '1fr',
-              md: 'repeat(3, minmax(0, 1fr))',
+              md: 'repeat(2, minmax(0, 1fr))',
             },
           }}
         >
@@ -1247,7 +1259,7 @@ function LandingPageContent({ isLoading = false }) {
         <SectionHeading
           subtitle={t(
             'landingPage.solvesIt.intro',
-            'Govern identity with four primitives: trust profiles, credential templates, presentation policies, and flows.'
+            'Govern identity with five core primitives: trust profiles, credential templates, presentation policies, deployment profiles, and flows.'
           )}
           divider
         >
@@ -1686,7 +1698,7 @@ function LandingPageContent({ isLoading = false }) {
         >
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, mb: 2 }}>
             <Chip label={`Open Protocol · ${PROTOCOL.status}`} color="primary" size="small" sx={{ fontWeight: 700 }} />
-            <Chip label={`v${PROTOCOL.version}`} variant="outlined" size="small" />
+            <Chip label={`Public draft v${PROTOCOL.version}`} variant="outlined" size="small" />
             <Chip label={PROTOCOL.license} variant="outlined" size="small" />
           </Box>
           <Typography variant="h6" fontWeight={600} color="primary.dark" sx={{ fontStyle: 'italic', maxWidth: 800, mx: 'auto', mb: 2 }}>
@@ -1695,7 +1707,9 @@ function LandingPageContent({ isLoading = false }) {
           <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 700, mx: 'auto' }}>
             The Marty Identity Protocol (MIP) defines five primitives—Trust Profiles, Credential Templates,
             Presentation Policies, Deployment Profiles, and Flows—that make digital identity management
-            explicit in the draft protocol model.
+            explicit in the draft protocol model. Optional agent identity and delegation contracts add
+            scoped approval, current authority checks, and decision evidence. Review the agent guide
+            for the newer source extensions and their deployment requirements.
           </Typography>
         </Paper>
 

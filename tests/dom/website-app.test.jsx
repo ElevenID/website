@@ -110,6 +110,16 @@ describe('website composition chrome with the deferred route boundary isolated',
       .toBe('https://elevenidllc.com/resources');
   });
 
+  it('makes agent learning discoverable in its own navigation tab', async () => {
+    await renderWebsite();
+    const agents = screen.getByRole('tab', { name: 'Agents' });
+    expect(agents.getAttribute('href')).toBe('/ai');
+    fireEvent.click(agents);
+    await waitFor(() => expect(screen.getByTestId('website-route-boundary').textContent).toBe('/ai'));
+    expect(agents.getAttribute('aria-selected')).toBe('true');
+    expect(screen.getByRole('tab', { name: 'Product' }).getAttribute('aria-selected')).toBe('false');
+  });
+
   it('selects the configured resource tab for a nested public route', async () => {
     await renderWebsite('/blog/foundations?view=latest');
     expect(screen.getByRole('tab', { name: 'Resources' }).getAttribute('aria-selected')).toBe('true');

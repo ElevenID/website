@@ -5,10 +5,12 @@
  * across Product, Standards, and Identity Guide pages
  */
 
+import { PUBLIC_MIP_BASELINE_VERSION } from './agentProtocolContent';
+
 // Core value proposition
 export const VALUE_PROPOSITION = {
   headline: 'Marty: identity workflows you operate.',
-  supportingSubheadline: 'One product for portable credentials, applicant and document verification, and Travel Trust.',
+  supportingSubheadline: 'Verifiable credentials, document checks, Travel Trust, and scoped authority for agents.',
   subheadline: 'Build trust around your workflow.',
   extendedSubheadline: 'Choose a defined use case, evaluate it with synthetic data, and run the agreed deployment yourself or with your chosen partner.',
   primaryCTA: 'Start Verifying',
@@ -111,7 +113,7 @@ export const AUDIENCE_ROUTING = {
 export const PROOF_STRIP = {
   title: 'A Defined Product and Operating Model',
   claims: [
-    { label: 'One Marty product, three use cases', category: 'Scope' },
+    { label: 'Credentials, trust, and agent authority', category: 'Scope' },
     { label: 'Synthetic evaluation first', category: 'Evaluation' },
     { label: 'Customer or partner operated', category: 'Operations' },
     { label: 'Explicit trust and key configuration', category: 'Security' },
@@ -125,6 +127,7 @@ export const ECOSYSTEM_SIGNALS = {
     { label: 'Portable credentials', items: ['Issuer trust', 'Credential profiles', 'Wallet compatibility'] },
     { label: 'Applicant and document verification', items: ['Document inputs', 'Review rules', 'Recorded decisions'] },
     { label: 'Travel Trust', items: ['Travel-document trust', 'Journey policy', 'Deployment evidence'] },
+    { label: 'Agent identity and delegation', items: ['Accountable identities', 'Scoped approval', 'Operation-bound evidence'] },
   ],
 };
 
@@ -581,8 +584,9 @@ export const IDENTITY_CONCEPTS = {
     ],
     conclusion: 'Identity becomes a transaction: request → present → validate → decide',
   },
+  // Keep the imported property name stable; Flow is the fifth core primitive.
   fourPrimitives: {
-    title: 'The Four Primitives',
+    title: 'Five Core Primitives',
     tagline: 'Digital identity management as automatable configuration',
     primitives: [
       {
@@ -631,6 +635,17 @@ export const IDENTITY_CONCEPTS = {
           'Device groupings (lanes)',
         ],
         stability: 'Changes frequently; owned by operations',
+      },
+      {
+        name: 'Flow',
+        purpose: 'Orchestrate identity steps under explicit trust and policy rules',
+        contains: [
+          'Issuance, presentation, and verification steps',
+          'Approval and decision transitions',
+          'References to templates, policies, and deployment profiles',
+          'Evidence and failure handling for the selected workflow',
+        ],
+        stability: 'Changes with the workflow; owned by the integration team',
       },
     ],
   },
@@ -689,12 +704,12 @@ export const STANDARDS_STRATEGIC = {
 export const PROTOCOL = {
   name: 'Marty Identity Protocol',
   abbreviation: 'MIP',
-  version: '0.5.0',
+  version: PUBLIC_MIP_BASELINE_VERSION,
   status: 'Draft',
   license: 'Apache 2.0',
   githubUrl: 'https://github.com/Marty-Protocol/Marty-Protocol',
-  tagline: 'An open, vendor-neutral specification for cryptographically verifiable digital identity management.',
-  description: 'MIP defines the minimum automatable set of primitives required for issuing, holding, presenting, and verifying digital credentials under explicit rules of trust and disclosure.',
+  tagline: 'An open draft model for credentials, trust, and delegated authority for people and agents.',
+  description: 'MIP defines five core primitives for digital identity, with optional contracts for agent identity, scoped delegation, and verifiable decision evidence.',
   thesis: 'Digital identity management can be represented by Trust Profiles + Credential Templates + Presentation Policies + Deployment Profiles, orchestrated by Flows.',
   primitives: [
     {
@@ -737,7 +752,7 @@ export const PROTOCOL = {
   governance: {
     model: 'Vendor-neutral, community-governed',
     contributions: 'Developer Certificate of Origin (DCO)',
-    decisions: 'All decisions made publicly on GitHub',
+    decisions: 'Public specification changes are reviewed through GitHub',
     copyright: 'The MIP Authors',
   },
   components: [

@@ -256,6 +256,63 @@ test('reconciliation rejects source drift, arbitrary paths and duplicate overrid
   assert.throws(() => selectPublicAssets(inventory(), [change(), change()]), /duplicate/);
 });
 
+function websiteAdaptation(overrides = {}) {
+  return {
+    schema_version: 1, purpose: 'post-extraction-adaptation-record',
+    source_repository: 'ElevenID/marty-ui',
+    immutable_source_commit: 'df6ec6c4bfee803d89c54e9333297f29f378cee3',
+    adapted_files: [{
+      path: 'ui/public/locales/en/marketing.json', source_original_blob: 'a'.repeat(40),
+      previous_extracted_blob: 'b'.repeat(40), current_blob: 'e'.repeat(40),
+      current_bytes: 12, change: 'Update reviewed protocol education.',
+    }],
+    ...overrides,
+  };
+}
+
+test('website locale adaptation continues exact history without mutating prior records', () => {
+  const inputs = [inventory(), [change()], websiteAdaptation()];
+  const before = JSON.stringify(inputs);
+  const selected = selectPublicAssets(inputs[0], inputs[1], undefined, inputs[2]);
+  assert.equal(selected[0].sha, 'e'.repeat(40));
+  assert.equal(selected[0].bytes, 12);
+  assert.equal(selected[1].sha, 'c'.repeat(40));
+  assert.equal(JSON.stringify(inputs), before);
+});
+
+test('website locale adaptation rejects wrong ancestry, unreviewed paths and invalid output identities', () => {
+  const entry = websiteAdaptation().adapted_files[0];
+  for (const mutation of [
+    { source_original_blob: '0'.repeat(40) }, { previous_extracted_blob: '0'.repeat(40) },
+    { path: 'ui/public/locales/en/console.json' }, { path: 'ui/public/favicon.svg' },
+    { path: 'ui/public/locales/xx/marketing.json' }, { current_blob: 'invalid' },
+    { current_bytes: -1 }, { change: '' },
+  ]) assert.throws(() => selectPublicAssets(inventory(), [change()], undefined,
+    websiteAdaptation({ adapted_files: [{ ...entry, ...mutation }] })));
+  assert.throws(() => selectPublicAssets(inventory(), [change()], undefined,
+    websiteAdaptation({ adapted_files: [entry, entry] })), /duplicate/);
+  assert.throws(() => selectPublicAssets(inventory(), [change()], undefined,
+    websiteAdaptation({ immutable_source_commit: '0'.repeat(40) })), /Invalid website/);
+});
+
+test('website summary adaptation permits only llms.txt among runtime discovery resources', () => {
+  const input = inventory();
+  input.files.push({ path: 'llms.txt', blob_sha: 'f'.repeat(40), size_bytes: 14, category: 'public' });
+  const entry = {
+    path: 'ui/public/llms.txt', source_original_blob: 'f'.repeat(40),
+    previous_extracted_blob: 'f'.repeat(40), current_blob: '1'.repeat(40),
+    current_bytes: 20, change: 'Align machine-readable teaching with the website.',
+  };
+  const selected = selectPublicAssets(input, [], undefined, websiteAdaptation({ adapted_files: [entry] }));
+  assert.deepEqual(selected.find((asset) => asset.path === 'llms.txt'), {
+    path: 'llms.txt', sha: '1'.repeat(40), bytes: 20,
+  });
+  for (const path of ['ui/public/.well-known/ai-plugin.json', 'ui/public/runtime-config.js', 'ui/public/startup.js', 'ui/public/llms-full.txt']) {
+    assert.throws(() => selectPublicAssets(input, [], undefined,
+      websiteAdaptation({ adapted_files: [{ ...entry, path }] })), /limited to reviewed/);
+  }
+});
+
 test('large asset contract remains exactly pinned to eight original blobs', () => {
   const manifest = JSON.parse(readFileSync(new URL('../../contracts/large-public-assets.json', import.meta.url), 'utf8'));
   assert.equal(manifest.source_commit, 'df6ec6c4bfee803d89c54e9333297f29f378cee3');

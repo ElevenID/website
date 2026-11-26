@@ -1,16 +1,16 @@
 {
   "protocol": {
     "heroTitle": "Built around an Open Draft Protocol",
-    "heroSubtitle": "The Marty Identity Protocol (MIP) is a vendor-neutral, open specification for cryptographically verifiable digital identity management.",
+    "heroSubtitle": "An open draft model for credentials, trust, and delegated authority for people and agents.",
     "sectionPrimitives": "Five Core Primitives",
-    "primitivesSubtitle": "MIP defines the minimum automatable set of primitives for issuing, holding, presenting, and verifying digital credentials.",
+    "primitivesSubtitle": "MIP defines five core identity primitives, with optional contracts for agent identity and scoped delegation.",
     "sectionStandards": "Standards Alignment",
     "standardsSubtitle": "A named standard is a starting point. Review the exact release and profile; compatibility and conformance require their own evidence.",
     "sectionGovernance": "Open Governance",
-    "governanceSubtitle": "No single organization controls the protocol. All decisions are made publicly on GitHub.",
+    "governanceSubtitle": "Review the public specification and contribution process on GitHub. Newer implementation contracts and their publication status are described separately.",
     "governanceModel": "Vendor-neutral, community-governed",
     "governanceContributions": "Developer Certificate of Origin (DCO) — no CLA required",
-    "governanceDecisions": "All decisions made publicly on GitHub — no private steering committees",
+    "governanceDecisions": "Public specification changes are reviewed through GitHub",
     "governanceCopyright": "Copyright held by The MIP Authors",
     "sectionComponents": "What's in the Repo",
     "componentsSubtitle": "A named standard is a starting point. Review the exact release and profile; compatibility and conformance require their own evidence.",
@@ -19,7 +19,7 @@
     "ctaGitHub": "View on GitHub",
     "ctaSpec": "Read the Specification",
     "badge": "Open Draft Protocol",
-    "version": "v{{version}} — {{status}}",
+    "version": "Public draft v{{version}} — {{status}}",
     "license": "Apache 2.0"
   },
   "valueProposition": {
@@ -28,7 +28,7 @@
     "extendedSubheadline": "Choose a defined use case, evaluate it with synthetic data, and run the agreed deployment yourself or with your chosen partner.",
     "primaryCTA": "Start Verifying",
     "secondaryCTA": "View Verification API",
-    "supporting": "Portable credentials, applicant and document verification, and Travel Trust."
+    "supporting": "Verifiable credentials, document checks, Travel Trust, and scoped authority for agents."
   },
   "idvComparison": {
     "title": "Plan the Trust Exchange",
@@ -129,7 +129,7 @@
     },
     "solvesIt": {
       "title": "How ElevenID LLC Solves It",
-      "intro": "Agree the inputs, trust sources, and expected result",
+      "intro": "Govern identity with five core primitives: trust profiles, credential templates, presentation policies, deployment profiles, and flows.",
       "subheading": "A named standard is a starting point. Review the exact release and profile; compatibility and conformance require their own evidence."
     },
     "howItWorks": {
@@ -199,7 +199,7 @@
     },
     "proofStrip": {
       "claims": {
-        "w3c": "One Marty product, three use cases",
+        "w3c": "Credentials, trust, and agent authority",
         "offlineCache": "Synthetic evaluation first",
         "deployment": "Customer or partner operated",
         "keySecurity": "Explicit trust and key configuration",

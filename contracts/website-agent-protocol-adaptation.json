@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "purpose": "post-extraction-adaptation-record",
+  "source_repository": "ElevenID/marty-ui",
+  "immutable_source_commit": "df6ec6c4bfee803d89c54e9333297f29f378cee3",
+  "extends": "contracts/website-pages-application-handoff-adaptation.json",
+  "previous_website_source": "329e10fb50d91a9edc97378cc5899eceee1d59b2",
+  "adapted_files": [
+    {
+      "path": "ui/public/llms.txt",
+      "source_original_blob": "a2f57de94ec6d3dc7508679fd1e8417c3f86e291",
+      "previous_extracted_blob": "a2f57de94ec6d3dc7508679fd1e8417c3f86e291",
+      "current_blob": "d4f1f7d0465db9243f926f14cd5ac1597562c499",
+      "current_bytes": 4467,
+      "change": "Teach agent identity, scoped delegation, evidence and recovery with accurate protocol status, working learning routes and deployed-Gateway discovery."
+    },
+    {
+      "path": "ui/public/locales/de/common.json",
+      "source_original_blob": "9dd9cd4d95758889b5211736be80256d9e429f56",
+      "previous_extracted_blob": "9dd9cd4d95758889b5211736be80256d9e429f56",
+      "current_blob": "97138321a4bae69883668771ac78d6192b786ff0",
+      "current_bytes": 1369,
+      "change": "Add localized Agents navigation."
+    },
+    {
+      "path": "ui/public/locales/de/marketing.json",
+      "source_original_blob": "cd8fd539c568e8fcee00b0677698de908cc379d7",
+      "previous_extracted_blob": "cd8fd539c568e8fcee00b0677698de908cc379d7",
+      "current_blob": "0fac4dbd386cc3ff8c02ec0e6c732019e040f933",
+      "current_bytes": 10382,
+      "change": "Align protocol publication, agent identity, delegation and governance copy with the current website teaching."
+    },
+    {
+      "path": "ui/public/locales/en/common.json",
+      "source_original_blob": "7d95018c5d8dc339f075e1f61615343fd39580ec",
+      "previous_extracted_blob": "7d95018c5d8dc339f075e1f61615343fd39580ec",
+      "current_blob": "19d53a773d951fa0571e2e0ad1bc79011f74bf24",
+      "current_bytes": 7752,
+      "change": "Add localized Agents navigation."
+    },
+    {
+      "path": "ui/public/locales/en/marketing.json",
+      "source_original_blob": "1fabd6d5ef601aa3ae6d904f96de7c9105dad4dc",
+      "previous_extracted_blob": "abd0a07db30845792adebff0d281241ebfcd666a",
+      "current_blob": "fdae67b9f84960ad7cfa56cb46e79e68f30df68b",
+      "current_bytes": 10641,
+      "change": "Align protocol publication, agent identity, delegation and governance copy with the current website teaching."
+    },
+    {
+      "path": "ui/public/locales/es/common.json",
+      "source_original_blob": "d84250c0726a1a2846e7efd24a9a790a213b1053",
+      "previous_extracted_blob": "d84250c0726a1a2846e7efd24a9a790a213b1053",
+      "current_blob": "8d1ceb83419fd50c95fccf18c8007b5c98203d8b",
+      "current_bytes": 1283,
+      "change": "Add localized Agents navigation."
+    },
+    {
+      "path": "ui/public/locales/es/marketing.json",
+      "source_original_blob": "a00e404a1423187063c1f23830b15215e7bf8139",
+      "previous_extracted_blob": "a00e404a1423187063c1f23830b15215e7bf8139",
+      "current_blob": "7d5e591cc48416830b6b06337e19241fd391a0f2",
+      "current_bytes": 10495,
+      "change": "Align protocol publication, agent identity, delegation and governance copy with the current website teaching."
+    },
+    {
+      "path": "ui/public/locales/fr/common.json",
+      "source_original_blob": "62ed4a96d3fa991ee32eaad4c2e7de61f8f3d92e",
+      "previous_extracted_blob": "62ed4a96d3fa991ee32eaad4c2e7de61f8f3d92e",
+      "current_blob": "c621af7ac51494dcb3215cf31f27c322efbf8c11",
+      "current_bytes": 1274,
+      "change": "Add localized Agents navigation."
+    },
+    {
+      "path": "ui/public/locales/fr/marketing.json",
+      "source_original_blob": "b32931e8f36b5e0241f06a8eec45efc75ad5fdb3",
+      "previous_extracted_blob": "b32931e8f36b5e0241f06a8eec45efc75ad5fdb3",
+      "current_blob": "f9d0223bd3344a7a0d78ba7c7a9e4ea908a2b21b",
+      "current_bytes": 11011,
+      "change": "Align protocol publication, agent identity, delegation and governance copy with the current website teaching."
+    },
+    {
+      "path": "ui/public/locales/ja/common.json",
+      "source_original_blob": "b5af927ce0f7e41973b7980b755ec1b4c471060d",
+      "previous_extracted_blob": "b5af927ce0f7e41973b7980b755ec1b4c471060d",
+      "current_blob": "ea14365c884a769a6352eef7bddcfeb10704411b",
+      "current_bytes": 1340,
+      "change": "Add localized Agents navigation."
+    },
+    {
+      "path": "ui/public/locales/ja/marketing.json",
+      "source_original_blob": "d6bb4769221efba36252d9ce138a41f98d5ec5f8",
+      "previous_extracted_blob": "d6bb4769221efba36252d9ce138a41f98d5ec5f8",
+      "current_blob": "89c740909fe5da5b2dcd2c5f0ecc829e3320983b",
+      "current_bytes": 10889,
+      "change": "Align protocol publication, agent identity, delegation and governance copy with the current website teaching."
+    },
+    {
+      "path": "ui/public/locales/nl/common.json",
+      "source_original_blob": "df626d414d186d384bc7c48bd4b683f6e336631d",
+      "previous_extracted_blob": "df626d414d186d384bc7c48bd4b683f6e336631d",
+      "current_blob": "3b633e6dfc23fd13cb6972d61a388dccdc6c1601",
+      "current_bytes": 6539,
+      "change": "Add localized Agents navigation."
+    },
+    {
+      "path": "ui/public/locales/nl/marketing.json",
+      "source_original_blob": "81b4f538f904c6710cbdcd2102c5f661cf40a754",
+      "previous_extracted_blob": "81b4f538f904c6710cbdcd2102c5f661cf40a754",
+      "current_blob": "2d164147102a7614f3e825879e8de4c85dc73e8d",
+      "current_bytes": 10198,
+      "change": "Align protocol publication, agent identity, delegation and governance copy with the current website teaching."
+    },
+    {
+      "path": "ui/src/components/IdentityGuidePage.jsx",
+      "source_original_blob": "f3e9104a7d4b242b11359a83da80a88560c75cc4",
+      "previous_extracted_blob": "032d7f5baf8e6bc34a9c04c477d70e4edc70f570",
+      "current_blob": "0c7e89da41ddad9f04a4af1ea4c148b7982f3e8c",
+      "current_bytes": 11291,
+      "change": "Explain Flow as the fifth core primitive and link optional delegation to qualified profiles."
+    },
+    {
+      "path": "ui/src/components/LandingPageContent.jsx",
+      "source_original_blob": "a8c8d3a0ee9ff0ba140b3b91ee14b4d179bd02bc",
+      "previous_extracted_blob": "a454043ecaa7b26a6d743f9655539e87c4dd8f99",
+      "current_blob": "3743eed341a3dc5c09b65cb725d082abe79a7e81",
+      "current_bytes": 81965,
+      "change": "Add discoverable agent identity and delegation learning alongside existing credential workflows."
+    },
+    {
+      "path": "ui/src/components/ProductPage.jsx",
+      "source_original_blob": "b34814b99d67667695eedd833455e46b22a43b8e",
+      "previous_extracted_blob": "b34814b99d67667695eedd833455e46b22a43b8e",
+      "current_blob": "d7b260153fcdb7d6c758f71629c66e52ee74bb9b",
+      "current_bytes": 22244,
+      "change": "Represent agent identity and delegated authority as a product workflow with explicit deployment scope."
+    },
+    {
+      "path": "ui/src/components/ProtocolPage.jsx",
+      "source_original_blob": "42e1d3b5e32aaefb2e44d371602839f0c1baa580",
+      "previous_extracted_blob": "79d4308a3cadf29f73e76774466f5957299e3c21",
+      "current_blob": "fb98bc77b43967e1cf4f5a43b869a5b6746f9627",
+      "current_bytes": 16721,
+      "change": "Teach optional agent identity and delegation contracts alongside the public protocol baseline and existing credential curriculum."
+    },
+    {
+      "path": "ui/src/components/pages/AiCapabilityPage.jsx",
+      "source_original_blob": "2b0c0f055152e05af23bcc132456ad134f2ce441",
+      "previous_extracted_blob": "e1554668f9f370320cf533b80cdde7e0b38f9ae9",
+      "current_blob": "6c908a59e2fc6daf735057c3b0a7e750e002cb3d",
+      "current_bytes": 16488,
+      "change": "Explain attributable identity management, scoped grants, use-time authority, evidence, recovery and application boundaries."
+    },
+    {
+      "path": "ui/src/components/pages/MarketingProtocolSupportCatalog.jsx",
+      "source_original_blob": "5718f4a1ee33fd5ab8d2e5095a3824e218f12f2d",
+      "previous_extracted_blob": "0fe4a8145dadc55d17b59eaddac232c6b2b5ac0c",
+      "current_blob": "14179d2c78c0f3ef0b9a0f0a242b85e94c9ebf8f",
+      "current_bytes": 1385,
+      "change": "Label and collapse the retained historical support snapshot and link deployment documentation."
+    },
+    {
+      "path": "ui/src/components/pages/ProtocolSupportCatalogView.jsx",
+      "source_original_blob": "506c07af7d3c1f4f5800bc5976264a67e82a54a0",
+      "previous_extracted_blob": "36692856176a7d109f71fc107866827209729022",
+      "current_blob": "258837fe03f87ede2cb22a6419f4579f1df535bb",
+      "current_bytes": 3974,
+      "change": "Show catalog date and allow a descriptive documentation source link without changing support classifications."
+    },
+    {
+      "path": "ui/src/components/pages/PublicIAPages.jsx",
+      "source_original_blob": "54f3a9b34fa8254c9907794154bb5bbed33c76ee",
+      "previous_extracted_blob": "d59b649482b10892ac0f7dc1b2f1a063f7417872",
+      "current_blob": "b128511352cccc1639de17239f05e2aa83eb9f00",
+      "current_bytes": 26374,
+      "change": "Add agent learning paths and responsibility boundaries across solutions, developers and architecture; keep section grids within narrow viewports."
+    },
+    {
+      "path": "ui/src/components/pages/WhatIsMartyProtocolPage.jsx",
+      "source_original_blob": "5ef8f20f7b35852c22f10442844a65b68afec2bf",
+      "previous_extracted_blob": "c816d15d9857183e5841c92d8188ba8754fd3762",
+      "current_blob": "c2794b38024a769ee05d3a2e4efcdb0f31cb0b35",
+      "current_bytes": 8964,
+      "change": "Teach exactly five core primitives, optional grants and distinct identity and authority with accurate publication status."
+    },
+    {
+      "path": "ui/src/components/seo/structuredData.js",
+      "source_original_blob": "044b5efe9b7f2359ea8e3720e5a03ef0cd78e18f",
+      "previous_extracted_blob": "74cfb9482929033db066b07b9381c35d24410fe3",
+      "current_blob": "beb06fc1106982595076d69c252c0a3d483c6f33",
+      "current_bytes": 3964,
+      "change": "Include agent identity and authority in metadata while retaining the shared public protocol baseline version."
+    },
+    {
+      "path": "ui/src/data/marketingContent.js",
+      "source_original_blob": "19afb2feb6e66e0b3c3c29b15c8ab1548deb369b",
+      "previous_extracted_blob": "930654cc94c8a2a958a114b86c66e26afd368166",
+      "current_blob": "27db9f03715a009cecfdd34fbd3868ab9c3c4007",
+      "current_bytes": 38538,
+      "change": "Represent the agent feature area and five core primitives consistently across shared marketing content."
+    },
+    {
+      "path": "ui/src/variants/publicConfig.public.js",
+      "source_original_blob": "1fcdf810dcf69b323c8a610570e76c24c01afd90",
+      "previous_extracted_blob": "1fcdf810dcf69b323c8a610570e76c24c01afd90",
+      "current_blob": "39d0c77d3b6dacb02df9d74500ff432bd3a05509",
+      "current_bytes": 2482,
+      "change": "Expose a dedicated Agents navigation tab for the existing /ai route."
+    }
+  ],
+  "scope_note": "Website education for agent identity and delegated authority, preserving original extraction identities and historical product-support classifications."
+}

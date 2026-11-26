@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, lstatSync } from 'node:fs';
 import { test } from 'node:test';
+import { assertAgentWebsiteAdaptation } from './fixtures/website-agent-adaptation.mjs';
 const manifest=JSON.parse(readFileSync(new URL('../contracts/extraction-provenance-batch-13.json',import.meta.url),'utf8'));
 const handoff=JSON.parse(readFileSync(new URL('../contracts/website-pages-application-handoff-adaptation.json',import.meta.url),'utf8'));
 const hash=(buffer)=>createHash('sha1').update('blob '+buffer.length+String.fromCharCode(0)).update(buffer).digest('hex');
@@ -18,6 +19,9 @@ test('batch 13 imported bytes match selected source blobs',()=>{
   assert.equal(lstatSync(file).isFile(),true,entry.path);
   const content=readFileSync(file);
   if (handoff.adapted_files.some(item=>item.path===entry.path)) continue;
+  if (assertAgentWebsiteAdaptation(entry.path, {
+   originalBlob: entry.original_sha, previousBlob: entry.selected_sha,
+  })) continue;
   if (entry.path === 'ui/src/services/demoManifestService.js') {
    const adaptation=JSON.parse(readFileSync(new URL('../contracts/demo-retirement-adaptation.json',import.meta.url),'utf8')).adapted_files.find(item=>item.path===entry.path);
    assert.equal(adaptation.source_original_blob,entry.original_sha);
@@ -65,6 +69,9 @@ test('Pages application handoff adapts four reviewed source files without rewrit
   const file=new URL('../'+item.path,import.meta.url);
   assert.equal(lstatSync(file).isFile(),true,item.path);
   const content=readFileSync(file);
+  if (assertAgentWebsiteAdaptation(item.path, {
+   originalBlob: item.source_original_blob, previousBlob: item.current_blob,
+  })) continue;
   assert.equal(content.length,item.current_bytes,item.path);
   assert.equal(hash(content),item.current_blob,item.path);
  }

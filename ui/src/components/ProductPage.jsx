@@ -1,4 +1,5 @@
 import { useSurfaceNavigate } from '../application/routing/useSurfaceNavigate';
+import { publicEntryHref } from '../application/routing/publicEntry';
 /**
  * Product Page
  * 
@@ -41,8 +42,8 @@ function ProductPage() {
     <Box>
       {/* SEO Meta Tags */}
       <SEOHead
-        title="Verifiable Credential APIs"
-        description="Marty: one customer-operated product for portable credentials, applicant and document verification, and Travel Trust. Review components, scope, and operating responsibilities."
+        title="Identity, Credentials, and Agent Delegation"
+        description="Explore Marty workflows for credentials, document verification, Travel Trust, and agent identity and delegation, with explicit release and deployment scope."
         canonicalPath="/product"
         keywords={['verifiable credential API', 'EUDI Wallet API', 'Open Badges API', 'ISO 18013-5', 'credential issuance', 'credential verification']}
         structuredData={[
@@ -77,7 +78,7 @@ function ProductPage() {
       {/* Product Overview */}
       <Box sx={{ mb: 4 }}>
         <Typography variant="body1" color="text.secondary" paragraph sx={{ maxWidth: 900, mx: 'auto', textAlign: 'center' }}>
-          Marty by {branding.branding.appName} connects credentials, document checks, trust policies, and workflow decisions.
+          Marty by {branding.branding.appName} connects credentials, document checks, trust policies, and delegated agent authority.
           Start with synthetic data and validate the selected release in your operating environment.
         </Typography>
       </Box>
@@ -183,19 +184,25 @@ function ProductPage() {
       {/* One product, independent use cases */}
       <Box sx={{ mb: 6 }}>
         <Typography variant="h5" fontWeight="bold" gutterBottom>
-          One Marty Product, Three Use Cases
+          One Identity Foundation, Multiple Workflows
         </Typography>
         <Grid container spacing={3}>
           {[
             { title: 'Portable Credentials', description: 'Evaluate issuance, holding, presentation, and verification for a defined credential and trust network.' },
             { title: 'Applicant and Document Verification', description: 'Connect document inputs, review rules, and recorded decisions to your application workflow.' },
             { title: 'Travel Trust', description: 'Evaluate travel-document trust, journey rules, and verification decisions for a defined travel scenario.' },
+            { title: 'Agent Identity and Delegation', description: 'Manage accountable agent identities and scoped grants. Check who an agent represents at use time and retain signed decision evidence. Availability depends on the selected profile and deployment.', path: '/ai' },
           ].map((track) => (
-            <Grid item xs={12} md={4} key={track.title}>
+            <Grid size={{ xs: 12, md: 6 }} key={track.title}>
               <Card elevation={2} sx={{ height: '100%' }}>
                 <CardContent>
                   <Typography variant="h6" fontWeight="bold" color="primary" gutterBottom>{track.title}</Typography>
                   <Typography variant="body2" color="text.secondary">{track.description}</Typography>
+                  {track.path && (
+                    <Button component="a" href={publicEntryHref(track.path)} sx={{ mt: 2 }}>
+                      Learn Agent Identity and Delegation
+                    </Button>
+                  )}
                 </CardContent>
               </Card>
             </Grid>

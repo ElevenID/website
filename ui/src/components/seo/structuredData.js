@@ -1,4 +1,5 @@
 import { DEFAULT_SEO_IMAGE_URL } from './siteMetadata.js';
+import { PUBLIC_MIP_BASELINE_VERSION } from '../../data/agentProtocolContent';
 
 /**
  * Structured data (JSON-LD) generators for SEO
@@ -14,7 +15,7 @@ export const organizationSchema = () => ({
   name: 'ElevenID LLC',
   url: 'https://elevenidllc.com',
   logo: DEFAULT_SEO_IMAGE_URL,
-  description: 'Marty: customer-operated software for portable credentials, applicant and document verification, and Travel Trust',
+  description: 'Marty: customer-operated software for verifiable credentials, document checks, Travel Trust, and agent identity and delegation',
   foundingDate: '2023',
   sameAs: [
     // Add social media profiles when available
@@ -125,12 +126,12 @@ export const protocolSchema = () => ({
   '@context': 'https://schema.org',
   '@type': 'TechArticle',
   name: 'Marty Identity Protocol (MIP)',
-  headline: 'An open draft protocol for cryptographically verifiable digital identity management',
-  description: 'MIP defines the minimum automatable set of primitives required for issuing, holding, presenting, and verifying digital credentials under explicit rules of trust and disclosure.',
+  headline: 'An open draft protocol for credentials, trust, and delegated authority',
+  description: 'Learn the five core identity primitives and optional agent identity and delegation contracts, including scoped approval, current authority checks, and decision evidence. The linked public specification is the v0.5.0 baseline; newer source extensions have separate qualification requirements.',
   url: 'https://elevenidllc.com/protocol',
   datePublished: '2026-03-11',
   license: 'https://www.apache.org/licenses/LICENSE-2.0',
-  version: '0.5.0',
+  version: PUBLIC_MIP_BASELINE_VERSION,
   author: {
     '@type': 'Organization',
     name: 'The MIP Authors',

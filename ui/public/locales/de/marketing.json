@@ -5,7 +5,7 @@
     "extendedSubheadline": "Wählen Sie einen klaren Anwendungsfall, testen Sie mit synthetischen Daten und betreiben Sie die vereinbarte Lösung selbst oder mit Ihrem Partner.",
     "primaryCTA": "Entwicklerdokumentation lesen",
     "secondaryCTA": "Verifizierungs-API ansehen",
-    "supporting": "Portable Nachweise, Bewerber- und Dokumentenprüfung sowie Travel Trust."
+    "supporting": "Verifizierbare Nachweise, Dokumentenprüfung, Travel Trust und begrenzte Befugnisse für Agenten."
   },
   "idvComparison": {
     "title": "Den Vertrauensaustausch planen",
@@ -99,7 +99,7 @@
     },
     "solvesIt": {
       "title": "Wie ElevenID LLC das löst",
-      "intro": "Eingaben, Vertrauensquellen und erwartetes Ergebnis vereinbaren",
+      "intro": "Identität mit fünf Kernbausteinen steuern: Vertrauensprofile, Nachweisvorlagen, Präsentationsrichtlinien, Bereitstellungsprofile und Flows.",
       "subheading": "Ein Standard ist ein Ausgangspunkt. Prüfen Sie die konkrete Version und das Profil; Kompatibilität und Konformität benötigen eigene Nachweise."
     },
     "howItWorks": {
@@ -169,7 +169,7 @@
     },
     "proofStrip": {
       "claims": {
-        "w3c": "Ein Marty-Produkt, drei Anwendungsfälle",
+        "w3c": "Nachweise, Vertrauen und Agentenbefugnisse",
         "offlineCache": "Zuerst mit synthetischen Daten testen",
         "deployment": "Betrieb durch Kunden oder Partner",
         "keySecurity": "Explizite Vertrauens- und Schlüsselkonfiguration",
@@ -196,7 +196,10 @@
     "heroTitle": "Auf Basis eines offenen Protokollentwurfs",
     "badge": "Offenes Protokoll im Entwurf",
     "standardsSubtitle": "Ein Standard ist ein Ausgangspunkt. Prüfen Sie die konkrete Version und das Profil; Kompatibilität und Konformität benötigen eigene Nachweise.",
-    "componentsSubtitle": "Ein Standard ist ein Ausgangspunkt. Prüfen Sie die konkrete Version und das Profil; Kompatibilität und Konformität benötigen eigene Nachweise."
+    "componentsSubtitle": "Ein Standard ist ein Ausgangspunkt. Prüfen Sie die konkrete Version und das Profil; Kompatibilität und Konformität benötigen eigene Nachweise.",
+    "heroSubtitle": "Ein offenes Entwurfsmodell für digitale Nachweise, Vertrauen und delegierte Befugnisse für Menschen und Agenten.",
+    "primitivesSubtitle": "MIP definiert fünf zentrale Identitätsbausteine mit optionalen Verträgen für Agentenidentität und begrenzte Delegation.",
+    "version": "Öffentlicher Entwurf v{{version}} — {{status}}"
   },
   "infrastructure": {
     "title": "Mit einem nützlichen Ablauf beginnen",

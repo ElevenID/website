@@ -140,7 +140,7 @@ function IdentityGuidePage() {
         </Box>
       </Box>
       <Divider sx={{ my: 8 }} />
-      {/* Four Primitives */}
+      {/* Five core primitives; the diagram groups configuration beneath Flow. */}
       <Box sx={{ mb: 8 }}>
         <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'center' }}>
           {IDENTITY_CONCEPTS.fourPrimitives.title}
@@ -149,7 +149,8 @@ function IdentityGuidePage() {
           {IDENTITY_CONCEPTS.fourPrimitives.tagline}
         </Typography>
         <Typography variant="body2" color="primary.main" paragraph sx={{ textAlign: 'center', mb: 6, fontWeight: 500 }}>
-          Policies are configuration, not code. Endpoints execute centrally governed trust and disclosure rules without redeployment.
+          Four configuration primitives work together through Flow, the fifth core primitive.
+          Optional delegation contracts add scoped authority to this foundation; each integration still needs an implemented profile.
         </Typography>
 
         <Paper elevation={2} sx={{ p: 4, bgcolor: 'grey.50', mb: 6 }}>

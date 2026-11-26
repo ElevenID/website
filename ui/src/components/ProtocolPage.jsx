@@ -3,7 +3,7 @@ import { publicEntryHref } from '../application/routing/publicEntry';
 /**
  * Protocol Page
  *
- * Explains the Marty Identity Protocol (MIP) — the open standard
+ * Explains the Marty Identity Protocol (MIP) — the open draft specification
  * that defines primitives for verifiable digital identity management.
  */
 
@@ -24,6 +24,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import { PROTOCOL } from '../data/marketingContent';
 import { GUIDE_CHAPTERS, GUIDE_ARTICLES_BY_CHAPTER } from '@elevenid/marty-blog';
 import { InteractiveProtocolMap } from './diagrams';
+import AgentDelegationOverview from './protocol/AgentDelegationOverview';
 
 const CHAPTER_ICONS = {
   School: <SchoolIcon />,
@@ -46,10 +47,10 @@ function ProtocolPage() {
   return (
     <Box>
       <SEOHead
-        title="Marty Identity Protocol (MIP) — Open Draft"
-        description="MIP is a vendor-neutral, open specification for cryptographically verifiable digital identity management. Explore the interactive protocol map and learning curriculum."
+        title="Marty Identity Protocol — Identity and Agent Delegation"
+        description="Learn Marty's five core identity primitives and newer optional agent-trust and delegation contracts: explicit approval, current authority, signed evidence, and result recovery."
         canonicalPath="/protocol"
-        keywords={['Marty Identity Protocol', 'MIP', 'open standard', 'verifiable credentials', 'digital identity', 'open source', 'identity protocol']}
+        keywords={['Marty Identity Protocol', 'MIP', 'agent identity', 'agent delegation', 'delegated authority', 'verifiable credentials', 'identity protocol']}
         structuredData={protocolSchema()}
       />
 
@@ -71,7 +72,7 @@ function ProtocolPage() {
             sx={{ bgcolor: 'rgba(255,255,255,0.15)', color: 'white', fontWeight: 700 }}
           />
           <Chip
-            label={t('protocol.version', { version: PROTOCOL.version, status: PROTOCOL.status, defaultValue: `v${PROTOCOL.version} — ${PROTOCOL.status}` })}
+            label={t('protocol.version', { version: PROTOCOL.version, status: PROTOCOL.status, defaultValue: `Public draft v${PROTOCOL.version} — ${PROTOCOL.status}` })}
             variant="outlined"
             sx={{ borderColor: 'rgba(255,255,255,0.4)', color: 'white' }}
           />
@@ -142,12 +143,13 @@ function ProtocolPage() {
 
       {/* Interactive Protocol Map */}
       <Box sx={{ mb: 8 }}>
-        <Typography variant="h4" gutterBottom sx={{ fontWeight: 800, textAlign: 'center' }}>
-          Protocol Architecture
+        <Typography variant="h4" component="h2" gutterBottom sx={{ fontWeight: 800, textAlign: 'center' }}>
+          Core Protocol Architecture
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', mb: 4, maxWidth: 800, mx: 'auto' }}>
-          Hover to explore relationships between components. Click any node to read its guide article.
-          Toggle between Concept and Implementation views.
+          Explore the five core primitives and their supporting credential concepts.
+          Select a node to read its guide article, or switch between Concept and Implementation views.
+          The optional agent extensions below build on this model.
         </Typography>
         <Box sx={{ maxWidth: 1000, mx: 'auto' }}>
           <InteractiveProtocolMap />
@@ -156,15 +158,19 @@ function ProtocolPage() {
 
       <Divider sx={{ mb: 8 }} />
 
+      <AgentDelegationOverview />
+
+      <Divider sx={{ mb: 8 }} />
+
       {/* Learning Curriculum */}
       <Box sx={{ mb: 8 }}>
         <Box sx={{ textAlign: 'center', mb: 5 }}>
-          <Typography variant="h4" gutterBottom sx={{ fontWeight: 800 }}>
-            Learn the Protocol
+          <Typography variant="h4" component="h2" gutterBottom sx={{ fontWeight: 800 }}>
+            Continue with the Protocol Foundations
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 700, mx: 'auto' }}>
-            Six progressive chapters take you from foundations through deployment.
-            Each article is a focused, standalone guide with code examples and concept tags.
+            Six progressive chapters cover the original credential and deployment foundations.
+            Use the agent-delegation overview above alongside these guides for the newer optional contracts.
           </Typography>
         </Box>
 
@@ -197,7 +203,7 @@ function ProtocolPage() {
                         sx={{ fontWeight: 700, bgcolor: `${chapter.color}15`, color: chapter.color }}
                       />
                     </Box>
-                    <Typography variant="h6" gutterBottom sx={{ fontWeight: 700 }}>
+                    <Typography variant="h6" component="h3" gutterBottom sx={{ fontWeight: 700 }}>
                       {chapter.title}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
@@ -308,14 +314,14 @@ function ProtocolPage() {
           {t('protocol.sectionGovernance', 'Open Governance')}
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', mb: 4, maxWidth: 700, mx: 'auto' }}>
-          {t('protocol.governanceSubtitle', 'No single organization controls the protocol. All decisions are made publicly on GitHub.')}
+          {t('protocol.governanceSubtitle', 'Review the public specification and contribution process on GitHub. Newer implementation contracts and their publication status are described separately.')}
         </Typography>
 
         <Grid container spacing={3} sx={{ maxWidth: 800, mx: 'auto' }}>
           {[
             { icon: <GroupsIcon sx={{ fontSize: 32, color: 'primary.main' }} />, text: t('protocol.governanceModel', PROTOCOL.governance.model) },
             { icon: <GavelIcon sx={{ fontSize: 32, color: 'secondary.main' }} />, text: t('protocol.governanceContributions', 'Developer Certificate of Origin (DCO) — no CLA required') },
-            { icon: <PublicIcon sx={{ fontSize: 32, color: 'info.main' }} />, text: t('protocol.governanceDecisions', 'All decisions made publicly on GitHub — no private steering committees') },
+            { icon: <PublicIcon sx={{ fontSize: 32, color: 'info.main' }} />, text: t('protocol.governanceDecisions', 'Public specification changes are reviewed through GitHub') },
             { icon: <InventoryIcon sx={{ fontSize: 32, color: 'success.main' }} />, text: t('protocol.governanceCopyright', 'Copyright held by The MIP Authors') },
           ].map((item, idx) => (
             <Grid size={{ xs: 12, sm: 6 }} key={idx}>

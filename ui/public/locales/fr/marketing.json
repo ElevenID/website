@@ -5,7 +5,7 @@
     "extendedSubheadline": "Définissez un cas d’usage, évaluez-le avec des données synthétiques et exploitez le déploiement convenu avec votre équipe ou votre partenaire.",
     "primaryCTA": "Consulter la documentation",
     "secondaryCTA": "Voir l’API de vérification",
-    "supporting": "Identifiants portables, vérification des candidats et des documents, et Travel Trust."
+    "supporting": "Justificatifs vérifiables, vérification de documents, Travel Trust et autorité limitée pour les agents."
   },
   "idvComparison": {
     "title": "Définir l’échange de confiance",
@@ -99,7 +99,7 @@
     },
     "solvesIt": {
       "title": "Comment ElevenID LLC résout cela",
-      "intro": "Définissez les entrées, les sources de confiance et le résultat attendu",
+      "intro": "Gérez l’identité avec cinq primitives : profils de confiance, modèles de justificatifs, politiques de présentation, profils de déploiement et flux.",
       "subheading": "Un standard est un point de départ. Examinez la version et le profil précis ; compatibilité et conformité exigent leurs propres preuves."
     },
     "howItWorks": {
@@ -169,7 +169,7 @@
     },
     "proofStrip": {
       "claims": {
-        "w3c": "Un produit Marty, trois cas d’usage",
+        "w3c": "Justificatifs, confiance et autorité des agents",
         "offlineCache": "D’abord une évaluation sur données synthétiques",
         "deployment": "Exploité par le client ou son partenaire",
         "keySecurity": "Configuration explicite de la confiance et des clés",
@@ -196,7 +196,10 @@
     "heroTitle": "Fondé sur un protocole ouvert en cours de rédaction",
     "badge": "Protocole ouvert en cours de rédaction",
     "standardsSubtitle": "Un standard est un point de départ. Examinez la version et le profil précis ; compatibilité et conformité exigent leurs propres preuves.",
-    "componentsSubtitle": "Un standard est un point de départ. Examinez la version et le profil précis ; compatibilité et conformité exigent leurs propres preuves."
+    "componentsSubtitle": "Un standard est un point de départ. Examinez la version et le profil précis ; compatibilité et conformité exigent leurs propres preuves.",
+    "heroSubtitle": "Un modèle de spécification ouverte à l’état de projet pour les justificatifs, la confiance et l’autorité déléguée aux personnes et aux agents.",
+    "primitivesSubtitle": "MIP définit cinq primitives d’identité, avec des contrats facultatifs pour l’identité des agents et la délégation à portée limitée.",
+    "version": "Projet public v{{version}} — {{status}}"
   },
   "infrastructure": {
     "title": "Commencez par un parcours utile",

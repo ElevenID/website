@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { lstatSync, readFileSync } from 'node:fs';
 import { test } from 'node:test';
+import { assertAgentWebsiteAdaptation } from './fixtures/website-agent-adaptation.mjs';
 import {
   WEB_SURFACE_ROUTES,
   WEB_ROUTE_CONTRACT,
@@ -139,6 +140,9 @@ test('copied source and license retain their recorded Git blob identities', () =
       assert.equal(current.previous_extracted_blob, expectedBlob);
       expectedBlob = current.current_blob;
     }
+    if (assertAgentWebsiteAdaptation(entry.target_path, {
+      originalBlob: entry.git_blob_sha1, previousBlob: expectedBlob,
+    })) continue;
     assert.equal(hash, expectedBlob, entry.target_path);
     if (adaptations.length) assert.equal(bytes.length, adaptations.at(-1).current_bytes);
   }

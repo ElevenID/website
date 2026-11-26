@@ -1,164 +1,110 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
-import { MemoryRouter, useLocation } from 'react-router';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { cleanup, render, screen, within } from '@testing-library/react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AiCapabilityPage from '../../ui/src/components/pages/AiCapabilityPage.jsx';
 
-// The actual AI page, marketing catalog adapter, normalizer, catalog view,
-// metadata and navigation helpers execute. Only the large snapshot is replaced
-// by the explicit fixture boundary, and final document loads are recorded.
-const documentLoads = vi.hoisted(() => []);
-vi.mock('../../ui/src/application/routing/appHandoff.js', async (importOriginal) => {
-  const actual = await importOriginal();
-  return {
-    ...actual,
-    redirectBrowser: vi.fn((destination, options = {}) => actual.redirectBrowser(destination, {
-      ...options,
-      location: {
-        href: window.location.href, origin: window.location.origin,
-        pathname: window.location.pathname, search: window.location.search, hash: window.location.hash,
-        assign: (value) => documentLoads.push({ method: 'assign', value }),
-        replace: (value) => documentLoads.push({ method: 'replace', value }),
-      },
-    })),
-  };
-});
-const theme = createTheme();
-function CurrentRoute() {
-  const location = useLocation();
-  return <output data-testid="ai-current-route">{location.pathname}</output>;
-}
-function mount() {
-  return render(<ThemeProvider theme={theme}><MemoryRouter initialEntries={['/ai']}>
-    <AiCapabilityPage /><CurrentRoute />
-  </MemoryRouter></ThemeProvider>);
-}
+// The actual agent page, metadata, public-entry helper and support view execute.
+// Only the retained historical catalog is replaced by the small catalog fixture.
+const mount = () => render(<ThemeProvider theme={createTheme()}><AiCapabilityPage /></ThemeProvider>);
 function clearMetadata() {
   document.title = '';
   document.head.querySelectorAll(
     'meta[name="description"],meta[name="keywords"],meta[property^="og:"],meta[name^="twitter:"],link[rel="canonical"],script[data-seo-jsonld="true"]',
   ).forEach((element) => element.remove());
 }
-function publicEntry() {
-  window.__MARTY_RUNTIME_CONFIG__ = {
-    hosting: { canonicalOrigin: 'https://identity.example.test', publicEntryOrigins: ['https://192.0.2.10'] },
-  };
-}
 beforeEach(() => {
   window.history.replaceState(null, '', '/ai');
-  clearMetadata();
-  delete window.__MARTY_RUNTIME_CONFIG__;
-  documentLoads.length = 0;
-  vi.clearAllMocks();
+  clearMetadata(); delete window.__MARTY_RUNTIME_CONFIG__;
 });
 afterEach(() => { cleanup(); clearMetadata(); delete window.__MARTY_RUNTIME_CONFIG__; });
 
-describe('AI capability page composition', () => {
-  it('retains bold headings and card labels with the installed Typography', () => {
+describe('agent identity and delegation page', () => {
+  it('publishes the agent feature identity and canonical metadata', () => {
     mount();
-    for (const name of [
-      'Identity Infrastructure for AI Systems', 'What API Consumers Can Do',
-      'Credential Verification', 'Credential Issuance', 'Trust Policy Evaluation', 'Credential Schema Lookup',
-      'Integration Interfaces', 'Support Catalog', 'REST API', 'OpenAPI Spec',
-      'Protocol Consumer Support', 'Discover Before Integrating', 'AI Use Cases', 'Build from the Gateway Contract',
-    ]) {
-      expect(['700', 'bold']).toContain(getComputedStyle(screen.getByRole('heading', { name })).fontWeight);
-    }
-    for (const name of ['Gate integrations by support level', 'Generate HTTP clients', 'Build tenant workflows', 'Explain product limits']) {
-      expect(['700', 'bold']).toContain(getComputedStyle(screen.getByText(name)).fontWeight);
-    }
-    expect(['0.35em', '16.8px']).toContain(getComputedStyle(screen.getByRole('heading', { level: 1 })).marginBottom);
-  });
-
-  it('publishes its page identity and both structured metadata objects', () => {
-    mount();
-    expect(screen.getByRole('heading', { level: 1, name: 'Identity Infrastructure for AI Systems' })).toBeTruthy();
-    expect(document.title).toBe('AI-Accessible Identity Infrastructure — ElevenID | ElevenID LLC');
+    expect(screen.getByRole('heading', { level: 1, name: 'Agent identity & delegation' })).toBeTruthy();
+    expect(document.title).toBe('Agent Identity & Delegation — ElevenID | ElevenID LLC');
     expect(document.head.querySelector('link[rel="canonical"]').getAttribute('href')).toBe('https://elevenidllc.com/ai');
-    const types = [...document.head.querySelectorAll('script[data-seo-jsonld="true"]')]
-      .flatMap((element) => JSON.parse(element.textContent)).map((value) => value['@type']);
-    expect(types).toEqual(expect.arrayContaining(['SoftwareApplication', 'BreadcrumbList']));
-    expect(documentLoads).toEqual([]);
+    const schemas = [...document.head.querySelectorAll('script[data-seo-jsonld="true"]')]
+      .flatMap((element) => JSON.parse(element.textContent));
+    expect(schemas.map((value) => value['@type'])).toEqual(['SoftwareApplication', 'BreadcrumbList']);
+    expect(schemas[1].itemListElement.at(-1).item).toBe('https://elevenidllc.com/ai');
   });
 
-  it('keeps the snapshot warning, separate support states and fixture limitations visible', () => {
+  it('separates principal, runtime, subject and grant so enrollment cannot imply authority', () => {
     mount();
-    expect(screen.getByRole('alert').textContent).toContain("Check your deployment's live catalog before integrating.");
-    for (const label of ['Implemented', 'Derived', 'Partial', 'Unsupported']) {
-      expect(screen.getByText(label + ': 1')).toBeTruthy();
+    const concepts = screen.getByRole('table', { name: 'Agent identity and authority concepts' });
+    for (const name of ['Acting principal', 'Runtime and proof key', 'Represented subject', 'Delegated authority']) {
+      expect(within(concepts).getByRole('rowheader', { name: new RegExp(name) })).toBeTruthy();
     }
-    const unsupported = screen.getByRole('heading', { level: 4, name: 'Fixture unsupported capability' }).closest('.MuiCard-root');
-    expect(within(unsupported).getByText('No product surface is represented.')).toBeTruthy();
-    expect(within(unsupported).queryByText(/^API:/)).toBeNull();
-    expect(screen.getByText('Incomplete fixture only.')).toBeTruthy();
+    expect(screen.getByText(/Enrollment makes the identity eligible for subsequent checks/)).toBeTruthy();
+    expect(screen.getByText(/Existing key-bound grants keep their original terms/)).toBeTruthy();
+    expect(screen.getByText(/Consent withdrawal and current organization permissions/)).toBeTruthy();
   });
 
-  it('exposes every interface card as a keyboard-reachable link', () => {
+  it('teaches the ordered use and recovery workflow with evidence-only limits', () => {
     mount();
-    for (const [name, path] of [['Support Catalog', '/v1/protocol-support'], ['REST API', '/docs'], ['OpenAPI Spec', '/openapi.json']]) {
-      const link = screen.getAllByRole('link', { name: new RegExp('^' + name) })[0];
-      expect(link.tagName).toBe('A');
-      expect(link.getAttribute('href')).toBe(path);
-      expect(link.tabIndex).toBe(0);
+    const steps = screen.getByRole('list');
+    expect(within(steps).getAllByRole('listitem')).toHaveLength(5);
+    expect(within(steps).getAllByRole('heading').map((heading) => heading.textContent)).toEqual([
+      'Approve the exact terms', 'Start one use', 'Prove identity and evaluate current authority',
+      'Verify the decision evidence', 'Recover the original result',
+    ]);
+    for (const command of ['START_USE', 'FINALIZE_USE', 'RECOVER_RESULT']) {
+      expect(within(steps).getByText(command).tagName).toBe('CODE');
     }
+    expect(screen.getByText(/EVIDENCE_ONLY semantics/)).toBeTruthy();
+    expect(screen.getByText(/An uncertain or missing result is not permission to issue a replacement operation/)).toBeTruthy();
+    expect(screen.getByText(/single-hop: they do not permit further delegation/)).toBeTruthy();
   });
 
-  it('does not advertise unsupported CLI or universal agent capabilities', () => {
+  it('keeps application execution and identity-provider sign-in responsibilities explicit', () => {
     mount();
-    for (const unsupported of [
-      '@elevenid/marty-cli', 'marty verify start', 'marty creds issue',
-      'All commands support', 'primary interface for AI agents',
-    ]) expect(document.body.textContent).not.toContain(unsupported);
-  });
-
-  it('uses safe separate-tab links for machine-readable interfaces and the catalog source', () => {
-    mount();
-    const links = [
-      ...screen.getAllByRole('link', { name: /^Support Catalog/ }),
-      ...screen.getAllByRole('link', { name: /^OpenAPI Spec/ }),
-      screen.getByRole('link', { name: 'machine-readable catalog' }),
-    ];
-    expect(links).toHaveLength(4);
-    for (const link of links) {
-      expect(link.getAttribute('target')).toBe('_blank');
-      expect(link.getAttribute('rel').split(/\s+/)).toEqual(expect.arrayContaining(['noopener', 'noreferrer']));
+    for (const owner of ['Marty / ElevenID', 'Your application and agent runtime', 'Your identity provider']) {
+      expect(screen.getByRole('heading', { name: owner })).toBeTruthy();
     }
-    expect(screen.getByRole('link', { name: /^REST API/ }).getAttribute('target')).toBeNull();
+    expect(screen.getByText(/budgets, reservations, provider calls, duplicate-operation prevention/)).toBeTruthy();
+    expect(screen.getByText(/A successful login establishes the signed-in user/)).toBeTruthy();
+    expect(screen.getByText(/runtime qualification still NOT_ASSESSED/)).toBeTruthy();
+    expect(screen.getByText(/public MIP baseline remains 0.5.0/)).toBeTruthy();
   });
 
-  it('directs every interface and catalog source to configured DNS from a public IP entry', () => {
-    publicEntry();
+  it('exposes documentation and learning as native links without marketing-host API links', () => {
     mount();
-    for (const link of [
-      ...screen.getAllByRole('link', { name: /^(Support Catalog|REST API|OpenAPI Spec)/ }),
-      screen.getByRole('link', { name: 'machine-readable catalog' }),
-    ]) {
-      expect(link.getAttribute('href')).toMatch(/^https:\/\/identity\.example\.test\/(v1\/protocol-support|docs|openapi\.json)$/);
+    const docs = screen.getByRole('link', { name: 'API documentation' });
+    expect(docs.tagName).toBe('A');
+    expect(docs.getAttribute('href')).toBe('/docs');
+    expect(docs.tabIndex).toBe(0);
+    expect(screen.getByRole('link', { name: 'Marty protocol' }).getAttribute('href')).toBe('/protocol');
+    expect(screen.getByRole('link', { name: 'Explore the delegation model' }).getAttribute('href')).toBe('/protocol');
+    for (const link of screen.getAllByRole('link')) {
+      expect(link.getAttribute('href')).not.toMatch(/^\/(v1\/protocol-support|openapi\.json)$/);
     }
+    expect(screen.getByText(/curl -fsS/).textContent).toContain('$MARTY_BASE_URL/v1/protocol-support');
   });
 
-  it('hands the documentation CTA to an application document without changing the website route', async () => {
+  it('uses the configured public origin for documentation and learning links', () => {
+    window.__MARTY_RUNTIME_CONFIG__ = {
+      hosting: { canonicalOrigin: 'https://identity.example.test', publicEntryOrigins: ['https://192.0.2.10'] },
+    };
     mount();
-    await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'API Documentation' })); });
-    expect(documentLoads).toEqual([{ method: 'assign', value: '/docs' }]);
-    expect(screen.getByTestId('ai-current-route').textContent).toBe('/ai');
+    expect(screen.getByRole('link', { name: 'API documentation' }).getAttribute('href'))
+      .toBe('https://identity.example.test/docs');
+    expect(screen.getByRole('link', { name: 'Marty protocol' }).getAttribute('href'))
+      .toBe('https://identity.example.test/protocol');
   });
 
-  it('uses the configured DNS document for documentation from a public IP entry', async () => {
-    publicEntry();
+  it('keeps the historical catalog separate from current deployment claims', () => {
     mount();
-    await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'API Documentation' })); });
-    expect(documentLoads).toEqual([{ method: 'assign', value: 'https://identity.example.test/docs' }]);
-    expect(screen.getByTestId('ai-current-route').textContent).toBe('/ai');
+    expect(screen.getByRole('alert').textContent).toContain('predates the latest agent identity and delegation work');
+    expect(screen.getByText('Review historical support snapshot').closest('details').open).toBe(false);
   });
 
-  it('retains responsive capability and interface card widths with the installed Grid', () => {
-    const view = mount();
-    const items = [...view.container.querySelectorAll('.MuiGrid-root:not(.MuiGrid-container)')];
-    expect(items.length).toBeGreaterThan(0);
-    expect(items.every((item) => item.classList.contains('MuiGrid-grid-xs-12'))).toBe(true);
-    for (const size of ['sm-6', 'sm-4']) {
-      expect(view.container.querySelectorAll('.MuiGrid-grid-' + size).length).toBeGreaterThan(0);
-    }
+  it('keeps lifecycle cards responsive and long identity concepts horizontally contained', () => {
+    const { container } = mount();
+    const cards = [...container.querySelectorAll('.MuiGrid-grid-xs-12')];
+    expect(cards.length).toBeGreaterThanOrEqual(7);
+    expect(container.querySelectorAll('.MuiGrid-grid-sm-6').length).toBeGreaterThanOrEqual(4);
+    const table = screen.getByRole('table', { name: 'Agent identity and authority concepts' });
+    expect(table.closest('.MuiTableContainer-root')).toBeTruthy();
   });
 });

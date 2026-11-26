@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { lstatSync, readFileSync } from 'node:fs';
 import { test } from 'node:test';
+import { assertAgentWebsiteAdaptation } from './fixtures/website-agent-adaptation.mjs';
 
 const provenance = JSON.parse(readFileSync(
   new URL('../contracts/extraction-provenance-batch-12.json', import.meta.url), 'utf8',
@@ -48,11 +49,17 @@ test('batch 12 preserved and adapted files match their recorded blob identities'
       const hash = createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
       if (adapted) {
         assert.ok(entry.changes.length > 0, entry.target_path);
+        if (assertAgentWebsiteAdaptation(entry.target_path, {
+          originalBlob: entry.source_git_blob_sha1, previousBlob: entry.target_git_blob_sha1,
+        })) continue;
         assert.equal(bytes.length, entry.target_bytes, entry.target_path);
         assert.ok(bytes.length < 16 * 1024, entry.target_path);
         assert.equal(hash, entry.target_git_blob_sha1, entry.target_path);
       } else {
         assert.equal(entry.transfer, 'verbatim');
+        if (assertAgentWebsiteAdaptation(entry.target_path, {
+          originalBlob: entry.git_blob_sha1, previousBlob: entry.git_blob_sha1,
+        })) continue;
         assert.equal(bytes.length, entry.bytes, entry.target_path);
         assert.equal(hash, entry.git_blob_sha1, entry.target_path);
       }
