@@ -67,6 +67,7 @@ jobs:
         with:
           name: website-pages-${{ env.MARTY_WEBSITE_SOURCE_SHA }}
           path: ${{ runner.temp }}/website-pages/
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 1
       - name: Build the standalone image with a pinned Nginx base
