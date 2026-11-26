@@ -8,7 +8,7 @@ const STATUS_PRESENTATION = {
   unsupported: { label: 'Unsupported', color: 'default' },
 };
 
-export default function ProtocolSupportCatalogView({ catalog, sourcePath = '/v1/protocol-support' }) {
+export default function ProtocolSupportCatalogView({ catalog, sourcePath = '/v1/protocol-support', sourceLabel = 'machine-readable catalog' }) {
   const counts = Object.fromEntries(PROTOCOL_SUPPORT_LEVELS.map((level) => [
     level,
     catalog.entities.filter((entity) => entity.support_level === level).length,
@@ -30,8 +30,8 @@ export default function ProtocolSupportCatalogView({ catalog, sourcePath = '/v1/
         These labels describe product consumer surfaces. Qualification is shown separately and does not imply production release readiness.
       </Typography>
       <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 3 }}>
-        Protocol pin <code>{catalog.protocol_revision}</code> ·{' '}
-        <Link href={sourcePath} target="_blank" rel="noopener noreferrer">machine-readable catalog</Link>
+        Catalog date {catalog.catalog_revision} · Protocol pin <code>{catalog.protocol_revision}</code> ·{' '}
+        <Link href={sourcePath} target="_blank" rel="noopener noreferrer">{sourceLabel}</Link>
       </Typography>
       {PROTOCOL_SUPPORT_LEVELS.map((level) => (
         <Box key={level} sx={{ mb: 4 }}>

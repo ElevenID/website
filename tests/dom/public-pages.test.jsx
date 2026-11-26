@@ -39,7 +39,7 @@ const theme = createTheme();
 const pages = [
   { Component: DigitalCredential, path: '/what-is-digital-credential', heading: 'What Is a Digital Credential?', title: 'What Is a Digital Credential? — ElevenID', sizes: ['xs-12', 'sm-6', 'md-4', 'md-6'] },
   { Component: CredentialVerification, path: '/what-is-credential-verification', heading: 'What Is Credential Verification?', title: 'What Is Credential Verification? — ElevenID', sizes: ['xs-12', 'sm-6'] },
-  { Component: MartyProtocol, path: '/what-is-marty-protocol', heading: 'What Is the Marty Identity Protocol?', title: 'What Is the Marty Identity Protocol (MIP)? — ElevenID', sizes: ['xs-12', 'sm-6'] },
+  { Component: MartyProtocol, path: '/what-is-marty-protocol', heading: 'What Is the Marty Identity Protocol?', title: 'What Is the Marty Identity Protocol? — People and Agents', sizes: ['xs-12', 'sm-6'] },
   { Component: OpenBadge, path: '/what-is-open-badge', heading: 'What Is an Open Badge?', title: 'What Is an Open Badge? — ElevenID', sizes: ['xs-12', 'sm-6'] },
   { Component: EudiWallet, path: '/eudi-wallet-verification', heading: 'EUDI Wallet Verification API', sizes: ['xs-12', 'md-4'] },
   { Component: IsoMdoc, path: '/iso-18013-5-mdoc-verification', heading: 'ISO 18013-5 mDoc Verification API' },
@@ -77,6 +77,16 @@ afterEach(() => {
 });
 
 describe('public page integration', () => {
+  it('teaches five core primitives while keeping delegation a supporting abstraction', () => {
+    renderPage(MartyProtocol, '/what-is-marty-protocol');
+    for (const name of ['Trust Profile', 'Credential Template', 'Presentation Policy', 'Deployment Profile', 'Flow']) {
+      expect(screen.getByRole('heading', { level: 3, name })).toBeTruthy();
+    }
+    expect(screen.queryByRole('heading', { name: 'Compliance Profile' })).toBeNull();
+    expect(screen.queryByRole('heading', { name: 'DelegationGrant' })).toBeNull();
+    expect(screen.getByText(/None adds a sixth core primitive/)).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Agent identity and integration' }).getAttribute('href')).toBe('/ai');
+  });
   it.each(pages)('renders $path with its heading and canonical metadata', ({ Component, path, heading, title }) => {
     renderPage(Component, path);
     expect(screen.getByRole('heading', { level: 1, name: heading })).toBeTruthy();

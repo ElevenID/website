@@ -140,7 +140,7 @@ function validateBlogAssetManifest(manifest) {
   return byTarget;
 }
 
-export function selectPublicAssets(inventory, reconciliation = [], blogAssetManifest) {
+export function selectPublicAssets(inventory, reconciliation = [], blogAssetManifest, websiteAdaptation) {
   if (inventory?.schema_version !== 1 || !Array.isArray(inventory.files)
     || !inventory.categories || !Array.isArray(reconciliation)) throw new Error('Invalid asset inventory');
   const selected = [];
@@ -171,6 +171,39 @@ export function selectPublicAssets(inventory, reconciliation = [], blogAssetMani
     if (blogAsset) {
       entry.sha = blogAsset.source_sha;
       entry.bytes = blogAsset.bytes;
+    }
+  }
+  if (websiteAdaptation !== undefined) {
+    if (websiteAdaptation?.schema_version !== 1
+      || websiteAdaptation.purpose !== 'post-extraction-adaptation-record'
+      || websiteAdaptation.source_repository !== 'ElevenID/marty-ui'
+      || websiteAdaptation.immutable_source_commit !== 'df6ec6c4bfee803d89c54e9333297f29f378cee3'
+      || !Array.isArray(websiteAdaptation.adapted_files)) {
+      throw new Error('Invalid website asset adaptation record');
+    }
+    const adapted = new Set();
+    for (const change of websiteAdaptation.adapted_files) {
+      if (!change || typeof change.path !== 'string' || adapted.has(change.path)) {
+        throw new Error('Invalid or duplicate website adaptation path');
+      }
+      adapted.add(change.path);
+      if (!change.path.startsWith('ui/public/')) continue;
+      if (change.path !== 'ui/public/llms.txt'
+        && !/^ui\/public\/locales\/(en|de|es|fr|ja|nl)\/(common|marketing)\.json$/.test(change.path)) {
+        throw new Error('Website asset adaptation is limited to reviewed locales and llms.txt');
+      }
+      const relative = change.path.slice('ui/public/'.length);
+      const original = inventory.files.find((asset) => asset.path === relative);
+      const current = selected.find((asset) => asset.path === relative);
+      if (!original || !current || change.source_original_blob !== original.blob_sha
+        || change.previous_extracted_blob !== current.sha) {
+        throw new Error(`Website adaptation does not continue the selected asset: ${change.path}`);
+      }
+      if (typeof change.change !== 'string' || !change.change.trim()) {
+        throw new Error(`Website adaptation requires a change explanation: ${change.path}`);
+      }
+      current.sha = change.current_blob;
+      current.bytes = change.current_bytes;
     }
   }
   return validateAssets(selected);

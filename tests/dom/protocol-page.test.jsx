@@ -36,7 +36,7 @@ describe('protocol page composition', () => {
   it('publishes its canonical identity and draft technical article', () => {
     mount();
     expect(screen.getByRole('heading', { level: 1, name: 'Built around an Open Draft Protocol' })).toBeTruthy();
-    expect(document.title).toBe('Marty Identity Protocol (MIP) — Open Draft | ElevenID LLC');
+    expect(document.title).toBe('Marty Identity Protocol — Identity and Agent Delegation | ElevenID LLC');
     const metadata = educationMetadata();
     expect(metadata.canonical).toBe('https://elevenidllc.com/protocol');
     expect(metadata.schema).toHaveLength(1);
@@ -56,7 +56,7 @@ describe('protocol page composition', () => {
   it('retains draft status, version, source limits and independently supplied mappings', () => {
     mount();
     for (const text of [
-      'Open Draft Protocol', 'v0.0.0-fixture — Draft fixture', 'Fixture license',
+      'Open Draft Protocol', 'Public draft v0.0.0-fixture — Draft fixture', 'Fixture license',
       'A bounded protocol content fixture.', 'Draft mapping; no certification.',
       'Profile-specific fixture coverage.', 'Fixture governance is independently reviewed.',
     ]) expect(screen.getByText(text)).toBeTruthy();
@@ -216,7 +216,7 @@ describe('protocol page composition', () => {
   });
 
   it('retains responsive chapter, mapping and governance card widths', () => {
-    const items = educationGridItems(mount().container);
+    const items = educationGridItems(mount().container).filter((item) => !item.closest('#agent-delegation'));
     expect(items).toHaveLength(10);
     expect(items.every((item) => item.classList.contains('MuiGrid-grid-xs-12'))).toBe(true);
     expect(items.every((item) => item.classList.contains('MuiGrid-grid-sm-6'))).toBe(true);
@@ -226,14 +226,14 @@ describe('protocol page composition', () => {
   it('retains heading, thesis, chapter and mapping font weights with their gutters', () => {
     mount();
     for (const name of [
-      'Built around an Open Draft Protocol', 'Protocol Architecture', 'Learn the Protocol',
+      'Built around an Open Draft Protocol', 'Core Protocol Architecture', 'Continue with the Protocol Foundations',
       'Standards Alignment', 'Open Governance', 'Get Involved',
     ]) expect(getComputedStyle(screen.getByRole('heading', { name })).fontWeight).toBe('800');
     expect(getComputedStyle(screen.getByText('“Fixture policy is reviewed before use.”')).fontWeight).toBe('600');
     for (const name of ['Fixture foundations', 'Fixture mapping A']) {
       expect(['700', 'bold']).toContain(getComputedStyle(screen.getByRole('heading', { name })).fontWeight);
     }
-    expect(getComputedStyle(screen.getByRole('heading', { name: 'Protocol Architecture' })).textAlign).toBe('center');
+    expect(getComputedStyle(screen.getByRole('heading', { name: 'Core Protocol Architecture' })).textAlign).toBe('center');
     expect(getComputedStyle(screen.getByRole('heading', { name: 'Standards Alignment' })).textAlign).toBe('center');
     const heroStyle = getComputedStyle(screen.getByRole('heading', { level: 1 }));
     if (heroStyle.marginBottom.endsWith('em')) {
@@ -247,7 +247,24 @@ describe('protocol page composition', () => {
 
   it('retains the explicitly deferred interactive protocol map position', () => {
     mount();
-    expect(screen.getByRole('heading', { name: 'Protocol Architecture' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Core Protocol Architecture' })).toBeTruthy();
     expect(screen.getByRole('complementary', { name: 'Deferred protocol map' })).toBeTruthy();
+  });
+
+  it('teaches the optional grant lifecycle and exposes the next learning links', () => {
+    mount();
+    const section = within(screen.getByRole('region', { name: 'Identity and authority for agents' }));
+    for (const role of ['Issuer', 'Grantor', 'Represented subject', 'Delegate']) {
+      expect(section.getByRole('heading', { level: 4, name: role })).toBeTruthy();
+    }
+    const steps = within(section.getByRole('list'));
+    expect(steps.getAllByRole('listitem')).toHaveLength(6);
+    expect(steps.getAllByRole('heading').at(-1).textContent).toBe('Recover the original result');
+    expect(section.getByRole('complementary', { name: 'Protocol publication and availability' }).textContent)
+      .toContain('NOT_ASSESSED');
+    expect(section.getByText(/Only ACTIVE grants may authorize/)).toBeTruthy();
+    expect(section.getByText(/single-hop and online/)).toBeTruthy();
+    expect(section.getByRole('link', { name: 'Explore agent identity and integration' }).getAttribute('href')).toBe('/ai');
+    expect(section.getByRole('link', { name: 'Review the five core primitives' }).getAttribute('href')).toBe('/what-is-marty-protocol');
   });
 });

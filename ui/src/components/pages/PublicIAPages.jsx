@@ -80,7 +80,7 @@ function PageFrame({ title, description, canonicalPath, keywords, eyebrow, actio
 
 function Section({ title, subtitle, children }) {
   return (
-    <Box>
+    <Box sx={{ minWidth: 0 }}>
       <Box sx={{ mb: 3 }}>
         <Typography variant="h4" fontWeight={800} gutterBottom>
           {title}
@@ -118,6 +118,16 @@ const architectureLayers = [
     bullets: ['Selective disclosure', 'Presentation policy enforcement', 'Revocation and expiry checks'],
   },
   {
+    title: 'Agent identity layer',
+    description: 'Identify the acting principal separately from its runtime instance, proof key, and represented-customer session. Keep attributable identity and key history.',
+    bullets: ['Accountable agent identities', 'Verified key and runtime binding', 'Enrollment and lifecycle history'],
+  },
+  {
+    title: 'Delegated authority layer',
+    description: 'Use optional DelegationGrant contracts to bind explicit approval to a subject, delegate, audience, action, resource, and expiry. Recheck current authority for the exact operation.',
+    bullets: ['Scoped and revocable approval', 'Online operation-bound checks', 'Signed decision evidence'],
+  },
+  {
     title: 'Runtime layer',
     description: 'Define the customer-operated runtime and interfaces for the selected workflow. Validate installation and journey behavior before production.',
     bullets: ['Documented interfaces', 'Customer or partner operations', 'Profile-specific connectivity tests'],
@@ -125,6 +135,12 @@ const architectureLayers = [
 ];
 
 const resourceLinks = [
+  {
+    title: 'Agent Identity and Delegation',
+    description: 'Learn agent identity lifecycle, scoped grants, operation-bound checks, and the responsibilities of your application.',
+    path: '/ai',
+    cta: 'Read the Agent Guide',
+  },
   {
     title: 'Developer Docs',
     description: 'Reference docs, implementation notes, and API details for verification-first integrations.',
@@ -167,12 +183,20 @@ export function SolutionsPage() {
   return (
     <PageFrame
       title="Verification solutions for real operating environments"
-      description="Explore portable credentials, applicant and document verification, and Travel Trust with one customer-operated Marty product."
+      description="Explore portable credentials, document verification, Travel Trust, and delegated agent workflows with one customer-operated identity foundation."
       canonicalPath="/solutions"
       keywords={['verification solutions', 'enterprise access', 'travel verification', 'age assurance', 'portable credentials']}
       eyebrow="Solutions"
       actions={SHOW_PUBLIC_CTA ? defaultActions : defaultActions.slice(1)}
     >
+      <Section
+        title="Give agents accountable, scoped authority"
+        subtitle="An assistant can request an approved credential operation or act for a customer in a commerce workflow. Marty checks identity, consent, and delegated authority; your application controls its business permissions, budgets, execution, and outcomes."
+      >
+        <Button component="a" href={publicEntryHref('/ai')} variant="outlined">
+          Explore Agent Workflows
+        </Button>
+      </Section>
       <Section
         title="Deployment playbooks"
         subtitle="These design guides help define requirements. Confirm current release support and evidence before using a scenario in production."
@@ -328,6 +352,15 @@ export function DevelopersPage() {
       </Section>
 
       <Section
+        title="Building an agent integration?"
+        subtitle="Start with the acting principal, runtime and key binding, then define the represented subject and exact delegated operation. Discover what the selected deployment enables before implementing the request and receipt flow."
+      >
+        <Button component="a" href={publicEntryHref('/ai')} variant="outlined">
+          Read the Agent Integration Guide
+        </Button>
+      </Section>
+
+      <Section
         title="Trace the runtime before you wire production"
         subtitle="Developers still need the system model: architecture explains the trust and policy layers, while security explains the deployment controls and compliance posture."
       >
@@ -348,7 +381,7 @@ export function ArchitecturePage() {
   return (
     <PageFrame
       title="Architecture built around trust, policy, and runtime"
-      description="The platform is organized so credential formats, trusted issuers, disclosure rules, and deployment profiles stay explicit instead of hiding inside one-off integrations."
+      description="Understand how credentials, agent identities, delegated authority, trust policies, and deployment profiles fit together."
       canonicalPath="/architecture"
       keywords={['identity architecture', 'trust architecture', 'verifiable credential architecture', 'policy engine', 'runtime architecture']}
       eyebrow="Architecture"
@@ -382,6 +415,20 @@ export function ArchitecturePage() {
             </Grid>
           ))}
         </Grid>
+      </Section>
+
+      <Section
+        title="Identity and authority meet application execution"
+        subtitle="Marty supplies identity, trust, consent, delegated authority, and decision evidence. Your application owns agent models, prompts, orchestration, resource permissions, budgets, provider calls, and business outcomes. Your identity provider supplies user sign-in."
+      >
+        <Typography variant="body1" sx={{ mb: 2 }}>
+          A signed permit records an identity-policy decision for an exact operation. The application
+          must verify that evidence and enforce its own rules before acting; the receipt does not
+          establish that a payment, reservation, or other business action happened.
+        </Typography>
+        <Button component="a" href={publicEntryHref('/ai')} variant="outlined">
+          Follow a Delegated Operation
+        </Button>
       </Section>
 
       <Section

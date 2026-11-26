@@ -1,67 +1,82 @@
 # ElevenID
 
-> AI-verifiable identity infrastructure.
+> Customer-operated identity workflows, verifiable credentials, and scoped authority for agents with Marty.
 
-ElevenID is infrastructure for issuing and verifying verifiable credentials,
-Open Badges, and identity documents using the Marty Identity Protocol (MIP).
+Marty by ElevenID connects credential issuance and verification, document checks,
+trust policy, agent identity, delegated authority, and decision evidence. Each
+workflow depends on its selected implementation, profile, and deployment.
 
-ElevenID provides APIs for AI systems to verify credentials, badges, and identity claims.
+## Protocol model
 
-## APIs
+The Marty Identity Protocol (MIP) has five core primitives: Trust Profile,
+Credential Template, Presentation Policy, Deployment Profile, and Flow.
+Supporting abstractions and optional extensions add machine identity, agent-trust
+bindings, DelegationGrant, consent, and decision receipts without adding a sixth
+core primitive.
 
-- Credential Verification API: https://elevenidllc.com/verifiable-credential-api
-- EUDI Wallet Verification: https://elevenidllc.com/eudi-wallet-verification
-- ISO 18013-5 mDoc Verification: https://elevenidllc.com/iso-18013-5-mdoc-verification
-- SD-JWT Verification: https://elevenidllc.com/sd-jwt-verification
-- Open Badges Verification: https://elevenidllc.com/open-badges-verification
-- Open Badges Issuance: https://elevenidllc.com/open-badges-issuance
-- Trust Registry Infrastructure: https://elevenidllc.com/trust-registry-infrastructure
+## Agent identity and delegation
 
-## Documentation
+An AgentPrincipal identifies the acting principal. Keep that identity distinct
+from its runtime instance, proof key, represented subject, and delegated authority.
+Identity administration records accountable ownership, enrollment, key changes,
+status, and history; registration or successful sign-in alone does not grant authority.
 
-- API Documentation: https://elevenidllc.com/docs
-- Blog: https://elevenidllc.com/blog
-- OpenAPI Specification: https://elevenidllc.com/openapi.yaml
+A DelegationGrant records approved actions, resources, audiences, validity, and
+proof binding. The grantor explicitly approves its immutable terms. The initial
+delegation profile is single-hop and online: final use checks current identity,
+grant status, consent, scope, policy, freshness, and the exact operation. Offline
+grants and onward delegation are outside that profile.
 
-## Product
+The selected managed-machine use path retains a challenge with START_USE,
+evaluates the signed proof and current authority with FINALIZE_USE, and supports
+original-result recovery with RECOVER_RESULT. Signed receipts are EVIDENCE_ONLY:
+they record an identity and authority decision, not payment or completed execution.
+Recovery preserves the original outcome, timestamps, and expiry; it does not renew
+authority or authorize a replacement operation.
 
+Marty owns identity, trust, consent, delegated authority, and its decision evidence.
+The consuming application owns agent definitions, tasks, models, budgets,
+reservations, provider calls, operation idempotency, and business outcomes.
+An identity provider supplies user sign-in and session authentication.
+
+## Publication and availability
+
+The linked public MIP baseline is v0.5.0. Newer optional agent-trust and delegation
+source contracts are unreleased additions with separate qualification requirements.
+Reference coverage is not deployment evidence: optional profile runtime assessment
+remains NOT_ASSESSED and public discovery is disabled until the selected profiles
+have matching deployment evidence. Implementation paths require explicit enablement;
+the website does not establish availability in a particular deployment.
+
+## Learning and product pages
+
+- Agent Identity and Delegation: https://elevenidllc.com/ai
+- Protocol and Delegation Model: https://elevenidllc.com/protocol
+- Five Core Primitives: https://elevenidllc.com/what-is-marty-protocol
+- Architecture and Responsibilities: https://elevenidllc.com/architecture
 - Product Overview: https://elevenidllc.com/product
-- Standards: https://elevenidllc.com/standards
-- Protocol: https://elevenidllc.com/protocol
-- AI Integration: https://elevenidllc.com/ai
+- Developer Integration: https://elevenidllc.com/developers
+- API Documentation (application handoff): https://elevenidllc.com/docs
+- How Digital Identity Works: https://elevenidllc.com/identity
+- Why Verifiable Identity: https://elevenidllc.com/why-verifiable-identity
+- Credential Verification: https://elevenidllc.com/verifiable-credential-api
+- Open Badges Issuance: https://elevenidllc.com/open-badges-issuance
+- Blog: https://elevenidllc.com/blog
 
-## Concept Definitions
+## Gateway discovery
 
-- What Is Verifiable Identity: https://elevenidllc.com/what-is-verifiable-identity
-- What Is Credential Verification: https://elevenidllc.com/what-is-credential-verification
-- What Is an Open Badge: https://elevenidllc.com/what-is-open-badge
-- What Is a Digital Credential: https://elevenidllc.com/what-is-digital-credential
-- What Is the Marty Identity Protocol: https://elevenidllc.com/what-is-marty-protocol
+Set MARTY_BASE_URL to the selected deployed Gateway origin, not the marketing
+website. Fetch /v1/protocol-support under that origin for deployment-specific
+support and qualification limits, and /openapi.json under the same origin for
+the generated API contract. Check enabled profiles and operation requirements
+before integrating. These paths are not website API endpoints.
 
-## Topics
+## Standards and profiles to evaluate
 
-- verifiable credentials
-- W3C Verifiable Credentials
-- Open Badges
-- EUDI Wallet
-- identity verification
-- credential issuance
-- OID4VCI (OpenID for Verifiable Credential Issuance)
-- OID4VP (OpenID for Verifiable Presentations)
-- ISO 18013-5 mDoc
-- SD-JWT (Selective Disclosure JWT)
-- trust registries
-- Marty Identity Protocol
-- digital identity
-- credential verification
-- zero-knowledge proofs
-- decentralized identity
+- Standards and Qualification: https://elevenidllc.com/standards
+- Credential formats: W3C Verifiable Credentials, SD-JWT, ISO 18013-5 mDoc, Open Badges.
+- Exchange and trust profiles: OpenID4VCI, OpenID4VP, DID-based identity, and EUDI wallet mappings.
 
-## Standards Supported
-
-- W3C Verifiable Credentials Data Model
-- OpenID4VCI / OpenID4VP
-- ISO/IEC 18013-5 (mDL / mDoc)
-- SD-JWT (IETF draft)
-- Open Badges v3.0
-- DID (Decentralized Identifiers)
+References and mappings do not establish conformance or wallet interoperability.
+Evaluate the exact standard version, credential format, transport, trust framework,
+adapter, and executed evidence for the selected release and deployment.

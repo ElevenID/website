@@ -77,7 +77,7 @@ describe('MUI typography compatibility', () => {
   it.each([
     ['/what-is-digital-credential', DigitalCredential, ['electronic equivalent of a physical document']],
     ['/what-is-credential-verification', CredentialVerification, ['act of validating that a digital credential']],
-    ['/what-is-marty-protocol', MartyProtocol, ['defines the core building blocks', 'Existing credential standards tell you']],
+    ['/what-is-marty-protocol', MartyProtocol, ['for the building blocks that make digital identity workflows repeatable', 'Newer optional source contracts extend that model']],
     ['/what-is-open-badge', OpenBadge, ['packages a claim about an achievement']],
   ])('%s retains the spacing after explanatory paragraphs', (pathname, Component, fragments) => {
     const { container } = renderContent(<Component />, pathname);

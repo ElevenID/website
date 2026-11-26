@@ -5,7 +5,7 @@
     "extendedSubheadline": "Kies een afgebakende toepassing, test met synthetische gegevens en beheer de afgesproken installatie zelf of met uw gekozen partner.",
     "primaryCTA": "Ontwikkelaarsdocumentatie bekijken",
     "secondaryCTA": "Verificatie-API bekijken",
-    "supporting": "Draagbare credentials, verificatie van aanvragers en documenten, en Travel Trust."
+    "supporting": "Verifieerbare credentials, documentcontroles, Travel Trust en afgebakende bevoegdheden voor agents."
   },
   "idvComparison": {
     "title": "Plan de vertrouwensuitwisseling",
@@ -106,7 +106,7 @@
     },
     "solvesIt": {
       "title": "Hoe ElevenID LLC dit oplost",
-      "intro": "Spreek invoer, vertrouwensbronnen en verwachte uitkomst af",
+      "intro": "Beheer identiteit met vijf kernbouwstenen: vertrouwensprofielen, credentialtemplates, presentatiebeleid, implementatieprofielen en flows.",
       "subheading": "Een standaard is een vertrekpunt. Controleer de exacte versie en het profiel; compatibiliteit en conformiteit vereisen eigen bewijs."
     },
     "howItWorks": {
@@ -176,7 +176,7 @@
     },
     "proofStrip": {
       "claims": {
-        "w3c": "Eén Marty-product, drie toepassingen",
+        "w3c": "Credentials, vertrouwen en agentbevoegdheden",
         "offlineCache": "Eerst evalueren met synthetische gegevens",
         "deployment": "Beheerd door klant of partner",
         "keySecurity": "Expliciete configuratie van vertrouwen en sleutels",
@@ -203,6 +203,9 @@
     "heroTitle": "Gebaseerd op een open conceptprotocol",
     "badge": "Open conceptprotocol",
     "standardsSubtitle": "Een standaard is een vertrekpunt. Controleer de exacte versie en het profiel; compatibiliteit en conformiteit vereisen eigen bewijs.",
-    "componentsSubtitle": "Een standaard is een vertrekpunt. Controleer de exacte versie en het profiel; compatibiliteit en conformiteit vereisen eigen bewijs."
+    "componentsSubtitle": "Een standaard is een vertrekpunt. Controleer de exacte versie en het profiel; compatibiliteit en conformiteit vereisen eigen bewijs.",
+    "heroSubtitle": "Een open conceptmodel voor credentials, vertrouwen en gedelegeerde bevoegdheden voor mensen en agents.",
+    "primitivesSubtitle": "MIP definieert vijf kernbouwstenen voor identiteit, met optionele contracten voor agentidentiteit en afgebakende delegatie.",
+    "version": "Publiek concept v{{version}} — {{status}}"
   }
 }

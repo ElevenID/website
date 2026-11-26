@@ -11,6 +11,7 @@ const paths = [
   'ui/src/utils/staticAssetHref.js',
   'ui/src/components/seo/siteMetadata.js',
   'ui/src/components/seo/structuredData.js',
+  'ui/src/data/agentProtocolContent.js',
 ];
 const sources = await Promise.all(paths.map(async (path) => [
   new URL(path, repositoryRoot).href,

@@ -5,7 +5,7 @@
     "extendedSubheadline": "Define un caso de uso, evalúalo con datos sintéticos y opera el despliegue acordado con tu equipo o un socio elegido.",
     "primaryCTA": "Explorar la documentación",
     "secondaryCTA": "Ver la API de verificación",
-    "supporting": "Credenciales portables, verificación de solicitantes y documentos, y Travel Trust."
+    "supporting": "Credenciales verificables, verificación de documentos, Travel Trust y autoridad limitada para agentes."
   },
   "idvComparison": {
     "title": "Planifica el intercambio de confianza",
@@ -99,7 +99,7 @@
     },
     "solvesIt": {
       "title": "Cómo lo resuelve ElevenID LLC",
-      "intro": "Acuerda entradas, fuentes de confianza y resultado esperado",
+      "intro": "Gestiona la identidad con cinco elementos centrales: perfiles de confianza, plantillas de credenciales, políticas de presentación, perfiles de despliegue y flujos.",
       "subheading": "Nombrar un estándar es solo el inicio. Revisa la versión y el perfil concretos; la compatibilidad y la conformidad requieren pruebas propias."
     },
     "howItWorks": {
@@ -169,7 +169,7 @@
     },
     "proofStrip": {
       "claims": {
-        "w3c": "Un producto Marty, tres casos de uso",
+        "w3c": "Credenciales, confianza y autoridad de agentes",
         "offlineCache": "Primero, evaluación con datos sintéticos",
         "deployment": "Operado por el cliente o su socio",
         "keySecurity": "Configuración explícita de confianza y claves",
@@ -196,7 +196,10 @@
     "heroTitle": "Basado en un protocolo abierto en borrador",
     "badge": "Protocolo abierto en borrador",
     "standardsSubtitle": "Nombrar un estándar es solo el inicio. Revisa la versión y el perfil concretos; la compatibilidad y la conformidad requieren pruebas propias.",
-    "componentsSubtitle": "Nombrar un estándar es solo el inicio. Revisa la versión y el perfil concretos; la compatibilidad y la conformidad requieren pruebas propias."
+    "componentsSubtitle": "Nombrar un estándar es solo el inicio. Revisa la versión y el perfil concretos; la compatibilidad y la conformidad requieren pruebas propias.",
+    "heroSubtitle": "Un modelo de especificación abierta en borrador para credenciales, confianza y autoridad delegada para personas y agentes.",
+    "primitivesSubtitle": "MIP define cinco elementos centrales de identidad, con contratos opcionales para la identidad de agentes y la delegación con alcance limitado.",
+    "version": "Borrador público v{{version}} — {{status}}"
   },
   "infrastructure": {
     "title": "Empieza con un flujo útil",

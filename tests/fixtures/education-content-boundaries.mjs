@@ -18,7 +18,7 @@ const allowed = new Map([
   ])],
   [component('ProtocolPage'), new Set([
     ...common, './seo/structuredData', 'react-i18next', '@elevenid/marty-blog',
-    '../application/routing/publicEntry',
+    '../application/routing/publicEntry', './protocol/AgentDelegationOverview',
     ...['GitHub', 'MenuBook', 'ArrowForward', 'CheckCircle', 'Groups', 'Gavel', 'Public', 'Inventory', 'School'].map(icon),
   ])],
 ]);
