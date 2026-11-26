@@ -31,7 +31,7 @@ export const PUBLIC_TABS = [
       '/trust-registry-infrastructure',
     ],
   },
-  { labelKey: 'navigation.agents', defaultLabel: 'Agents', path: '/ai', exact: true },
+  { labelKey: 'navigation.agents', defaultLabel: 'Agents', path: '/ai' },
   { labelKey: 'navigation.solutions', defaultLabel: 'Solutions', path: '/solutions' },
   { labelKey: 'navigation.developers', defaultLabel: 'Developers', path: '/developers', prefixes: ['/developers'] },
   { labelKey: 'navigation.standards', defaultLabel: 'Standards', path: '/standards' },

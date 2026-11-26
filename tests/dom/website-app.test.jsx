@@ -120,6 +120,13 @@ describe('website composition chrome with the deferred route boundary isolated',
     expect(screen.getByRole('tab', { name: 'Product' }).getAttribute('aria-selected')).toBe('false');
   });
 
+  it('keeps the Agents tab selected on the supported trailing-slash route', async () => {
+    await renderWebsite('/ai/');
+    expect(screen.getByTestId('website-route-boundary').textContent).toBe('/ai/');
+    expect(screen.getByRole('tab', { name: 'Agents' }).getAttribute('aria-selected')).toBe('true');
+    expect(screen.getByRole('tab', { name: 'Product' }).getAttribute('aria-selected')).toBe('false');
+  });
+
   it('selects the configured resource tab for a nested public route', async () => {
     await renderWebsite('/blog/foundations?view=latest');
     expect(screen.getByRole('tab', { name: 'Resources' }).getAttribute('aria-selected')).toBe('true');

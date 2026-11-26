@@ -202,9 +202,9 @@
       "path": "ui/src/variants/publicConfig.public.js",
       "source_original_blob": "1fcdf810dcf69b323c8a610570e76c24c01afd90",
       "previous_extracted_blob": "1fcdf810dcf69b323c8a610570e76c24c01afd90",
-      "current_blob": "39d0c77d3b6dacb02df9d74500ff432bd3a05509",
-      "current_bytes": 2482,
-      "change": "Expose a dedicated Agents navigation tab for the existing /ai route."
+      "current_blob": "fde2e0f23cb835893f527ecb338412d4e0fc01b2",
+      "current_bytes": 2469,
+      "change": "Expose a dedicated Agents navigation tab for the existing /ai route, including its supported trailing-slash alias."
     }
   ],
   "scope_note": "Website education for agent identity and delegated authority, preserving original extraction identities and historical product-support classifications."
