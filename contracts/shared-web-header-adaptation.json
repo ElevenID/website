@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "purpose": "shared-header-consumption-and-adaptation",
+  "previous_website_source": "3dad3d57d8d3cde8eeeaabc8b893bd3cf03fb5bd",
+  "canonical_source": {
+    "repository": "ElevenID/marty-ui",
+    "directory": "ui/src/shared/web-layout",
+    "revision": "c56d6a7f061fe37ae4752a978e69dc235933d0fbc3c1705d032ee011b0fa98a4"
+  },
+  "adapted_files": [
+    {
+      "path": "ui/src/apps/website/WebsiteApp.jsx",
+      "current_blob": "6b4df1182ac01e034eb9d4d8436eca18599de840",
+      "bytes": 4068,
+      "change": "Delegate header structure and branding to the same general source used by the application and both auth renderers.",
+      "previous_blob": "a18840c688d6df75fbf0147ba31f63fd734d4b6c",
+      "source_original_blob": "51789b621ae64442135789314c7857ff393a6cf0"
+    },
+    {
+      "path": "ui/vite.config.mjs",
+      "current_blob": "460861df528d42e9d29abc34fc53aed5eaaee8b5",
+      "bytes": 2901,
+      "change": "Reject a stale or locally diverged shared-header source snapshot before serving or building the website.",
+      "previous_blob": "45edb1dde95efa4c858b5902c5658f6629ab4763",
+      "source_original_blob": "45edb1dde95efa4c858b5902c5658f6629ab4763"
+    }
+  ],
+  "added_files": [
+    {
+      "path": "ui/src/shared/web-layout/header.mjs",
+      "current_blob": "89dbeac7998871ef20452352f968191b3ef359e9",
+      "bytes": 1050,
+      "change": "Consume the identical canonical source snapshot with no network or runtime dependency."
+    },
+    {
+      "path": "ui/src/shared/web-layout/header.css",
+      "current_blob": "d6ef0dffd46fd3bb01b15651ae12d92714076358",
+      "bytes": 1157,
+      "change": "Consume the identical canonical source snapshot with no network or runtime dependency."
+    },
+    {
+      "path": "ui/src/shared/web-layout/verify-source.mjs",
+      "current_blob": "11b980ca3c7ba182fc0103ab977e921717710bee",
+      "bytes": 1261,
+      "change": "Consume the identical canonical source snapshot with no network or runtime dependency."
+    },
+    {
+      "path": "ui/src/shared/web-layout/source.json",
+      "current_blob": "79c1eb8ccbcbe9795bd70ba6b8f0d4b62d3818ce",
+      "bytes": 670,
+      "change": "Consume the identical canonical source snapshot with no network or runtime dependency."
+    },
+    {
+      "path": "ui/src/components/layouts/AppHeader.jsx",
+      "current_blob": "eec749543b82a48ef7a77f1ac35f38d72aeba9c9",
+      "bytes": 464,
+      "change": "Use the general header factory with React.createElement and the existing navigation actions."
+    }
+  ]
+}
