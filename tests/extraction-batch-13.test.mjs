@@ -5,6 +5,7 @@ import { test } from 'node:test';
 import { assertAgentWebsiteAdaptation } from './fixtures/website-agent-adaptation.mjs';
 const manifest=JSON.parse(readFileSync(new URL('../contracts/extraction-provenance-batch-13.json',import.meta.url),'utf8'));
 const handoff=JSON.parse(readFileSync(new URL('../contracts/website-pages-application-handoff-adaptation.json',import.meta.url),'utf8'));
+const sharedHeader=JSON.parse(readFileSync(new URL('../contracts/shared-web-header-adaptation.json',import.meta.url),'utf8'));
 const hash=(buffer)=>createHash('sha1').update('blob '+buffer.length+String.fromCharCode(0)).update(buffer).digest('hex');
 test('batch 13 large public source identity is recorded',()=>{
  assert.equal(manifest.schema_version,1);
@@ -69,6 +70,20 @@ test('Pages application handoff adapts four reviewed source files without rewrit
   const file=new URL('../'+item.path,import.meta.url);
   assert.equal(lstatSync(file).isFile(),true,item.path);
   const content=readFileSync(file);
+  if (item.path === 'ui/src/apps/website/WebsiteApp.jsx') {
+   assert.equal(sharedHeader.schema_version,1);
+   assert.equal(sharedHeader.purpose,'shared-header-consumption-and-adaptation');
+   assert.equal(sharedHeader.canonical_source.repository,handoff.source_repository);
+   const matches=sharedHeader.adapted_files.filter(entry=>entry.path===item.path);
+   assert.equal(matches.length,1,item.path);
+   const current=matches[0];
+   assert.equal(current.source_original_blob,item.source_original_blob,item.path);
+   assert.equal(current.previous_blob,item.current_blob,item.path);
+   assert.ok(current.change.length>0,item.path);
+   assert.equal(content.length,current.bytes,item.path);
+   assert.equal(hash(content),current.current_blob,item.path);
+   continue;
+  }
   if (assertAgentWebsiteAdaptation(item.path, {
    originalBlob: item.source_original_blob, previousBlob: item.current_blob,
   })) continue;
