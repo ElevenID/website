@@ -1,12 +1,13 @@
 import { Component, Suspense, useEffect, useMemo } from 'react';
 import { BrowserRouter, Link, useLocation } from 'react-router';
-import { AppBar, Box, Button, Container, CssBaseline, Tabs, Tab, Toolbar, Typography } from '@mui/material';
+import { Box, Button, Container, CssBaseline, Tabs, Tab } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
 import { BrandingProvider } from '../../contexts/BrandingContext';
 import { useBranding } from '../../hooks/useBranding';
 import LanguageSwitcher from '../../components/common/LanguageSwitcher';
 import PublicFooter from '../../components/layouts/PublicFooter';
+import AppHeader from '../../components/layouts/AppHeader';
 import { PUBLIC_TABS, SHOW_PUBLIC_LOGIN_BUTTON, DISABLE_PUBLIC_LOGIN_BUTTON, SHOW_PUBLIC_CTA } from '@ui-public-config';
 import { publicEntryHref } from '../../application/routing/publicEntry';
 import { isWebPathEnabled, isWebSectionEnabled } from '../../utils/runtimeConfig';
@@ -39,14 +40,13 @@ function WebsiteShell() {
   return <ThemeProvider theme={theme}>
     <CssBaseline />
     <WebSurfaceBoundary surface="website">
-      <AppBar position="static"><Toolbar>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>{branding.appName}</Typography>
-        <LanguageSwitcher compact sx={{ mr: 2 }} />
+      <AppHeader brandName={branding.appName} primaryColor={branding.primaryColor}>
+        <LanguageSwitcher compact />
         {SHOW_PUBLIC_LOGIN_BUTTON && <Button component="a" color="inherit" disabled={DISABLE_PUBLIC_LOGIN_BUTTON}
           href={publicEntryHref(`/login?next=${encodeURIComponent(isWebSectionEnabled('console') ? '/console' : '/organizations')}`)}>
           {t('common.login', 'Login')}
         </Button>}
-      </Toolbar></AppBar>
+      </AppHeader>
       <Container maxWidth="lg">
         <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: 1, borderColor: 'divider', my: 2 }}>
           <Tabs value={selected < 0 ? false : selected} variant="scrollable" scrollButtons="auto" aria-label="navigation" sx={{ flexGrow: 1 }}>

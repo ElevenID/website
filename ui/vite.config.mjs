@@ -6,8 +6,10 @@ import { websiteBuildSelection, webSurfaceBuildContractPlugin } from './scripts/
 import { productionBuildContract, productionBuildContractPlugin } from './scripts/production-build-contract.mjs';
 import { muiIconMjsCompatibilityPlugin } from './scripts/mui-icon-compatibility.mjs';
 import { devServerOrigin } from './scripts/dev-server-origin.mjs';
+import { verifyHeaderSource } from './src/shared/web-layout/verify-source.mjs';
 
 const uiRoot = fileURLToPath(new URL('.', import.meta.url));
+verifyHeaderSource(new URL('./src/shared/web-layout/', import.meta.url));
 const { sourceSha, pages, commerceSha, revision } = websiteBuildSelection();
 const commerceEntry = productionBuildContract({ pages, surface: 'website',
   extensionPath: process.env.MARTY_COMMERCE_EXTENSION_PATH, sourceSha: commerceSha });
